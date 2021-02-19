@@ -1,6 +1,6 @@
 import React from "react";
 import NumberFormat from "react-number-format";
-import { Item } from "../../client";
+import { Item } from "../../../client";
 
 export function ItemFY0Input(props: { item: Item }) {
     const { item } = props;

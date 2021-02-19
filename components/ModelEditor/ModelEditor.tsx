@@ -1,5 +1,6 @@
 import React from 'react';
 import { DriverTypeEnum, Item, Model } from '../../client';
+import { Billboard } from './Billboard';
 import { ItemComponent } from './ItemComponent';
 import { Section } from './Section';
 import { Subtotal } from './Subtotal';
@@ -111,6 +112,7 @@ const model: Model = {
 export function ModelEditor() {
     const items = model.items ?? [];
 
+    // model item partitioning
     const revenueIdx = items.findIndex(it => it.name === Revenue)
     const revenueSubtotal = items[revenueIdx]
     const revenueItems: Item[] = items.slice(0, revenueIdx)
@@ -142,8 +144,10 @@ export function ModelEditor() {
     const netIncomeIdx = items.findIndex(it => it.name === NetIncome)
     const netIncomeSubtotal = items[netIncomeIdx]
 
+    // end of model item partitioning
+
     return (
-        <div className="text-blueGray-100 text-lg container mx-auto py-24">
+        <div className="text-blueGray-100 text-lg container mx-auto pt-24 pb-96 lg:flex">
             <section className="flex flex-col space-y-12">
                 <Section items={revenueItems} subtotal={revenueSubtotal} />
                 <Section items={cogsItems} subtotal={cogsSubtotal} />
@@ -157,6 +161,7 @@ export function ModelEditor() {
                 </div>
                 <Subtotal subtotal={netIncomeSubtotal} />
             </section>
+            <Billboard />
         </div>
     )
 }
