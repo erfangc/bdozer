@@ -190,6 +190,12 @@ export interface Item {
     name?: string;
     /**
      * 
+     * @type {string}
+     * @memberof Item
+     */
+    description?: string;
+    /**
+     * 
      * @type {number}
      * @memberof Item
      */
