@@ -1,10 +1,16 @@
 import React, { useState } from "react"
 import NumberFormat from "react-number-format"
-import { Item } from "../../client"
+import { Item, Model } from "../../client"
 import { ItemEditor } from "./ItemEditor/ItemEditor"
 import { Attention, Check } from "./Svgs"
 
-export function ItemComponent({ item }: { item: Item }) {
+interface ItemComponentProps {
+    model: Model
+    item: Item
+    onChange: (newModel: Model) => void
+}
+
+export function ItemComponent({ item, onChange, model }: ItemComponentProps) {
 
     const checked = item.drivers?.length > 0 || item.expression
     const [open, setOpen] = useState(false)
@@ -24,7 +30,7 @@ export function ItemComponent({ item }: { item: Item }) {
             </span>
             {
                 open ?
-                    <ItemEditor item={item} /> : null
+                    <ItemEditor item={item} onChange={onChange} model={model} /> : null
             }
         </div>
     )

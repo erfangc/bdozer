@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DriverTypeEnum, Item, Model } from '../../client';
 import { Billboard } from './Billboard';
 import { ItemComponent } from './ItemComponent';
@@ -15,7 +15,7 @@ const TaxExpense = "TaxExpense"
 const InterestExpense = "InterestExpense"
 const NetIncome = "NetIncome"
 
-const model: Model = {
+const initialModel: Model = {
     items: [
         {
             name: "Commercial_Aircraft",
@@ -110,7 +110,13 @@ const model: Model = {
 }
 
 export function ModelEditor() {
+
+    const [model, setModel] = useState(initialModel)
     const items = model.items ?? [];
+
+    function updateModel(newModel: Model) {
+        setModel(newModel)
+    }
 
     // model item partitioning
     const revenueIdx = items.findIndex(it => it.name === Revenue)
@@ -149,15 +155,15 @@ export function ModelEditor() {
     return (
         <div className="text-blueGray-100 text-lg container mx-auto pt-24 pb-96 lg:flex">
             <section className="flex flex-col space-y-12">
-                <Section items={revenueItems} subtotal={revenueSubtotal} />
-                <Section items={cogsItems} subtotal={cogsSubtotal} />
+                <Section items={revenueItems} subtotal={revenueSubtotal} onChange={updateModel} model={model} />
+                <Section items={cogsItems} subtotal={cogsSubtotal} onChange={updateModel} model={model} />
                 <Subtotal subtotal={grossProfitSubtotal} />
-                <Section items={operatingExpensesItems} subtotal={operatingExpensesSubtotal} />
+                <Section items={operatingExpensesItems} subtotal={operatingExpensesSubtotal} onChange={updateModel} model={model} />
                 <Subtotal subtotal={operatingIncomeSubtotal} />
-                <Section items={nonOperatingExpensesItems} subtotal={nonOperatingExpensesSubtotal} />
+                <Section items={nonOperatingExpensesItems} subtotal={nonOperatingExpensesSubtotal} onChange={updateModel} model={model} />
                 <div>
-                    <ItemComponent item={interestExpenseSubtotal} />
-                    <ItemComponent item={taxExpenseSubtotal} />
+                    <ItemComponent item={interestExpenseSubtotal} onChange={updateModel} model={model} />
+                    <ItemComponent item={taxExpenseSubtotal} onChange={updateModel} model={model} />
                 </div>
                 <Subtotal subtotal={netIncomeSubtotal} />
             </section>
