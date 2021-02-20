@@ -25,7 +25,7 @@ export function CustomDriver(
                 </span>
             </div>
             <div className="flex-col flex justify-around">
-                <span className="text-xs text-blueGray-100 whitespace-nowrap">Initial Subscribers</span>
+                <span className="text-xs text-blueGray-100 whitespace-nowrap">Formula</span>
                 <pre>{driver.custom?.expression}</pre>
             </div>
         </div>

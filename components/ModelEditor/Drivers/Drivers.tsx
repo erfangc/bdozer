@@ -15,6 +15,26 @@ export function Drivers({ item, model, onChange, onEditTriggered }: DriversProps
 
     const drivers = item.drivers ?? []
 
+    function addDriver() {
+        const num = model.items?.flatMap(({ drivers }) => drivers)?.length + 1;
+        const newDriver: Driver = {
+            name: `Driver_${num}`,
+            type: DriverTypeEnum.Custom
+        }
+        const updatedDrivers = [...item.drivers, newDriver]
+        const updatedItems = model.items?.map(oldItem => {
+            if (oldItem.name === item.name) {
+                return {
+                    ...item,
+                    drivers: updatedDrivers
+                }
+            } else {
+                return oldItem
+            }
+        })
+        onChange({ ...model, items: updatedItems })
+    }
+
     return (
         <div className="flex-col space-y-4">
             <p className="flex items-center">
@@ -48,7 +68,7 @@ export function Drivers({ item, model, onChange, onEditTriggered }: DriversProps
                     }
                 })
             }
-            <PrimaryButton>Add Driver</PrimaryButton>
+            <PrimaryButton onClick={addDriver}>Add Driver</PrimaryButton>
         </div>
     )
 }
