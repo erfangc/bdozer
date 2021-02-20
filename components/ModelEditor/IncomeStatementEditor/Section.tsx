@@ -17,16 +17,19 @@ export function Section({ items, subtotal, onChange, model }: SectionProps) {
     function addItem() {
         // place the new item 1 line above the subtotal
         const subtotalIdx = model.incomeStatementItems?.findIndex(i => i.name === subtotal.name)
+
         const newItem: Item = {
             name: `Item_${model.incomeStatementItems.length + 1}`,
             historicalValue: 0,
             description: `Item_${model.incomeStatementItems.length + 1}`.replace("_", " ")
         }
+
         const updatedItems = [
             ...model.incomeStatementItems?.slice(0, subtotalIdx),
             newItem,
-            ...model.incomeStatementItems.slice(subtotalIdx, model.incomeStatementItems.length)
+            ...model.incomeStatementItems?.slice(subtotalIdx, model.incomeStatementItems.length)
         ]
+
         onChange({ ...model, incomeStatementItems: updatedItems })
     }
 

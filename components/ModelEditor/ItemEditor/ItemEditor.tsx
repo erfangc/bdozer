@@ -78,9 +78,9 @@ export function ItemEditor({ model, item, onChange }: ItemEditorProps) {
         </>
 
     function updateDriver(newDriver: Driver) {
-        setDriverBeingEdited({ ...driverBeingEdited, ...newDriver })
+        setDriverBeingEdited(newDriver)
         const updatedDrivers = item.drivers?.map(driver => {
-            if (driver.name === newDriver) {
+            if (driver.name === newDriver.name) {
                 return newDriver
             } else {
                 return driver
@@ -97,7 +97,8 @@ export function ItemEditor({ model, item, onChange }: ItemEditorProps) {
     }
 
     const driverEditor = driverBeingEdited
-        ? <DriverEditor
+        ?
+        <DriverEditor
             driver={driverBeingEdited}
             onChange={updateDriver}
             onDismiss={() => setDriverBeingEdited(undefined)}
