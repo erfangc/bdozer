@@ -6,7 +6,7 @@ import { SecondaryButton } from "../../SecondaryButton";
 import { DriverProps } from "./DriverProps";
 
 export function SaaSRevenueDriver({
-    item, driver, model, onChange
+    item, driver, model, onChange, onEdit
 }: DriverProps) {
 
     const saaSRevenue = driver.saaSRevenue
@@ -25,7 +25,7 @@ export function SaaSRevenueDriver({
             <div className="flex-col flex justify-around">
                 <span className="font-bold text-lg text-blueGray-200">SaaSRevenue</span>
                 <span className="flex space-x-2">
-                    <SecondaryButton>Edit</SecondaryButton>
+                    <SecondaryButton onClick={onEdit}>Edit</SecondaryButton>
                     <DeleteButton onClick={deleteDriver}>Delete</DeleteButton>
                 </span>
             </div>

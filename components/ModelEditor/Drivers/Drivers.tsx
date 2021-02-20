@@ -1,5 +1,5 @@
 import React from "react";
-import { DriverTypeEnum, Item, Model } from "../../../client";
+import { Driver, DriverTypeEnum, Item, Model } from "../../../client";
 import { PrimaryButton } from "../../PrimaryButton";
 import { CustomDriver } from "./CustomDriver";
 import { SaaSRevenueDriver } from "./SaaSRevenueDriver";
@@ -8,9 +8,10 @@ interface DriversProps {
     item: Item
     model: Model
     onChange: (newModel: Model) => void
+    onEditTriggered: (driver: Driver) => void
 }
 
-export function Drivers({ item, model, onChange }: DriversProps) {
+export function Drivers({ item, model, onChange, onEditTriggered }: DriversProps) {
 
     const drivers = item.drivers ?? []
 
@@ -29,7 +30,7 @@ export function Drivers({ item, model, onChange }: DriversProps) {
                                 driver={driver}
                                 model={model}
                                 onChange={onChange}
-                                onEdit={() => null}
+                                onEdit={() => onEditTriggered(driver)}
                             />
                         )
                     } else if (driver.type === DriverTypeEnum.Custom) {
@@ -39,7 +40,7 @@ export function Drivers({ item, model, onChange }: DriversProps) {
                                 driver={driver}
                                 model={model}
                                 onChange={onChange}
-                                onEdit={() => null}
+                                onEdit={() => onEditTriggered(driver)}
                             />
                         )
                     } else {

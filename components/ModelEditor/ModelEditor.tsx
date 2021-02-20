@@ -28,6 +28,7 @@ const initialModel: Model = {
             historicalValue: 50_000,
             drivers: [
                 {
+                    name: 'Online_Subscription',
                     type: DriverTypeEnum.SaaSRevenue,
                     saaSRevenue: {
                         averageRevenuePerSubscription: 128,
@@ -36,6 +37,7 @@ const initialModel: Model = {
                     }
                 },
                 {
+                    name: 'Some_Other_Driver',
                     type: DriverTypeEnum.Custom,
                     custom: {
                         expression: 'period * 12 + 2'

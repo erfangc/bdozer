@@ -7,19 +7,33 @@ import { TextInput } from "../../TextInput";
 interface DriverEditorProps {
     driver: Driver
     onChange: (driver: Driver) => void
+    onDismiss: () => void
 }
 
-export function DriverEditor({ driver, onChange }: DriverEditorProps) {
+export function DriverEditor({ driver, onDismiss, onChange }: DriverEditorProps) {
 
     let driverSpecificForm = null
 
     switch (driver.type) {
+        // TODO refactor into their own components that update and validate their own fields
         case DriverTypeEnum.SaaSRevenue:
             driverSpecificForm =
                 <div>
-                    <NumberInput label="Total Subscription At Terminal Year" />
-                    <NumberInput label="Initial Subscriptions" />
-                    <NumberInput label="Average Revenue per Subscription" />
+                    <NumberInput
+                        label="Total Subscription At Terminal Year"
+                        value={driver.saaSRevenue?.totalSubscriptionAtTerminalYear}
+                        onChange={({ currentTarget: { value } }) => null}
+                    />
+                    <NumberInput
+                        label="Initial Subscriptions"
+                        value={driver.saaSRevenue?.initialSubscriptions}
+                        onChange={({ currentTarget: { value } }) => null}
+                    />
+                    <NumberInput
+                        label="Average Revenue per Subscription"
+                        value={driver.saaSRevenue?.averageRevenuePerSubscription}
+                        onChange={({ currentTarget: { value } }) => null}
+                    />
                 </div>
             break;
         case DriverTypeEnum.Custom:
@@ -29,6 +43,8 @@ export function DriverEditor({ driver, onChange }: DriverEditorProps) {
                     <textarea
                         name="expression"
                         rows={3}
+                        value={driver.custom?.expression}
+                        onChange={({ currentTarget: { value } }) => null}
                         className="w-full rounded-sm bg-blueGray-900 border-blueGray-500 px-4 py-4 outline-none"
                         placeholder="Enter formula"
                     />
@@ -61,7 +77,7 @@ export function DriverEditor({ driver, onChange }: DriverEditorProps) {
                 <span className="ml-4 h-px border-t border-blueGray-300 flex-grow"></span>
             </p>
             {driverSpecificForm}
-            <PrimaryButton>Confirm</PrimaryButton>
+            <PrimaryButton onClick={onDismiss}>Confirm</PrimaryButton>
         </div>
     )
 }

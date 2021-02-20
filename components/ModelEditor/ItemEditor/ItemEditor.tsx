@@ -12,9 +12,13 @@ interface ItemEditorProps {
     onChange: (newModel: Model) => void
 }
 
+/**
+ * Shows an editor for the Item but also 
+ * can be swapped to edit the Drivers that belong to the Item
+ */
 export function ItemEditor({ model, item, onChange }: ItemEditorProps) {
 
-    const [driverBeingEdited, setDriverEditing] = useState<Driver | undefined>(item.drivers[1])
+    const [driverBeingEdited, setDriverBeingEdited] = useState<Driver | undefined>(undefined)
 
     function updateDescription(newDescription) {
         // TODO validate the new description
@@ -55,7 +59,7 @@ export function ItemEditor({ model, item, onChange }: ItemEditorProps) {
                 <ItemDescriptionInput item={item} onChange={updateDescription} />
                 <ItemFY0Input item={item} onChange={updateHistoricalValue} />
             </div>
-            <Drivers item={item} model={model} onChange={onChange} />
+            <Drivers item={item} model={model} onChange={onChange} onEditTriggered={setDriverBeingEdited} />
             <div className="flex-col space-y-4">
                 <p className="flex items-center">
                     <span>Formula</span>
@@ -74,12 +78,16 @@ export function ItemEditor({ model, item, onChange }: ItemEditorProps) {
         </>
 
     function updateDriver(newDriver: Driver) {
-        setDriverEditing({ ...driverBeingEdited, ...newDriver })
+        setDriverBeingEdited({ ...driverBeingEdited, ...newDriver })
         // TODO update the actual Driver
     }
 
     const driverEditor = driverBeingEdited
-        ? <DriverEditor driver={driverBeingEdited} onChange={updateDriver} />
+        ? <DriverEditor
+            driver={driverBeingEdited}
+            onChange={updateDriver}
+            onDismiss={() => setDriverBeingEdited(undefined)}
+        />
         : null
 
     return (

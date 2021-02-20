@@ -1,4 +1,4 @@
-import { Item, Driver, Model } from "../../../client";
+import { Driver, Item, Model } from "../../../client";
 
 export interface DriverProps {
   item: Item;
