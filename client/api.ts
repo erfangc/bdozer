@@ -236,7 +236,19 @@ export interface Model {
      * @type {Array<Item>}
      * @memberof Model
      */
-    items?: Array<Item>;
+    incomeStatementItems?: Array<Item>;
+    /**
+     * 
+     * @type {Array<Item>}
+     * @memberof Model
+     */
+    balanceSheetItems?: Array<Item>;
+    /**
+     * 
+     * @type {Array<Item>}
+     * @memberof Model
+     */
+    otherItems?: Array<Item>;
     /**
      * 
      * @type {number}

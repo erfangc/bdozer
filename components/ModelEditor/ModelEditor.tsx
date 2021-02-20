@@ -7,7 +7,7 @@ import { Section } from './Section';
 import { Subtotal } from './Subtotal';
 
 const initialModel: Model = {
-    items: [
+    incomeStatementItems: [
         {
             name: "Commercial_Aircraft",
             description: "Commercial Aircraft",
@@ -113,7 +113,7 @@ const initialModel: Model = {
 export function ModelEditor() {
 
     const [model, setModel] = useState(initialModel)
-    const items = model.items ?? [];
+    const items = model.incomeStatementItems ?? [];
 
     async function updateModel(newModel: Model) {
         setModel(newModel)
