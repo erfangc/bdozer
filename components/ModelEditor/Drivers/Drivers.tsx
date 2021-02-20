@@ -16,12 +16,15 @@ export function Drivers({ item, model, onChange, onEditTriggered }: DriversProps
     const drivers = item.drivers ?? []
 
     function addDriver() {
-        const num = model.items?.flatMap(({ drivers }) => drivers)?.length + 1;
+        const num = (model.items?.flatMap(({ drivers }) => drivers)?.length ?? 0) + 1;
         const newDriver: Driver = {
             name: `Driver_${num}`,
-            type: DriverTypeEnum.Custom
+            type: DriverTypeEnum.Custom,
+            custom: {
+                expression: '0'
+            }
         }
-        const updatedDrivers = [...item.drivers, newDriver]
+        const updatedDrivers = [...(item?.drivers || []), newDriver]
         const updatedItems = model.items?.map(oldItem => {
             if (oldItem.name === item.name) {
                 return {
