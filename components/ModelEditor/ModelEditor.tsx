@@ -28,9 +28,17 @@ const initialModel: Model = {
             historicalValue: 50_000,
             drivers: [
                 {
+                    type: DriverTypeEnum.SaaSRevenue,
+                    saaSRevenue: {
+                        averageRevenuePerSubscription: 128,
+                        initialSubscriptions: 150_000,
+                        totalSubscriptionAtTerminalYear: 355_000
+                    }
+                },
+                {
                     type: DriverTypeEnum.Custom,
                     custom: {
-                        expression: '100.0'
+                        expression: 'period * 12 + 2'
                     }
                 }
             ]
@@ -118,7 +126,7 @@ export function ModelEditor() {
         setModel(newModel)
     }
 
-    // model item partitioning
+    // Model item partitioning
     const revenueIdx = items.findIndex(it => it.name === Revenue)
     const revenueSubtotal = items[revenueIdx]
     const revenueItems: Item[] = items.slice(0, revenueIdx)
@@ -149,8 +157,7 @@ export function ModelEditor() {
 
     const netIncomeIdx = items.findIndex(it => it.name === NetIncome)
     const netIncomeSubtotal = items[netIncomeIdx]
-
-    // end of model item partitioning
+    // End of model item partitioning
 
     return (
         <div className="text-blueGray-100 text-lg container mx-auto pt-24 pb-96 lg:flex">

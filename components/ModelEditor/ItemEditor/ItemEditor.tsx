@@ -1,9 +1,10 @@
-import React from "react";
-import { Item, Model } from "../../../client";
-import { Drivers } from "../Drivers/Drivers";
-import { ItemFY0Input } from "./ItemFY0Input";
-import { ItemDescriptionInput } from "./ItemDescriptionInput";
+import React, { useState } from "react";
+import { Driver, Item, Model } from "../../../client";
 import { DeleteButton } from "../../DeleteButton";
+import { DriverEditor } from "../Drivers/DriverEditor";
+import { Drivers } from "../Drivers/Drivers";
+import { ItemDescriptionInput } from "./ItemDescriptionInput";
+import { ItemFY0Input } from "./ItemFY0Input";
 
 interface ItemEditorProps {
     model: Model
@@ -12,6 +13,8 @@ interface ItemEditorProps {
 }
 
 export function ItemEditor({ model, item, onChange }: ItemEditorProps) {
+
+    const [driverBeingEdited, setDriverEditing] = useState<Driver | undefined>(item.drivers[1])
 
     function updateDescription(newDescription) {
         // TODO validate the new description
@@ -42,13 +45,17 @@ export function ItemEditor({ model, item, onChange }: ItemEditorProps) {
         onChange({ ...model, items: updatedItems })
     }
 
-    return (
-        <div className="absolute top-0 left-full ml-4 bg-blueGray-800 px-20 py-8 rounded-lg shadow-md flex-col space-y-8">
+    //
+    // item editor proper, i.e not in driver editor mode
+    // alternatively we could be editing a driver instead
+    //
+    const itemEditorProper =
+        <>
             <div className="flex-col space-y-4">
                 <ItemDescriptionInput item={item} onChange={updateDescription} />
                 <ItemFY0Input item={item} onChange={updateHistoricalValue} />
             </div>
-            <Drivers />
+            <Drivers item={item} model={model} onChange={onChange} />
             <div className="flex-col space-y-4">
                 <p className="flex items-center">
                     <span>Formula</span>
@@ -61,7 +68,23 @@ export function ItemEditor({ model, item, onChange }: ItemEditorProps) {
                     placeholder="Enter formula"
                 />
             </div>
-            <DeleteButton onClick={deleteItem}>Delete Item</DeleteButton>
+            <DeleteButton onClick={deleteItem}>
+                Delete Item
+            </DeleteButton>
+        </>
+
+    function updateDriver(newDriver: Driver) {
+        setDriverEditing({ ...driverBeingEdited, ...newDriver })
+        // TODO update the actual Driver
+    }
+
+    const driverEditor = driverBeingEdited
+        ? <DriverEditor driver={driverBeingEdited} onChange={updateDriver} />
+        : null
+
+    return (
+        <div className="absolute top-0 left-full ml-4 bg-blueGray-800 px-20 py-8 rounded-lg shadow-md flex-col space-y-8">
+            {driverEditor ?? itemEditorProper}
         </div>
     )
 }
