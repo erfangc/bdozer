@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import NumberFormat from "react-number-format"
-import { Item, Model } from "../../client"
-import { ItemEditor } from "./ItemEditor/ItemEditor"
-import { Attention, Check } from "./Svgs"
+import { Item, Model } from "../../../client"
+import { ItemEditor } from "../ItemEditor/ItemEditor"
+import { Attention, Check } from "../Svgs"
 
 interface ItemComponentProps {
     model: Model

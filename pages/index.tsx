@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { ModelEditor } from '../components/ModelEditor/ModelEditor';
+import { ModelEditor } from '../components/ModelEditor/ModelEditor'
 
 export default function Home() {
   return (

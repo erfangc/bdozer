@@ -1,6 +1,6 @@
 import React from "react";
 import NumberFormat from "react-number-format";
-import { Item } from "../../client";
+import { Item } from "../../../client";
 
 interface SubtotalProps {
     subtotal: Item

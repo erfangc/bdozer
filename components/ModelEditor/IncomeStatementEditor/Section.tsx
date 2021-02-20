@@ -1,9 +1,9 @@
 import React from "react";
 import NumberFormat from "react-number-format";
-import { Item, Model } from "../../client";
-import { GhostButton } from "../GhostButton";
+import { Item, Model } from "../../../client";
+import { GhostButton } from "../../GhostButton";
 import { ItemComponent } from "./ItemComponent";
-import { DashedLine } from "./Svgs";
+import { DashedLine } from "../Svgs";
 
 interface SectionProps {
     model: Model
