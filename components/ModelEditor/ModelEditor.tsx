@@ -1,19 +1,10 @@
 import React, { useState } from 'react';
 import { DriverTypeEnum, Item, Model, ModelBuilderControllerApi } from '../../client';
+import { Revenue, CostOfGoodsSold, GrossProfit, OperatingExpense, OperatingIncome, NonOperatingExpense, InterestExpense, TaxExpense, NetIncome } from '../../constants/Constants';
 import { Billboard } from './Billboard';
 import { ItemComponent } from './ItemComponent';
 import { Section } from './Section';
 import { Subtotal } from './Subtotal';
-
-const Revenue = "Revenue"
-const CostOfGoodsSold = "CostOfGoodsSold"
-const GrossProfit = "GrossProfit"
-const OperatingIncome = "OperatingIncome"
-const OperatingExpense = "OperatingExpense"
-const NonOperatingExpense = "NonOperatingExpense"
-const TaxExpense = "TaxExpense"
-const InterestExpense = "InterestExpense"
-const NetIncome = "NetIncome"
 
 const initialModel: Model = {
     items: [

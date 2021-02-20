@@ -1,0 +1,9 @@
+export const Revenue = "Revenue";
+export const CostOfGoodsSold = "CostOfGoodsSold";
+export const GrossProfit = "GrossProfit";
+export const OperatingIncome = "OperatingIncome";
+export const OperatingExpense = "OperatingExpense";
+export const NonOperatingExpense = "NonOperatingExpense";
+export const TaxExpense = "TaxExpense";
+export const InterestExpense = "InterestExpense";
+export const NetIncome = "NetIncome";

@@ -32,6 +32,12 @@ export interface Address {
      * @type {number}
      * @memberof Address
      */
+    sheet?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Address
+     */
     row?: number;
     /**
      * 
@@ -231,6 +237,42 @@ export interface Model {
      * @memberof Model
      */
     items?: Array<Item>;
+    /**
+     * 
+     * @type {number}
+     * @memberof Model
+     */
+    currentPrice?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Model
+     */
+    beta?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Model
+     */
+    sharesOutstanding?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Model
+     */
+    dilutedSharesOutstanding?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Model
+     */
+    corporateTaxRate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Model
+     */
+    costOfDebt?: number;
     /**
      * 
      * @type {number}
