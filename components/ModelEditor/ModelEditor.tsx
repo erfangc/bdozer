@@ -64,20 +64,37 @@ export function ModelEditor() {
 
     return (
         <div className="text-blueGray-100 text-lg container mx-auto pt-24 pb-96 lg:flex">
-            <section className="flex flex-col space-y-12">
-                <Section items={revenueItems} subtotal={revenueSubtotal} onChange={updateModel} model={model} />
-                <Section items={cogsItems} subtotal={cogsSubtotal} onChange={updateModel} model={model} />
-                <Subtotal subtotal={grossProfitSubtotal} />
-                <Section items={operatingExpensesItems} subtotal={operatingExpensesSubtotal} onChange={updateModel} model={model} />
-                <Subtotal subtotal={operatingIncomeSubtotal} />
-                <Section items={nonOperatingExpensesItems} subtotal={nonOperatingExpensesSubtotal} onChange={updateModel} model={model} />
-                <div>
-                    <ItemComponent item={interestExpenseSubtotal} onChange={updateModel} model={model} />
-                    <ItemComponent item={taxExpenseSubtotal} onChange={updateModel} model={model} />
-                </div>
-                <Subtotal subtotal={netIncomeSubtotal} />
-            </section>
+            {/* tabs */}
+            <div>
+                <Tabs></Tabs>
+                <section className="flex flex-col space-y-12">
+                    <Section items={revenueItems} subtotal={revenueSubtotal} onChange={updateModel} model={model} />
+                    <Section items={cogsItems} subtotal={cogsSubtotal} onChange={updateModel} model={model} />
+                    <Subtotal subtotal={grossProfitSubtotal} />
+                    <Section items={operatingExpensesItems} subtotal={operatingExpensesSubtotal} onChange={updateModel} model={model} />
+                    <Subtotal subtotal={operatingIncomeSubtotal} />
+                    <Section items={nonOperatingExpensesItems} subtotal={nonOperatingExpensesSubtotal} onChange={updateModel} model={model} />
+                    <div>
+                        <ItemComponent item={interestExpenseSubtotal} onChange={updateModel} model={model} />
+                        <ItemComponent item={taxExpenseSubtotal} onChange={updateModel} model={model} />
+                    </div>
+                    <Subtotal subtotal={netIncomeSubtotal} />
+                </section>
+            </div>
             <Billboard />
+        </div>
+    )
+}
+
+function Tabs() {
+    return (
+        <div className="flex space-x-4 mb-8">
+            <button className="border-b-4 border-blue-500 text-lg text-blueGray-50 pb-2 transition ease-linear hover:border-blue-200">
+                Income Statement
+            </button>
+            <button className="border-b-4 border-blueGray-900 text-lg text-blueGray-400 pb-2 transition ease-linear hover:border-blue-500 hover:text-blueGray-50">
+                Balance Sheet
+            </button>
         </div>
     )
 }
