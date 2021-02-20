@@ -26,16 +26,8 @@ export function CustomDriver(
             </div>
             <div className="flex-col flex justify-around">
                 <span className="text-xs text-blueGray-100 whitespace-nowrap">Formula</span>
-                <pre>{driver.custom?.expression}</pre>
+                <pre>{driver.customDriver?.formula}</pre>
             </div>
-        </div>
-    )
-}
-
-export function CustomDriverEditor() {
-    return (
-        <div>
-
         </div>
     )
 }

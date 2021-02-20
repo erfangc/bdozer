@@ -15,40 +15,13 @@ export function DriverEditor({ driver, onDismiss, onChange }: DriverEditorProps)
     let driverSpecificForm = null
 
     switch (driver.type) {
-        // TODO refactor into their own components that update and validate their own fields
         case DriverTypeEnum.SaaSRevenue:
             driverSpecificForm =
-                <div>
-                    <NumberInput
-                        label="Total Subscription At Terminal Year"
-                        value={driver.saaSRevenue?.totalSubscriptionAtTerminalYear}
-                        onChange={({ currentTarget: { value } }) => null}
-                    />
-                    <NumberInput
-                        label="Initial Subscriptions"
-                        value={driver.saaSRevenue?.initialSubscriptions}
-                        onChange={({ currentTarget: { value } }) => null}
-                    />
-                    <NumberInput
-                        label="Average Revenue per Subscription"
-                        value={driver.saaSRevenue?.averageRevenuePerSubscription}
-                        onChange={({ currentTarget: { value } }) => null}
-                    />
-                </div>
+                <SaaSRevenueDriverEditor driver={driver} onChange={onChange} />
             break;
         case DriverTypeEnum.Custom:
             driverSpecificForm =
-                <div className="flex-col flex">
-                    <label className="mb-2 text-sm">Formula</label>
-                    <textarea
-                        name="expression"
-                        rows={3}
-                        value={driver.custom?.expression}
-                        onChange={({ currentTarget: { value } }) => null}
-                        className="w-full rounded-sm bg-blueGray-900 border-blueGray-500 px-4 py-4 outline-none"
-                        placeholder="Enter formula"
-                    />
-                </div>
+                <CustomDriverEditor driver={driver} onChange={onChange} />
             break;
         default:
             driverSpecificForm = null
@@ -78,6 +51,49 @@ export function DriverEditor({ driver, onDismiss, onChange }: DriverEditorProps)
             </p>
             {driverSpecificForm}
             <PrimaryButton onClick={onDismiss}>Confirm</PrimaryButton>
+        </div>
+    )
+}
+
+interface Props {
+    driver: Driver
+    onChange: (driver: Driver) => void
+}
+
+function SaaSRevenueDriverEditor({ driver, onChange }: Props) {
+    return (
+        <div>
+            <NumberInput
+                label="Total Subscription At Terminal Year"
+                value={driver.saaSRevenue?.totalSubscriptionAtTerminalYear}
+                onValueChange={({ floatValue }) => onChange({ ...driver, saaSRevenue: { ...driver.saaSRevenue, totalSubscriptionAtTerminalYear: floatValue } })}
+            />
+            <NumberInput
+                label="Initial Subscriptions"
+                value={driver.saaSRevenue?.initialSubscriptions}
+                onValueChange={({ floatValue }) => onChange({ ...driver, saaSRevenue: { ...driver.saaSRevenue, initialSubscriptions: floatValue } })}
+            />
+            <NumberInput
+                label="Average Revenue per Subscription"
+                value={driver.saaSRevenue?.averageRevenuePerSubscription}
+                onValueChange={({ floatValue }) => onChange({ ...driver, saaSRevenue: { ...driver.saaSRevenue, averageRevenuePerSubscription: floatValue } })}
+            />
+        </div>
+    )
+}
+
+function CustomDriverEditor({ driver, onChange }: Props) {
+    return (
+        <div className="flex-col flex">
+            <label className="mb-2 text-sm">Formula</label>
+            <textarea
+                name="expression"
+                rows={3}
+                value={driver.customDriver?.formula}
+                onChange={({ currentTarget: { value } }) => onChange({ ...driver, customDriver: { ...driver.customDriver, formula: value } })}
+                className="w-full rounded-sm bg-blueGray-900 border-blueGray-500 px-4 py-4 outline-none"
+                placeholder="Enter formula"
+            />
         </div>
     )
 }

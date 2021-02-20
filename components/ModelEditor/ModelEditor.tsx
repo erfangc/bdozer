@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DriverTypeEnum, Item, Model } from '../../client';
+import { DriverTypeEnum, Item, Model, ModelBuilderControllerApi } from '../../client';
 import { Billboard } from './Billboard';
 import { ItemComponent } from './ItemComponent';
 import { Section } from './Section';
@@ -39,8 +39,8 @@ const initialModel: Model = {
                 {
                     name: 'Some_Other_Driver',
                     type: DriverTypeEnum.Custom,
-                    custom: {
-                        expression: 'period * 12 + 2'
+                    customDriver: {
+                        formula: 'period * 12 + 2'
                     }
                 }
             ]
@@ -124,8 +124,11 @@ export function ModelEditor() {
     const [model, setModel] = useState(initialModel)
     const items = model.items ?? [];
 
-    function updateModel(newModel: Model) {
+    async function updateModel(newModel: Model) {
         setModel(newModel)
+        // reformulate the model via the back-end
+        const { data: reformulatedModel } = await new ModelBuilderControllerApi().reformulateModel(newModel)
+        setModel(reformulatedModel)
     }
 
     // Model item partitioning

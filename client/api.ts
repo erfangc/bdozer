@@ -98,15 +98,15 @@ export interface Cell {
 /**
  * 
  * @export
- * @interface Custom
+ * @interface CustomDriver
  */
-export interface Custom {
+export interface CustomDriver {
     /**
      * 
      * @type {string}
-     * @memberof Custom
+     * @memberof CustomDriver
      */
-    expression?: string;
+    formula?: string;
 }
 /**
  * 
@@ -146,10 +146,10 @@ export interface Driver {
     fixedCost?: FixedCost;
     /**
      * 
-     * @type {Custom}
+     * @type {CustomDriver}
      * @memberof Driver
      */
-    custom?: Custom;
+    customDriver?: CustomDriver;
 }
 
 /**

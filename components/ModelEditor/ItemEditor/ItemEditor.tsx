@@ -79,7 +79,21 @@ export function ItemEditor({ model, item, onChange }: ItemEditorProps) {
 
     function updateDriver(newDriver: Driver) {
         setDriverBeingEdited({ ...driverBeingEdited, ...newDriver })
-        // TODO update the actual Driver
+        const updatedDrivers = item.drivers?.map(driver => {
+            if (driver.name === newDriver.name) {
+                return newDriver
+            } else {
+                return driver
+            }
+        })
+        const updatedItems = model.items?.map(oldItem => {
+            if (oldItem.name === item.name) {
+                return { ...item, drivers: updatedDrivers }
+            } else {
+                return oldItem
+            }
+        })
+        onChange({ ...model, items: updatedItems })
     }
 
     const driverEditor = driverBeingEdited

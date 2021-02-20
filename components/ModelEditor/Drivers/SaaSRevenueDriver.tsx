@@ -6,7 +6,7 @@ import { SecondaryButton } from "../../SecondaryButton";
 import { DriverProps } from "./DriverProps";
 
 export function SaaSRevenueDriver({
-    item, driver, model, onChange, onEdit
+    driver, model, onChange, onEdit
 }: DriverProps) {
 
     const saaSRevenue = driver.saaSRevenue
