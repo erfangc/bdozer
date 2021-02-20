@@ -12,11 +12,11 @@ export function SaaSRevenueDriver({
     const saaSRevenue = driver.saaSRevenue
 
     function deleteDriver() {
-        const updatedItems = model.items?.map(oldItem => {
+        const updatedItems = model.incomeStatementItems?.map(oldItem => {
             const drivers = oldItem.drivers?.filter(oldDriver => oldDriver.name !== driver.name)
             return { ...oldItem, drivers }
         })
-        const updatedModel: Model = { ...model, items: updatedItems }
+        const updatedModel: Model = { ...model, incomeStatementItems: updatedItems }
         onChange(updatedModel)
     }
 

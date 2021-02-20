@@ -22,31 +22,31 @@ export function ItemEditor({ model, item, onChange }: ItemEditorProps) {
 
     function updateDescription(newDescription) {
         // TODO validate the new description
-        const updatedItems = model.items?.map(oldItem => {
+        const updatedItems = model.incomeStatementItems?.map(oldItem => {
             if (oldItem.name === item.name) {
                 return { ...item, description: newDescription }
             } else {
                 return oldItem
             }
         })
-        onChange({ ...model, items: updatedItems })
+        onChange({ ...model, incomeStatementItems: updatedItems })
     }
 
     function updateHistoricalValue(newHistoricalValue) {
         // TODO validate the new description
-        const updatedItems = model.items?.map(oldItem => {
+        const updatedItems = model.incomeStatementItems?.map(oldItem => {
             if (oldItem.name === item.name) {
                 return { ...item, historicalValue: newHistoricalValue }
             } else {
                 return oldItem
             }
         })
-        onChange({ ...model, items: updatedItems })
+        onChange({ ...model, incomeStatementItems: updatedItems })
     }
 
     function deleteItem() {
-        const updatedItems = model.items?.filter(i => i.name !== item.name)
-        onChange({ ...model, items: updatedItems })
+        const updatedItems = model.incomeStatementItems?.filter(i => i.name !== item.name)
+        onChange({ ...model, incomeStatementItems: updatedItems })
     }
 
     //
@@ -80,20 +80,20 @@ export function ItemEditor({ model, item, onChange }: ItemEditorProps) {
     function updateDriver(newDriver: Driver) {
         setDriverBeingEdited({ ...driverBeingEdited, ...newDriver })
         const updatedDrivers = item.drivers?.map(driver => {
-            if (driver.name === newDriver.name) {
+            if (driver.name === newDriver) {
                 return newDriver
             } else {
                 return driver
             }
         })
-        const updatedItems = model.items?.map(oldItem => {
+        const updatedItems = model.incomeStatementItems?.map(oldItem => {
             if (oldItem.name === item.name) {
                 return { ...item, drivers: updatedDrivers }
             } else {
                 return oldItem
             }
         })
-        onChange({ ...model, items: updatedItems })
+        onChange({ ...model, incomeStatementItems: updatedItems })
     }
 
     const driverEditor = driverBeingEdited

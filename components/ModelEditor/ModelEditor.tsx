@@ -1,119 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DriverTypeEnum, Item, Model, ModelBuilderControllerApi } from '../../client';
-import { Revenue, CostOfGoodsSold, GrossProfit, OperatingExpense, OperatingIncome, NonOperatingExpense, InterestExpense, TaxExpense, NetIncome } from '../../constants/Constants';
+import { Revenue, CostOfGoodsSold, GrossProfit, OperatingExpense, OperatingIncome, NonOperatingExpense, InterestExpense, TaxExpense, NetIncome } from '../../constants/ReservedItemNames';
 import { Billboard } from './Billboard';
 import { ItemComponent } from './ItemComponent';
 import { Section } from './Section';
 import { Subtotal } from './Subtotal';
 
-const initialModel: Model = {
-    incomeStatementItems: [
-        {
-            name: "Commercial_Aircraft",
-            description: "Commercial Aircraft",
-            historicalValue: 150_000
-        },
-        {
-            name: "Military_Aircraft",
-            description: "Military Aircraft",
-            historicalValue: 50_000,
-            drivers: [
-                {
-                    name: 'Online_Subscription',
-                    type: DriverTypeEnum.SaaSRevenue,
-                    saaSRevenue: {
-                        averageRevenuePerSubscription: 128,
-                        initialSubscriptions: 150_000,
-                        totalSubscriptionAtTerminalYear: 355_000
-                    }
-                },
-                {
-                    name: 'Some_Other_Driver',
-                    type: DriverTypeEnum.Custom,
-                    customDriver: {
-                        formula: 'period * 12 + 2'
-                    }
-                }
-            ]
-        },
-        {
-            name: "Revenue",
-            description: "Revenue",
-            historicalValue: 100_000
-        },
-        {
-            name: "Commercial_Aircraft_COGS",
-            description: "Commercial Aircraft COGS",
-            historicalValue: 50_000
-        },
-        {
-            name: "Military_Aircraft_COGS",
-            description: "Military Aircraft COGS",
-            historicalValue: 50_000
-        },
-        {
-            name: "CostOfGoodsSold",
-            description: "Cost Of Goods Sold",
-            historicalValue: 100_000
-        },
-        {
-            name: "GrossProfit",
-            description: "Gross Profit",
-            historicalValue: 100_000
-        },
-        {
-            name: "Research_and_Development",
-            description: "Research and Development",
-            historicalValue: 100_000
-        },
-        {
-            name: "General_Administrative",
-            description: "General Administrative",
-            historicalValue: 100_000
-        },
-        {
-            name: "OperatingExpense",
-            description: "Operating Expenses",
-            historicalValue: 100_000
-        },
-        {
-            name: "OperatingIncome",
-            description: "Operating Income",
-            historicalValue: 100_000
-        },
-        {
-            name: "Litigation",
-            description: "Litigation",
-            historicalValue: 100_000
-        },
-        {
-            name: "NonOperatingExpense",
-            description: "Non Operating Expenses",
-            historicalValue: 100_000
-        },
-        {
-            name: "InterestExpense",
-            description: "Interest Expense",
-            historicalValue: 100_000
-        },
-        {
-            name: "TaxExpense",
-            description: "Tax Expense",
-            historicalValue: 100_000
-        },
-        {
-            name: "NetIncome",
-            description: "Net Income",
-            historicalValue: 100_000
-        },
-    ],
-    periods: 5
-}
+const api = new ModelBuilderControllerApi()
 
 export function ModelEditor() {
 
-    const [model, setModel] = useState(initialModel)
-    const items = model.incomeStatementItems ?? [];
+    const [model, setModel] = useState<Model | undefined>()
+
+    useEffect(() => {
+        api.createModel().then(({ data }) => setModel(data))
+    }, []) // load model from backend
+
+    const items = model?.incomeStatementItems ?? [];
 
     async function updateModel(newModel: Model) {
         setModel(newModel)
@@ -154,6 +57,10 @@ export function ModelEditor() {
     const netIncomeIdx = items.findIndex(it => it.name === NetIncome)
     const netIncomeSubtotal = items[netIncomeIdx]
     // End of model item partitioning
+
+    if (model === undefined) {
+        return null
+    }
 
     return (
         <div className="text-blueGray-100 text-lg container mx-auto pt-24 pb-96 lg:flex">
