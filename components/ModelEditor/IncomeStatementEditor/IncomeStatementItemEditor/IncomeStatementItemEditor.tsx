@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Driver, Item, Model } from "../../../client";
-import { DeleteButton } from "../../DeleteButton";
-import { DriverEditor } from "../Drivers/DriverEditor";
-import { Drivers } from "../Drivers/Drivers";
+import { Driver, Item, Model } from "../../../../client";
+import { DeleteButton } from "../../../DeleteButton";
+import { DriverEditor } from "../../Drivers/DriverEditor";
+import { Drivers } from "../../Drivers/Drivers";
 import { ItemDescriptionInput } from "./ItemDescriptionInput";
 import { ItemFY0Input } from "./ItemFY0Input";
 
@@ -16,7 +16,7 @@ interface ItemEditorProps {
  * Shows an editor for the Item but also 
  * can be swapped to edit the Drivers that belong to the Item
  */
-export function ItemEditor({ model, item, onChange }: ItemEditorProps) {
+export function IncomeStatementItemEditor({ model, item, onChange }: ItemEditorProps) {
 
     const [driverBeingEdited, setDriverBeingEdited] = useState<Driver | undefined>(undefined)
 

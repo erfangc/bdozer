@@ -15,7 +15,7 @@ export function IncomeStatementEditor({ model, onChange }: IncomeStatementEditor
     const items = model.incomeStatementItems ?? [];
 
     // ------------------------------
-    // Model item partitioning
+    //  Model item partitioning
     // ------------------------------
 
     const revenueIdx = items.findIndex(it => it.name === Revenue)
@@ -50,7 +50,7 @@ export function IncomeStatementEditor({ model, onChange }: IncomeStatementEditor
     const netIncomeSubtotal = items[netIncomeIdx]
 
     // ------------------------------
-    // End of model item partitioning
+    //  End of model item partitioning
     // ------------------------------
 
     return (

@@ -15,7 +15,9 @@ interface SectionProps {
 export function Section({ items, subtotal, onChange, model }: SectionProps) {
 
     function addItem() {
-        // place the new item 1 line above the subtotal
+        //
+        // Place the new item 1 line above the subtotal
+        //
         const subtotalIdx = model.incomeStatementItems?.findIndex(i => i.name === subtotal.name)
 
         const newItem: Item = {

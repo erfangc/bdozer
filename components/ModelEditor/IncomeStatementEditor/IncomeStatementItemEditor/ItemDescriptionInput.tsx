@@ -1,4 +1,4 @@
-import { Item } from "../../../client";
+import { Item } from "../../../../client";
 
 export function ItemDescriptionInput(props: { item: Item, onChange: (newValue) => void }) {
     const { item, onChange } = props;
