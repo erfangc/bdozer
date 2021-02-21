@@ -87,7 +87,7 @@ export interface Cell {
      * @type {string}
      * @memberof Cell
      */
-    expression?: string;
+    formula?: string;
     /**
      * 
      * @type {Address}
@@ -156,6 +156,12 @@ export interface Driver {
      * @memberof Driver
      */
     customDriver?: CustomDriver;
+    /**
+     * 
+     * @type {number}
+     * @memberof Driver
+     */
+    historicalValue?: number;
 }
 
 /**
@@ -290,7 +296,74 @@ export interface Model {
      * @type {number}
      * @memberof Model
      */
+    riskFreeRate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Model
+     */
+    equityRiskPremium?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Model
+     */
+    terminalFcfMultiple?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Model
+     */
+    terminalFcfGrowthRate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Model
+     */
     periods?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ModelEvaluationOutput
+ */
+export interface ModelEvaluationOutput {
+    /**
+     * 
+     * @type {Array<Cell>}
+     * @memberof ModelEvaluationOutput
+     */
+    cells?: Array<Cell>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelEvaluationOutput
+     */
+    pvOfFcf?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelEvaluationOutput
+     */
+    targetPriceUnderExitMultipleMethod?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelEvaluationOutput
+     */
+    targetPriceUnderPerpetuityMethod?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelEvaluationOutput
+     */
+    pvOfTerminalValueUnderPerpetuityMethod?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelEvaluationOutput
+     */
+    pvOfTerminalValueUnderExitMultipleMethod?: number;
 }
 /**
  * 
@@ -461,7 +534,7 @@ export const ModelBuilderControllerApiFp = function(configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async evaluateModel(model: Model, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Cell>>> {
+        async evaluateModel(model: Model, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelEvaluationOutput>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.evaluateModel(model, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -499,7 +572,7 @@ export const ModelBuilderControllerApiFactory = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        evaluateModel(model: Model, options?: any): AxiosPromise<Array<Cell>> {
+        evaluateModel(model: Model, options?: any): AxiosPromise<ModelEvaluationOutput> {
             return localVarFp.evaluateModel(model, options).then((request) => request(axios, basePath));
         },
         /**
@@ -551,6 +624,100 @@ export class ModelBuilderControllerApi extends BaseAPI {
      */
     public reformulateModel(model: Model, options?: any) {
         return ModelBuilderControllerApiFp(this.configuration).reformulateModel(model, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ModelsControllerApi - axios parameter creator
+ * @export
+ */
+export const ModelsControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        _default: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/models/default`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ModelsControllerApi - functional programming interface
+ * @export
+ */
+export const ModelsControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ModelsControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async _default(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Model>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator._default(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ModelsControllerApi - factory interface
+ * @export
+ */
+export const ModelsControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ModelsControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        _default(options?: any): AxiosPromise<Model> {
+            return localVarFp._default(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ModelsControllerApi - object-oriented interface
+ * @export
+ * @class ModelsControllerApi
+ * @extends {BaseAPI}
+ */
+export class ModelsControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelsControllerApi
+     */
+    public _default(options?: any) {
+        return ModelsControllerApiFp(this.configuration)._default(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

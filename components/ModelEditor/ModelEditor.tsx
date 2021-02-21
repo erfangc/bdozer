@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Model, ModelBuilderControllerApi } from '../../client';
+import { Model, ModelBuilderControllerApi, ModelsControllerApi } from '../../client';
 import { BalanceSheetEditor } from './BalanceSheetEditor/BalanceSheetEditor';
 import { Billboard } from './Billboard';
 import { IncomeStatementEditor } from './IncomeStatementEditor/IncomeStatementEditor';
 
-const api = new ModelBuilderControllerApi()
+const modelBuilderApi = new ModelBuilderControllerApi()
+const modelsApi = new ModelsControllerApi()
 
 export function ModelEditor() {
 
@@ -13,7 +14,7 @@ export function ModelEditor() {
 
     // load the model from the backend
     useEffect(() => {
-        api.createModel().then(({ data }) => setModel(data))
+        modelsApi._default().then(({ data }) => setModel(data))
     }, [])
 
     /**
@@ -23,7 +24,7 @@ export function ModelEditor() {
     async function updateModel(newModel: Model) {
         setModel(newModel)
         // reformulate the model via the back-end
-        const { data: reformulatedModel } = await api.reformulateModel(newModel)
+        const { data: reformulatedModel } = await modelBuilderApi.reformulateModel(newModel)
         setModel(reformulatedModel)
     }
 
