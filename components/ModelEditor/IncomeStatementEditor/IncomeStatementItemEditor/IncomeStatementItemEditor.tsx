@@ -1,7 +1,6 @@
 import React from "react";
 import { Item, ItemTypeEnum, Model } from "../../../../client";
-import { AutoForm } from "../../../AutoForms/AutoForm";
-import { SchemaObject } from "../../../AutoForms/OpenAPITypes";
+import { AutoForm, Schema } from "../../../AutoForms/AutoForm";
 import { DeleteButton } from "../../../DeleteButton";
 import { ItemDescriptionInput } from "./ItemDescriptionInput";
 import { ItemFY0Input } from "./ItemFY0Input";
@@ -117,49 +116,43 @@ function FormulaInput({ item, onSubmit }: { item: Item, onSubmit: (string) => vo
     )
 }
 
-function schemaOf(item: Item): SchemaObject {
+function schemaOf(item: Item): Schema[] {
     switch (item.type) {
         case ItemTypeEnum.SaaSRevenue:
-            return {
-                type: "object",
-                properties: {
-                    totalSubscriptionAtTerminalYear: {
-                        description: "Total Subscription at Terminal Year",
-                        type: "integer",
-                        format: "int32"
-                    },
-                    initialSubscriptions: {
-                        description: 'Initial Subscriptions',
-                        type: "integer",
-                        format: "int32"
-                    },
-                    averageRevenuePerSubscription: {
-                        description: "Average Revenue per Subscription",
-                        type: "number",
-                        format: "double"
-                    }
+            return [
+                {
+                    name: 'totalSubscriptionAtTerminalYear',
+                    label: "Total Subscription at Terminal Year",
+                    type: "integer"
+                },
+                {
+                    name: 'initialSubscriptions',
+                    label: 'Initial Subscriptions',
+                    type: "integer"
+                },
+                {
+                    name: 'averageRevenuePerSubscription',
+                    label: "Average Revenue per Subscription",
+                    type: "number"
                 }
-            }
+            ]
         case ItemTypeEnum.FixedCost:
-            return {
-                type: "object",
-                properties: {
-                    cost: {
-                        "type": "number",
-                        "format": "double"
-                    }
+            return [
+                {
+                    name: "cost",
+                    label: "Cost",
+                    type: "number"
                 }
-            }
+            ]
         case ItemTypeEnum.VariableCost:
-            return {
-                type: "object",
-                properties: {
-                    percentOfRevenue: {
-                        type: "number",
-                        format: "double"
-                    }
+            return [
+                {
+                    label: 'Percent of Revenue',
+                    name: 'percentOfRevenue',
+                    type: "percent",
+                    description: 'Percent Of Revenue'
                 }
-            }
+            ]
         default:
             return null
     }

@@ -1,36 +1,58 @@
 import { useState } from "react";
 import { NumberInput } from "../NumberInput";
 import { PrimaryButton } from "../PrimaryButton";
-import { SchemaObject } from "./OpenAPITypes";
+
+export interface Schema {
+    type: 'number' | 'percent' | 'integer',
+    name: string
+    label?: string
+    description?: string
+    required?: boolean
+}
 
 interface AutoFormProps {
     body: any
-    schema: SchemaObject
+    schema: Schema[]
     onSubmit: (body: any) => void
 }
 
 export function AutoForm({ body, schema, onSubmit }: AutoFormProps) {
 
-    const [formState, setFormState] = useState<any>(body)
+    const dcopy = { ...body }
+
+    schema.map(el => {
+        if (el.type === 'percent') {
+            dcopy[el.name] = dcopy[el.name] * 100
+        }
+    })
+
+    // TODO finish
+    const [formState, setFormState] = useState<any>(dcopy)
+    const [dirty, setDirty] = useState(false)
     const [formErrors, setFormErrors] = useState<any>({})
 
-    function handleSubmit() {
-        onSubmit(formState)
+    function handleSubmit(e) {
+        e?.preventDefault()
+        const newState = { ...formState }
+        schema.map(el => {
+            if (el.type == 'percent') {
+                newState[el.name] = newState[el.name] / 100
+            }
+        })
+        onSubmit(newState)
     }
 
-    const components = Object.keys(schema.properties).map(property => {
-        const { type, description } = schema.properties[property] as SchemaObject
-        const value = formState[property]
+    const components = schema.map(property => {
+        const { type, label, description, name } = property
+        const value = formState[name]
 
         function updatePropertyValue(newValue: any) {
-            setFormState({ ...formState, [property]: newValue })
+            setFormState({ ...formState, [name]: newValue })
         }
 
         let component = null
 
-        const label = description ?? property
-
-        if (type === 'number') {
+        if (type === 'number' || type === 'percent') {
             component = (
                 <NumberInput
                     value={value}
@@ -55,9 +77,11 @@ export function AutoForm({ body, schema, onSubmit }: AutoFormProps) {
 
     return (
         <div className="flex-col space-y-6">
-            {components}
-            <PrimaryButton onClick={handleSubmit}>
-                Confirm
+            <form onSubmit={handleSubmit} className="flex-col space-y-6">
+                {components}
+            </form>
+            <PrimaryButton onClick={handleSubmit} disabled={!dirty}>
+                Confirm &amp; Recalculate
             </PrimaryButton>
         </div>
     )
