@@ -11,7 +11,7 @@ export function TextInput({ label, className, ...props }: TextInputProps) {
             {label ? <label className="mb-2 text-sm">{label}</label> : null}
             <input
                 type="text"
-                className={`outline-none border border-blueGray-500 bg-blueGray-900 text-blueGray-50 rounded-sm px-3 py-2 ${className}`}
+                className={`focus:outline-none border border-blueGray-500 bg-blueGray-900 text-blueGray-50 rounded-sm px-3 py-2 ${className}`}
                 {...props}
             />
         </div>

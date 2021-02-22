@@ -106,7 +106,7 @@ export function IncomeStatementItemEditor({ model, item, onChange }: ItemEditorP
         : null
 
     return (
-        <div className="absolute top-0 left-full ml-4 bg-blueGray-800 px-20 py-8 rounded-lg shadow-md flex-col space-y-8" style={{ minWidth: '425px' }}>
+        <div className="absolute top-0 left-full ml-4 bg-blueGray-800 px-20 py-8 rounded-lg shadow-md flex-col space-y-8">
             {driverEditor ?? itemEditorProper}
         </div>
     )

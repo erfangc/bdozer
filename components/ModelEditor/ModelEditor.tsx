@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Model, ModelBuilderControllerApi, ModelsControllerApi } from '../../client';
+import NumberFormat from 'react-number-format';
+import { Model, ModelBuilderControllerApi, ModelEvaluationOutput, ModelsControllerApi } from '../../client';
 import { BalanceSheetEditor } from './BalanceSheetEditor/BalanceSheetEditor';
 import { Billboard } from './Billboard';
 import { IncomeStatementEditor } from './IncomeStatementEditor/IncomeStatementEditor';
@@ -10,11 +11,17 @@ const modelsApi = new ModelsControllerApi()
 export function ModelEditor() {
 
     const [model, setModel] = useState<Model | undefined>()
+    const [output, setOutput] = useState<ModelEvaluationOutput | undefined>()
     const [activeTab, setActiveTab] = useState<'income statement' | 'balance sheet'>('income statement')
 
     // load the model from the backend
     useEffect(() => {
-        modelsApi._default().then(({ data }) => setModel(data))
+        (async () => {
+            const { data: model } = await modelsApi._default()
+            setModel(model)
+            const { data: output } = await modelBuilderApi.evaluateModel(model)
+            setOutput(output)
+        })()
     }, [])
 
     /**
@@ -24,8 +31,15 @@ export function ModelEditor() {
     async function updateModel(newModel: Model) {
         setModel(newModel)
         // reformulate the model via the back-end
-        const { data: reformulatedModel } = await modelBuilderApi.reformulateModel(newModel)
-        setModel(reformulatedModel)
+        try {
+            const { data: reformulatedModel } = await modelBuilderApi.reformulateModel(newModel)
+            setModel(reformulatedModel)
+            const { data } = await modelBuilderApi.evaluateModel(reformulatedModel)
+            setOutput(data)
+        } catch (e) {
+            console.error(e)
+        }
+
     }
 
     if (model === undefined) {
@@ -34,18 +48,45 @@ export function ModelEditor() {
 
     return (
         <div className="text-blueGray-100 text-lg container mx-auto pt-24 pb-96 lg:flex">
-            <div>
-                <Tabs activeTab={activeTab} onChange={newValue => setActiveTab(newValue)} />
-                {
-                    activeTab === 'income statement'
-                        ? <IncomeStatementEditor model={model} onChange={updateModel} />
-                        : <BalanceSheetEditor model={model} onChange={updateModel} />
-                }
+            <div className="flex-col space-y-16">
+                <div className="flex space-x-4">
+                    <Card value={output?.targetPriceUnderExitMultipleMethod} label="Price (xMultiple)" />
+                    <Card value={output?.targetPriceUnderPerpetuityMethod} label="Price (Growing Perpetuity)" />
+                </div>
+                <div className="flex-col space-y-8">
+                    <Tabs activeTab={activeTab} onChange={newValue => setActiveTab(newValue)} />
+                    {
+                        activeTab === 'income statement'
+                            ? <IncomeStatementEditor model={model} onChange={updateModel} />
+                            : <BalanceSheetEditor model={model} onChange={updateModel} />
+                    }
+                </div>
             </div>
             <Billboard />
         </div>
     )
 }
+
+// Card component
+interface CardProps {
+    label: any
+    value: number
+}
+function Card(props: CardProps) {
+    return (
+        <div className="py-4 px-8 rounded-lg shadow-md bg-blueGray-700 flex-col flex space-y-2">
+            <span className="text-xs">{props.label}</span>
+            <NumberFormat
+                displayType='text'
+                className="text-2xl"
+                value={props.value}
+                decimalScale={1}
+                prefix="$"
+            />
+        </div>
+    )
+}
+// end
 
 interface TabsProps {
     activeTab: 'income statement' | 'balance sheet'
@@ -58,7 +99,7 @@ function Tabs({ activeTab, onChange }: TabsProps) {
     const inactiveClass = "border-b-4 border-blueGray-900 text-lg text-blueGray-400 pb-2 transition ease-linear hover:border-blue-500 hover:text-blueGray-50 focus:outline-none"
 
     return (
-        <div className="flex space-x-4 mb-8">
+        <div className="flex space-x-4">
             <button className={activeTab === 'income statement' ? activeClass : inactiveClass} onClick={() => onChange('income statement')}>
                 Income Statement
             </button>
