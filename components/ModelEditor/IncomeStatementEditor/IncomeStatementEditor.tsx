@@ -55,7 +55,10 @@ export function IncomeStatementEditor({ model, onChange }: IncomeStatementEditor
 
     return (
         <section className="flex flex-col space-y-12">
-            <Section items={revenueItems} subtotal={revenueSubtotal} onChange={onChange} model={model} />
+            <div className="flex-col space-y-4">
+                <div className="flex justify-end"><p className="font-light text-sm mr-10">FY0 Historical Value</p></div>
+                <Section items={revenueItems} subtotal={revenueSubtotal} onChange={onChange} model={model} />
+            </div>
             <Section items={cogsItems} subtotal={cogsSubtotal} onChange={onChange} model={model} />
             <Subtotal subtotal={grossProfitSubtotal} />
             <Section items={operatingExpensesItems} subtotal={operatingExpensesSubtotal} onChange={onChange} model={model} />

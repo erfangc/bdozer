@@ -1,7 +1,7 @@
 export function Billboard() {
     return (
-        <section className="flex-grow flex self-start justify-center">
-            <div className="hidden lg:flex-col lg:flex items-center">
+        <section className="flex-grow flex self-start justify-center h-screen">
+            <div className="hidden lg:flex-col lg:flex items-center justify-center">
                 <Inbox />
                 <p className="text-2xl">
                     Click on items to add/edit drivers

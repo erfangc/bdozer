@@ -27,7 +27,7 @@ export function BalanceSheetItemEditor({ item, model, onChange }: BalanceSheetIt
     }
 
     return (
-        <div className="absolute top-0 left-full ml-4 bg-blueGray-800 px-20 py-8 rounded-lg shadow-md flex-col space-y-8 w-96">
+        <div className="absolute z-10 top-0 left-full ml-4 bg-blueGray-800 px-20 py-8 rounded-lg shadow-md flex-col space-y-8 w-96">
             <p className="text-lg font-bold">{item.description ?? item.name}</p>
             <NumberInput
                 onValueChange={updateHistoricalValue}

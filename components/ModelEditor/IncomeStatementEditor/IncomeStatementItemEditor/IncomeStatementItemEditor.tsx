@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
 import { Item, ItemTypeEnum, Model } from "../../../../client";
 import { AutoForm, Schema } from "../../../AutoForms/AutoForm";
 import { DeleteButton } from "../../../DeleteButton";
+import { FormulaEditor } from "./FormulaEditor";
 import { ItemDescriptionInput } from "./ItemDescriptionInput";
 import { ItemFY0Input } from "./ItemFY0Input";
 
@@ -11,14 +12,89 @@ interface ItemEditorProps {
     onChange: (newModel: Model) => void
 }
 
+interface State {
+
+}
 /**
  * Shows an editor for the Item but also 
  * can be swapped to edit the Drivers that belong to the Item
  */
-export function IncomeStatementItemEditor({ model, item, onChange }: ItemEditorProps) {
 
-    function updateDescription(newDescription) {
-        // TODO validate the new description
+export class IncomeStatementItemEditor extends Component<ItemEditorProps, State> {
+
+    constructor(props) {
+        super(props);
+    }
+
+    schemaOf(item: Item): Schema[] {
+        switch (item.type) {
+            case ItemTypeEnum.SaaSRevenue:
+                return [
+                    {
+                        name: 'totalSubscriptionAtTerminalYear',
+                        label: "Total Subscription at Terminal Year",
+                        type: "integer"
+                    },
+                    {
+                        name: 'initialSubscriptions',
+                        label: 'Initial Subscriptions',
+                        type: "integer"
+                    },
+                    {
+                        name: 'averageRevenuePerSubscription',
+                        label: "Average Revenue per Subscription",
+                        type: "number"
+                    }
+                ]
+            case ItemTypeEnum.FixedCost:
+                return [
+                    {
+                        name: "cost",
+                        label: "Cost",
+                        type: "number"
+                    }
+                ]
+            case ItemTypeEnum.VariableCost:
+                return [
+                    {
+                        label: 'Percent of Revenue',
+                        name: 'percentOfRevenue',
+                        type: "percent",
+                        description: 'Percent Of Revenue'
+                    }
+                ]
+            default:
+                return null
+        }
+    }
+
+    bodyOf(item: Item): any {
+        switch (item.type) {
+            case ItemTypeEnum.SaaSRevenue:
+                return item.saaSRevenue
+            case ItemTypeEnum.VariableCost:
+                return item.variableCost
+            case ItemTypeEnum.FixedCost:
+                return item.fixedCost
+            default:
+                return {}
+        }
+    }
+
+    merge(item: Item, property: any): Item {
+        switch (item.type) {
+            case ItemTypeEnum.SaaSRevenue:
+                return { ...item, saaSRevenue: { ...property } }
+            case ItemTypeEnum.VariableCost:
+                return { ...item, variableCost: { ...property } }
+            case ItemTypeEnum.FixedCost:
+                return { ...item, fixedCost: { ...property } }
+            default:
+                return {}
+        }
+    }
+    updateDescription(newDescription) {
+        const { model, item, onChange } = this.props;
         const updatedItems = model.incomeStatementItems?.map(oldItem => {
             if (oldItem.name === item.name) {
                 return { ...item, description: newDescription }
@@ -28,9 +104,8 @@ export function IncomeStatementItemEditor({ model, item, onChange }: ItemEditorP
         })
         onChange({ ...model, incomeStatementItems: updatedItems })
     }
-
-    function updateHistoricalValue(newHistoricalValue) {
-        // TODO validate the new description
+    updateHistoricalValue(newHistoricalValue) {
+        const { model, item, onChange } = this.props;
         const updatedItems = model.incomeStatementItems?.map(oldItem => {
             if (oldItem.name === item.name) {
                 return { ...item, historicalValue: newHistoricalValue }
@@ -41,8 +116,9 @@ export function IncomeStatementItemEditor({ model, item, onChange }: ItemEditorP
         onChange({ ...model, incomeStatementItems: updatedItems })
     }
 
-    function updateProperty(newValue: any) {
-        const newItem = merge(item, newValue)
+    updateProperty(newValue: any) {
+        const { model, item, onChange } = this.props;
+        const newItem = this.merge(item, newValue)
         const updatedItems = model.incomeStatementItems?.map(oldItem => {
             if (oldItem.name === item.name) {
                 return newItem
@@ -53,12 +129,14 @@ export function IncomeStatementItemEditor({ model, item, onChange }: ItemEditorP
         onChange({ ...model, incomeStatementItems: updatedItems })
     }
 
-    function deleteItem() {
+    deleteItem() {
+        const { model, item, onChange } = this.props;
         const updatedItems = model.incomeStatementItems?.filter(i => i.name !== item.name)
         onChange({ ...model, incomeStatementItems: updatedItems })
     }
 
-    function updateFormula(newFormula: string) {
+    updateFormula(newFormula: string) {
+        const { model, item, onChange } = this.props;
         const newItem = { ...item, expression: newFormula }
         const updatedItems = model.incomeStatementItems?.map(oldItem => {
             if (oldItem.name === item.name) {
@@ -70,116 +148,29 @@ export function IncomeStatementItemEditor({ model, item, onChange }: ItemEditorP
         onChange({ ...model, incomeStatementItems: updatedItems })
     }
 
-    return (
-        <div className="absolute top-0 left-full ml-4 bg-blueGray-800 px-20 py-8 rounded-lg shadow-md flex-col space-y-8">
-            <div className="flex-col space-y-4">
-                <ItemDescriptionInput item={item} onChange={updateDescription} />
-                <ItemFY0Input item={item} onChange={updateHistoricalValue} />
+    render() {
+        const { model, item, onChange } = this.props;
+        return (
+            <div
+                className="absolute top-0 z-10 left-full ml-4 bg-blueGray-800 px-20 py-8 rounded-lg shadow-md flex-col space-y-8"
+            >
+                <div className="flex-col space-y-4">
+                    <ItemDescriptionInput item={item} onChange={this.updateDescription.bind(this)} />
+                    <ItemFY0Input item={item} onChange={this.updateHistoricalValue.bind(this)} />
+                </div>
+                {
+                    item.type === ItemTypeEnum.Custom
+                        ?
+                        <FormulaEditor item={item} onSubmit={this.updateFormula.bind(this)} />
+                        :
+                        <AutoForm
+                            schema={this.schemaOf(item)}
+                            body={this.bodyOf(item)}
+                            onSubmit={this.updateProperty.bind(this)}
+                        />
+                }
+                <DeleteButton onClick={this.deleteItem.bind(this)}>Delete Item</DeleteButton>
             </div>
-            {
-                item.type === ItemTypeEnum.Custom
-                    ?
-                    <FormulaInput item={item} onSubmit={updateFormula} />
-                    :
-                    <AutoForm
-                        schema={schemaOf(item)}
-                        body={bodyOf(item)}
-                        onSubmit={updateProperty}
-                    />
-            }
-            <DeleteButton onClick={deleteItem}>Delete Item</DeleteButton>
-        </div>
-    )
-}
-
-function FormulaInput({ item, onSubmit }: { item: Item, onSubmit: (string) => void }) {
-
-    function handleChange({ currentTarget: { value } }: React.ChangeEvent<HTMLTextAreaElement>) {
-        onSubmit(value)
-    }
-
-    return (
-        <div className="flex-col space-y-4">
-            <p className="flex items-center">
-                <span>Formula</span>
-                <span className="ml-4 h-px border-t border-blueGray-300 flex-grow"></span>
-            </p>
-            <textarea
-                name="expression"
-                rows={3}
-                value={item.expression}
-                onChange={handleChange}
-                className="w-full rounded-sm bg-blueGray-900 border-blueGray-500 px-4 py-4"
-                placeholder="Enter formula"
-            />
-        </div>
-    )
-}
-
-function schemaOf(item: Item): Schema[] {
-    switch (item.type) {
-        case ItemTypeEnum.SaaSRevenue:
-            return [
-                {
-                    name: 'totalSubscriptionAtTerminalYear',
-                    label: "Total Subscription at Terminal Year",
-                    type: "integer"
-                },
-                {
-                    name: 'initialSubscriptions',
-                    label: 'Initial Subscriptions',
-                    type: "integer"
-                },
-                {
-                    name: 'averageRevenuePerSubscription',
-                    label: "Average Revenue per Subscription",
-                    type: "number"
-                }
-            ]
-        case ItemTypeEnum.FixedCost:
-            return [
-                {
-                    name: "cost",
-                    label: "Cost",
-                    type: "number"
-                }
-            ]
-        case ItemTypeEnum.VariableCost:
-            return [
-                {
-                    label: 'Percent of Revenue',
-                    name: 'percentOfRevenue',
-                    type: "percent",
-                    description: 'Percent Of Revenue'
-                }
-            ]
-        default:
-            return null
-    }
-}
-
-function bodyOf(item: Item): any {
-    switch (item.type) {
-        case ItemTypeEnum.SaaSRevenue:
-            return item.saaSRevenue
-        case ItemTypeEnum.VariableCost:
-            return item.variableCost
-        case ItemTypeEnum.FixedCost:
-            return item.fixedCost
-        default:
-            return {}
-    }
-}
-
-function merge(item: Item, property: any): Item {
-    switch (item.type) {
-        case ItemTypeEnum.SaaSRevenue:
-            return { ...item, saaSRevenue: { ...property } }
-        case ItemTypeEnum.VariableCost:
-            return { ...item, variableCost: { ...property } }
-        case ItemTypeEnum.FixedCost:
-            return { ...item, fixedCost: { ...property } }
-        default:
-            return {}
+        )
     }
 }

@@ -16,6 +16,7 @@ export function BalanceSheetEditor({ model, onChange }: BalanceSheetEditorProps)
             {
                 balanceSheetItems.map(item =>
                     <BalanceSheetItemComponent
+                        key={item.name}
                         model={model}
                         onChange={onChange}
                         item={item}

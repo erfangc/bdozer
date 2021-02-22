@@ -18,17 +18,15 @@ interface AutoFormProps {
 
 export function AutoForm({ body, schema, onSubmit }: AutoFormProps) {
 
-    const dcopy = { ...body }
-
+    const defensiveCopy = { ...body }
     schema.map(el => {
         if (el.type === 'percent') {
-            dcopy[el.name] = dcopy[el.name] * 100
+            defensiveCopy[el.name] = defensiveCopy[el.name] * 100
         }
     })
 
-    // TODO finish
-    const [formState, setFormState] = useState<any>(dcopy)
-    const [dirty, setDirty] = useState(false)
+    // TODO finish this part
+    const [formState, setFormState] = useState<any>(defensiveCopy)
     const [formErrors, setFormErrors] = useState<any>({})
 
     function handleSubmit(e) {
@@ -55,6 +53,7 @@ export function AutoForm({ body, schema, onSubmit }: AutoFormProps) {
         if (type === 'number' || type === 'percent') {
             component = (
                 <NumberInput
+                    key={name}
                     value={value}
                     label={label}
                     onValueChange={({ floatValue }) => updatePropertyValue(floatValue)}
@@ -63,6 +62,7 @@ export function AutoForm({ body, schema, onSubmit }: AutoFormProps) {
         } else if (type === 'integer') {
             component = (
                 <NumberInput
+                    key={name}
                     value={value}
                     label={label}
                     onValueChange={({ floatValue }) => updatePropertyValue(floatValue)}
@@ -80,7 +80,7 @@ export function AutoForm({ body, schema, onSubmit }: AutoFormProps) {
             <form onSubmit={handleSubmit} className="flex-col space-y-6">
                 {components}
             </form>
-            <PrimaryButton onClick={handleSubmit} disabled={!dirty}>
+            <PrimaryButton onClick={handleSubmit}>
                 Confirm &amp; Recalculate
             </PrimaryButton>
         </div>

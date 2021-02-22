@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import NumberFormat from 'react-number-format';
 import { Model, ModelBuilderControllerApi, ModelEvaluationOutput, ModelsControllerApi } from '../../client';
+import { Card } from '../Card';
+import { OutputDash } from '../Output/OutputDash';
 import { BalanceSheetEditor } from './BalanceSheetEditor/BalanceSheetEditor';
-import { Billboard } from './Billboard';
 import { IncomeStatementEditor } from './IncomeStatementEditor/IncomeStatementEditor';
 
 const modelBuilderApi = new ModelBuilderControllerApi()
@@ -49,10 +49,6 @@ export function ModelEditor() {
     return (
         <div className="text-blueGray-100 text-lg container mx-auto pt-24 pb-96 lg:flex">
             <div className="flex-col space-y-16">
-                <div className="flex space-x-4">
-                    <Card value={output?.targetPriceUnderExitMultipleMethod} label="Price (xMultiple)" />
-                    <Card value={output?.targetPriceUnderPerpetuityMethod} label="Price (Growing Perpetuity)" />
-                </div>
                 <div className="flex-col space-y-8">
                     <Tabs activeTab={activeTab} onChange={newValue => setActiveTab(newValue)} />
                     {
@@ -62,31 +58,11 @@ export function ModelEditor() {
                     }
                 </div>
             </div>
-            <Billboard />
+            {/* <Billboard /> */}
+            <OutputDash model={model} output={output} />
         </div>
     )
 }
-
-// Card component
-interface CardProps {
-    label: any
-    value: number
-}
-function Card(props: CardProps) {
-    return (
-        <div className="py-4 px-8 rounded-lg shadow-md bg-blueGray-700 flex-col flex space-y-2">
-            <span className="text-xs">{props.label}</span>
-            <NumberFormat
-                displayType='text'
-                className="text-2xl"
-                value={props.value}
-                decimalScale={1}
-                prefix="$"
-            />
-        </div>
-    )
-}
-// end
 
 interface TabsProps {
     activeTab: 'income statement' | 'balance sheet'
