@@ -66,12 +66,6 @@ export interface Cell {
     name?: string;
     /**
      * 
-     * @type {Driver}
-     * @memberof Cell
-     */
-    driver?: Driver;
-    /**
-     * 
      * @type {Item}
      * @memberof Cell
      */
@@ -101,80 +95,6 @@ export interface Cell {
      */
     dependentCellNames?: Array<string>;
 }
-/**
- * 
- * @export
- * @interface CustomDriver
- */
-export interface CustomDriver {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomDriver
-     */
-    formula?: string;
-}
-/**
- * 
- * @export
- * @interface Driver
- */
-export interface Driver {
-    /**
-     * 
-     * @type {string}
-     * @memberof Driver
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Driver
-     */
-    type?: DriverTypeEnum;
-    /**
-     * 
-     * @type {SaaSRevenue}
-     * @memberof Driver
-     */
-    saaSRevenue?: SaaSRevenue;
-    /**
-     * 
-     * @type {VariableCost}
-     * @memberof Driver
-     */
-    variableCost?: VariableCost;
-    /**
-     * 
-     * @type {FixedCost}
-     * @memberof Driver
-     */
-    fixedCost?: FixedCost;
-    /**
-     * 
-     * @type {CustomDriver}
-     * @memberof Driver
-     */
-    customDriver?: CustomDriver;
-    /**
-     * 
-     * @type {number}
-     * @memberof Driver
-     */
-    historicalValue?: number;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DriverTypeEnum {
-    SaaSRevenue = 'SaaSRevenue',
-    Custom = 'Custom',
-    VariableCost = 'VariableCost',
-    FixedCost = 'FixedCost'
-}
-
 /**
  * 
  * @export
@@ -214,12 +134,6 @@ export interface Item {
     historicalValue?: number;
     /**
      * 
-     * @type {Array<Driver>}
-     * @memberof Item
-     */
-    drivers?: Array<Driver>;
-    /**
-     * 
      * @type {string}
      * @memberof Item
      */
@@ -230,7 +144,43 @@ export interface Item {
      * @memberof Item
      */
     segment?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Item
+     */
+    type?: ItemTypeEnum;
+    /**
+     * 
+     * @type {SaaSRevenue}
+     * @memberof Item
+     */
+    saaSRevenue?: SaaSRevenue;
+    /**
+     * 
+     * @type {VariableCost}
+     * @memberof Item
+     */
+    variableCost?: VariableCost;
+    /**
+     * 
+     * @type {FixedCost}
+     * @memberof Item
+     */
+    fixedCost?: FixedCost;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ItemTypeEnum {
+    SaaSRevenue = 'SaaSRevenue',
+    Custom = 'Custom',
+    VariableCost = 'VariableCost',
+    FixedCost = 'FixedCost'
+}
+
 /**
  * 
  * @export

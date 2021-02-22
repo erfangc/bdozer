@@ -12,7 +12,8 @@ interface ItemComponentProps {
 
 export function ItemComponent({ item, onChange, model }: ItemComponentProps) {
 
-    const checked = item.drivers?.length > 0 || item.expression
+    // TODO fix this
+    const checked = item.expression || item.fixedCost || item.saaSRevenue || item.variableCost
     const [open, setOpen] = useState(false)
 
     return (

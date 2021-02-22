@@ -1,5 +1,4 @@
 import React from "react"
-import NumberFormat, { NumberFormatProps } from "react-number-format"
 
 interface TextInputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
     label?: string
