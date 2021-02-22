@@ -148,8 +148,21 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
         onChange({ ...model, incomeStatementItems: updatedItems })
     }
 
-    render() {
+    updateType(newType: ItemTypeEnum) {
         const { model, item, onChange } = this.props;
+        const newItem: Item = { ...item, type: newType }
+        const updatedItems = model.incomeStatementItems?.map(oldItem => {
+            if (oldItem.name === item.name) {
+                return newItem
+            } else {
+                return oldItem
+            }
+        })
+        onChange({ ...model, incomeStatementItems: updatedItems })
+    }
+
+    render() {
+        const { item } = this.props;
         return (
             <div
                 className="absolute top-0 z-10 left-full ml-4 bg-blueGray-800 px-20 py-8 rounded-lg shadow-md flex-col space-y-8"
@@ -158,6 +171,12 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
                     <ItemDescriptionInput item={item} onChange={this.updateDescription.bind(this)} />
                     <ItemFY0Input item={item} onChange={this.updateHistoricalValue.bind(this)} />
                 </div>
+                <Select label="Item Type" value={item.type} onChange={({ currentTarget: { value } }) => this.updateType(value as any)}>
+                    <option value={ItemTypeEnum.Custom}>Custom</option>
+                    <option value={ItemTypeEnum.SaaSRevenue}>SaaS Revenue</option>
+                    <option value={ItemTypeEnum.VariableCost}>Variable Cost</option>
+                    <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
+                </Select>
                 {
                     item.type === ItemTypeEnum.Custom
                         ?
@@ -173,4 +192,24 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
             </div>
         )
     }
+}
+
+interface SelectProps extends React.DetailedHTMLProps<React.SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> {
+    label?: string
+    caption?: string
+}
+
+function Select({ label, caption, className, children, ...props }: SelectProps) {
+    return (
+        <div className="flex-col space-y-4 flex">
+            {label ? <label className="text-sm">{label}</label> : null}
+            <select
+                className={`focus:outline-none border appearance-none border-blueGray-500 bg-blueGray-900 text-blueGray-50 rounded-sm px-3 py-2 ${className}`}
+                {...props}
+            >
+                {children}
+            </select>
+            {caption ? <p className="text-xs text-blueGray-600">{caption}</p> : null}
+        </div>
+    )
 }
