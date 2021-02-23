@@ -2,11 +2,9 @@ import { Item, Model, ModelEvaluationOutput } from "../../client";
 
 import React, { useState } from 'react'
 import HighchartsReact from 'highcharts-react-official'
-import { CostOfGoodsSold, FreeCashFlow, GrossProfit, NetIncome, Revenue } from "../../constants/ReservedItemNames";
 import { Card } from "../Card";
 import { highcharts } from "../../highcharts";
 import { GhostButton, SmallGhostButton } from "../GhostButton";
-import { Select } from "../Select";
 
 interface OutputDashProps {
     output: ModelEvaluationOutput
