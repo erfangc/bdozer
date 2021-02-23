@@ -30,7 +30,7 @@ export function ItemChooser(
     }
 
     return (
-        <div className="relative self-end flex" style={{ zIndex: 9 }}>
+        <div className="relative self-end flex" style={{ zIndex: 1 }}>
             <SmallGhostButton onClick={() => setOpen(!open)}>
                 Items to Display
             </SmallGhostButton>

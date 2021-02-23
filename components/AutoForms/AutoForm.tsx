@@ -14,9 +14,10 @@ interface AutoFormProps {
     body: any
     schema: Schema[]
     onSubmit: (body: any) => void
+    useGrid?: boolean
 }
 
-export function AutoForm({ body, schema, onSubmit }: AutoFormProps) {
+export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
 
     const defensiveCopy = { ...body }
     schema.map(el => {
@@ -77,7 +78,7 @@ export function AutoForm({ body, schema, onSubmit }: AutoFormProps) {
 
     return (
         <div className="flex-col space-y-6">
-            <form onSubmit={handleSubmit} className="flex-col space-y-6">
+            <form onSubmit={handleSubmit} className={useGrid ? "grid grid-flow-col grid-cols-3 grid-rows-3 gap-4" : "flex-col space-y-6"}>
                 {components}
             </form>
             <PrimaryButton onClick={handleSubmit}>

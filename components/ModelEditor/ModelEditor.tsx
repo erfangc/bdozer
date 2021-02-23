@@ -59,7 +59,7 @@ export function ModelEditor() {
                     }
                 </div>
             </div>
-            <OutputDash model={model} output={output} />
+            <OutputDash model={model} output={output} onChange={updateModel} />
         </div>
     )
 }
