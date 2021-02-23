@@ -13,7 +13,7 @@ export function ItemFY0Input(props: { item: Item, onChange: (newValue) => void }
                 decimalScale={1}
                 name={item.name}
                 value={value}
-                placeholder="ex: Commercial Aircraft"
+                placeholder="ex: 100,000"
                 onValueChange={({ floatValue }) => setValue(floatValue)}
                 onBlur={() => onChange(value)}
                 className="border border-blueGray-500 bg-blueGray-900 text-blueGray-50 rounded-sm px-3 py-2"
