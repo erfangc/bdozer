@@ -42,7 +42,7 @@ export class ItemComponent extends Component<ItemComponentProps, State> {
         const { item, onChange, model } = this.props
         const { editorOpen } = this.state
         // TODO fix this
-        const checked = item.expression || item.fixedCost || item.saaSRevenue || item.variableCost
+        const checked = item.expression || item.fixedCost || item.subscriptionRevenue || item.variableCost
         return (
             <div className="flex items-center w-96 justify-between relative" ref={node => { this.node = node }}>
                 <span>{item.description ?? item.name}</span>

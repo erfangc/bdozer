@@ -12,19 +12,16 @@ interface BalanceSheetItemComponentProps {
 export function BalanceSheetItemComponent({ model, item, onChange }: BalanceSheetItemComponentProps) {
     const [open, setOpen] = useState(false)
     return (
-        <div className="flex items-center w-96 justify-between relative">
+        <p className="text-lg text-blueGray-400 flex w-96 font-bold justify-between">
             <span>{item.description ?? item.name}</span>
-            <span
-                className="flex items-center space-x-2 cursor-pointer"
-                onClick={() => setOpen(!open)}
-            >
+            <span className="flex">
                 <NumberFormat
-                    className="hover:text-blueGray-400"
+                    displayType="text"
+                    value={item.historicalValue}
                     thousandSeparator
                     decimalScale={0}
-                    displayType='text'
-                    value={item.historicalValue}
                 />
+                <span className="w-10"></span>
             </span>
             {
                 open
@@ -35,6 +32,6 @@ export function BalanceSheetItemComponent({ model, item, onChange }: BalanceShee
                     />
                     : null
             }
-        </div>
+        </p>
     )
 }

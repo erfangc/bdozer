@@ -152,10 +152,10 @@ export interface Item {
     type?: ItemTypeEnum;
     /**
      * 
-     * @type {SaaSRevenue}
+     * @type {SubscriptionRevenue}
      * @memberof Item
      */
-    saaSRevenue?: SaaSRevenue;
+    subscriptionRevenue?: SubscriptionRevenue;
     /**
      * 
      * @type {VariableCost}
@@ -175,7 +175,7 @@ export interface Item {
     * @enum {string}
     */
 export enum ItemTypeEnum {
-    SaaSRevenue = 'SaaSRevenue',
+    SubscriptionRevenue = 'SubscriptionRevenue',
     Custom = 'Custom',
     VariableCost = 'VariableCost',
     FixedCost = 'FixedCost'
@@ -318,25 +318,25 @@ export interface ModelEvaluationOutput {
 /**
  * 
  * @export
- * @interface SaaSRevenue
+ * @interface SubscriptionRevenue
  */
-export interface SaaSRevenue {
+export interface SubscriptionRevenue {
     /**
      * 
      * @type {number}
-     * @memberof SaaSRevenue
+     * @memberof SubscriptionRevenue
      */
     totalSubscriptionAtTerminalYear?: number;
     /**
      * 
      * @type {number}
-     * @memberof SaaSRevenue
+     * @memberof SubscriptionRevenue
      */
     initialSubscriptions?: number;
     /**
      * 
      * @type {number}
-     * @memberof SaaSRevenue
+     * @memberof SubscriptionRevenue
      */
     averageRevenuePerSubscription?: number;
 }

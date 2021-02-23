@@ -29,7 +29,7 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
 
     schemaOf(item: Item): Schema[] {
         switch (item.type) {
-            case ItemTypeEnum.SaaSRevenue:
+            case ItemTypeEnum.SubscriptionRevenue:
                 return [
                     {
                         name: 'totalSubscriptionAtTerminalYear',
@@ -71,8 +71,8 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
 
     bodyOf(item: Item): any {
         switch (item.type) {
-            case ItemTypeEnum.SaaSRevenue:
-                return item.saaSRevenue
+            case ItemTypeEnum.SubscriptionRevenue:
+                return item.subscriptionRevenue
             case ItemTypeEnum.VariableCost:
                 return item.variableCost
             case ItemTypeEnum.FixedCost:
@@ -84,8 +84,8 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
 
     merge(item: Item, property: any): Item {
         switch (item.type) {
-            case ItemTypeEnum.SaaSRevenue:
-                return { ...item, saaSRevenue: { ...property } }
+            case ItemTypeEnum.SubscriptionRevenue:
+                return { ...item, subscriptionRevenue: { ...property } }
             case ItemTypeEnum.VariableCost:
                 return { ...item, variableCost: { ...property } }
             case ItemTypeEnum.FixedCost:
@@ -174,7 +174,7 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
                 </div>
                 <Select label="Item Type" value={item.type} onChange={({ currentTarget: { value } }) => this.updateType(value as any)}>
                     <option value={ItemTypeEnum.Custom}>Custom</option>
-                    <option value={ItemTypeEnum.SaaSRevenue}>SaaS Revenue</option>
+                    <option value={ItemTypeEnum.SubscriptionRevenue}>Subscription Revenue</option>
                     <option value={ItemTypeEnum.VariableCost}>Variable Cost</option>
                     <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
                 </Select>
