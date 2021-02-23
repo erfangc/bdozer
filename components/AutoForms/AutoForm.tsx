@@ -26,7 +26,7 @@ export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
         }
     })
 
-    // TODO finish this part
+    // TODO finish validation of errors
     const [formState, setFormState] = useState<any>(defensiveCopy)
     const [formErrors, setFormErrors] = useState<any>({})
 
@@ -73,7 +73,6 @@ export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
         }
 
         return component
-
     });
 
     return (
@@ -82,7 +81,7 @@ export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
                 onSubmit={handleSubmit}
                 className={
                     useGrid
-                        ? "grid grid-flow-col grid-cols-2 grid-rows-4 gap-4"
+                        ? "grid grid-flow-col grid-cols-3 grid-rows-4 gap-4"
                         : "flex-col space-y-6"
                 }
             >
