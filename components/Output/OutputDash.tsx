@@ -80,7 +80,7 @@ export function OutputDash({ model, output }: OutputDashProps) {
                     </div>
                     <ItemChooser
                         chosenItems={chosenItems}
-                        availableItems={model.incomeStatementItems}
+                        model={model}
                         onChange={newChosenItems => setChosenItems(newChosenItems)}
                     />
                 </div>
@@ -103,11 +103,19 @@ export function OutputDash({ model, output }: OutputDashProps) {
 
 interface ItemChooserProps {
     chosenItems: Item[]
-    availableItems: Item[]
+    model: Model
     onChange: (chosenItems: Item[]) => void
 }
 
-function ItemChooser({ chosenItems, availableItems, onChange }: ItemChooserProps) {
+function ItemChooser(
+    {
+        chosenItems,
+        model: {
+            incomeStatementItems,
+            otherItems
+        },
+        onChange
+    }: ItemChooserProps) {
     const [open, setOpen] = useState(false)
 
     function select(item: Item) {
@@ -129,8 +137,27 @@ function ItemChooser({ chosenItems, availableItems, onChange }: ItemChooserProps
                 open
                     ?
                     <div className="p-6 bg-blueGray-700 rounded-lg shadow-lg mt-2 inline-block absolute top-full -left-1/2 whitespace-nowrap">
+                        <p className="text-sm font-bold block mb-4 border-b border-blueGray-400">
+                            Income Statement
+                        </p>
                         {
-                            availableItems.map(item =>
+                            incomeStatementItems.map(item =>
+                                <div key={item.name} className="text-sm mb-1">
+                                    <input
+                                        type="checkbox"
+                                        name={item.name}
+                                        checked={chosenItems.includes(item)}
+                                        onChange={() => select(item)}
+                                    />
+                                    <label className="ml-2">{item.description ?? item.name}</label>
+                                </div>
+                            )
+                        }
+                        <p className="text-sm font-bold block mt-6 mb-4 border-b border-blueGray-400">
+                            Other Items
+                        </p>
+                        {
+                            otherItems.map(item =>
                                 <div key={item.name} className="text-sm mb-1">
                                     <input
                                         type="checkbox"
