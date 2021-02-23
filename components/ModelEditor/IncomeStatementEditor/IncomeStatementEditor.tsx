@@ -1,8 +1,8 @@
 import React from "react";
 import { Model, Item } from "../../../client";
 import { Revenue, CostOfGoodsSold, GrossProfit, OperatingExpense, OperatingIncome, NonOperatingExpense, InterestExpense, TaxExpense, NetIncome } from "../../../constants/ReservedItemNames";
-import { ItemComponent } from "./ItemComponent";
-import { Section } from "./Section";
+import { IncomeStatementItemComponent } from "./IncomeStatementItemComponent";
+import { IncomeStatementSection } from "./Section";
 import { Subtotal } from "./Subtotal";
 
 interface IncomeStatementEditorProps {
@@ -57,16 +57,16 @@ export function IncomeStatementEditor({ model, onChange }: IncomeStatementEditor
         <section className="flex flex-col space-y-12">
             <div className="flex-col space-y-4">
                 <div className="flex justify-end"><p className="font-light text-sm mr-10">FY0 Historical Value</p></div>
-                <Section items={revenueItems} subtotal={revenueSubtotal} onChange={onChange} model={model} />
+                <IncomeStatementSection items={revenueItems} subtotal={revenueSubtotal} onChange={onChange} model={model} />
             </div>
-            <Section items={cogsItems} subtotal={cogsSubtotal} onChange={onChange} model={model} />
+            <IncomeStatementSection items={cogsItems} subtotal={cogsSubtotal} onChange={onChange} model={model} />
             <Subtotal subtotal={grossProfitSubtotal} />
-            <Section items={operatingExpensesItems} subtotal={operatingExpensesSubtotal} onChange={onChange} model={model} />
+            <IncomeStatementSection items={operatingExpensesItems} subtotal={operatingExpensesSubtotal} onChange={onChange} model={model} />
             <Subtotal subtotal={operatingIncomeSubtotal} />
-            <Section items={nonOperatingExpensesItems} subtotal={nonOperatingExpensesSubtotal} onChange={onChange} model={model} />
+            <IncomeStatementSection items={nonOperatingExpensesItems} subtotal={nonOperatingExpensesSubtotal} onChange={onChange} model={model} />
             <div>
-                <ItemComponent item={interestExpenseSubtotal} onChange={onChange} model={model} />
-                <ItemComponent item={taxExpenseSubtotal} onChange={onChange} model={model} />
+                <IncomeStatementItemComponent item={interestExpenseSubtotal} onChange={onChange} model={model} />
+                <IncomeStatementItemComponent item={taxExpenseSubtotal} onChange={onChange} model={model} />
             </div>
             <Subtotal subtotal={netIncomeSubtotal} />
         </section>

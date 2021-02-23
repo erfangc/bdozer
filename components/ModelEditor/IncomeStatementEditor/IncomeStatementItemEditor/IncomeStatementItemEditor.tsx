@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Item, ItemTypeEnum, Model } from "../../../../client";
 import { AutoForm, Schema } from "../../../AutoForms/AutoForm";
+import { bodyOf, merge, schemaOf } from "../../../AutoForms/Schemas";
 import { DeleteButton } from "../../../DeleteButton";
 import { Select } from "../../../Select";
 import { FormulaEditor } from "./FormulaEditor";
@@ -27,73 +28,6 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
         super(props);
     }
 
-    schemaOf(item: Item): Schema[] {
-        switch (item.type) {
-            case ItemTypeEnum.SubscriptionRevenue:
-                return [
-                    {
-                        name: 'totalSubscriptionAtTerminalYear',
-                        label: "Total Subscription at Terminal Year",
-                        type: "integer"
-                    },
-                    {
-                        name: 'initialSubscriptions',
-                        label: 'Initial Subscriptions',
-                        type: "integer"
-                    },
-                    {
-                        name: 'averageRevenuePerSubscription',
-                        label: "Average Revenue per Subscription",
-                        type: "number"
-                    }
-                ]
-            case ItemTypeEnum.FixedCost:
-                return [
-                    {
-                        name: "cost",
-                        label: "Cost",
-                        type: "number"
-                    }
-                ]
-            case ItemTypeEnum.VariableCost:
-                return [
-                    {
-                        label: 'Percent of Revenue',
-                        name: 'percentOfRevenue',
-                        type: "percent",
-                        description: 'Percent Of Revenue'
-                    }
-                ]
-            default:
-                return null
-        }
-    }
-
-    bodyOf(item: Item): any {
-        switch (item.type) {
-            case ItemTypeEnum.SubscriptionRevenue:
-                return item.subscriptionRevenue
-            case ItemTypeEnum.VariableCost:
-                return item.variableCost
-            case ItemTypeEnum.FixedCost:
-                return item.fixedCost
-            default:
-                return {}
-        }
-    }
-
-    merge(item: Item, property: any): Item {
-        switch (item.type) {
-            case ItemTypeEnum.SubscriptionRevenue:
-                return { ...item, subscriptionRevenue: { ...property } }
-            case ItemTypeEnum.VariableCost:
-                return { ...item, variableCost: { ...property } }
-            case ItemTypeEnum.FixedCost:
-                return { ...item, fixedCost: { ...property } }
-            default:
-                return {}
-        }
-    }
     updateDescription(newDescription) {
         const { model, item, onChange } = this.props;
         const updatedItems = model.incomeStatementItems?.map(oldItem => {
@@ -105,6 +39,7 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
         })
         onChange({ ...model, incomeStatementItems: updatedItems })
     }
+
     updateHistoricalValue(newHistoricalValue) {
         const { model, item, onChange } = this.props;
         const updatedItems = model.incomeStatementItems?.map(oldItem => {
@@ -119,7 +54,7 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
 
     updateProperty(newValue: any) {
         const { model, item, onChange } = this.props;
-        const newItem = this.merge(item, newValue)
+        const newItem = merge(item, newValue)
         const updatedItems = model.incomeStatementItems?.map(oldItem => {
             if (oldItem.name === item.name) {
                 return newItem
@@ -175,7 +110,8 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
                 <Select label="Item Type" value={item.type} onChange={({ currentTarget: { value } }) => this.updateType(value as any)}>
                     <option value={ItemTypeEnum.Custom}>Custom</option>
                     <option value={ItemTypeEnum.SubscriptionRevenue}>Subscription Revenue</option>
-                    <option value={ItemTypeEnum.VariableCost}>Variable Cost</option>
+                    <option value={ItemTypeEnum.PercentOfTotalAsset}>Percent of Total Asset</option>
+                    <option value={ItemTypeEnum.PercentOfRevenue}>Percent of Revenue</option>
                     <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
                 </Select>
                 {
@@ -184,8 +120,8 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
                         <FormulaEditor item={item} onSubmit={this.updateFormula.bind(this)} />
                         :
                         <AutoForm
-                            schema={this.schemaOf(item)}
-                            body={this.bodyOf(item)}
+                            schema={schemaOf(item)}
+                            body={bodyOf(item)}
                             onSubmit={this.updateProperty.bind(this)}
                         />
                 }

@@ -41,7 +41,9 @@ export function ModelSettings({ model, onChange }: ModelSettingsProps) {
                 onRequestClose={closeModal}
             >
                 <h1 className="text-2xl font-bold">Model Settings</h1>
-                <p className="text-sm mt-2 mb-12 font-light">Configure settings for discount rates, beta, corporate tax rate and other common inputs into an equity valuation model</p>
+                <p className="text-sm mt-2 mb-12 font-light">
+                    Configure settings for discount rates, beta, corporate tax rate and other common inputs into an equity valuation model
+                </p>
 
                 <AutoForm body={model} schema={schema} onSubmit={handleSubmit} useGrid />
                 <DeleteButton onClick={closeModal} className="mt-2">Close</DeleteButton>

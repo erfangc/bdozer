@@ -1,9 +1,9 @@
-import React from "react";
-import NumberFormat from "react-number-format";
-import { Item, Model } from "../../../client";
-import { SmallGhostButton } from "../../GhostButton";
-import { IncomeStatementItemComponent } from "./IncomeStatementItemComponent";
-import { DashedLine } from "../Svgs";
+import React from "react"
+import NumberFormat from "react-number-format"
+import { Model, Item } from "../../../client"
+import { SmallGhostButton } from "../../GhostButton"
+import { DashedLine } from "../Svgs"
+import { BalanceSheetItemComponent } from "./BalanceSheetItemComponent"
 
 interface SectionProps {
     model: Model
@@ -12,32 +12,33 @@ interface SectionProps {
     onChange: (newModel: Model) => void
 }
 
-export function IncomeStatementSection({ items, subtotal, onChange, model }: SectionProps) {
+export function BalanceSheetSection({ items, subtotal, onChange, model }: SectionProps) {
 
     function addItem() {
         //
         // Place the new item 1 line above the subtotal
         //
-        const subtotalIdx = model.incomeStatementItems?.findIndex(i => i.name === subtotal.name)
+        const subtotalIdx = model.balanceSheetItems?.findIndex(i => i.name === subtotal.name)
 
+        const name = `Balance_Sheet_Item_${model.balanceSheetItems.length + 1}`
         const newItem: Item = {
-            name: `Item_${model.incomeStatementItems.length + 1}`,
+            name: name,
             historicalValue: 0,
-            description: `Item_${model.incomeStatementItems.length + 1}`.replace("_", " ")
+            description: name.replace(/_/g, " ")
         }
 
         const updatedItems = [
-            ...model.incomeStatementItems?.slice(0, subtotalIdx),
+            ...model.balanceSheetItems?.slice(0, subtotalIdx),
             newItem,
-            ...model.incomeStatementItems?.slice(subtotalIdx, model.incomeStatementItems.length)
+            ...model.balanceSheetItems?.slice(subtotalIdx, model.balanceSheetItems.length)
         ]
 
-        onChange({ ...model, incomeStatementItems: updatedItems })
+        onChange({ ...model, balanceSheetItems: updatedItems })
     }
 
     return (
         <div className="flex flex-col w-96 space-y-3">
-            {items.map(item => <IncomeStatementItemComponent key={item.name} item={item} onChange={onChange} model={model} />)}
+            {items.map(item => <BalanceSheetItemComponent key={item.name} item={item} onChange={onChange} model={model} />)}
             <span className="w-64"><SmallGhostButton onClick={addItem}>Add Item</SmallGhostButton></span>
             <div className="w-96 flex justify-between text-lg font-bold">
                 <span>{subtotal.description ?? subtotal.name}</span>
@@ -55,3 +56,4 @@ export function IncomeStatementSection({ items, subtotal, onChange, model }: Sec
         </div>
     )
 }
+

@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react"
+import React, { Component } from "react"
 import NumberFormat from "react-number-format"
 import { Item, Model } from "../../../client"
 import { IncomeStatementItemEditor } from "./IncomeStatementItemEditor/IncomeStatementItemEditor"
@@ -15,7 +15,7 @@ interface State {
     editorOpen: boolean
 }
 
-export class ItemComponent extends Component<ItemComponentProps, State> {
+export class IncomeStatementItemComponent extends Component<ItemComponentProps, State> {
 
     clickOutsideHandler = null
     node = null
@@ -41,8 +41,8 @@ export class ItemComponent extends Component<ItemComponentProps, State> {
     render() {
         const { item, onChange, model } = this.props
         const { editorOpen } = this.state
-        // TODO fix this
-        const checked = item.expression || item.fixedCost || item.subscriptionRevenue || item.variableCost
+        // TODO fix this validation error
+        const checked = item.expression || item.fixedCost || item.subscriptionRevenue || item.percentOfRevenue
         return (
             <div className="flex items-center w-96 justify-between relative" ref={node => { this.node = node }}>
                 <span>{item.description ?? item.name}</span>

@@ -158,10 +158,16 @@ export interface Item {
     subscriptionRevenue?: SubscriptionRevenue;
     /**
      * 
-     * @type {VariableCost}
+     * @type {PercentOfTotalAsset}
      * @memberof Item
      */
-    variableCost?: VariableCost;
+    percentOfTotalAsset?: PercentOfTotalAsset;
+    /**
+     * 
+     * @type {PercentOfRevenue}
+     * @memberof Item
+     */
+    percentOfRevenue?: PercentOfRevenue;
     /**
      * 
      * @type {FixedCost}
@@ -177,7 +183,8 @@ export interface Item {
 export enum ItemTypeEnum {
     SubscriptionRevenue = 'SubscriptionRevenue',
     Custom = 'Custom',
-    VariableCost = 'VariableCost',
+    PercentOfRevenue = 'PercentOfRevenue',
+    PercentOfTotalAsset = 'PercentOfTotalAsset',
     FixedCost = 'FixedCost'
 }
 
@@ -318,6 +325,32 @@ export interface ModelEvaluationOutput {
 /**
  * 
  * @export
+ * @interface PercentOfRevenue
+ */
+export interface PercentOfRevenue {
+    /**
+     * 
+     * @type {number}
+     * @memberof PercentOfRevenue
+     */
+    percentOfRevenue?: number;
+}
+/**
+ * 
+ * @export
+ * @interface PercentOfTotalAsset
+ */
+export interface PercentOfTotalAsset {
+    /**
+     * 
+     * @type {number}
+     * @memberof PercentOfTotalAsset
+     */
+    percentOfTotalAsset?: number;
+}
+/**
+ * 
+ * @export
  * @interface SubscriptionRevenue
  */
 export interface SubscriptionRevenue {
@@ -339,19 +372,6 @@ export interface SubscriptionRevenue {
      * @memberof SubscriptionRevenue
      */
     averageRevenuePerSubscription?: number;
-}
-/**
- * 
- * @export
- * @interface VariableCost
- */
-export interface VariableCost {
-    /**
-     * 
-     * @type {number}
-     * @memberof VariableCost
-     */
-    percentOfRevenue?: number;
 }
 
 /**

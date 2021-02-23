@@ -78,7 +78,14 @@ export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
 
     return (
         <div className="flex-col space-y-6">
-            <form onSubmit={handleSubmit} className={useGrid ? "grid grid-flow-col grid-cols-3 grid-rows-3 gap-4" : "flex-col space-y-6"}>
+            <form
+                onSubmit={handleSubmit}
+                className={
+                    useGrid
+                        ? "grid grid-flow-col grid-cols-2 grid-rows-4 gap-4"
+                        : "flex-col space-y-6"
+                }
+            >
                 {components}
             </form>
             <PrimaryButton onClick={handleSubmit}>
