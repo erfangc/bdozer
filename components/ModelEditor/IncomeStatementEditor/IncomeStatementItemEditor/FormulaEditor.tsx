@@ -30,7 +30,8 @@ export function FormulaEditor({ item, onSubmit }: { item: Item, onSubmit: (strin
                 onChange={handleChange}
                 className="cursor-pointer w-full rounded-sm bg-blueGray-900 border-blueGray-500 px-4 py-4"
                 placeholder="Enter formula"
-            />
+            >
+            </textarea>
             <PrimaryButton onClick={() => onSubmit(value)}>Confirm &amp; Rerun</PrimaryButton>
         </div>
     )

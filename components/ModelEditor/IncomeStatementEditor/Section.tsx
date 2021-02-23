@@ -1,7 +1,7 @@
 import React from "react";
 import NumberFormat from "react-number-format";
 import { Item, Model } from "../../../client";
-import { GhostButton } from "../../GhostButton";
+import { GhostButton, SmallGhostButton } from "../../GhostButton";
 import { ItemComponent } from "./ItemComponent";
 import { DashedLine } from "../Svgs";
 
@@ -38,7 +38,7 @@ export function Section({ items, subtotal, onChange, model }: SectionProps) {
     return (
         <div className="flex flex-col w-96 space-y-3">
             {items.map(item => <ItemComponent key={item.name} item={item} onChange={onChange} model={model} />)}
-            <span className="w-64"><GhostButton onClick={addItem}>Add Item</GhostButton></span>
+            <span className="w-64"><SmallGhostButton onClick={addItem}>Add Item</SmallGhostButton></span>
             <div className="w-96 flex justify-between text-lg font-bold">
                 <span>{subtotal.description ?? subtotal.name}</span>
                 <span className="flex">

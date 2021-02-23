@@ -1,11 +1,12 @@
-import { Model, ModelEvaluationOutput } from "../../client";
+import { Item, Model, ModelEvaluationOutput } from "../../client";
 
-import React from 'react'
+import React, { useState } from 'react'
 import HighchartsReact from 'highcharts-react-official'
 import { CostOfGoodsSold, FreeCashFlow, GrossProfit, NetIncome, Revenue } from "../../constants/ReservedItemNames";
 import { Card } from "../Card";
 import { highcharts } from "../../highcharts";
-import { GhostButton } from "../GhostButton";
+import { GhostButton, SmallGhostButton } from "../GhostButton";
+import { Select } from "../Select";
 
 interface OutputDashProps {
     output: ModelEvaluationOutput
@@ -14,18 +15,21 @@ interface OutputDashProps {
 
 export function OutputDash({ model, output }: OutputDashProps) {
 
-    const revenue = filterFor(Revenue)
-    const cogs = filterFor(CostOfGoodsSold)
-    const grossProfit = filterFor(GrossProfit)
-    const netIncome = filterFor(NetIncome)
-    const fcf = filterFor(FreeCashFlow)
+    const [stacking, setStacking] = useState<'normal' | 'percent' | undefined>()
+    const [type, setType] = useState<'area' | 'column' | 'line'>("column")
 
-    const stacking = 'normal'
-    const type = 'column'
+    const [chosenItems, setChosenItems] = useState<Item[]>([])
+
+    const series = chosenItems.map(item => ({
+        name: item.description ?? item.name,
+        type,
+        stacking,
+        data: filterFor(item.name)
+    }))
 
     const options: Highcharts.Options = {
         title: {
-            text: 'Projected Financials Overtime'
+            text: null
         },
         yAxis: {
             title: {
@@ -37,39 +41,9 @@ export function OutputDash({ model, output }: OutputDashProps) {
                 text: 'Years'
             },
         },
-        series: [
-            {
-                name: 'Revenue',
-                type,
-                stacking,
-                data: revenue
-            },
-            {
-                name: 'COGS',
-                type,
-                stacking,
-                data: cogs
-            },
-            {
-                name: 'Gross Profit',
-                type,
-                stacking,
-                data: grossProfit
-            },
-            {
-                name: 'Net Income',
-                type,
-                stacking: undefined,
-                data: netIncome
-            },
-            {
-                name: 'Free Cash Flow',
-                type,
-                stacking: undefined,
-                data: fcf
-            }
-        ],
+        series,
     }
+
 
     return (
         <div className='flex-col px-10 items-center flex-grow justify-center space-y-10'>
@@ -86,7 +60,30 @@ export function OutputDash({ model, output }: OutputDashProps) {
                 </div>
                 <GhostButton>Model Settings</GhostButton>
             </div>
-            <figure className="w-full">
+            <figure>
+                <div className="flex space-x-6 mb-2">
+                    <div className="flex-col space-y-1">
+                        <p className="text-sm">Stack Behavior:</p>
+                        <div className="flex space-x-1">
+                            <SmallGhostButton onClick={() => setStacking(undefined)}>No Stacking</SmallGhostButton>
+                            <SmallGhostButton onClick={() => setStacking('normal')}>Stack</SmallGhostButton>
+                            <SmallGhostButton onClick={() => setStacking('percent')}>As Percentage</SmallGhostButton>
+                        </div>
+                    </div>
+                    <div className="flex-col space-y-1">
+                        <p className="text-sm">Chart Type:</p>
+                        <div className="flex space-x-1">
+                            <SmallGhostButton onClick={() => setType('area')} >Area</SmallGhostButton>
+                            <SmallGhostButton onClick={() => setType('column')} >Column</SmallGhostButton>
+                            <SmallGhostButton onClick={() => setType('line')} >Line</SmallGhostButton>
+                        </div>
+                    </div>
+                    <ItemChooser
+                        chosenItems={chosenItems}
+                        availableItems={model.incomeStatementItems}
+                        onChange={newChosenItems => setChosenItems(newChosenItems)}
+                    />
+                </div>
                 <HighchartsReact
                     highcharts={highcharts}
                     options={options}
@@ -99,7 +96,57 @@ export function OutputDash({ model, output }: OutputDashProps) {
         return output
             ?.cells
             ?.filter(cell => cell.item?.name === itemName)
-            ?.map(cell => [new Date().getFullYear() + cell.period, cell.value]) ?? [];
+            ?.map(cell => [new Date().getFullYear() + cell.period - 1, cell.value]) ?? [];
     }
 
+}
+
+interface ItemChooserProps {
+    chosenItems: Item[]
+    availableItems: Item[]
+    onChange: (chosenItems: Item[]) => void
+}
+
+function ItemChooser({ chosenItems, availableItems, onChange }: ItemChooserProps) {
+    const [open, setOpen] = useState(false)
+
+    function select(item: Item) {
+        let newChosenItems = null
+        if (chosenItems.includes(item)) {
+            newChosenItems = chosenItems.filter(i => i.name !== item.name)
+        } else {
+            newChosenItems = [...chosenItems, item]
+        }
+        onChange(newChosenItems)
+    }
+
+    return (
+        <div className="relative z-10 self-end flex">
+            <SmallGhostButton onClick={() => setOpen(!open)}>
+                Items to Display
+            </SmallGhostButton>
+            {
+                open
+                    ?
+                    <div className="p-6 bg-blueGray-700 rounded-lg shadow-lg mt-2 inline-block absolute top-full -left-1/2 whitespace-nowrap">
+                        {
+                            availableItems.map(item =>
+                                <div key={item.name} className="text-sm mb-1">
+                                    <input
+                                        type="checkbox"
+                                        name={item.name}
+                                        checked={chosenItems.includes(item)}
+                                        onChange={() => select(item)}
+                                    />
+                                    <label className="ml-2">{item.description ?? item.name}</label>
+                                </div>
+                            )
+                        }
+                    </div>
+                    :
+                    null
+            }
+        </div>
+
+    )
 }

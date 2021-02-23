@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Item, ItemTypeEnum, Model } from "../../../../client";
 import { AutoForm, Schema } from "../../../AutoForms/AutoForm";
 import { DeleteButton } from "../../../DeleteButton";
+import { Select } from "../../../Select";
 import { FormulaEditor } from "./FormulaEditor";
 import { ItemDescriptionInput } from "./ItemDescriptionInput";
 import { ItemFY0Input } from "./ItemFY0Input";
@@ -192,24 +193,4 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
             </div>
         )
     }
-}
-
-interface SelectProps extends React.DetailedHTMLProps<React.SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> {
-    label?: string
-    caption?: string
-}
-
-function Select({ label, caption, className, children, ...props }: SelectProps) {
-    return (
-        <div className="flex-col space-y-4 flex">
-            {label ? <label className="text-sm">{label}</label> : null}
-            <select
-                className={`focus:outline-none border appearance-none border-blueGray-500 bg-blueGray-900 text-blueGray-50 rounded-sm px-3 py-2 ${className}`}
-                {...props}
-            >
-                {children}
-            </select>
-            {caption ? <p className="text-xs text-blueGray-600">{caption}</p> : null}
-        </div>
-    )
 }

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Model, ModelBuilderControllerApi, ModelEvaluationOutput, ModelsControllerApi } from '../../client';
-import { Card } from '../Card';
 import { OutputDash } from '../Output/OutputDash';
 import { BalanceSheetEditor } from './BalanceSheetEditor/BalanceSheetEditor';
 import { IncomeStatementEditor } from './IncomeStatementEditor/IncomeStatementEditor';
@@ -14,7 +13,9 @@ export function ModelEditor() {
     const [output, setOutput] = useState<ModelEvaluationOutput | undefined>()
     const [activeTab, setActiveTab] = useState<'income statement' | 'balance sheet'>('income statement')
 
+    //
     // load the model from the backend
+    //
     useEffect(() => {
         (async () => {
             const { data: model } = await modelsApi._default()
@@ -58,7 +59,6 @@ export function ModelEditor() {
                     }
                 </div>
             </div>
-            {/* <Billboard /> */}
             <OutputDash model={model} output={output} />
         </div>
     )
