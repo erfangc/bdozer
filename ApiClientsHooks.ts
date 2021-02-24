@@ -7,10 +7,15 @@ import { serverErrorStore } from "./ServerErrorStore";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || undefined;
 
 const axiosInstance = axios.create();
+axiosInstance.interceptors.response.use(null, (error) => {
+  console.log("... error here ...");
+
+  serverErrorStore.addError(error?.response?.data);
+  return Promise.reject(error);
+});
 
 function useAxios() {
   const { getIdTokenClaims } = useAuth0();
-
   useEffect(() => {
     axiosInstance.interceptors.request.use(async (cfg) => {
       const { __raw } = await getIdTokenClaims();
@@ -22,14 +27,7 @@ function useAxios() {
         },
       };
     });
-    axiosInstance.interceptors.response.use(null, (error) => {
-      console.log("... error here ...");
-
-      serverErrorStore.addError(error?.response?.data);
-      return Promise.reject(error);
-    });
   }, []);
-
   return axiosInstance;
 }
 
