@@ -1,11 +1,14 @@
-export function Billboard() {
+import { PrimaryButton } from "../PrimaryButton";
+
+export function Billboard(props: { runModel: () => void }) {
     return (
         <section className="flex-grow flex self-start justify-center h-screen">
-            <div className="hidden lg:flex-col lg:flex items-center justify-center">
+            <div className="hidden lg:flex-col lg:flex items-center justify-center space-y-4">
                 <Inbox />
                 <p className="text-2xl">
-                    Click on items to add/edit drivers
-                    </p>
+                    Click on line items to edit them
+                </p>
+                <PrimaryButton onClick={props.runModel}>Run Model</PrimaryButton>
             </div>
         </section>
     )

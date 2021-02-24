@@ -45,7 +45,7 @@ export class ServerErrors extends Component<{}, State> {
                         errors.map(
                             error => (
                                 <ErrorMessage
-                                    key={error.id}
+                                    key={error?.id}
                                     error={error}
                                     onDismiss={() => this.dismissError(error.id)}
                                 />

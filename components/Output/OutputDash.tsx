@@ -1,6 +1,7 @@
 import HighchartsReact from 'highcharts-react-official';
 import React, { useState } from 'react';
 import { Item, Model, ModelEvaluationOutput } from "../../client";
+import { FreeCashFlow, NetIncome, Revenue } from '../../constants/ReservedItemNames';
 import { highcharts } from "../../highcharts";
 import { Card } from "../Card";
 import { ModelSettings } from './ModelSettings';
@@ -17,7 +18,11 @@ export function OutputDash({ model, output, onChange }: OutputDashProps) {
     const [stacking, setStacking] = useState<'normal' | 'percent' | undefined>()
     const [type, setType] = useState<'area' | 'column' | 'line'>("column")
 
-    const [chosenItems, setChosenItems] = useState<Item[]>([])
+    const [chosenItems, setChosenItems] = useState<Item[]>([
+        model.incomeStatementItems.find(it => it.name === Revenue),
+        model.incomeStatementItems.find(it => it.name === NetIncome),
+        model.otherItems.find(it => it.name === FreeCashFlow),
+    ])
 
     const series = chosenItems.map(item => ({
         name: item.description ?? item.name,

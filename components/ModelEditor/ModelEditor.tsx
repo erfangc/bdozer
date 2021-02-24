@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Model, ModelBuilderControllerApi, ModelEvaluationOutput, ModelsControllerApi } from '../../client';
 import { OutputDash } from '../Output/OutputDash';
 import { BalanceSheetEditor } from './BalanceSheetEditor/BalanceSheetEditor';
+import { Billboard } from './Billboard';
 import { IncomeStatementEditor } from './IncomeStatementEditor/IncomeStatementEditor';
 
 const modelBuilderApi = new ModelBuilderControllerApi()
@@ -18,10 +19,11 @@ export function ModelEditor() {
     //
     useEffect(() => {
         (async () => {
+            //
+            // determine which model to pull down
+            //
             const { data: model } = await modelsApi._default()
             setModel(model)
-            const { data: output } = await modelBuilderApi.evaluateModel(model)
-            setOutput(output)
         })()
     }, [])
 
@@ -40,7 +42,10 @@ export function ModelEditor() {
         } catch (e) {
             console.error(e)
         }
+    }
 
+    function runModel() {
+        updateModel(model)
     }
 
     if (model === undefined) {
@@ -59,7 +64,11 @@ export function ModelEditor() {
                     }
                 </div>
             </div>
-            <OutputDash model={model} output={output} onChange={updateModel} />
+            {
+                output
+                    ? <OutputDash model={model} output={output} onChange={updateModel} />
+                    : <Billboard runModel={runModel} />
+            }
         </div>
     )
 }
