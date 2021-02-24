@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { modelsApi, modelBuilderApi } from '../../api-clients';
 import { Model, ModelBuilderControllerApi, ModelEvaluationOutput, ModelsControllerApi } from '../../client';
 import { OutputDash } from '../Output/OutputDash';
 import { BalanceSheetEditor } from './BalanceSheetEditor/BalanceSheetEditor';
 import { Billboard } from './Billboard';
 import { IncomeStatementEditor } from './IncomeStatementEditor/IncomeStatementEditor';
-
-const modelBuilderApi = new ModelBuilderControllerApi()
-const modelsApi = new ModelsControllerApi()
 
 export function ModelEditor() {
 
@@ -53,7 +51,7 @@ export function ModelEditor() {
     }
 
     return (
-        <div className="text-blueGray-100 text-lg container mx-auto pt-24 pb-96 lg:flex">
+        <div className="text-blueGray-100 text-lg lg:flex">
             <div className="flex-col space-y-16">
                 <div className="flex-col space-y-8">
                     <Tabs activeTab={activeTab} onChange={newValue => setActiveTab(newValue)} />

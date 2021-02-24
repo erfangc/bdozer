@@ -4,8 +4,12 @@ import { Item, Model, ModelEvaluationOutput } from "../../client";
 import { FreeCashFlow, NetIncome, Revenue } from '../../constants/ReservedItemNames';
 import { highcharts } from "../../highcharts";
 import { Card } from "../Card";
+import { PrimaryButton } from '../PrimaryButton';
 import { ModelSettings } from './ModelSettings';
 import { Toolbar } from "./Toolbar";
+import Modal from 'react-modal';
+import { GhostButton } from '../GhostButton';
+import { DeleteButton } from '../DeleteButton';
 
 interface OutputDashProps {
     output: ModelEvaluationOutput
@@ -49,7 +53,7 @@ export function OutputDash({ model, output, onChange }: OutputDashProps) {
     }
 
     return (
-        <div className='flex-col px-10 items-center flex-grow justify-center space-y-10'>
+        <div className='flex-col px-24 items-center flex-grow justify-center space-y-20'>
             <div className="flex justify-between">
                 <div className="flex space-x-4">
                     <Card
@@ -61,7 +65,10 @@ export function OutputDash({ model, output, onChange }: OutputDashProps) {
                         label="Price (Growing Perpetuity)"
                     />
                 </div>
-                <ModelSettings model={model} onChange={onChange} />
+                <div className="flex-col space-y-1">
+                    <ModelSettings model={model} onChange={onChange} />
+                    <SaveAs />
+                </div>
             </div>
             <figure>
                 <Toolbar
@@ -86,4 +93,39 @@ export function OutputDash({ model, output, onChange }: OutputDashProps) {
             ?.map(cell => [new Date().getFullYear() + cell.period - 1, cell.value]) ?? [];
     }
 
+}
+
+function SaveAs() {
+    const [open, setOpen] = useState(false)
+
+    function openModal() {
+        setOpen(true)
+    }
+
+    function closeModal() {
+        setOpen(false)
+    }
+
+    function handleSubmit(newModel: Model) {
+        closeModal()
+    }
+
+    return (
+        <div>
+            <PrimaryButton onClick={openModal} className="w-full">Save As</PrimaryButton>
+            <Modal
+                overlayClassName="z-10"
+                shouldCloseOnOverlayClick
+                className="z-10 top-1/4 left-1/4 right-1/4 absolute p-10 overflow-auto rounded-lg outline-none bg-blueGray-700 text-blueGray-50"
+                isOpen={open}
+                onRequestClose={closeModal}
+            >
+                <h1 className="text-2xl font-bold">Save As</h1>
+                <p className="text-sm mt-2 mb-12 font-light">
+                    This feature is not available right now
+                </p>
+                <DeleteButton onClick={closeModal}>Dismiss</DeleteButton>
+            </Modal>
+        </div>
+    )
 }
