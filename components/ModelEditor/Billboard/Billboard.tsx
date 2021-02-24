@@ -10,8 +10,8 @@ export function Billboard(props: { runModel: () => void }) {
                 <p className="text-2xl">
                     Click on line items to edit them
                 </p>
-                <p><Code>Ctrl</Code> + <Code>A</Code>&nbsp;&nbsp;to add an item</p>
-                <p><Code>Ctrl</Code> + <Code>Z</Code>&nbsp;&nbsp;to undo item</p>
+                <p><Code>Ctrl</Code> + <Code>A</Code>&nbsp;&nbsp;to add an item (doesn't work yet)</p>
+                <p><Code>Ctrl</Code> + <Code>Z</Code>&nbsp;&nbsp;to undo item (doesn't work yet)</p>
                 <PrimaryButton onClick={props.runModel}>Run Model</PrimaryButton>
             </div>
         </section>
