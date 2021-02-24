@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Item, ItemTypeEnum, Model } from "../../../../client";
-import { AutoForm, Schema } from "../../../AutoForms/AutoForm";
+import { AutoForm } from "../../../AutoForms/AutoForm";
 import { bodyOf, merge, schemaOf } from "../../../AutoForms/Schemas";
 import { DeleteButton } from "../../../DeleteButton";
 import { Select } from "../../../Select";
@@ -14,19 +14,11 @@ interface ItemEditorProps {
     onChange: (newModel: Model) => void
 }
 
-interface State {
-
-}
 /**
  * Shows an editor for the Item but also 
  * can be swapped to edit the Drivers that belong to the Item
  */
-
-export class IncomeStatementItemEditor extends Component<ItemEditorProps, State> {
-
-    constructor(props) {
-        super(props);
-    }
+export class IncomeStatementItemEditor extends Component<ItemEditorProps> {
 
     updateDescription(newDescription) {
         const { model, item, onChange } = this.props;
@@ -100,9 +92,7 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
     render() {
         const { item } = this.props;
         return (
-            <div
-                className="absolute top-0 z-10 left-full ml-4 bg-blueGray-800 px-20 py-8 rounded-lg shadow-md flex-col space-y-8"
-            >
+            <div className="absolute top-0 z-10 left-full ml-4 bg-blueGray-800 px-20 py-8 rounded-lg shadow-md flex-col space-y-8">
                 <div className="flex-col space-y-4">
                     <ItemDescriptionInput item={item} onChange={this.updateDescription.bind(this)} />
                     <ItemFY0Input item={item} onChange={this.updateHistoricalValue.bind(this)} />
@@ -117,7 +107,10 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps, State>
                 {
                     item.type === ItemTypeEnum.Custom
                         ?
-                        <FormulaEditor item={item} onSubmit={this.updateFormula.bind(this)} />
+                        <FormulaEditor
+                            item={item}
+                            onSubmit={this.updateFormula.bind(this)}
+                        />
                         :
                         <AutoForm
                             schema={schemaOf(item)}

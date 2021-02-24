@@ -1,3 +1,4 @@
+import { stat } from "fs";
 import { Store } from "./Store";
 
 export interface ApiError {
@@ -7,9 +8,8 @@ export interface ApiError {
 }
 
 class ServerErrorStore extends Store<ApiError[]> {
-  constructor() {
-    super();
-    this.setState([]);
+  constructor(state: ApiError[]) {
+    super(state);
   }
 
   addError(error: ApiError) {
@@ -21,4 +21,4 @@ class ServerErrorStore extends Store<ApiError[]> {
   }
 }
 
-export const serverErrorStore = new ServerErrorStore();
+export const serverErrorStore = new ServerErrorStore([]);

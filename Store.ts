@@ -3,6 +3,10 @@ export class Store<T> {
   private callbacks: { [key: string]: (state: T) => void } = {};
   private counter = 0;
 
+  constructor(state: T) {
+    this.state = state;
+  }
+
   subscribe(callback: (state: T) => void): number {
     this.counter++;
     this.callbacks[this.counter] = callback;

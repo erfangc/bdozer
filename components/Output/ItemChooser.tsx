@@ -8,15 +8,8 @@ interface ItemChooserProps {
     onChange: (chosenItems: Item[]) => void
 }
 
-export function ItemChooser(
-    {
-        chosenItems,
-        model: {
-            incomeStatementItems,
-            otherItems
-        },
-        onChange
-    }: ItemChooserProps) {
+export function ItemChooser({ chosenItems, model: { incomeStatementItems, otherItems }, onChange }: ItemChooserProps) {
+
     const [open, setOpen] = useState(false)
 
     function select(item: Item) {
@@ -31,9 +24,7 @@ export function ItemChooser(
 
     return (
         <div className="relative self-end flex" style={{ zIndex: 1 }}>
-            <SmallGhostButton onClick={() => setOpen(!open)}>
-                Items to Display
-            </SmallGhostButton>
+            <SmallGhostButton onClick={() => setOpen(!open)}>Items to Display</SmallGhostButton>
             {
                 open
                     ?
@@ -42,16 +33,19 @@ export function ItemChooser(
                             Income Statement
                         </p>
                         {
-                            incomeStatementItems.map(item =>
-                                <div key={item.name} className="text-sm mb-1">
-                                    <input
-                                        type="checkbox"
-                                        name={item.name}
-                                        checked={chosenItems.includes(item)}
-                                        onChange={() => select(item)}
-                                    />
-                                    <label className="ml-2">{item.description ?? item.name}</label>
-                                </div>
+                            incomeStatementItems.map(
+                                item =>
+                                    <div key={item.name} className="text-sm mb-1">
+                                        <input
+                                            type="checkbox"
+                                            name={item.name}
+                                            checked={chosenItems.includes(item)}
+                                            onChange={() => select(item)}
+                                        />
+                                        <label className="ml-2">
+                                            {item.description ?? item.name}
+                                        </label>
+                                    </div>
                             )
                         }
                         <p className="text-sm font-bold block mt-6 mb-4 border-b border-blueGray-400">
@@ -66,7 +60,9 @@ export function ItemChooser(
                                         checked={chosenItems.includes(item)}
                                         onChange={() => select(item)}
                                     />
-                                    <label className="ml-2">{item.description ?? item.name}</label>
+                                    <label className="ml-2">
+                                        {item.description ?? item.name}
+                                    </label>
                                 </div>
                             )
                         }
@@ -75,6 +71,5 @@ export function ItemChooser(
                     null
             }
         </div>
-
     )
 }
