@@ -1,20 +1,4 @@
-import { PrimaryButton } from "../PrimaryButton";
-
-export function Billboard(props: { runModel: () => void }) {
-    return (
-        <section className="flex-grow flex self-start justify-center h-screen">
-            <div className="hidden lg:flex-col lg:flex items-center justify-center space-y-4">
-                <Inbox />
-                <p className="text-2xl">
-                    Click on line items to edit them
-                </p>
-                <PrimaryButton onClick={props.runModel}>Run Model</PrimaryButton>
-            </div>
-        </section>
-    )
-}
-
-function Inbox() {
+export function Rocket() {
     return (
         <svg width="257" height="256" viewBox="0 0 257 256" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M128.5 256C196.155 256 251 201.155 251 133.5C251 65.8451 196.155 11 128.5 11C60.8451 11 6 65.8451 6 133.5C6 201.155 60.8451 256 128.5 256Z" fill="#1E293B" />

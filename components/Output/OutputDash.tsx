@@ -1,15 +1,14 @@
 import HighchartsReact from 'highcharts-react-official';
 import React, { useState } from 'react';
+import Modal from 'react-modal';
 import { Item, Model, ModelEvaluationOutput } from "../../client";
 import { FreeCashFlow, NetIncome, Revenue } from '../../constants/ReservedItemNames';
-import { highcharts } from "../../highcharts";
+import { highcharts } from "../../HighchartsConfig";
 import { Card } from "../Card";
+import { DeleteButton } from '../DeleteButton';
 import { PrimaryButton } from '../PrimaryButton';
 import { ModelSettings } from './ModelSettings';
 import { Toolbar } from "./Toolbar";
-import Modal from 'react-modal';
-import { GhostButton } from '../GhostButton';
-import { DeleteButton } from '../DeleteButton';
 
 interface OutputDashProps {
     output: ModelEvaluationOutput

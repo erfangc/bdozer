@@ -26,12 +26,12 @@ export function Nav(props: NavProps) {
                     <NavButton icon={<Settings />} />
                 </div>
             </div>
-            <div className="text-blueGray-50 pb-6 flex-col space-y-4 flex items-center">
+            <div className="text-blueGray-50 pb-6 flex-col space-y-2 flex items-center">
                 <img
                     src={user.picture} className="w-10 h-10 rounded-full" alt="Profile Picture"
                 />
                 <a
-                    className="text-sm cursor-pointer hover:text-blueGray-400 transition ease-linear"
+                    className="text-sm cursor-pointer hover:bg-blueGray-400 hover:text-blueGray-900 rounded transition ease-linear p-2"
                     onClick={() => logout({ returnTo: origin })}
                 >
                     Logout

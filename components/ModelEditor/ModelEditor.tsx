@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { modelsApi, modelBuilderApi } from '../../api-clients';
-import { Model, ModelBuilderControllerApi, ModelEvaluationOutput, ModelsControllerApi } from '../../client';
+import { useModelBuilderApi, useModelsApi } from '../../ApiClientsHooks';
+import { Model, ModelEvaluationOutput } from '../../client';
 import { OutputDash } from '../Output/OutputDash';
 import { BalanceSheetEditor } from './BalanceSheetEditor/BalanceSheetEditor';
-import { Billboard } from './Billboard';
+import { Billboard } from './Billboard/Billboard';
 import { IncomeStatementEditor } from './IncomeStatementEditor/IncomeStatementEditor';
 
 export function ModelEditor() {
@@ -12,14 +12,14 @@ export function ModelEditor() {
     const [output, setOutput] = useState<ModelEvaluationOutput | undefined>()
     const [activeTab, setActiveTab] = useState<'income statement' | 'balance sheet'>('income statement')
 
+    const modelsApi = useModelsApi()
+    const modelBuilderApi = useModelBuilderApi()
+
     //
     // load the model from the backend
     //
     useEffect(() => {
         (async () => {
-            //
-            // determine which model to pull down
-            //
             const { data: model } = await modelsApi._default()
             setModel(model)
         })()
