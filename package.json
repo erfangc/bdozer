@@ -18,6 +18,7 @@
     "postcss": "^8.2.6",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-fullstory": "^1.4.0",
     "react-modal": "^3.12.1",
     "react-number-format": "^4.4.4",
     "tailwindcss": "^2.0.3"

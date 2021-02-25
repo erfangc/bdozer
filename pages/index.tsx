@@ -17,7 +17,7 @@ export default function Home() {
       <Head>
         <title>Equity Model Builder - UI</title>
         <link rel="icon" href="/favicon.ico" />
-        <script type="text/javascript" src="fullstory.js"></script>
+        <script type="text/javascript" src="/fullstory.js"></script>
       </Head>
       <App />
     </Auth0Provider>
