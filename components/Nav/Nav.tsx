@@ -1,8 +1,8 @@
 import React from "react"
 import { Logo } from "./Logo"
-import { NavButton, Settings } from "./NavButton"
+import { ModelIcon, NavButton, Settings } from "./NavButton"
 import { useAuth0 } from '@auth0/auth0-react'
-
+import { useRouter } from 'next/router'
 interface NavProps {
 
 }
@@ -10,6 +10,7 @@ interface NavProps {
 export function Nav(props: NavProps) {
 
     const { user, logout } = useAuth0()
+    const router = useRouter()
 
     let origin = null
     if (typeof window !== 'undefined') {
@@ -22,13 +23,14 @@ export function Nav(props: NavProps) {
                 <Logo />
                 <div className="h-px w-full border-b border-blueGray-700"></div>
                 <div className="flex-col space-y-6">
-                    <NavButton active />
-                    <NavButton icon={<Settings />} />
+                    <NavButton active={router.pathname === '/'} linkTo="/" />
+                    <NavButton active={router.pathname === '/models'} icon={<ModelIcon />} linkTo="/models" />
+                    <NavButton active={router.pathname === '/settings'} icon={<Settings />} linkTo="/settings" />
                 </div>
             </div>
             <div className="text-blueGray-50 pb-6 flex-col space-y-2 flex items-center">
                 <img
-                    src={user.picture} className="w-10 h-10 rounded-full" alt="Profile Picture"
+                    src={user.picture} className="w-10 h-10 rounded-full" alt=""
                 />
                 <a
                     className="text-sm cursor-pointer hover:bg-blueGray-400 hover:text-blueGray-900 rounded transition ease-linear p-2"

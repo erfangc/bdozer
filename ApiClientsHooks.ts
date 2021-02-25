@@ -18,12 +18,13 @@ function useAxios() {
 
   useEffect(() => {
     axiosInstance.interceptors.request.use(async (cfg) => {
-      const { __raw } = await getIdTokenClaims();
+      // TODO are we accidentally attaching a gazillion of these?
+      const idToken = await getIdTokenClaims();
       return {
         ...cfg,
         headers: {
           ...cfg.headers,
-          Authorization: `Bearer ${__raw}`,
+          Authorization: `Bearer ${idToken?.__raw ?? "-"}`,
         },
       };
     });

@@ -128,6 +128,12 @@ export interface Item {
     description?: string;
     /**
      * 
+     * @type {string}
+     * @memberof Item
+     */
+    type?: ItemTypeEnum;
+    /**
+     * 
      * @type {number}
      * @memberof Item
      */
@@ -144,12 +150,6 @@ export interface Item {
      * @memberof Item
      */
     segment?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Item
-     */
-    type?: ItemTypeEnum;
     /**
      * 
      * @type {SubscriptionRevenue}
@@ -170,10 +170,28 @@ export interface Item {
     percentOfRevenue?: PercentOfRevenue;
     /**
      * 
+     * @type {UnitSalesRevenue}
+     * @memberof Item
+     */
+    unitSalesRevenue?: UnitSalesRevenue;
+    /**
+     * 
      * @type {FixedCost}
      * @memberof Item
      */
     fixedCost?: FixedCost;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Item
+     */
+    stockBasedCompensation?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Item
+     */
+    nonCashExpense?: boolean;
 }
 
 /**
@@ -182,6 +200,7 @@ export interface Item {
     */
 export enum ItemTypeEnum {
     SubscriptionRevenue = 'SubscriptionRevenue',
+    UnitSalesRevenue = 'UnitSalesRevenue',
     Custom = 'Custom',
     PercentOfRevenue = 'PercentOfRevenue',
     PercentOfTotalAsset = 'PercentOfTotalAsset',
@@ -194,6 +213,42 @@ export enum ItemTypeEnum {
  * @interface Model
  */
 export interface Model {
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
+    get_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
+    symbol?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
+    cik?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Model
+     */
+    tags?: Array<string>;
     /**
      * 
      * @type {Array<Item>}
@@ -278,6 +333,18 @@ export interface Model {
      * @memberof Model
      */
     periods?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
+    updatedAt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
+    updatedBy?: string;
 }
 /**
  * 
@@ -302,6 +369,12 @@ export interface ModelEvaluationOutput {
      * @type {number}
      * @memberof ModelEvaluationOutput
      */
+    terminalFcf?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelEvaluationOutput
+     */
     targetPriceUnderExitMultipleMethod?: number;
     /**
      * 
@@ -321,6 +394,25 @@ export interface ModelEvaluationOutput {
      * @memberof ModelEvaluationOutput
      */
     pvOfTerminalValueUnderExitMultipleMethod?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ModelHistory
+ */
+export interface ModelHistory {
+    /**
+     * 
+     * @type {Model}
+     * @memberof ModelHistory
+     */
+    model?: Model;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ModelHistory
+     */
+    changes?: Array<string>;
 }
 /**
  * 
@@ -373,6 +465,31 @@ export interface SubscriptionRevenue {
      */
     averageRevenuePerSubscription?: number;
 }
+/**
+ * 
+ * @export
+ * @interface UnitSalesRevenue
+ */
+export interface UnitSalesRevenue {
+    /**
+     * 
+     * @type {number}
+     * @memberof UnitSalesRevenue
+     */
+    steadyStateUnitsSold?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UnitSalesRevenue
+     */
+    averageSellingPrice?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UnitSalesRevenue
+     */
+    initialUnitsSold?: number;
+}
 
 /**
  * ModelBuilderControllerApi - axios parameter creator
@@ -386,7 +503,7 @@ export const ModelBuilderControllerApiAxiosParamCreator = function (configuratio
          * @throws {RequiredError}
          */
         createModel: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/createModel`;
+            const localVarPath = `/api/model-builder/createModel`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -418,7 +535,7 @@ export const ModelBuilderControllerApiAxiosParamCreator = function (configuratio
         evaluateModel: async (model: Model, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'model' is not null or undefined
             assertParamExists('evaluateModel', 'model', model)
-            const localVarPath = `/evaluateModel`;
+            const localVarPath = `/api/model-builder/evaluateModel`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -453,7 +570,7 @@ export const ModelBuilderControllerApiAxiosParamCreator = function (configuratio
         reformulateModel: async (model: Model, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'model' is not null or undefined
             assertParamExists('reformulateModel', 'model', model)
-            const localVarPath = `/reformulateModel`;
+            const localVarPath = `/api/model-builder/reformulateModel`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -606,11 +723,48 @@ export const ModelsControllerApiAxiosParamCreator = function (configuration?: Co
     return {
         /**
          * 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        _default: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/models/default`;
+        deleteModel: async (id: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteModel', 'id', id)
+            const localVarPath = `/api/models/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHistory: async (id: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getHistory', 'id', id)
+            const localVarPath = `/api/models/{id}/history`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -633,6 +787,132 @@ export const ModelsControllerApiAxiosParamCreator = function (configuration?: Co
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getModel: async (id: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getModel', 'id', id)
+            const localVarPath = `/api/models/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listModels: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/models`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sample: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/models/sample`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Model} model 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveModel: async (model: Model, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'model' is not null or undefined
+            assertParamExists('saveModel', 'model', model)
+            const localVarPath = `/api/models`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(model, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -645,11 +925,60 @@ export const ModelsControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async _default(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Model>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator._default(options);
+        async deleteModel(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteModel(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHistory(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ModelHistory>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHistory(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getModel(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Model>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getModel(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listModels(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Model>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listModels(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sample(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Model>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sample(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Model} model 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveModel(model: Model, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Model>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveModel(model, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -664,11 +993,55 @@ export const ModelsControllerApiFactory = function (configuration?: Configuratio
     return {
         /**
          * 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        _default(options?: any): AxiosPromise<Model> {
-            return localVarFp._default(options).then((request) => request(axios, basePath));
+        deleteModel(id: string, options?: any): AxiosPromise<string> {
+            return localVarFp.deleteModel(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHistory(id: string, options?: any): AxiosPromise<Array<ModelHistory>> {
+            return localVarFp.getHistory(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getModel(id: string, options?: any): AxiosPromise<Model> {
+            return localVarFp.getModel(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listModels(options?: any): AxiosPromise<Array<Model>> {
+            return localVarFp.listModels(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sample(options?: any): AxiosPromise<Model> {
+            return localVarFp.sample(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Model} model 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveModel(model: Model, options?: any): AxiosPromise<Model> {
+            return localVarFp.saveModel(model, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -682,12 +1055,66 @@ export const ModelsControllerApiFactory = function (configuration?: Configuratio
 export class ModelsControllerApi extends BaseAPI {
     /**
      * 
+     * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ModelsControllerApi
      */
-    public _default(options?: any) {
-        return ModelsControllerApiFp(this.configuration)._default(options).then((request) => request(this.axios, this.basePath));
+    public deleteModel(id: string, options?: any) {
+        return ModelsControllerApiFp(this.configuration).deleteModel(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelsControllerApi
+     */
+    public getHistory(id: string, options?: any) {
+        return ModelsControllerApiFp(this.configuration).getHistory(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelsControllerApi
+     */
+    public getModel(id: string, options?: any) {
+        return ModelsControllerApiFp(this.configuration).getModel(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelsControllerApi
+     */
+    public listModels(options?: any) {
+        return ModelsControllerApiFp(this.configuration).listModels(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelsControllerApi
+     */
+    public sample(options?: any) {
+        return ModelsControllerApiFp(this.configuration).sample(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Model} model 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelsControllerApi
+     */
+    public saveModel(model: Model, options?: any) {
+        return ModelsControllerApiFp(this.configuration).saveModel(model, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

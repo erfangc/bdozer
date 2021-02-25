@@ -6,7 +6,11 @@ import { BalanceSheetEditor } from './BalanceSheetEditor/BalanceSheetEditor';
 import { Billboard } from './Billboard/Billboard';
 import { IncomeStatementEditor } from './IncomeStatementEditor/IncomeStatementEditor';
 
-export function ModelEditor() {
+interface ModelEditorProps {
+    _id?: string
+}
+
+export function ModelEditor(props: ModelEditorProps) {
 
     const [model, setModel] = useState<Model | undefined>()
     const [output, setOutput] = useState<ModelEvaluationOutput | undefined>()
@@ -20,8 +24,13 @@ export function ModelEditor() {
     //
     useEffect(() => {
         (async () => {
-            const { data: model } = await modelsApi._default()
-            setModel(model)
+            if (props._id) {
+                const { data: model } = await modelsApi.getModel(props._id)
+                setModel(model)
+            } else {
+                const { data: model } = await modelsApi.sample()
+                setModel(model)
+            }
         })()
     }, [])
 
