@@ -15,6 +15,7 @@ export function ModelEditor(props: ModelEditorProps) {
 
     const [model, setModel] = useState<Model | undefined>()
     const [loadingModel, setLoadingModel] = useState(false)
+    const [runningModel, setRunningModel] = useState(false)
     const [output, setOutput] = useState<ModelEvaluationOutput | undefined>()
     const [activeTab, setActiveTab] = useState<'income statement' | 'balance sheet'>('income statement')
 
@@ -44,6 +45,7 @@ export function ModelEditor(props: ModelEditorProps) {
      */
     async function updateModel(newModel: Model) {
         setModel(newModel)
+        setRunningModel(true)
         // reformulate the model via the back-end
         try {
             const { data: reformulatedModel } = await modelBuilderApi.reformulateModel(newModel)
@@ -51,8 +53,10 @@ export function ModelEditor(props: ModelEditorProps) {
             modelsApi.saveModel(reformulatedModel) // save in the background don't wait
             const { data } = await modelBuilderApi.evaluateModel(reformulatedModel)
             setOutput(data)
+            setRunningModel(false)
         } catch (e) {
             console.error(e)
+            setRunningModel(false)
         }
     }
 
@@ -75,8 +79,8 @@ export function ModelEditor(props: ModelEditorProps) {
             </div>
             {
                 output
-                    ? <OutputDash model={model} output={output} onChange={updateModel} />
-                    : <Billboard runModel={runModel} />
+                    ? <OutputDash model={model} output={output} onChange={updateModel} running={runningModel} />
+                    : <Billboard runModel={runModel} running={runningModel} />
             }
         </div>
     )

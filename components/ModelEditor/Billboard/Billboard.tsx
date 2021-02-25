@@ -1,8 +1,11 @@
 import React from "react";
-import { PrimaryButton } from "../../PrimaryButton";
+import { Play, PrimaryButton, Spinner } from "../../PrimaryButton";
 import { Rocket } from "./Rocket";
-
-export function Billboard(props: { runModel: () => void }) {
+interface BillboardProps {
+    runModel: () => void
+    running?: boolean
+}
+export function Billboard({ runModel, running }: BillboardProps) {
     return (
         <section className="flex-grow flex self-start justify-center h-screen">
             <div className="hidden lg:flex-col lg:flex items-center justify-center space-y-8">
@@ -12,7 +15,10 @@ export function Billboard(props: { runModel: () => void }) {
                 </p>
                 <p><Code>Ctrl</Code> + <Code>A</Code>&nbsp;&nbsp;to add an item (doesn't work yet)</p>
                 <p><Code>Ctrl</Code> + <Code>Z</Code>&nbsp;&nbsp;to undo item (doesn't work yet)</p>
-                <PrimaryButton onClick={props.runModel}>Run Model</PrimaryButton>
+                <PrimaryButton onClick={runModel}>
+                    {running ? <Spinner /> : <Play />}
+                    Run Model
+                </PrimaryButton>
             </div>
         </section>
     )

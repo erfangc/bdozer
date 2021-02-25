@@ -6,7 +6,7 @@ export default function Home() {
   const router = useRouter()
   return (
     <App>
-      <div className="container mx-auto h-screen flex items-center ml-24">
+      <div className="container mx-auto h-screen flex items-center lg:ml-24">
         <div>
           <h1 className="text-5xl text-blueGray-50 font-bold">Welcome.</h1>
           <p className="mt-2 mb-12 text-sm text-blueGray-50 w-1/2">

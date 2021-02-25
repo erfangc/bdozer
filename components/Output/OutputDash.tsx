@@ -13,10 +13,11 @@ import { Toolbar } from "./Toolbar";
 interface OutputDashProps {
     output: ModelEvaluationOutput
     model: Model
+    running: boolean
     onChange: (newModel: Model) => void
 }
 
-export function OutputDash({ model, output, onChange }: OutputDashProps) {
+export function OutputDash({ model, running, output, onChange }: OutputDashProps) {
 
     const [stacking, setStacking] = useState<'normal' | 'percent' | undefined>()
     const [type, setType] = useState<'area' | 'column' | 'line'>("column")
@@ -58,10 +59,12 @@ export function OutputDash({ model, output, onChange }: OutputDashProps) {
                     <Card
                         value={output?.targetPriceUnderExitMultipleMethod}
                         label="Price (Multiple)"
+                        running={running}
                     />
                     <Card
                         value={output?.targetPriceUnderPerpetuityMethod}
                         label="Price (Growing Perpetuity)"
+                        running={running}
                     />
                 </div>
                 <div className="flex-col space-y-1">
