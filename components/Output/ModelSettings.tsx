@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import Modal from 'react-modal';
 import { Model } from "../../client";
 import { AutoForm, Schema } from "../AutoForms/AutoForm";
 import { DeleteButton } from "../DeleteButton";
-import { GhostButton } from "../GhostButton";
-import Modal from 'react-modal'
+import { PrimaryButton } from "../PrimaryButton";
 
 Modal.setAppElement('#__next');
 
@@ -30,9 +30,9 @@ export function ModelSettings({ model, onChange }: ModelSettingsProps) {
 
     return (
         <div>
-            <GhostButton onClick={openModal}>
+            <PrimaryButton onClick={openModal}>
                 Model Settings
-            </GhostButton>
+            </PrimaryButton>
             <Modal
                 overlayClassName="z-10"
                 shouldCloseOnOverlayClick

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Model, Item } from "../../../client";
 import { Revenue, CostOfGoodsSold, GrossProfit, OperatingExpense, OperatingIncome, NonOperatingExpense, InterestExpense, TaxExpense, NetIncome } from "../../../constants/ReservedItemNames";
+import { ModelEditorSkeleton } from "../ModelEditorSkeleton";
 import { IncomeStatementItemComponent } from "./IncomeStatementItemComponent";
 import { IncomeStatementSection } from "./Section";
 import { Subtotal } from "./Subtotal";
@@ -52,8 +53,7 @@ export function IncomeStatementEditor({ model, onChange }: IncomeStatementEditor
     // ------------------------------
     //  End of model item partitioning
     // ------------------------------
-
-    return (
+    const editorComponent = (
         <section className="flex flex-col space-y-12">
             <div className="flex-col space-y-4">
                 <div className="flex justify-end"><p className="font-light text-sm mr-10">FY0 Historical Value</p></div>
@@ -71,4 +71,6 @@ export function IncomeStatementEditor({ model, onChange }: IncomeStatementEditor
             <Subtotal subtotal={netIncomeSubtotal} />
         </section>
     )
+
+    return editorComponent
 }

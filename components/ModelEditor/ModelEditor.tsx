@@ -5,6 +5,7 @@ import { OutputDash } from '../Output/OutputDash';
 import { BalanceSheetEditor } from './BalanceSheetEditor/BalanceSheetEditor';
 import { Billboard } from './Billboard/Billboard';
 import { IncomeStatementEditor } from './IncomeStatementEditor/IncomeStatementEditor';
+import { ModelEditorSkeleton } from './ModelEditorSkeleton';
 
 interface ModelEditorProps {
     _id?: string
@@ -13,6 +14,7 @@ interface ModelEditorProps {
 export function ModelEditor(props: ModelEditorProps) {
 
     const [model, setModel] = useState<Model | undefined>()
+    const [loadingModel, setLoadingModel] = useState(false)
     const [output, setOutput] = useState<ModelEvaluationOutput | undefined>()
     const [activeTab, setActiveTab] = useState<'income statement' | 'balance sheet'>('income statement')
 
@@ -23,6 +25,7 @@ export function ModelEditor(props: ModelEditorProps) {
     // load the model from the backend
     //
     useEffect(() => {
+        setLoadingModel(true);
         (async () => {
             if (props._id !== 'sample') {
                 const { data: model } = await modelsApi.getModel(props._id)
@@ -31,6 +34,7 @@ export function ModelEditor(props: ModelEditorProps) {
                 const { data: model } = await modelsApi.sample()
                 setModel(model)
             }
+            setLoadingModel(false);
         })()
     }, [])
 
@@ -56,19 +60,16 @@ export function ModelEditor(props: ModelEditorProps) {
         updateModel(model)
     }
 
-    if (model === undefined) {
-        return null
-    }
-
     return (
         <div className="text-blueGray-100 text-lg lg:flex px-16 pt-16 pb-96 flex-grow">
             <div className="flex-col space-y-16">
                 <div className="flex-col space-y-8">
                     <Tabs activeTab={activeTab} onChange={newValue => setActiveTab(newValue)} />
                     {
-                        activeTab === 'income statement'
-                            ? <IncomeStatementEditor model={model} onChange={updateModel} />
-                            : <BalanceSheetEditor model={model} onChange={updateModel} />
+                        loadingModel || !model ? <ModelEditorSkeleton /> :
+                            activeTab === 'income statement'
+                                ? <IncomeStatementEditor model={model} onChange={updateModel} />
+                                : <BalanceSheetEditor model={model} onChange={updateModel} />
                     }
                 </div>
             </div>

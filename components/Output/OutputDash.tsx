@@ -6,7 +6,7 @@ import { FreeCashFlow, NetIncome, Revenue } from '../../constants/ReservedItemNa
 import { highcharts } from "../../HighchartsConfig";
 import { Card } from "../Card";
 import { DeleteButton } from '../DeleteButton';
-import { PrimaryButton } from '../PrimaryButton';
+import { GhostButton } from '../GhostButton';
 import { ModelSettings } from './ModelSettings';
 import { Toolbar } from "./Toolbar";
 
@@ -111,7 +111,7 @@ function SaveAs() {
 
     return (
         <div>
-            <PrimaryButton onClick={openModal} className="w-full">Save As</PrimaryButton>
+            <GhostButton onClick={openModal} className="w-full">Save As</GhostButton>
             <Modal
                 overlayClassName="z-10"
                 shouldCloseOnOverlayClick
