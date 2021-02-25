@@ -1,13 +1,17 @@
 import { useState } from "react";
+import { types } from "util";
 import { NumberInput } from "../NumberInput";
 import { PrimaryButton } from "../PrimaryButton";
+import { TextArea } from "../Textarea";
+import { TextInput } from "../TextInput";
 
 export interface Schema {
-    type: 'number' | 'percent' | 'integer',
+    type: 'number' | 'percent' | 'integer' | 'string' | 'textarea',
     name: string
     label?: string
     description?: string
     required?: boolean
+    fullLength?: boolean
 }
 
 interface AutoFormProps {
@@ -42,7 +46,7 @@ export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
     }
 
     const components = schema.map(property => {
-        const { type, label, description, name } = property
+        const { type, label, fullLength, name } = property
         const value = formState[name]
 
         function updatePropertyValue(newValue: any) {
@@ -50,25 +54,50 @@ export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
         }
 
         let component = null
-
-        if (type === 'number' || type === 'percent') {
+        if (type === 'string') {
             component = (
-                <NumberInput
-                    key={name}
-                    value={value}
-                    label={label}
-                    onValueChange={({ floatValue }) => updatePropertyValue(floatValue)}
-                />
+                <div className={fullLength ? 'col-span-full' : ''}>
+                    <TextInput
+                        key={name}
+                        value={value}
+                        label={label}
+                        onChange={({ currentTarget: { value } }) => updatePropertyValue(value)}
+                    />
+                </div>
+            )
+        } else if (type === 'textarea') {
+            component = (
+                <div className={fullLength ? 'col-span-full' : ''}>
+                    <TextArea
+                        key={name}
+                        value={value}
+                        label={label}
+                        onChange={({ currentTarget: { value } }) => updatePropertyValue(value)}
+                    />
+                </div>
+            )
+        } else if (type === 'number' || type === 'percent') {
+            component = (
+                <div className={fullLength ? 'col-span-full' : ''}>
+                    <NumberInput
+                        key={name}
+                        value={value}
+                        label={label}
+                        onValueChange={({ floatValue }) => updatePropertyValue(floatValue)}
+                    />
+                </div>
             )
         } else if (type === 'integer') {
             component = (
-                <NumberInput
-                    key={name}
-                    value={value}
-                    label={label}
-                    onValueChange={({ floatValue }) => updatePropertyValue(floatValue)}
-                    decimalScale={0}
-                />
+                <div className={fullLength ? 'col-span-full' : ''}>
+                    <NumberInput
+                        key={name}
+                        value={value}
+                        label={label}
+                        onValueChange={({ floatValue }) => updatePropertyValue(floatValue)}
+                        decimalScale={0}
+                    />
+                </div>
             )
         }
 
@@ -79,11 +108,7 @@ export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
         <div className="flex-col space-y-6">
             <form
                 onSubmit={handleSubmit}
-                className={
-                    useGrid
-                        ? "grid grid-flow-col grid-cols-3 grid-rows-4 gap-4"
-                        : "flex-col space-y-6"
-                }
+                className="grid grid-cols-3 gap-4"
             >
                 {components}
             </form>

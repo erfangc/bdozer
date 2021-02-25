@@ -44,6 +44,7 @@ export function ModelEditor(props: ModelEditorProps) {
         try {
             const { data: reformulatedModel } = await modelBuilderApi.reformulateModel(newModel)
             setModel(reformulatedModel)
+            modelsApi.saveModel(reformulatedModel) // save in the background don't wait
             const { data } = await modelBuilderApi.evaluateModel(reformulatedModel)
             setOutput(data)
         } catch (e) {

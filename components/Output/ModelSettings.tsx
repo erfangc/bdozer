@@ -36,7 +36,7 @@ export function ModelSettings({ model, onChange }: ModelSettingsProps) {
             <Modal
                 overlayClassName="z-10"
                 shouldCloseOnOverlayClick
-                className="z-10 top-1/4 left-1/4 right-1/4 absolute p-10 overflow-auto rounded-lg outline-none bg-blueGray-700 text-blueGray-50"
+                className="z-10 top-8 left-1/4 right-1/4 absolute p-10 overflow-auto rounded-lg outline-none bg-blueGray-700 text-blueGray-50"
                 isOpen={open}
                 onRequestClose={closeModal}
             >
@@ -53,6 +53,28 @@ export function ModelSettings({ model, onChange }: ModelSettingsProps) {
 }
 
 const schema: Schema[] = [
+    {
+        name: 'name',
+        type: 'string',
+        label: 'Model Name',
+        fullLength: true
+    },
+    {
+        name: 'description',
+        type: 'textarea',
+        label: 'Description',
+        fullLength: true
+    },
+    {
+        name: 'symbol',
+        type: 'string',
+        label: 'Symbol'
+    },
+    {
+        name: 'cik',
+        type: 'string',
+        label: 'CIK'
+    },
     {
         name: "currentPrice",
         type: "number",

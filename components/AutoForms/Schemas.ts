@@ -9,16 +9,19 @@ export function schemaOf(item: Item): Schema[] {
           name: "totalSubscriptionAtTerminalYear",
           label: "Total Subscription at Terminal Year",
           type: "integer",
+          fullLength: true,
         },
         {
           name: "initialSubscriptions",
           label: "Initial Subscriptions",
           type: "integer",
+          fullLength: true,
         },
         {
           name: "averageRevenuePerSubscription",
           label: "Average Revenue per Subscription",
           type: "number",
+          fullLength: true,
         },
       ];
     case ItemTypeEnum.FixedCost:
@@ -27,6 +30,7 @@ export function schemaOf(item: Item): Schema[] {
           name: "cost",
           label: "Cost",
           type: "number",
+          fullLength: true,
         },
       ];
     case ItemTypeEnum.PercentOfRevenue:
