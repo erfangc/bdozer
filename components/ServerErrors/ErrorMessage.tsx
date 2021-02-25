@@ -8,7 +8,7 @@ export function ErrorMessage({ error, onDismiss }: { error: ApiError, onDismiss:
                     Error Message
           </span>
                 <p className="text-sm font-light text-l">
-                    {error.message}
+                    {error?.message ?? 'An unknown server error have occurred'}
                 </p>
             </div>
             <a className="self-center text-sm text-blueGray-50" onClick={onDismiss}>
