@@ -24,7 +24,7 @@ export function ModelEditor(props: ModelEditorProps) {
     //
     useEffect(() => {
         (async () => {
-            if (props._id) {
+            if (props._id !== 'sample') {
                 const { data: model } = await modelsApi.getModel(props._id)
                 setModel(model)
             } else {
@@ -60,7 +60,7 @@ export function ModelEditor(props: ModelEditorProps) {
     }
 
     return (
-        <div className="text-blueGray-100 text-lg lg:flex">
+        <div className="text-blueGray-100 text-lg lg:flex px-16 pt-16 pb-96 flex-grow">
             <div className="flex-col space-y-16">
                 <div className="flex-col space-y-8">
                     <Tabs activeTab={activeTab} onChange={newValue => setActiveTab(newValue)} />

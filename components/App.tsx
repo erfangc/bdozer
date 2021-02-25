@@ -22,7 +22,7 @@ export function App({ children }) {
                 <div className="bg-blueGray-900 min-h-screen antialiased">
                     <Nav />
                     <ServerErrors />
-                    <div className="lg:ml-20 px-16 pt-16 pb-96">
+                    <div className="lg:ml-20 flex">
                         {children}
                     </div>
                 </div>

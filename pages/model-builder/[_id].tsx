@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { App } from "../../components/App";
 import { ModelEditor } from "../../components/ModelEditor/ModelEditor";
 
-export default function () {
+export default function ModelBuilder() {
     const router = useRouter()
     const { _id } = router.query
     return (

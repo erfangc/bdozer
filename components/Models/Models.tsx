@@ -58,14 +58,14 @@ export function Models() {
     }
 
     return (
-        <>
+        <div className="flex-grow px-16 py-24">
             <h1 className="text-3xl font-bold text-blueGray-50">Models</h1>
             <p className="text-base mt-2 mb-10 text-blueGray-100">These are the models that are currently saved in the system. Click on one to edit it</p>
             <div className="space-y-10 flex flex-col w-1/2 mb-10">
                 {loading ? null : modelComponents}
             </div>
             <PrimaryButton onClick={createModel}>Create a New Model</PrimaryButton>
-        </>
+        </div>
     )
 }
 
