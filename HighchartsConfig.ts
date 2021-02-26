@@ -1,11 +1,26 @@
 import Highcharts from "highcharts";
 
-const blueGray = "#F8FAFC";
+export const blueGray = "#F8FAFC";
+export const blueGray600 = "#475569";
+export const blueGray700 = "#334155";
+export const blue = "#2563EB";
 
 Highcharts.theme = {
   colors: ["#2563EB", "#16A34A", "#FACC15", "#EF4444", "#4F46E5", "#06B6D4"],
   credits: {
     enabled: false,
+  },
+  tooltip: {
+    useHTML: true,
+    formatter: function () {
+      return `<div class="p-1 flex space-x-2 text-blueGray-50">
+        <b class="font-semibold">${this.series.name}:</b>
+        <span>${this.y.toLocaleString()}</span>
+      </div>`;
+    },
+    borderWidth: 0,
+    backgroundColor: blueGray700,
+    borderRadius: 8,
   },
   chart: {
     style: {

@@ -88,14 +88,19 @@ export class BalanceSheetItemEditor extends Component<ItemEditorProps, State> {
     updateType(newType: ItemTypeEnum) {
         const { model, item, onChange } = this.props;
         const newItem: Item = { ...item, type: newType }
-        const updatedItems = model.balanceSheetItems?.map(oldItem => {
-            if (oldItem.name === item.name) {
-                return newItem
-            } else {
-                return oldItem
-            }
+        const updatedItems = model
+            .balanceSheetItems
+            ?.map(oldItem => {
+                if (oldItem.name === item.name) {
+                    return newItem
+                } else {
+                    return oldItem
+                }
+            })
+        onChange({
+            ...model,
+            balanceSheetItems: updatedItems
         })
-        onChange({ ...model, balanceSheetItems: updatedItems })
     }
 
     render() {
@@ -105,10 +110,18 @@ export class BalanceSheetItemEditor extends Component<ItemEditorProps, State> {
                 className="absolute top-0 z-10 left-full ml-4 bg-blueGray-800 px-20 py-8 rounded-lg shadow-md flex-col space-y-8"
             >
                 <div className="flex-col space-y-4">
-                    <ItemDescriptionInput item={item} onChange={this.updateDescription.bind(this)} />
-                    <ItemFY0Input item={item} onChange={this.updateHistoricalValue.bind(this)} />
+                    <ItemDescriptionInput
+                        item={item} onChange={this.updateDescription.bind(this)}
+                    />
+                    <ItemFY0Input
+                        item={item} onChange={this.updateHistoricalValue.bind(this)}
+                    />
                 </div>
-                <Select label="Item Type" value={item.type} onChange={({ currentTarget: { value } }) => this.updateType(value as any)}>
+                <Select
+                    label="Item Type"
+                    value={item.type}
+                    onChange={({ currentTarget: { value } }) => this.updateType(value as any)}
+                >
                     <option value={ItemTypeEnum.Custom}>Custom</option>
                     <option value={ItemTypeEnum.SubscriptionRevenue}>Subscription Revenue</option>
                     <option value={ItemTypeEnum.PercentOfTotalAsset}>Percent of Total Asset</option>
@@ -126,7 +139,9 @@ export class BalanceSheetItemEditor extends Component<ItemEditorProps, State> {
                             onSubmit={this.updateProperty.bind(this)}
                         />
                 }
-                <DeleteButton onClick={this.deleteItem.bind(this)}>Delete Item</DeleteButton>
+                <DeleteButton onClick={this.deleteItem.bind(this)}>
+                    Delete Item
+                </DeleteButton>
             </div>
         )
     }
