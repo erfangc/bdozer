@@ -210,6 +210,38 @@ export enum ItemTypeEnum {
 /**
  * 
  * @export
+ * @interface MXParserEvaluateRequest
+ */
+export interface MXParserEvaluateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MXParserEvaluateRequest
+     */
+    formula?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MXParserEvaluateResponse
+ */
+export interface MXParserEvaluateResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof MXParserEvaluateResponse
+     */
+    value?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MXParserEvaluateResponse
+     */
+    error?: string;
+}
+/**
+ * 
+ * @export
  * @interface Model
  */
 export interface Model {
@@ -403,16 +435,28 @@ export interface ModelEvaluationOutput {
 export interface ModelHistory {
     /**
      * 
+     * @type {string}
+     * @memberof ModelHistory
+     */
+    get_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelHistory
+     */
+    modelId?: string;
+    /**
+     * 
      * @type {Model}
      * @memberof ModelHistory
      */
     model?: Model;
     /**
      * 
-     * @type {Array<string>}
+     * @type {string}
      * @memberof ModelHistory
      */
-    changes?: Array<string>;
+    changeSummary?: string;
 }
 /**
  * 
@@ -1115,6 +1159,109 @@ export class ModelsControllerApi extends BaseAPI {
      */
     public saveModel(model: Model, options?: any) {
         return ModelsControllerApiFp(this.configuration).saveModel(model, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * MxParserControllerApi - axios parameter creator
+ * @export
+ */
+export const MxParserControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {MXParserEvaluateRequest} mXParserEvaluateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        evaluate: async (mXParserEvaluateRequest: MXParserEvaluateRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'mXParserEvaluateRequest' is not null or undefined
+            assertParamExists('evaluate', 'mXParserEvaluateRequest', mXParserEvaluateRequest)
+            const localVarPath = `/api/mxparser`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(mXParserEvaluateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * MxParserControllerApi - functional programming interface
+ * @export
+ */
+export const MxParserControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MxParserControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {MXParserEvaluateRequest} mXParserEvaluateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async evaluate(mXParserEvaluateRequest: MXParserEvaluateRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MXParserEvaluateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.evaluate(mXParserEvaluateRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * MxParserControllerApi - factory interface
+ * @export
+ */
+export const MxParserControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MxParserControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {MXParserEvaluateRequest} mXParserEvaluateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        evaluate(mXParserEvaluateRequest: MXParserEvaluateRequest, options?: any): AxiosPromise<MXParserEvaluateResponse> {
+            return localVarFp.evaluate(mXParserEvaluateRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * MxParserControllerApi - object-oriented interface
+ * @export
+ * @class MxParserControllerApi
+ * @extends {BaseAPI}
+ */
+export class MxParserControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {MXParserEvaluateRequest} mXParserEvaluateRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MxParserControllerApi
+     */
+    public evaluate(mXParserEvaluateRequest: MXParserEvaluateRequest, options?: any) {
+        return MxParserControllerApiFp(this.configuration).evaluate(mXParserEvaluateRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -17,11 +17,10 @@ export function Card(props: CardProps) {
             {
                 running
                     ?
-                    <p
-                        className="text-2xl animate-pulse"
+                    <div
+                        className="h-8 animate-pulse bg-blueGray-500 rounded"
                     >
-                        ...
-                    </p>
+                    </div>
                     : <NumberFormat
                         displayType='text'
                         className="text-2xl"

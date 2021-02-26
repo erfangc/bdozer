@@ -1,4 +1,8 @@
-import { ModelBuilderControllerApi, ModelsControllerApi } from "./client";
+import {
+  ModelBuilderControllerApi,
+  ModelsControllerApi,
+  MxParserControllerApi,
+} from "./client";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { useEffect } from "react";
@@ -40,4 +44,9 @@ export function useModelsApi() {
 export function useModelBuilderApi() {
   const axiosInstance = useAxios();
   return new ModelBuilderControllerApi(null, basePath, axiosInstance);
+}
+
+export function useMxParserApi() {
+  const axiosInstance = useAxios();
+  return new MxParserControllerApi(null, basePath, axiosInstance);
 }
