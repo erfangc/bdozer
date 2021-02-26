@@ -67,8 +67,11 @@ export function OutputDash({ model, running, output, onChange }: OutputDashProps
                         running={running}
                     />
                 </div>
-                <div className="flex-col space-y-1">
-                    <ModelSettings model={model} onChange={onChange} />
+                <div className="flex-col space-y-2">
+                    <ModelSettings
+                        model={model}
+                        onChange={onChange}
+                    />
                     <SaveAs />
                 </div>
             </div>

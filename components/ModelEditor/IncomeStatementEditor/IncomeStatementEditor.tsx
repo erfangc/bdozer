@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { Model, Item } from "../../../client";
-import { Revenue, CostOfGoodsSold, GrossProfit, OperatingExpense, OperatingIncome, NonOperatingExpense, InterestExpense, TaxExpense, NetIncome } from "../../../constants/ReservedItemNames";
-import { ModelEditorSkeleton } from "../ModelEditorSkeleton";
+import React from "react";
+import { Item, Model } from "../../../client";
+import { CostOfGoodsSold, GrossProfit, InterestExpense, NetIncome, NonOperatingExpense, OperatingExpense, OperatingIncome, Revenue, TaxExpense } from "../../../constants/ReservedItemNames";
 import { IncomeStatementItemComponent } from "./IncomeStatementItemComponent";
 import { IncomeStatementSection } from "./Section";
 import { Subtotal } from "./Subtotal";
@@ -65,8 +64,16 @@ export function IncomeStatementEditor({ model, onChange }: IncomeStatementEditor
             <Subtotal subtotal={operatingIncomeSubtotal} />
             <IncomeStatementSection items={nonOperatingExpensesItems} subtotal={nonOperatingExpensesSubtotal} onChange={onChange} model={model} />
             <div>
-                <IncomeStatementItemComponent item={interestExpenseSubtotal} onChange={onChange} model={model} />
-                <IncomeStatementItemComponent item={taxExpenseSubtotal} onChange={onChange} model={model} />
+                <IncomeStatementItemComponent
+                    item={interestExpenseSubtotal}
+                    onChange={onChange}
+                    model={model}
+                />
+                <IncomeStatementItemComponent
+                    item={taxExpenseSubtotal}
+                    onChange={onChange}
+                    model={model}
+                />
             </div>
             <Subtotal subtotal={netIncomeSubtotal} />
         </section>

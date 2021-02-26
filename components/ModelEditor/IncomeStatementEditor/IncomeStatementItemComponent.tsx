@@ -8,7 +8,6 @@ interface ItemComponentProps {
     model: Model
     item: Item
     onChange: (newModel: Model) => void
-
 }
 
 interface State {
@@ -42,11 +41,15 @@ export class IncomeStatementItemComponent extends Component<ItemComponentProps, 
         const { item, onChange, model } = this.props
         const { editorOpen } = this.state
         // TODO fix this validation error
+
         const checked = item.expression || item.fixedCost || item.subscriptionRevenue || item.percentOfRevenue
         return (
             <div className="flex items-center w-96 justify-between relative" ref={node => { this.node = node }}>
                 <span>{item.description ?? item.name}</span>
-                <span className="flex items-center space-x-2 cursor-pointer" onClick={() => this.setState({ editorOpen: !editorOpen })}>
+                <span
+                    className="flex items-center space-x-2 cursor-pointer"
+                    onClick={() => this.setState({ editorOpen: !editorOpen })}
+                >
                     <NumberFormat
                         className="hover:text-blueGray-400"
                         thousandSeparator
@@ -58,7 +61,13 @@ export class IncomeStatementItemComponent extends Component<ItemComponentProps, 
                 </span>
                 {
                     editorOpen
-                        ? <IncomeStatementItemEditor item={item} onChange={onChange} model={model} />
+                        ? (
+                            <IncomeStatementItemEditor
+                                item={item}
+                                onChange={onChange}
+                                model={model}
+                            />
+                        )
                         : null
                 }
             </div>

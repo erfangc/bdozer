@@ -4,6 +4,7 @@ import { Model } from "../../client";
 import { AutoForm, Schema } from "../AutoForms/AutoForm";
 import { DeleteButton } from "../DeleteButton";
 import { PrimaryButton } from "../PrimaryButton";
+import { Cogs } from "../ButtonSvgs/Cogs";
 
 Modal.setAppElement('#__next');
 
@@ -31,7 +32,8 @@ export function ModelSettings({ model, onChange }: ModelSettingsProps) {
     return (
         <div>
             <PrimaryButton onClick={openModal}>
-                Model Settings
+                <Cogs />
+                <span>Model Settings</span>
             </PrimaryButton>
             <Modal
                 overlayClassName="z-10"

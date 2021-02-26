@@ -17,7 +17,7 @@ export class NumberInput extends React.Component<NumberInputProps> {
                     getInputRef={el => this.ref = el}
                     thousandSeparator
                     decimalScale={1}
-                    className="outline-none border border-blueGray-500 bg-blueGray-900 text-blueGray-50 rounded-sm px-3 py-2 cursor-pointer"
+                    className="outline-none border border-blueGray-500 bg-blueGray-900 text-blueGray-50 rounded px-3 py-2 cursor-pointer"
                     {...props}
                 />
             </div>

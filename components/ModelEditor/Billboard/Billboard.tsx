@@ -1,5 +1,7 @@
 import React from "react";
-import { Play, PrimaryButton, Spinner } from "../../PrimaryButton";
+import { PrimaryButton } from "../../PrimaryButton";
+import { Play } from "../../ButtonSvgs/Play";
+import { Spinner } from "../../ButtonSvgs/Spinner";
 import { Rocket } from "./Rocket";
 interface BillboardProps {
     runModel: () => void
