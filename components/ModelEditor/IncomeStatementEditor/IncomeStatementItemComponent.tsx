@@ -44,12 +44,18 @@ export class IncomeStatementItemComponent extends Component<ItemComponentProps, 
 
         const checked = item.expression || item.fixedCost || item.subscriptionRevenue || item.percentOfRevenue
         return (
-            <div className="flex items-center w-96 justify-between relative" ref={node => { this.node = node }}>
-                <span>{item.description ?? item.name}</span>
-                <span
-                    className="flex items-center space-x-2 cursor-pointer"
+            <div
+                className="flex items-center justify-between relative cursor-pointer"
+                ref={node => { this.node = node }}
+            >
+                {/* wrap around the outside of the component to simulate a border with negative padding */}
+                <div
                     onClick={() => this.setState({ editorOpen: !editorOpen })}
+                    className="absolute -inset-2 border rounded-lg hover:border-blueGray-600 border-blueGray-900 hover:shadow-lg"
                 >
+                </div>
+                <span>{item.description ?? item.name}</span>
+                <span className="flex items-center space-x-2">
                     <NumberFormat
                         className="hover:text-blueGray-400"
                         thousandSeparator
