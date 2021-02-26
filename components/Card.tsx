@@ -1,6 +1,5 @@
 import React from "react";
 import NumberFormat from "react-number-format";
-import { Spinner } from "./PrimaryButton";
 
 // Card component
 interface CardProps {
