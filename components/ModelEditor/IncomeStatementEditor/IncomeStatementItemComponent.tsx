@@ -51,7 +51,7 @@ export class IncomeStatementItemComponent extends Component<ItemComponentProps, 
                 {/* wrap around the outside of the component to simulate a border with negative padding */}
                 <div
                     onClick={() => this.setState({ editorOpen: !editorOpen })}
-                    className="absolute -inset-2 border rounded-lg hover:border-blueGray-600 border-blueGray-900 hover:shadow-lg"
+                    className="absolute -inset-2 border rounded-lg hover:border-opacity-100 transition ease-linear border-blueGray-600 border-opacity-0 hover:shadow-lg"
                 >
                 </div>
                 <span>{item.description ?? item.name}</span>

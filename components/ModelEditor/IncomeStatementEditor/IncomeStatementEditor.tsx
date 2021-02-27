@@ -63,7 +63,7 @@ export function IncomeStatementEditor({ model, onChange }: IncomeStatementEditor
             <IncomeStatementSection items={operatingExpensesItems} subtotal={operatingExpensesSubtotal} onChange={onChange} model={model} />
             <Subtotal subtotal={operatingIncomeSubtotal} />
             <IncomeStatementSection items={nonOperatingExpensesItems} subtotal={nonOperatingExpensesSubtotal} onChange={onChange} model={model} />
-            <div>
+            <div className="flex flex-col space-y-4">
                 <IncomeStatementItemComponent
                     item={interestExpenseSubtotal}
                     onChange={onChange}
