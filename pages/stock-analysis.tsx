@@ -280,7 +280,7 @@ export default function StockAnalysis() {
             </section>
 
             {/*  */}
-            <section className="h-screen mx-auto container p-4" id='end'>
+            <section className="h-screen mx-auto container p-4 pt-12" id='end'>
                 <div className="flex items-center flex-col h-full justify-center space-y-10">
                     <div className="flex items-center flex-col space-y-4">
                         <p className="uppercase text-blue-600 font-bold">Our Target Price</p>
@@ -317,10 +317,15 @@ export default function StockAnalysis() {
 
 function Info() {
     const [email, setEmail] = useState<string | undefined>(undefined)
+    const [message, setMessage] = useState<string | undefined>("No extraneous marketing emails, only updates on stock analyses and early access acceptance notification")
     const [submitted, setSubmitted] = useState(false)
 
     function submit() {
-        setSubmitted(true)
+        if (!email) {
+            setMessage("Email is required")
+        } else {
+            setSubmitted(true)
+        }
     }
 
     return (
@@ -335,7 +340,7 @@ function Info() {
                             className="px-6 py-4 text-lg border-2 rounded-lg border-blueGray-600 outline-none focus:outline-none focus:border-blue-800 transition-all ease-linear"
                             onChange={({ currentTarget: { value } }) => setEmail(value)}
                         />
-                        <p>No extraneous marketing emails, only updates on stock analyses and early access acceptance notification</p>
+                        <p>{message}</p>
                     </div>
                     <Button onClick={submit}>Request Early Access</Button>
                 </>
