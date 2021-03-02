@@ -80,10 +80,14 @@ function Source({ href }) {
     )
 }
 
-function Button({ className, children, ...props }: React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>) {
+function Button({
+    className,
+    children,
+    ...props
+}: React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>) {
     return (
         <a
-            className={`px-6 py-4 bg-gradient-to-r from-orange-400 to-amber-500 rounded text-xl text-blueGray-900 ${className} flex items-center space-x-4 hover:to-orange-500 hover:from-amber-500 cursor-pointer`}
+            className={`px-6 py-4 hover:bg-amber-500 bg-gradient-to-r from-orange-400 to-amber-500 rounded text-xl text-blueGray-700 flex items-center space-x-4 cursor-pointer shadow hover:shadow-2xl transition ease-linear ${className}`}
             {...props}
         >
             {children}
@@ -194,7 +198,7 @@ export default function StockAnalysis() {
             <section className="min-h-screen flex items-center bg-blueGray-800" id="answer2">
                 <div className="flex items-center mx-auto container p-4 h-full md:p-2 text-blueGray-50 lg:px-0">
                     {/* left */}
-                    <div className="lg:w-1/2 xl:w-2/5 lg:mr-4 hidden lg:block">
+                    <div className="lg:w-1/2 xl:w-2/5 lg:mr-12 hidden lg:block">
                         <VehicleDeliveryChart />
                     </div>
                     {/* right */}
