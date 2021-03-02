@@ -287,6 +287,12 @@ export default function StockAnalysis() {
                             </p>
                         </h5>
                         <ul className="flex flex-col space-y-4 font-light">
+                            <li>
+                                Tesla introduced full self-driving beta version late 2020 with positive reviews
+                                <Source href="https://www.businessinsider.com/tesla-model-3-full-self-driving-no-human-input-driverless-2021-1" />
+                            </li>
+                            <li>Cars produced after March 2019 have the hardware necessary for full self-driving</li>
+                            <li>Development of Dojo supercompuer for self-driving technology</li>
                         </ul>
                         <div className="w-48">
                             <Button href="#end">Continue</Button>
