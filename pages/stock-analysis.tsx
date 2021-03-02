@@ -149,8 +149,8 @@ export default function StockAnalysis() {
                         </p>
                     </div>
                     <ul className="flex-col flex space-y-10 lg:space-y-0 lg:space-x-6 lg:flex-row">
-                        <li className="w-48 text-center text-blue-600 font-semibold bg-blue-100 p-4 rounded-lg">In 2020, Tesla sold 500,000 cars globally</li>
-                        <li className="w-48 text-center text-blue-600 font-semibold bg-blue-100 p-4 rounded-lg">20% of Tesla's sales came from Energy Storage and Vehicle Services</li>
+                        <li className="w-48 text-center text-blue-600 font-semibold bg-blue-100 p-4 rounded-lg">In 2020, Tesla sold 500,000 cars globally <Source href="https://insideevs.com/news/485298/global-plugin-car-sales-december-2020/" /></li>
+                        <li className="w-48 text-center text-blue-600 font-semibold bg-blue-100 p-4 rounded-lg">20% of Tesla's sales came from Energy Storage and Vehicle Services <Source href="https://tesla-cdn.thron.com/static/1LRLZK_2020_Q4_Quarterly_Update_Deck_-_Searchable_LVA2GL.pdf?xseo=&response-content-disposition=inline%3Bfilename%3D%22TSLA-Q4-2020-Update.pdf%22" /></li>
                     </ul>
                     <Button href="#question2">Continue</Button>
                 </div>
@@ -292,8 +292,9 @@ export default function StockAnalysis() {
                         </p>
                     </div>
                     <ul className="flex-col flex space-y-10 lg:space-y-0 lg:space-x-6 lg:flex-row">
-                        <li className="w-48 text-center text-blue-600 font-semibold bg-blue-100 p-4 rounded-lg">In 2020, Tesla sold 500,000 cars globally</li>
-                        <li className="w-48 text-center text-blue-600 font-semibold bg-blue-100 p-4 rounded-lg">20% of Tesla's sales came from Energy Storage and Vehicle Services</li>
+                        <li className="w-48 text-center text-blue-600 font-semibold bg-blue-100 p-4 rounded-lg">1 in 15 new passenger car sold world wide will be Tesla</li>
+                        <li className="w-48 text-center text-blue-600 font-semibold bg-blue-100 p-4 rounded-lg">Tesla would be able to cut cost and double its margin to 26%</li>
+                        <li className="w-48 text-center text-blue-600 font-semibold bg-blue-100 p-4 rounded-lg">50% of Tesla customers will buy their self-driving software</li>
                     </ul>
                     <div className="flex-col space-y-2">
                         <div className="w-96 flex flex-col space-y-2">
