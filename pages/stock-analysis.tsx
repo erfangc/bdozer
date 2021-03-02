@@ -1,4 +1,5 @@
 import HighchartsReact from "highcharts-react-official"
+import Head from "next/head";
 
 import React, { ReactNode, useState } from "react"
 import { RegisterEmailControllerApi } from "../client"
@@ -117,7 +118,11 @@ function Question({ children }: { children: ReactNode }) {
 export default function StockAnalysis() {
     return (
         <main className="text-blueGray-800">
-
+            <Head>
+                <title>Stock Valuation - (TSLA)</title>
+                <link rel="icon" href="/favicon.ico" />
+                <script type="text/javascript" src="/fullstory.js"></script>
+            </Head>
             <section className="min-h-screen flex items-center bg-blueGray-800 main-bg">
                 <div className="container mx-auto h-3/4 flex-col flex space-y-10 justify-center px-4">
                     <p className="text-blue-400 uppercase font-semibold">
