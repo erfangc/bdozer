@@ -4,6 +4,8 @@ import React, { ReactNode, useState } from "react"
 import { RegisterEmailControllerApi } from "../client"
 import { blueGray, highcharts } from "../HighchartsConfig"
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || undefined;
+
 function VehicleDeliveryChart() {
     const options: Highcharts.Options = {
         title: {
@@ -334,7 +336,7 @@ function Info() {
             setMessage("Email is required")
         } else {
             try {
-                const api = new RegisterEmailControllerApi()
+                const api = new RegisterEmailControllerApi(null, basePath)
                 await api.register(email)
                 setSubmitted(true)
             } catch (e) {
