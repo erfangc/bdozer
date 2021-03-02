@@ -228,9 +228,10 @@ export default function StockAnalysis() {
                             Tesla will be able to reduce cost and double its margin to 26%
                         </h5>
                         <ul className="flex flex-col space-y-4 font-light">
-                            <li>Expand Gigafactory in Shanghai <Source /></li>
-                            <li>Building Gigafactory in Berlin and Texas <Source /></li>
-                            <li>Selling Software as a Service and Mass Produce Auto Pilot <Source /></li>
+                            <li>Expand Gigafactory in Shanghai <Source href="https://tesla-cdn.thron.com/static/1LRLZK_2020_Q4_Quarterly_Update_Deck_-_Searchable_LVA2GL.pdf?xseo=&response-content-disposition=inline%3Bfilename%3D%22TSLA-Q4-2020-Update.pdf%22
+"/></li>
+                            <li>Building Gigafactory in Berlin and Texas</li>
+                            <li>Selling Software as a Service and Mass Produce Auto Pilot</li>
                         </ul>
                         <div className="w-48">
                             <Button href="#question4">Continue</Button>
