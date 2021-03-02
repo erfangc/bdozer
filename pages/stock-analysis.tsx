@@ -109,9 +109,11 @@ export default function StockAnalysis() {
     return (
         <main className="text-blueGray-800">
 
-            <section className="h-screen bg-blueGray-800">
-                <div className="container mx-auto h-3/4 flex-col flex space-y-10 justify-center p-4">
-                    <p className="text-blue-400 uppercase font-semibold">Tesla Corp (TSLA)</p>
+            <section className="min-h-screen flex items-center bg-blueGray-800">
+                <div className="container mx-auto h-3/4 flex-col flex space-y-10 justify-center px-4">
+                    <p className="text-blue-400 uppercase font-semibold">
+                        Tesla Corp (TSLA)
+                    </p>
                     <h1 className="text-6xl text-blueGray-50">
                         Tesla is worth <code className="font-mono text-blue-500 font-bold">$592</code> according to our analysis
                     </h1>
@@ -120,8 +122,8 @@ export default function StockAnalysis() {
             </section>
 
             {/*  */}
-            <section className="h-screen mx-auto container p-4" id="question1">
-                <div className="flex-col flex space-y-10 pt-10">
+            <section className="min-h-screen flex items-center mx-auto container" id="question1">
+                <div className="flex-col flex space-y-10 px-4">
                     <Question>
                         <span className="text-3xl lg:text-4xl">
                             In 2020, Tesla had 50% market share in the electrical vehicle market
@@ -137,7 +139,7 @@ export default function StockAnalysis() {
             </section>
 
             {/*  */}
-            <section className="h-screen mx-auto container p-4" id="answer1">
+            <section className="min-h-screen flex items-center mx-auto container justify-center" id="answer1">
                 <div className="flex items-center flex-col space-y-10">
                     <div className="flex items-center flex-col space-y-4">
                         <p className="uppercase text-blue-600 font-bold">Answer</p>
@@ -157,8 +159,8 @@ export default function StockAnalysis() {
             </section>
 
             {/*  */}
-            <section className="h-screen mx-auto container p-4" id="question2">
-                <div className="flex-col flex space-y-10 pt-10">
+            <section className="min-h-screen flex items-center mx-auto container" id="question2">
+                <div className="flex-col flex space-y-10 px-4">
                     <Question>
                         <span className="text-3xl lg:text-4xl">
                             By 2025, 1 in 15 new passenger cars sold will be Tesla
@@ -175,7 +177,7 @@ export default function StockAnalysis() {
                 </div>
             </section>
             {/*  */}
-            <section className="h-screen bg-blueGray-800" id="answer2">
+            <section className="min-h-screen flex items-center bg-blueGray-800" id="answer2">
                 <div className="flex items-center mx-auto container p-4 h-full md:p-2 text-blueGray-50 lg:px-0">
                     {/* left */}
                     <div className="lg:w-1/2 xl:w-2/5 lg:mr-4 hidden lg:block">
@@ -201,8 +203,8 @@ export default function StockAnalysis() {
             </section>
 
             {/*  */}
-            <section className="h-screen mx-auto container p-4" id="question3">
-                <div className="flex-col flex space-y-10 pt-10">
+            <section className="min-h-screen flex items-center mx-auto container" id="question3">
+                <div className="flex-col flex space-y-10 px-4">
                     <Question>
                         <span className="text-3xl lg:text-4xl">
                             By 2025, Tesla will be able to reduce cost and double its margin to 26%
@@ -220,7 +222,7 @@ export default function StockAnalysis() {
             </section>
 
             {/*  */}
-            <section className="h-screen bg-blueGray-800" id="answer3">
+            <section className="min-h-screen flex items-center bg-blueGray-800" id="answer3">
                 <div className="flex items-center mx-auto container p-4 h-full md:p-2 text-blueGray-50 lg:px-0">
                     <div className="flex flex-col space-y-10">
                         <h5 className="text-2xl text-amber-500 font-semibold">
@@ -242,8 +244,8 @@ export default function StockAnalysis() {
 
 
             {/*  */}
-            <section className="h-screen mx-auto container p-4" id="question4">
-                <div className="flex-col flex space-y-10 pt-10">
+            <section className="min-h-screen flex items-center mx-auto container" id="question4">
+                <div className="flex-col flex space-y-10 px-4">
                     <Question>
                         <span className="text-3xl lg:text-4xl">
                             By 2025, 50% Tesla car buyers will purchase Tesla self-driving software, which cost $10,000
@@ -261,7 +263,7 @@ export default function StockAnalysis() {
             </section>
 
             {/*  */}
-            <section className="h-screen bg-blueGray-800" id="answer4">
+            <section className="min-h-screen flex items-center bg-blueGray-800" id="answer4">
                 <div className="flex items-center mx-auto container p-4 h-full md:p-2 text-blueGray-50 lg:px-0">
                     <div className="flex flex-col space-y-10">
                         <h5>
@@ -280,7 +282,7 @@ export default function StockAnalysis() {
             </section>
 
             {/*  */}
-            <section className="h-screen mx-auto container p-4 pt-12" id='end'>
+            <section className="min-h-screen flex items-center mx-auto container p-4 justify-center" id='end'>
                 <div className="flex items-center flex-col h-full justify-center space-y-10">
                     <div className="flex items-center flex-col space-y-4">
                         <p className="uppercase text-blue-600 font-bold">Our Target Price</p>
@@ -329,7 +331,7 @@ function Info() {
     }
 
     return (
-        <section className="h-screen mx-auto container p-4 flex justify-center flex-col space-y-4 items-center" id='info'>
+        <section className="min-h-screen flex items-center mx-auto container p-4 justify-center flex-col space-y-4" id='info'>
             {!submitted
                 ?
                 <>
