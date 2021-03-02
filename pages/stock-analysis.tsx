@@ -1,5 +1,5 @@
 import HighchartsReact from "highcharts-react-official"
-import React, { ReactNode } from "react"
+import React, { ReactNode, useState } from "react"
 import { blueGray, highcharts } from "../HighchartsConfig"
 
 function VehicleDeliveryChart() {
@@ -314,13 +314,30 @@ export default function StockAnalysis() {
 }
 
 function Info() {
+    const [email, setEmail] = useState<string | undefined>(undefined)
+    const [submitted, setSubmitted] = useState(false)
+
+    function submit() {
+        setSubmitted(true)
+    }
+
     return (
         <section className="h-screen mx-auto container p-4 flex justify-center flex-col space-y-4 items-center" id='info'>
-            <div className="flex flex-col space-y-2 w-1/2">
-                <label>Enter Your Email Address</label>
-                <input type="email" className="px-6 py-4 text-lg border-2 rounded-lg border-blueGray-600 outline-none focus:outline-none focus:border-blue-800 transition-all ease-linear" />
-                <p>No extraneous marketing emails, only updates on stock analyses and early access acceptance notification</p>
-            </div>
+            {!submitted
+                ?
+                <>
+                    <div className="flex flex-col space-y-2 lg:w-1/2 w-full">
+                        <label>Enter Your Email Address</label>
+                        <input
+                            type="email"
+                            className="px-6 py-4 text-lg border-2 rounded-lg border-blueGray-600 outline-none focus:outline-none focus:border-blue-800 transition-all ease-linear"
+                            onChange={({ currentTarget: { value } }) => setEmail(value)}
+                        />
+                        <p>No extraneous marketing emails, only updates on stock analyses and early access acceptance notification</p>
+                    </div>
+                    <Button onClick={submit}>Request Early Access</Button>
+                </>
+                : <h1>Your information has been submitted. Thank you</h1>}
         </section>
     )
 }
