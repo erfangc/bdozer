@@ -71,7 +71,7 @@ function VehicleDeliveryChart() {
 
 function Source({ href }) {
     return (
-        <a className="underline hover:no-underline cursor-pointer text-xs align-bottom ml-1" href={href}>(source)</a>
+        <a className="underline hover:no-underline cursor-pointer text-xs align-bottom ml-1" href={href} target="_blank">(source)</a>
     )
 }
 
@@ -189,9 +189,9 @@ export default function StockAnalysis() {
                             new passenger cars sold world wide will be Tesla by 2025
                         </h5>
                         <ul className="flex flex-col space-y-4 font-light">
-                            <li>Tesla expects to produce and sell 3.8 million cars by 2025 <Source /></li>
-                            <li>Demand is strong: the global electric vehicles grew rapidly for the past 5 years 43% per year <Source /></li>
-                            <li>Policy makers in US, Europe and China are putting more emphasis on green energy electrical vehicles <Source /></li>
+                            <li>Tesla expects to produce and sell 3.8 million cars by 2025 <Source href="https://www.marketwatch.com/story/tesla-stock-sinks-7-after-quarterly-profit-is-a-miss-11611782700" /></li>
+                            <li>Demand is strong: the global electric vehicles grew rapidly for the past 5 years 43% per year <Source href="https://insideevs.com/news/485298/global-plugin-car-sales-december-2020/" /></li>
+                            <li>Policy makers in US, Europe and China are putting more emphasis on green energy electrical vehicles <Source href="https://www2.deloitte.com/us/en/insights/focus/future-of-mobility/electric-vehicle-trends-2030.html" /></li>
                         </ul>
                         <div className="w-48">
                             <Button href="#question3">Continue</Button>
@@ -296,18 +296,31 @@ export default function StockAnalysis() {
                     </ul>
                     <div className="flex-col space-y-2">
                         <div className="w-96 flex flex-col space-y-2">
-                            <Button href="#question2">See the Full Model</Button>
+                            <Button href="#info">See the Full Model</Button>
                         </div>
                         <div className="w-96 flex flex-col space-y-2">
-                            <Button href="#question2">Request Another Stock Analysis</Button>
+                            <Button href="#info">Request Another Stock Analysis</Button>
                         </div>
                         <div className="w-96 flex flex-col space-y-2">
-                            <Button href="#question2">Request Early Access</Button>
+                            <Button href="#info">Request Early Access</Button>
                             <p className="text-sm px-6">Over 10,000 Stock Analyses Constantly Updated by Professionals</p>
                         </div>
                     </div>
                 </div>
             </section>
+            <Info />
         </main>
+    )
+}
+
+function Info() {
+    return (
+        <section className="h-screen mx-auto container p-4 flex justify-center flex-col space-y-4 items-center" id='info'>
+            <div className="flex flex-col space-y-2 w-1/2">
+                <label>Enter Your Email Address</label>
+                <input type="email" className="px-6 py-4 text-lg border-2 rounded-lg border-blueGray-600 outline-none focus:outline-none focus:border-blue-800 transition-all ease-linear" />
+                <p>No extraneous marketing emails, only updates on stock analyses and early access acceptance notification</p>
+            </div>
+        </section>
     )
 }
