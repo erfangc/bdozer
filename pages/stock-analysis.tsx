@@ -1,5 +1,7 @@
 import HighchartsReact from "highcharts-react-official"
+
 import React, { ReactNode, useState } from "react"
+import { RegisterEmailControllerApi } from "../client"
 import { blueGray, highcharts } from "../HighchartsConfig"
 
 function VehicleDeliveryChart() {
@@ -97,7 +99,12 @@ function Exit() {
 function Question({ children }: { children: ReactNode }) {
     return (
         <h1>
-            <pre className="font-mono text-2xl font-extrabold lg:text-xl mb-3">Question</pre>
+            <pre className="font-mono text-2xl font-extrabold lg:text-xl mb-3 shadow p-2 rounded-md w-48 bg-blueGray-50 flex justify-between">
+                Question
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C21.9939 17.5203 17.5203 21.9939 12 22ZM11 17V19H13V17H11ZM12 7C13.1046 7 14 7.89543 14 9C14.0035 9.53073 13.7904 10.0399 13.41 10.41L12.17 11.67C11.4214 12.4217 11.0008 13.4391 11 14.5V15H13C12.9223 13.925 13.3559 12.8763 14.17 12.17L15.07 11.25C15.6681 10.6543 16.003 9.84411 16 9C16 6.79086 14.2091 5 12 5C9.79086 5 8 6.79086 8 9H10C10 7.89543 10.8954 7 12 7Z" fill="#334155" />
+                </svg>
+            </pre>
             <span className="text-3xl lg:text-4xl">
                 {children}
             </span>
@@ -109,7 +116,7 @@ export default function StockAnalysis() {
     return (
         <main className="text-blueGray-800">
 
-            <section className="min-h-screen flex items-center bg-blueGray-800">
+            <section className="min-h-screen flex items-center bg-blueGray-800 main-bg">
                 <div className="container mx-auto h-3/4 flex-col flex space-y-10 justify-center px-4">
                     <p className="text-blue-400 uppercase font-semibold">
                         Tesla Corp (TSLA)
@@ -142,7 +149,7 @@ export default function StockAnalysis() {
             <section className="min-h-screen flex items-center mx-auto container justify-center" id="answer1">
                 <div className="flex items-center flex-col space-y-10">
                     <div className="flex items-center flex-col space-y-4">
-                        <p className="uppercase text-blue-600 font-bold">Answer</p>
+                        <p className="uppercase text-blue-600 font-bold">Our Answer</p>
                         <h1 className="text-6xl text-blue-900 font-extrabold font-mono">16%</h1>
                         <p
                             className="text-2xl text-blue-900 font-extrabold w-96 text-center"
@@ -322,11 +329,17 @@ function Info() {
     const [message, setMessage] = useState<string | undefined>("No extraneous marketing emails, only updates on stock analyses and early access acceptance notification")
     const [submitted, setSubmitted] = useState(false)
 
-    function submit() {
+    async function submit() {
         if (!email) {
             setMessage("Email is required")
         } else {
-            setSubmitted(true)
+            try {
+                const api = new RegisterEmailControllerApi()
+                await api.register(email)
+                setSubmitted(true)
+            } catch (e) {
+                setMessage('Sorry, an error has occured')
+            }
         }
     }
 

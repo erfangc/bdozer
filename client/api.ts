@@ -192,6 +192,12 @@ export interface Item {
      * @memberof Item
      */
     nonCashExpense?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Item
+     */
+    subtotal?: boolean;
 }
 
 /**
@@ -207,38 +213,6 @@ export enum ItemTypeEnum {
     FixedCost = 'FixedCost'
 }
 
-/**
- * 
- * @export
- * @interface MXParserEvaluateRequest
- */
-export interface MXParserEvaluateRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof MXParserEvaluateRequest
-     */
-    formula?: string;
-}
-/**
- * 
- * @export
- * @interface MXParserEvaluateResponse
- */
-export interface MXParserEvaluateResponse {
-    /**
-     * 
-     * @type {number}
-     * @memberof MXParserEvaluateResponse
-     */
-    value?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof MXParserEvaluateResponse
-     */
-    error?: string;
-}
 /**
  * 
  * @export
@@ -293,6 +267,12 @@ export interface Model {
      * @memberof Model
      */
     balanceSheetItems?: Array<Item>;
+    /**
+     * 
+     * @type {Array<Item>}
+     * @memberof Model
+     */
+    cashFlowStatementItems?: Array<Item>;
     /**
      * 
      * @type {Array<Item>}
@@ -461,6 +441,38 @@ export interface ModelHistory {
 /**
  * 
  * @export
+ * @interface MxParserEvaluateRequest
+ */
+export interface MxParserEvaluateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof MxParserEvaluateRequest
+     */
+    formula?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MxParserEvaluateResponse
+ */
+export interface MxParserEvaluateResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof MxParserEvaluateResponse
+     */
+    value?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MxParserEvaluateResponse
+     */
+    error?: string;
+}
+/**
+ * 
+ * @export
  * @interface PercentOfRevenue
  */
 export interface PercentOfRevenue {
@@ -534,6 +546,173 @@ export interface UnitSalesRevenue {
      */
     initialUnitsSold?: number;
 }
+
+/**
+ * EdgarModelBuilderControllerApi - axios parameter creator
+ * @export
+ */
+export const EdgarModelBuilderControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        buildModel: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('buildModel', 'cik', cik)
+            const localVarPath = `/api/edgar-model-builder/{cik}`
+                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} term 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        search: async (term: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'term' is not null or undefined
+            assertParamExists('search', 'term', term)
+            const localVarPath = `/api/edgar-model-builder/search`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (term !== undefined) {
+                localVarQueryParameter['term'] = term;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * EdgarModelBuilderControllerApi - functional programming interface
+ * @export
+ */
+export const EdgarModelBuilderControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = EdgarModelBuilderControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async buildModel(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Model>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.buildModel(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} term 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async search(term: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.search(term, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * EdgarModelBuilderControllerApi - factory interface
+ * @export
+ */
+export const EdgarModelBuilderControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = EdgarModelBuilderControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        buildModel(cik: string, options?: any): AxiosPromise<Model> {
+            return localVarFp.buildModel(cik, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} term 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        search(term: string, options?: any): AxiosPromise<object> {
+            return localVarFp.search(term, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * EdgarModelBuilderControllerApi - object-oriented interface
+ * @export
+ * @class EdgarModelBuilderControllerApi
+ * @extends {BaseAPI}
+ */
+export class EdgarModelBuilderControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EdgarModelBuilderControllerApi
+     */
+    public buildModel(cik: string, options?: any) {
+        return EdgarModelBuilderControllerApiFp(this.configuration).buildModel(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} term 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EdgarModelBuilderControllerApi
+     */
+    public search(term: string, options?: any) {
+        return EdgarModelBuilderControllerApiFp(this.configuration).search(term, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 /**
  * ModelBuilderControllerApi - axios parameter creator
@@ -1171,13 +1350,13 @@ export const MxParserControllerApiAxiosParamCreator = function (configuration?: 
     return {
         /**
          * 
-         * @param {MXParserEvaluateRequest} mXParserEvaluateRequest 
+         * @param {MxParserEvaluateRequest} mxParserEvaluateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        evaluate: async (mXParserEvaluateRequest: MXParserEvaluateRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'mXParserEvaluateRequest' is not null or undefined
-            assertParamExists('evaluate', 'mXParserEvaluateRequest', mXParserEvaluateRequest)
+        evaluate: async (mxParserEvaluateRequest: MxParserEvaluateRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'mxParserEvaluateRequest' is not null or undefined
+            assertParamExists('evaluate', 'mxParserEvaluateRequest', mxParserEvaluateRequest)
             const localVarPath = `/api/mxparser`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1197,7 +1376,7 @@ export const MxParserControllerApiAxiosParamCreator = function (configuration?: 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(mXParserEvaluateRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(mxParserEvaluateRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1216,12 +1395,12 @@ export const MxParserControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {MXParserEvaluateRequest} mXParserEvaluateRequest 
+         * @param {MxParserEvaluateRequest} mxParserEvaluateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async evaluate(mXParserEvaluateRequest: MXParserEvaluateRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MXParserEvaluateResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.evaluate(mXParserEvaluateRequest, options);
+        async evaluate(mxParserEvaluateRequest: MxParserEvaluateRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MxParserEvaluateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.evaluate(mxParserEvaluateRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1236,12 +1415,12 @@ export const MxParserControllerApiFactory = function (configuration?: Configurat
     return {
         /**
          * 
-         * @param {MXParserEvaluateRequest} mXParserEvaluateRequest 
+         * @param {MxParserEvaluateRequest} mxParserEvaluateRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        evaluate(mXParserEvaluateRequest: MXParserEvaluateRequest, options?: any): AxiosPromise<MXParserEvaluateResponse> {
-            return localVarFp.evaluate(mXParserEvaluateRequest, options).then((request) => request(axios, basePath));
+        evaluate(mxParserEvaluateRequest: MxParserEvaluateRequest, options?: any): AxiosPromise<MxParserEvaluateResponse> {
+            return localVarFp.evaluate(mxParserEvaluateRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1255,13 +1434,117 @@ export const MxParserControllerApiFactory = function (configuration?: Configurat
 export class MxParserControllerApi extends BaseAPI {
     /**
      * 
-     * @param {MXParserEvaluateRequest} mXParserEvaluateRequest 
+     * @param {MxParserEvaluateRequest} mxParserEvaluateRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MxParserControllerApi
      */
-    public evaluate(mXParserEvaluateRequest: MXParserEvaluateRequest, options?: any) {
-        return MxParserControllerApiFp(this.configuration).evaluate(mXParserEvaluateRequest, options).then((request) => request(this.axios, this.basePath));
+    public evaluate(mxParserEvaluateRequest: MxParserEvaluateRequest, options?: any) {
+        return MxParserControllerApiFp(this.configuration).evaluate(mxParserEvaluateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * RegisterEmailControllerApi - axios parameter creator
+ * @export
+ */
+export const RegisterEmailControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        register: async (email: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'email' is not null or undefined
+            assertParamExists('register', 'email', email)
+            const localVarPath = `/public/register-email`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (email !== undefined) {
+                localVarQueryParameter['email'] = email;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * RegisterEmailControllerApi - functional programming interface
+ * @export
+ */
+export const RegisterEmailControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RegisterEmailControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async register(email: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.register(email, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * RegisterEmailControllerApi - factory interface
+ * @export
+ */
+export const RegisterEmailControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RegisterEmailControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        register(email: string, options?: any): AxiosPromise<void> {
+            return localVarFp.register(email, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * RegisterEmailControllerApi - object-oriented interface
+ * @export
+ * @class RegisterEmailControllerApi
+ * @extends {BaseAPI}
+ */
+export class RegisterEmailControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} email 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RegisterEmailControllerApi
+     */
+    public register(email: string, options?: any) {
+        return RegisterEmailControllerApiFp(this.configuration).register(email, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
