@@ -179,7 +179,6 @@ export default function StockAnalysis() {
                 </div>
             </section>
 
-            {/*  */}
             <section className="min-h-screen flex items-center mx-auto container" id="question1">
                 <div className="flex-col flex space-y-10 px-4">
                     <Question>
@@ -196,7 +195,6 @@ export default function StockAnalysis() {
                 </div>
             </section>
 
-            {/*  */}
             <section className="min-h-screen flex items-center mx-auto container justify-center" id="answer1">
                 <div className="flex items-center flex-col space-y-10">
                     <div className="flex items-center flex-col space-y-4">
@@ -216,7 +214,6 @@ export default function StockAnalysis() {
                 </div>
             </section>
 
-            {/*  */}
             <section className="min-h-screen flex items-center mx-auto container" id="question2">
                 <div className="flex-col flex space-y-10 px-4">
                     <Question>
@@ -234,7 +231,6 @@ export default function StockAnalysis() {
                     </div>
                 </div>
             </section>
-            {/*  */}
             <section className="min-h-screen flex items-center bg-blueGray-800" id="answer2">
                 <div className="flex-col flex items-center mx-auto container p-4 h-full text-blueGray-50 space-y-12 lg:flex-row lg:space-x-12 lg:space-y-0">
                     {/* left */}
@@ -260,7 +256,6 @@ export default function StockAnalysis() {
                 </div>
             </section>
 
-            {/*  */}
             <section className="min-h-screen flex items-center mx-auto container" id="question3">
                 <div className="flex-col flex space-y-10 px-4">
                     <Question>
@@ -279,7 +274,6 @@ export default function StockAnalysis() {
                 </div>
             </section>
 
-            {/*  */}
             <section className="min-h-screen flex items-center bg-blueGray-800" id="answer3">
                 <div className="flex items-center mx-auto container p-4 h-full md:p-2 text-blueGray-50 lg:px-0">
                     <div className="flex flex-col space-y-10">
@@ -300,7 +294,6 @@ export default function StockAnalysis() {
             </section>
 
 
-            {/*  */}
             <section className="min-h-screen flex items-center mx-auto container" id="question4">
                 <div className="flex-col flex space-y-10 px-4">
                     <Question>
@@ -319,7 +312,6 @@ export default function StockAnalysis() {
                 </div>
             </section>
 
-            {/*  */}
             <section className="min-h-screen flex items-center bg-blueGray-800" id="answer4">
                 <div className="flex items-center mx-auto container p-4 h-full md:p-2 text-blueGray-50 lg:px-0">
                     <div className="flex flex-col space-y-10">
@@ -343,7 +335,6 @@ export default function StockAnalysis() {
                 </div>
             </section>
 
-            {/*  */}
             <section className="min-h-screen flex items-center mx-auto container p-4 justify-center" id='end'>
                 <div className="flex items-center flex-col h-full justify-center space-y-10">
                     <div className="flex items-center flex-col space-y-4">
