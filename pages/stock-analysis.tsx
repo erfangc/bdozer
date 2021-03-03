@@ -9,6 +9,7 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || undefined;
 
 function Info() {
     const [email, setEmail] = useState<string | undefined>(undefined)
+    const [stock, setStock] = useState<string | undefined>(undefined)
     const [message, setMessage] = useState<string | undefined>("No extraneous marketing emails, only updates on stock analyses and early access acceptance notification")
     const [submitted, setSubmitted] = useState(false)
 
@@ -18,7 +19,7 @@ function Info() {
         } else {
             try {
                 const api = new RegisterEmailControllerApi(null, basePath)
-                await api.register(email)
+                await api.register(email, stock)
                 setSubmitted(true)
             } catch (e) {
                 setMessage('Sorry, an error has occured')
@@ -27,21 +28,31 @@ function Info() {
     }
 
     return (
-        <section className="min-h-screen flex items-center mx-auto container p-4 justify-center flex-col space-y-4" id='info'>
+        <section className="min-h-screen flex items-center mx-auto container p-4 justify-center flex-col space-y-12" id='info'>
             {!submitted
                 ?
-                <>
-                    <div className="flex flex-col space-y-2 lg:w-1/2 w-full">
-                        <label>Enter Your Email Address</label>
+                <div className="flex flex-col space-y-6">
+                    <div className="flex flex-col space-y-2 w-full">
+                        <label className="font-bold">Enter Your Email Address</label>
                         <input
                             type="email"
+                            value={email}
                             className="px-6 py-4 text-lg border-2 rounded-lg border-blueGray-600 outline-none focus:outline-none focus:border-blue-800 transition-all ease-linear"
                             onChange={({ currentTarget: { value } }) => setEmail(value)}
                         />
-                        <p>{message}</p>
+                        <p className="font-light">{message}</p>
                     </div>
-                    <Button onClick={submit}>Request Early Access</Button>
-                </>
+                    <div className="flex flex-col space-y-2 w-full">
+                        <label className="font-bold">Enter a company you want us to analyze <span className="font-light">(optional)</span></label>
+                        <input
+                            type="email"
+                            value={stock}
+                            className="px-6 py-4 text-lg border-2 rounded-lg border-blueGray-600 outline-none focus:outline-none focus:border-blue-800 transition-all ease-linear w-96"
+                            onChange={({ currentTarget: { value } }) => setStock(value)}
+                        />
+                    </div>
+                    <Button className="w-80" onClick={submit}>Request Early Access</Button>
+                </div>
                 : <h1>Your information has been submitted. Thank you</h1>}
         </section>
     )

@@ -1454,10 +1454,11 @@ export const RegisterEmailControllerApiAxiosParamCreator = function (configurati
         /**
          * 
          * @param {string} email 
+         * @param {string} [stock] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        register: async (email: string, options: any = {}): Promise<RequestArgs> => {
+        register: async (email: string, stock?: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'email' is not null or undefined
             assertParamExists('register', 'email', email)
             const localVarPath = `/public/register-email`;
@@ -1474,6 +1475,10 @@ export const RegisterEmailControllerApiAxiosParamCreator = function (configurati
 
             if (email !== undefined) {
                 localVarQueryParameter['email'] = email;
+            }
+
+            if (stock !== undefined) {
+                localVarQueryParameter['stock'] = stock;
             }
 
 
@@ -1500,11 +1505,12 @@ export const RegisterEmailControllerApiFp = function(configuration?: Configurati
         /**
          * 
          * @param {string} email 
+         * @param {string} [stock] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async register(email: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.register(email, options);
+        async register(email: string, stock?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.register(email, stock, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1520,11 +1526,12 @@ export const RegisterEmailControllerApiFactory = function (configuration?: Confi
         /**
          * 
          * @param {string} email 
+         * @param {string} [stock] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        register(email: string, options?: any): AxiosPromise<void> {
-            return localVarFp.register(email, options).then((request) => request(axios, basePath));
+        register(email: string, stock?: string, options?: any): AxiosPromise<void> {
+            return localVarFp.register(email, stock, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1539,12 +1546,13 @@ export class RegisterEmailControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} email 
+     * @param {string} [stock] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RegisterEmailControllerApi
      */
-    public register(email: string, options?: any) {
-        return RegisterEmailControllerApiFp(this.configuration).register(email, options).then((request) => request(this.axios, this.basePath));
+    public register(email: string, stock?: string, options?: any) {
+        return RegisterEmailControllerApiFp(this.configuration).register(email, stock, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
