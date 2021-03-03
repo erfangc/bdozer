@@ -236,17 +236,17 @@ export default function StockAnalysis() {
             </section>
             {/*  */}
             <section className="min-h-screen flex items-center bg-blueGray-800" id="answer2">
-                <div className="flex items-center mx-auto container p-4 h-full md:p-2 text-blueGray-50 lg:px-0 lg:space-x-12">
+                <div className="flex-col flex items-center mx-auto container p-4 h-full text-blueGray-50 space-y-12 lg:flex-row lg:space-x-12 lg:space-y-0">
                     {/* left */}
-                    <div className="lg:w-1/2 xl:w-2/5 hidden lg:block">
+                    <div className="lg:w-1/2 xl:w-2/5 w-full">
                         <VehicleDeliveryChart />
                     </div>
                     {/* right */}
                     <div className="flex flex-col space-y-10">
                         <h5 className="text-2xl text-amber-500 font-semibold">
                             In our fair value calculation, <br />
-                            our analyst project that 1 in 15 <br />
-                            new passenger cars sold world wide will be Tesla by 2025
+                            our analyst project that 1 in <span className="font-extrabold text-amber-300">15</span> new passenger cars<br />
+                            sold world wide will be Tesla by 2025
                         </h5>
                         <ul className="flex flex-col space-y-4 font-light">
                             <li>Tesla expects to produce and sell 3.8 million cars by 2025 <Source href="https://www.marketwatch.com/story/tesla-stock-sinks-7-after-quarterly-profit-is-a-miss-11611782700" /></li>
