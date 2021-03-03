@@ -85,22 +85,22 @@ function VehicleDeliveryChart() {
                     {
                         x: 2022,
                         y: 1.2,
-                        color: '#3730A3',
+                        color: '#6366F1',
                     },
                     {
                         x: 2023,
                         y: 1.5,
-                        color: '#4F46E5'
+                        color: '#6366F1'
                     },
                     {
                         x: 2024,
                         y: 2.2,
-                        color: '#6366F1'
+                        color: '#4F46E5'
                     },
                     {
                         x: 2025,
                         y: 3.8,
-                        color: '#A5B4FC'
+                        color: '#3730A3'
                     },
                 ]
             }
@@ -169,7 +169,7 @@ export default function StockAnalysis() {
             </Head>
             <section className="min-h-screen flex items-center bg-blueGray-800 main-bg">
                 <div className="container mx-auto h-3/4 flex-col flex space-y-10 justify-center px-4">
-                    <p className="text-blue-400 uppercase font-semibold">
+                    <p className="text-blue-500 uppercase font-semibold">
                         Tesla Corp (TSLA)
                     </p>
                     <h1 className="text-6xl text-blueGray-50">
@@ -221,7 +221,7 @@ export default function StockAnalysis() {
                 <div className="flex-col flex space-y-10 px-4">
                     <Question>
                         <span className="text-3xl lg:text-4xl">
-                            By 2025, 1 in 15 new passenger cars sold will be Tesla
+                            By 2025, 1 in <span className="font-bold">15</span> new passenger cars sold will be Tesla
                             <br />
                             Do you agree?
                         </span>
@@ -236,9 +236,9 @@ export default function StockAnalysis() {
             </section>
             {/*  */}
             <section className="min-h-screen flex items-center bg-blueGray-800" id="answer2">
-                <div className="flex items-center mx-auto container p-4 h-full md:p-2 text-blueGray-50 lg:px-0">
+                <div className="flex items-center mx-auto container p-4 h-full md:p-2 text-blueGray-50 lg:px-0 lg:space-x-12">
                     {/* left */}
-                    <div className="lg:w-1/2 xl:w-2/5 lg:mr-12 hidden lg:block">
+                    <div className="lg:w-1/2 xl:w-2/5 hidden lg:block">
                         <VehicleDeliveryChart />
                     </div>
                     {/* right */}
@@ -356,7 +356,7 @@ export default function StockAnalysis() {
                         </p>
                     </div>
                     <ul className="flex-col flex space-y-10 lg:space-y-0 lg:space-x-6 lg:flex-row">
-                        <li className="w-48 text-center text-blue-600 font-semibold bg-blue-100 p-4 rounded-lg">1 in 15 new passenger car sold world wide will be Tesla</li>
+                        <li className="w-48 text-center text-blue-600 font-semibold bg-blue-100 p-4 rounded-lg">1 in <span className="font-bold">15</span> new passenger car sold world wide will be Tesla</li>
                         <li className="w-48 text-center text-blue-600 font-semibold bg-blue-100 p-4 rounded-lg">Tesla would be able to cut cost and double its margin to 26%</li>
                         <li className="w-48 text-center text-blue-600 font-semibold bg-blue-100 p-4 rounded-lg">50% of Tesla customers will buy their self-driving software</li>
                     </ul>
