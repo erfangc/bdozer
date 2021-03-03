@@ -166,6 +166,11 @@ export default function StockAnalysis() {
                 <title>Stock Valuation - (TSLA)</title>
                 <link rel="icon" href="/favicon.ico" />
                 <script type="text/javascript" src="/fullstory.js"></script>
+                <script type="text/javascript" src="/facebook-pixel.js"></script>
+                <noscript>
+                    <img height="1" width="1"
+                        src="https://www.facebook.com/tr?id=478207119860336&ev=PageView&noscript=1" />
+                </noscript>
             </Head>
             <section className="min-h-screen flex items-center bg-blueGray-800 main-bg">
                 <div className="container mx-auto h-3/4 flex-col flex space-y-10 justify-center px-4">
