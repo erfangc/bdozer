@@ -7,6 +7,46 @@ import { blueGray, highcharts } from "../HighchartsConfig"
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || undefined;
 
+function Info() {
+    const [email, setEmail] = useState<string | undefined>(undefined)
+    const [message, setMessage] = useState<string | undefined>("No extraneous marketing emails, only updates on stock analyses and early access acceptance notification")
+    const [submitted, setSubmitted] = useState(false)
+
+    async function submit() {
+        if (!email) {
+            setMessage("Email is required")
+        } else {
+            try {
+                const api = new RegisterEmailControllerApi(null, basePath)
+                await api.register(email)
+                setSubmitted(true)
+            } catch (e) {
+                setMessage('Sorry, an error has occured')
+            }
+        }
+    }
+
+    return (
+        <section className="min-h-screen flex items-center mx-auto container p-4 justify-center flex-col space-y-4" id='info'>
+            {!submitted
+                ?
+                <>
+                    <div className="flex flex-col space-y-2 lg:w-1/2 w-full">
+                        <label>Enter Your Email Address</label>
+                        <input
+                            type="email"
+                            className="px-6 py-4 text-lg border-2 rounded-lg border-blueGray-600 outline-none focus:outline-none focus:border-blue-800 transition-all ease-linear"
+                            onChange={({ currentTarget: { value } }) => setEmail(value)}
+                        />
+                        <p>{message}</p>
+                    </div>
+                    <Button onClick={submit}>Request Early Access</Button>
+                </>
+                : <h1>Your information has been submitted. Thank you</h1>}
+        </section>
+    )
+}
+
 function VehicleDeliveryChart() {
     const options: Highcharts.Options = {
         title: {
@@ -248,8 +288,7 @@ export default function StockAnalysis() {
                             Tesla will be able to reduce cost and double its margin to 26%
                         </h5>
                         <ul className="flex flex-col space-y-4 font-light">
-                            <li>Expand Gigafactory in Shanghai <Source href="https://tesla-cdn.thron.com/static/1LRLZK_2020_Q4_Quarterly_Update_Deck_-_Searchable_LVA2GL.pdf?xseo=&response-content-disposition=inline%3Bfilename%3D%22TSLA-Q4-2020-Update.pdf%22
-"/></li>
+                            <li>Expand Gigafactory in Shanghai <Source href="https://tesla-cdn.thron.com/static/1LRLZK_2020_Q4_Quarterly_Update_Deck_-_Searchable_LVA2GL.pdf?xseo=&response-content-disposition=inline%3Bfilename%3D%22TSLA-Q4-2020-Update.pdf%22" /></li>
                             <li>Building Gigafactory in Berlin and Texas</li>
                             <li>Selling Software as a Service and Mass Produce Auto Pilot</li>
                         </ul>
@@ -337,45 +376,5 @@ export default function StockAnalysis() {
             </section>
             <Info />
         </main>
-    )
-}
-
-function Info() {
-    const [email, setEmail] = useState<string | undefined>(undefined)
-    const [message, setMessage] = useState<string | undefined>("No extraneous marketing emails, only updates on stock analyses and early access acceptance notification")
-    const [submitted, setSubmitted] = useState(false)
-
-    async function submit() {
-        if (!email) {
-            setMessage("Email is required")
-        } else {
-            try {
-                const api = new RegisterEmailControllerApi(null, basePath)
-                await api.register(email)
-                setSubmitted(true)
-            } catch (e) {
-                setMessage('Sorry, an error has occured')
-            }
-        }
-    }
-
-    return (
-        <section className="min-h-screen flex items-center mx-auto container p-4 justify-center flex-col space-y-4" id='info'>
-            {!submitted
-                ?
-                <>
-                    <div className="flex flex-col space-y-2 lg:w-1/2 w-full">
-                        <label>Enter Your Email Address</label>
-                        <input
-                            type="email"
-                            className="px-6 py-4 text-lg border-2 rounded-lg border-blueGray-600 outline-none focus:outline-none focus:border-blue-800 transition-all ease-linear"
-                            onChange={({ currentTarget: { value } }) => setEmail(value)}
-                        />
-                        <p>{message}</p>
-                    </div>
-                    <Button onClick={submit}>Request Early Access</Button>
-                </>
-                : <h1>Your information has been submitted. Thank you</h1>}
-        </section>
     )
 }
