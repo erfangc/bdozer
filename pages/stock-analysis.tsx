@@ -51,7 +51,7 @@ function Info() {
                             onChange={({ currentTarget: { value } }) => setStock(value)}
                         />
                     </div>
-                    <Button className="w-80" onClick={submit}>Request Early Access</Button>
+                    <Button className="w-80" onClick={submit}>Receive New Stock Alert</Button>
                 </div>
                 : <h1>Your information has been submitted. Thank you</h1>}
         </section>
@@ -375,7 +375,7 @@ export default function StockAnalysis() {
                             <Button href="#info">Request Another Stock Analysis</Button>
                         </div>
                         <div className="w-96 flex flex-col space-y-2">
-                            <Button href="#info">Request Early Access</Button>
+                            <Button href="#info">Receive New Stock Alert</Button>
                             <p className="text-sm px-6">Over 10,000 Stock Analyses Constantly Updated by Professionals</p>
                         </div>
                     </div>
