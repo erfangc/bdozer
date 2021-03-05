@@ -98,6 +98,68 @@ export interface Cell {
 /**
  * 
  * @export
+ * @interface EdgarEntity
+ */
+export interface EdgarEntity {
+    /**
+     * 
+     * @type {string}
+     * @memberof EdgarEntity
+     */
+    get_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EdgarEntity
+     */
+    get_index?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EdgarEntity
+     */
+    get_type?: string;
+    /**
+     * 
+     * @type {EdgarEntitySource}
+     * @memberof EdgarEntity
+     */
+    get_source?: EdgarEntitySource;
+}
+/**
+ * 
+ * @export
+ * @interface EdgarEntitySource
+ */
+export interface EdgarEntitySource {
+    /**
+     * 
+     * @type {string}
+     * @memberof EdgarEntitySource
+     */
+    entity?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EdgarEntitySource
+     */
+    entity_words?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EdgarEntitySource
+     */
+    tickers?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof EdgarEntitySource
+     */
+    rank?: number;
+}
+/**
+ * 
+ * @export
  * @interface EdgarFilingMetadata
  */
 export interface EdgarFilingMetadata {
@@ -946,7 +1008,7 @@ export const EdgarExplorerControllerApiFp = function(configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchEntities(term: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async searchEntities(term: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<EdgarEntity>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.searchEntities(term, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -976,7 +1038,7 @@ export const EdgarExplorerControllerApiFactory = function (configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchEntities(term: string, options?: any): AxiosPromise<object> {
+        searchEntities(term: string, options?: any): AxiosPromise<Array<EdgarEntity>> {
             return localVarFp.searchEntities(term, options).then((request) => request(axios, basePath));
         },
         /**

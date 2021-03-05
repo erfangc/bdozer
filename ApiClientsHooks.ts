@@ -1,4 +1,5 @@
 import {
+  EdgarExplorerControllerApi,
   ModelBuilderControllerApi,
   ModelsControllerApi,
   MxParserControllerApi,
@@ -49,4 +50,9 @@ export function useModelBuilderApi() {
 export function useMxParserApi() {
   const axiosInstance = useAxios();
   return new MxParserControllerApi(null, basePath, axiosInstance);
+}
+
+export function useEdgarExplorerControllerApi() {
+  const axiosInstance = useAxios();
+  return new EdgarExplorerControllerApi(null, basePath, axiosInstance)
 }
