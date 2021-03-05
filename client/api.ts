@@ -98,6 +98,224 @@ export interface Cell {
 /**
  * 
  * @export
+ * @interface EdgarFilingMetadata
+ */
+export interface EdgarFilingMetadata {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EdgarFilingMetadata
+     */
+    ciks?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof EdgarFilingMetadata
+     */
+    period_ending?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EdgarFilingMetadata
+     */
+    root_form?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EdgarFilingMetadata
+     */
+    file_num?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EdgarFilingMetadata
+     */
+    display_names?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof EdgarFilingMetadata
+     */
+    sequence?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EdgarFilingMetadata
+     */
+    biz_states?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EdgarFilingMetadata
+     */
+    sics?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof EdgarFilingMetadata
+     */
+    form?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EdgarFilingMetadata
+     */
+    adsh?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EdgarFilingMetadata
+     */
+    biz_locations?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof EdgarFilingMetadata
+     */
+    file_date?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EdgarFilingMetadata
+     */
+    file_type?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EdgarFilingMetadata
+     */
+    file_description?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof EdgarFilingMetadata
+     */
+    inc_states?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface Fact
+ */
+export interface Fact {
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    get_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    instanceDocumentElementId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    cik?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    entityName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    primarySymbol?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Fact
+     */
+    symbols?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    formType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    elementName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    longNamespace?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    rawElementName?: string;
+    /**
+     * 
+     * @type {XbrlPeriod}
+     * @memberof Fact
+     */
+    period?: XbrlPeriod;
+    /**
+     * 
+     * @type {Array<XbrlExplicitMember>}
+     * @memberof Fact
+     */
+    explicitMembers?: Array<XbrlExplicitMember>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    sourceDocument?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    label?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    verboseLabel?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    labelTerse?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    stringValue?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Fact
+     */
+    doubleValue?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    lastUpdated?: string;
+}
+/**
+ * 
+ * @export
  * @interface FixedCost
  */
 export interface FixedCost {
@@ -107,6 +325,43 @@ export interface FixedCost {
      * @memberof FixedCost
      */
     cost?: number;
+}
+/**
+ * 
+ * @export
+ * @interface HistoricalValue
+ */
+export interface HistoricalValue {
+    /**
+     * 
+     * @type {string}
+     * @memberof HistoricalValue
+     */
+    factId?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof HistoricalValue
+     */
+    value?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof HistoricalValue
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HistoricalValue
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HistoricalValue
+     */
+    instant?: string;
 }
 /**
  * 
@@ -138,6 +393,12 @@ export interface Item {
      * @memberof Item
      */
     historicalValue?: number;
+    /**
+     * 
+     * @type {Array<HistoricalValue>}
+     * @memberof Item
+     */
+    historicalValues?: Array<HistoricalValue>;
     /**
      * 
      * @type {string}
@@ -546,56 +807,67 @@ export interface UnitSalesRevenue {
      */
     initialUnitsSold?: number;
 }
+/**
+ * 
+ * @export
+ * @interface XbrlExplicitMember
+ */
+export interface XbrlExplicitMember {
+    /**
+     * 
+     * @type {string}
+     * @memberof XbrlExplicitMember
+     */
+    dimension?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof XbrlExplicitMember
+     */
+    value?: string;
+}
+/**
+ * 
+ * @export
+ * @interface XbrlPeriod
+ */
+export interface XbrlPeriod {
+    /**
+     * 
+     * @type {string}
+     * @memberof XbrlPeriod
+     */
+    instant?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof XbrlPeriod
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof XbrlPeriod
+     */
+    endDate?: string;
+}
 
 /**
- * EdgarModelBuilderControllerApi - axios parameter creator
+ * EdgarExplorerControllerApi - axios parameter creator
  * @export
  */
-export const EdgarModelBuilderControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const EdgarExplorerControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        buildModel: async (cik: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('buildModel', 'cik', cik)
-            const localVarPath = `/api/edgar-model-builder/{cik}`
-                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * 
          * @param {string} term 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        search: async (term: string, options: any = {}): Promise<RequestArgs> => {
+        searchEntities: async (term: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'term' is not null or undefined
-            assertParamExists('search', 'term', term)
-            const localVarPath = `/api/edgar-model-builder/search`;
+            assertParamExists('searchEntities', 'term', term)
+            const localVarPath = `/public/edgar-explorer/entities`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -622,94 +894,610 @@ export const EdgarModelBuilderControllerApiAxiosParamCreator = function (configu
                 options: localVarRequestOptions,
             };
         },
-    }
-};
-
-/**
- * EdgarModelBuilderControllerApi - functional programming interface
- * @export
- */
-export const EdgarModelBuilderControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = EdgarModelBuilderControllerApiAxiosParamCreator(configuration)
-    return {
         /**
          * 
          * @param {string} cik 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async buildModel(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Model>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.buildModel(cik, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        searchFilings: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('searchFilings', 'cik', cik)
+            const localVarPath = `/public/edgar-explorer/filings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (cik !== undefined) {
+                localVarQueryParameter['cik'] = cik;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
         },
+    }
+};
+
+/**
+ * EdgarExplorerControllerApi - functional programming interface
+ * @export
+ */
+export const EdgarExplorerControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = EdgarExplorerControllerApiAxiosParamCreator(configuration)
+    return {
         /**
          * 
          * @param {string} term 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async search(term: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.search(term, options);
+        async searchEntities(term: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchEntities(term, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-    }
-};
-
-/**
- * EdgarModelBuilderControllerApi - factory interface
- * @export
- */
-export const EdgarModelBuilderControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = EdgarModelBuilderControllerApiFp(configuration)
-    return {
         /**
          * 
          * @param {string} cik 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        buildModel(cik: string, options?: any): AxiosPromise<Model> {
-            return localVarFp.buildModel(cik, options).then((request) => request(axios, basePath));
+        async searchFilings(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<EdgarFilingMetadata>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchFilings(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+    }
+};
+
+/**
+ * EdgarExplorerControllerApi - factory interface
+ * @export
+ */
+export const EdgarExplorerControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = EdgarExplorerControllerApiFp(configuration)
+    return {
         /**
          * 
          * @param {string} term 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        search(term: string, options?: any): AxiosPromise<object> {
-            return localVarFp.search(term, options).then((request) => request(axios, basePath));
+        searchEntities(term: string, options?: any): AxiosPromise<object> {
+            return localVarFp.searchEntities(term, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchFilings(cik: string, options?: any): AxiosPromise<Array<EdgarFilingMetadata>> {
+            return localVarFp.searchFilings(cik, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * EdgarModelBuilderControllerApi - object-oriented interface
+ * EdgarExplorerControllerApi - object-oriented interface
  * @export
- * @class EdgarModelBuilderControllerApi
+ * @class EdgarExplorerControllerApi
  * @extends {BaseAPI}
  */
-export class EdgarModelBuilderControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} cik 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof EdgarModelBuilderControllerApi
-     */
-    public buildModel(cik: string, options?: any) {
-        return EdgarModelBuilderControllerApiFp(this.configuration).buildModel(cik, options).then((request) => request(this.axios, this.basePath));
-    }
-
+export class EdgarExplorerControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} term 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof EdgarModelBuilderControllerApi
+     * @memberof EdgarExplorerControllerApi
      */
-    public search(term: string, options?: any) {
-        return EdgarModelBuilderControllerApiFp(this.configuration).search(term, options).then((request) => request(this.axios, this.basePath));
+    public searchEntities(term: string, options?: any) {
+        return EdgarExplorerControllerApiFp(this.configuration).searchEntities(term, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EdgarExplorerControllerApi
+     */
+    public searchFilings(cik: string, options?: any) {
+        return EdgarExplorerControllerApiFp(this.configuration).searchFilings(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * FactBaseControllerApi - axios parameter creator
+ * @export
+ */
+export const FactBaseControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        allFactsForCik: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('allFactsForCik', 'cik', cik)
+            const localVarPath = `/api/fact-base/{cik}/all-facts`
+                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} adsh 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        buildModelForFiling: async (adsh: string, cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'adsh' is not null or undefined
+            assertParamExists('buildModelForFiling', 'adsh', adsh)
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('buildModelForFiling', 'cik', cik)
+            const localVarPath = `/api/fact-base/model-builder/{cik}/{adsh}`
+                .replace(`{${"adsh"}}`, encodeURIComponent(String(adsh)))
+                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {string} adsh 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        ingestFiling: async (cik: string, adsh: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('ingestFiling', 'cik', cik)
+            // verify required parameter 'adsh' is not null or undefined
+            assertParamExists('ingestFiling', 'adsh', adsh)
+            const localVarPath = `/api/fact-base/filing-ingestor`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (cik !== undefined) {
+                localVarQueryParameter['cik'] = cik;
+            }
+
+            if (adsh !== undefined) {
+                localVarQueryParameter['adsh'] = adsh;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        latestNonDimensionalFacts: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('latestNonDimensionalFacts', 'cik', cik)
+            const localVarPath = `/api/fact-base/{cik}/latest-non-dimensional-facts`
+                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * FactBaseControllerApi - functional programming interface
+ * @export
+ */
+export const FactBaseControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = FactBaseControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async allFactsForCik(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Fact>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.allFactsForCik(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} adsh 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async buildModelForFiling(adsh: string, cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Model>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.buildModelForFiling(adsh, cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {string} adsh 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async ingestFiling(cik: string, adsh: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ingestFiling(cik, adsh, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async latestNonDimensionalFacts(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: Fact; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.latestNonDimensionalFacts(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * FactBaseControllerApi - factory interface
+ * @export
+ */
+export const FactBaseControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = FactBaseControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        allFactsForCik(cik: string, options?: any): AxiosPromise<Array<Fact>> {
+            return localVarFp.allFactsForCik(cik, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} adsh 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        buildModelForFiling(adsh: string, cik: string, options?: any): AxiosPromise<Model> {
+            return localVarFp.buildModelForFiling(adsh, cik, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {string} adsh 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        ingestFiling(cik: string, adsh: string, options?: any): AxiosPromise<void> {
+            return localVarFp.ingestFiling(cik, adsh, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        latestNonDimensionalFacts(cik: string, options?: any): AxiosPromise<{ [key: string]: Fact; }> {
+            return localVarFp.latestNonDimensionalFacts(cik, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * FactBaseControllerApi - object-oriented interface
+ * @export
+ * @class FactBaseControllerApi
+ * @extends {BaseAPI}
+ */
+export class FactBaseControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FactBaseControllerApi
+     */
+    public allFactsForCik(cik: string, options?: any) {
+        return FactBaseControllerApiFp(this.configuration).allFactsForCik(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} adsh 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FactBaseControllerApi
+     */
+    public buildModelForFiling(adsh: string, cik: string, options?: any) {
+        return FactBaseControllerApiFp(this.configuration).buildModelForFiling(adsh, cik, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} cik 
+     * @param {string} adsh 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FactBaseControllerApi
+     */
+    public ingestFiling(cik: string, adsh: string, options?: any) {
+        return FactBaseControllerApiFp(this.configuration).ingestFiling(cik, adsh, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FactBaseControllerApi
+     */
+    public latestNonDimensionalFacts(cik: string, options?: any) {
+        return FactBaseControllerApiFp(this.configuration).latestNonDimensionalFacts(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * FilingEntityBootstrapperControllerApi - axios parameter creator
+ * @export
+ */
+export const FilingEntityBootstrapperControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bootstrapFilingEntity: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('bootstrapFilingEntity', 'cik', cik)
+            const localVarPath = `/api/filing-entity-bootstrapper`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (cik !== undefined) {
+                localVarQueryParameter['cik'] = cik;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        buildModelWithLatest10K: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('buildModelWithLatest10K', 'cik', cik)
+            const localVarPath = `/api/filing-entity-bootstrapper/build-model-with-latest-10-k`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (cik !== undefined) {
+                localVarQueryParameter['cik'] = cik;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * FilingEntityBootstrapperControllerApi - functional programming interface
+ * @export
+ */
+export const FilingEntityBootstrapperControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = FilingEntityBootstrapperControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bootstrapFilingEntity(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bootstrapFilingEntity(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async buildModelWithLatest10K(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Model>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.buildModelWithLatest10K(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * FilingEntityBootstrapperControllerApi - factory interface
+ * @export
+ */
+export const FilingEntityBootstrapperControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = FilingEntityBootstrapperControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bootstrapFilingEntity(cik: string, options?: any): AxiosPromise<void> {
+            return localVarFp.bootstrapFilingEntity(cik, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        buildModelWithLatest10K(cik: string, options?: any): AxiosPromise<Model> {
+            return localVarFp.buildModelWithLatest10K(cik, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * FilingEntityBootstrapperControllerApi - object-oriented interface
+ * @export
+ * @class FilingEntityBootstrapperControllerApi
+ * @extends {BaseAPI}
+ */
+export class FilingEntityBootstrapperControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilingEntityBootstrapperControllerApi
+     */
+    public bootstrapFilingEntity(cik: string, options?: any) {
+        return FilingEntityBootstrapperControllerApiFp(this.configuration).bootstrapFilingEntity(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilingEntityBootstrapperControllerApi
+     */
+    public buildModelWithLatest10K(cik: string, options?: any) {
+        return FilingEntityBootstrapperControllerApiFp(this.configuration).buildModelWithLatest10K(cik, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
