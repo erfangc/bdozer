@@ -13,7 +13,7 @@ export function ErrorMessage({ error, onDismiss }: { error: ApiError, onDismiss:
             </div>
             <a className="self-center text-sm text-blueGray-50" onClick={onDismiss}>
                 Dismiss
-        </a>
+            </a>
         </li>
     )
 }

@@ -8,7 +8,7 @@ interface State {
 
 export class ServerErrors extends Component<{}, State> {
 
-    private subscriptionHandle = null
+    private subscriptionHandle: number = null
 
     constructor(props) {
         super(props)
@@ -36,9 +36,7 @@ export class ServerErrors extends Component<{}, State> {
             <div
                 className="z-10 px-4 py-3 bg-red-500 rounded-lg shadow-lg font-semibold text-lg text-blueGray-50 w-32 text-center transition ease-linear hover:bg-red-400 cursor-pointer fixed bottom-2 left-2"
             >
-                <span className="rounded-full bg-red-700 px-2 mr-2">
-                    {errors.length}
-                </span>
+                <span className="rounded-full bg-red-700 px-2 mr-2">{errors.length}</span>
                 <span>Errors</span>
                 <ul className="absolute bottom-full left-0 mb-2 text-gray-700 flex-col space-y-4 whitespace-nowrap">
                     {
@@ -54,7 +52,6 @@ export class ServerErrors extends Component<{}, State> {
                     }
                 </ul>
             </div>
-            :
-            null
+            : null
     }
 }
