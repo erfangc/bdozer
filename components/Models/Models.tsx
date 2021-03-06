@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import React, { useState, useEffect } from "react"
-import { useModelsApi, useModelBuilderApi } from "../../ApiClientsHooks"
+import { useModelsApi, useModelBuilderApi } from "../../apiHooks"
 import { Model } from "../../client"
 import { DeleteButton } from "../DeleteButton"
 import { More } from "../Nav/NavButton"

@@ -1,4 +1,3 @@
-import { stat } from "fs";
 import { Store } from "./Store";
 
 export interface ApiError {

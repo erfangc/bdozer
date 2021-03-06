@@ -3,7 +3,7 @@ import Head from "next/head";
 
 import React, { ReactNode, useState } from "react"
 import { RegisterEmailControllerApi } from "../client"
-import { blueGray, highcharts } from "../HighchartsConfig"
+import { blueGray, highcharts } from "../highcharts"
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || undefined;
 

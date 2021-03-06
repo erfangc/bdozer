@@ -1,5 +1,6 @@
 import {
   EdgarExplorerControllerApi,
+  FilingEntityManagerControllerApi,
   ModelBuilderControllerApi,
   ModelsControllerApi,
   MxParserControllerApi,
@@ -52,7 +53,12 @@ export function useMxParserApi() {
   return new MxParserControllerApi(null, basePath, axiosInstance);
 }
 
-export function useEdgarExplorerControllerApi() {
+export function useEdgarExplorerApi() {
   const axiosInstance = useAxios();
   return new EdgarExplorerControllerApi(null, basePath, axiosInstance)
+}
+
+export function useFilingEntityManagerApi() {
+  const axiosInstance = useAxios();
+  return new FilingEntityManagerControllerApi(null, basePath, axiosInstance)
 }

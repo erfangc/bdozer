@@ -13,7 +13,8 @@ Highcharts.theme = {
   tooltip: {
     useHTML: true,
     formatter: function () {
-      return `<div class="p-1 flex space-x-2 text-blueGray-50">
+      return `
+      <div class="p-1 flex space-x-2 text-blueGray-50">
         <b class="font-semibold">${this.series.name}:</b>
         <span>${this.y.toLocaleString()}</span>
       </div>`;

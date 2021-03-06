@@ -378,6 +378,163 @@ export interface Fact {
 /**
  * 
  * @export
+ * @interface FilingEntity
+ */
+export interface FilingEntity {
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    get_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    cik?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    tradingSymbol?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    entityType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    sic?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    sicDescription?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof FilingEntity
+     */
+    insiderTransactionForOwnerExists?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof FilingEntity
+     */
+    insiderTransactionForIssuerExists?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof FilingEntity
+     */
+    tickers?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof FilingEntity
+     */
+    exchanges?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    ein?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    website?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    investorWebsite?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    category?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    fiscalYearEnd?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    stateOfIncorporation?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    stateOfIncorporationDescription?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    phone?: string;
+    /**
+     * 
+     * @type {Address}
+     * @memberof FilingEntity
+     */
+    businessAddress?: Address;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    statusMessage?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    lastUpdated?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilingEntity
+     */
+    latestAdsh?: string;
+    /**
+     * 
+     * @type {Model}
+     * @memberof FilingEntity
+     */
+    proFormaModel?: Model;
+}
+/**
+ * 
+ * @export
  * @interface FixedCost
  */
 export interface FixedCost {
@@ -1560,6 +1717,107 @@ export class FilingEntityBootstrapperControllerApi extends BaseAPI {
      */
     public buildModelWithLatest10K(cik: string, options?: any) {
         return FilingEntityBootstrapperControllerApiFp(this.configuration).buildModelWithLatest10K(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * FilingEntityManagerControllerApi - axios parameter creator
+ * @export
+ */
+export const FilingEntityManagerControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFilingEntity: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('getFilingEntity', 'cik', cik)
+            const localVarPath = `/api/filing-entity-manager/{cik}`
+                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * FilingEntityManagerControllerApi - functional programming interface
+ * @export
+ */
+export const FilingEntityManagerControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = FilingEntityManagerControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFilingEntity(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingEntity>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFilingEntity(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * FilingEntityManagerControllerApi - factory interface
+ * @export
+ */
+export const FilingEntityManagerControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = FilingEntityManagerControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFilingEntity(cik: string, options?: any): AxiosPromise<FilingEntity> {
+            return localVarFp.getFilingEntity(cik, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * FilingEntityManagerControllerApi - object-oriented interface
+ * @export
+ * @class FilingEntityManagerControllerApi
+ * @extends {BaseAPI}
+ */
+export class FilingEntityManagerControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilingEntityManagerControllerApi
+     */
+    public getFilingEntity(cik: string, options?: any) {
+        return FilingEntityManagerControllerApiFp(this.configuration).getFilingEntity(cik, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

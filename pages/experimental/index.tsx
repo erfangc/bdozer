@@ -1,11 +1,13 @@
 import React from 'react'
 import { useState } from 'react'
-import { useEdgarExplorerControllerApi as useEdgarExplorerApi } from '../../ApiClientsHooks'
+import { useEdgarExplorerApi, useFilingEntityManagerApi } from '../../apiHooks'
 import { EdgarEntity, EdgarEntitySource } from '../../client'
 
 function Experimental() {
 
     const edgarExplorerApi = useEdgarExplorerApi()
+    const filingEntityManagerApi = useFilingEntityManagerApi()
+
     const [term, setTerm] = useState<string>()
     const [found, setFound] = useState<EdgarEntity[]>([])
 
@@ -18,6 +20,12 @@ function Experimental() {
         }
     }
 
+    async function submit(edgarEntity: EdgarEntity) {
+        const { data } = await filingEntityManagerApi.getFilingEntity(edgarEntity['_id'])
+        console.log(data);
+        setFound([])
+    }
+
     function changeTerm(newTerm: string) {
         setTerm(newTerm)
         search(newTerm)
@@ -27,8 +35,12 @@ function Experimental() {
         const source = entity['_source'] as EdgarEntitySource
         const id = entity['_id']
         return (
-            <li key={id} className="px-4 py-2 cursor-pointer hover:bg-blueGray-900 text-sm flex justify-between items-center whitespace-nowrap transition ease-linear">
-                <span className="w-48 overflow-hidden overflow-ellipsis mr-10">
+            <li
+                key={id}
+                className="px-4 py-2 cursor-pointer hover:bg-blueGray-900 text-sm flex justify-between items-center whitespace-nowrap transition ease-linear"
+                onClick={() => submit(entity)}
+            >
+                <span className="w-56 md:w-96 overflow-hidden overflow-ellipsis mr-10">
                     {source.entity}
                 </span>
                 <span className="overflow-hidden overflow-ellipsis bg-blue-600 rounded-lg p-2 text-blueGray-100">

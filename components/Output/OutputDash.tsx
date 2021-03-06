@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { Item, Model, ModelEvaluationOutput } from "../../client";
 import { FreeCashFlow, NetIncome, Revenue } from '../../constants/ReservedItemNames';
-import { highcharts } from "../../HighchartsConfig";
+import { highcharts } from "../../highcharts";
 import { Card } from "../Card";
 import { DeleteButton } from '../DeleteButton';
 import { GhostButton } from '../GhostButton';
