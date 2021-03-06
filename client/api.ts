@@ -1593,42 +1593,6 @@ export const FilingEntityBootstrapperControllerApiAxiosParamCreator = function (
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        buildModelWithLatest10K: async (cik: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('buildModelWithLatest10K', 'cik', cik)
-            const localVarPath = `/api/filing-entity-bootstrapper/build-model-with-latest-10-k`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (cik !== undefined) {
-                localVarQueryParameter['cik'] = cik;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -1647,16 +1611,6 @@ export const FilingEntityBootstrapperControllerApiFp = function(configuration?: 
          */
         async bootstrapFilingEntity(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.bootstrapFilingEntity(cik, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async buildModelWithLatest10K(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Model>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.buildModelWithLatest10K(cik, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1678,15 +1632,6 @@ export const FilingEntityBootstrapperControllerApiFactory = function (configurat
         bootstrapFilingEntity(cik: string, options?: any): AxiosPromise<void> {
             return localVarFp.bootstrapFilingEntity(cik, options).then((request) => request(axios, basePath));
         },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        buildModelWithLatest10K(cik: string, options?: any): AxiosPromise<Model> {
-            return localVarFp.buildModelWithLatest10K(cik, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -1706,17 +1651,6 @@ export class FilingEntityBootstrapperControllerApi extends BaseAPI {
      */
     public bootstrapFilingEntity(cik: string, options?: any) {
         return FilingEntityBootstrapperControllerApiFp(this.configuration).bootstrapFilingEntity(cik, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} cik 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FilingEntityBootstrapperControllerApi
-     */
-    public buildModelWithLatest10K(cik: string, options?: any) {
-        return FilingEntityBootstrapperControllerApiFp(this.configuration).buildModelWithLatest10K(cik, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1760,6 +1694,72 @@ export const FilingEntityManagerControllerApiAxiosParamCreator = function (confi
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rerunModel: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('rerunModel', 'cik', cik)
+            const localVarPath = `/api/filing-entity-manager/{cik}/rerun-model`
+                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        viewLatest10kModel: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('viewLatest10kModel', 'cik', cik)
+            const localVarPath = `/api/filing-entity-manager/{cik}/view-latest-10k-model`
+                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1778,6 +1778,26 @@ export const FilingEntityManagerControllerApiFp = function(configuration?: Confi
          */
         async getFilingEntity(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingEntity>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFilingEntity(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async rerunModel(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Model>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rerunModel(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async viewLatest10kModel(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Model>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.viewLatest10kModel(cik, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1799,6 +1819,24 @@ export const FilingEntityManagerControllerApiFactory = function (configuration?:
         getFilingEntity(cik: string, options?: any): AxiosPromise<FilingEntity> {
             return localVarFp.getFilingEntity(cik, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rerunModel(cik: string, options?: any): AxiosPromise<Model> {
+            return localVarFp.rerunModel(cik, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        viewLatest10kModel(cik: string, options?: any): AxiosPromise<Model> {
+            return localVarFp.viewLatest10kModel(cik, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -1818,6 +1856,28 @@ export class FilingEntityManagerControllerApi extends BaseAPI {
      */
     public getFilingEntity(cik: string, options?: any) {
         return FilingEntityManagerControllerApiFp(this.configuration).getFilingEntity(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilingEntityManagerControllerApi
+     */
+    public rerunModel(cik: string, options?: any) {
+        return FilingEntityManagerControllerApiFp(this.configuration).rerunModel(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilingEntityManagerControllerApi
+     */
+    public viewLatest10kModel(cik: string, options?: any) {
+        return FilingEntityManagerControllerApiFp(this.configuration).viewLatest10kModel(cik, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

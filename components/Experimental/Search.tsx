@@ -74,6 +74,7 @@ export function Search() {
                         className="relative text-blueGray-50 pl-4 py-4 focus:outline-none bg-blueGray-700 placeholder-blueGray-400 text-lg"
                     />
                 </div>
+
                 {/* Autocomplete options */}
                 <div
                     className={`absolute bg-blueGray-700 top-full shadow-md w-full rounded-b-lg border-t ease-in transition-all ${entities.length > 0 ? 'border-blueGray-600' : 'border-blueGray-900'} overflow-hidden`}
