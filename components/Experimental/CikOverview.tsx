@@ -2,16 +2,8 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import NumberFormat from 'react-number-format'
 import { useFilingEntityManagerApi } from '../../apiHooks'
-import { FilingEntity, Item } from '../../client'
+import { FilingEntity } from '../../client'
 import { PrimaryButton } from '../../components/PrimaryButton'
-
-interface Row {
-    name: string
-    desc: string
-    historicalValues: { [period: string]: number }
-    historicalFactIds: { [period: string]: string }
-    item: Item
-}
 
 export default function CikOverview() {
 
