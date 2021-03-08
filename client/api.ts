@@ -328,6 +328,24 @@ export interface Fact {
     period?: XbrlPeriod;
     /**
      * 
+     * @type {string}
+     * @memberof Fact
+     */
+    documentFiscalPeriodFocus?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Fact
+     */
+    documentFiscalYearFocus?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    documentPeriodEndDate?: string;
+    /**
+     * 
      * @type {Array<XbrlExplicitMember>}
      * @memberof Fact
      */
@@ -374,6 +392,12 @@ export interface Fact {
      * @memberof Fact
      */
     lastUpdated?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    adsh?: string;
 }
 /**
  * 
@@ -559,6 +583,24 @@ export interface HistoricalValue {
     factId?: string;
     /**
      * 
+     * @type {string}
+     * @memberof HistoricalValue
+     */
+    documentFiscalPeriodFocus?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof HistoricalValue
+     */
+    documentFiscalYearFocus?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof HistoricalValue
+     */
+    documentPeriodEndDate?: string;
+    /**
+     * 
      * @type {number}
      * @memberof HistoricalValue
      */
@@ -581,6 +623,31 @@ export interface HistoricalValue {
      * @memberof HistoricalValue
      */
     instant?: string;
+}
+/**
+ * 
+ * @export
+ * @interface HistoricalValues
+ */
+export interface HistoricalValues {
+    /**
+     * 
+     * @type {Array<HistoricalValue>}
+     * @memberof HistoricalValues
+     */
+    fiscalYear?: Array<HistoricalValue>;
+    /**
+     * 
+     * @type {Array<HistoricalValue>}
+     * @memberof HistoricalValues
+     */
+    quarterly?: Array<HistoricalValue>;
+    /**
+     * 
+     * @type {HistoricalValue}
+     * @memberof HistoricalValues
+     */
+    ltm?: HistoricalValue;
 }
 /**
  * 
@@ -614,10 +681,10 @@ export interface Item {
     historicalValue?: number;
     /**
      * 
-     * @type {Array<HistoricalValue>}
+     * @type {HistoricalValues}
      * @memberof Item
      */
-    historicalValues?: Array<HistoricalValue>;
+    historicalValues?: HistoricalValues;
     /**
      * 
      * @type {string}
@@ -1363,6 +1430,49 @@ export const FactBaseControllerApiAxiosParamCreator = function (configuration?: 
         /**
          * 
          * @param {string} cik 
+         * @param {number} year 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        ingestQ4Facts: async (cik: string, year: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('ingestQ4Facts', 'cik', cik)
+            // verify required parameter 'year' is not null or undefined
+            assertParamExists('ingestQ4Facts', 'year', year)
+            const localVarPath = `/api/fact-base/filing-ingestor/q4`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (cik !== undefined) {
+                localVarQueryParameter['cik'] = cik;
+            }
+
+            if (year !== undefined) {
+                localVarQueryParameter['year'] = year;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} cik 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1438,6 +1548,17 @@ export const FactBaseControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} cik 
+         * @param {number} year 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async ingestQ4Facts(cik: string, year: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.ingestQ4Facts(cik, year, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} cik 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1483,6 +1604,16 @@ export const FactBaseControllerApiFactory = function (configuration?: Configurat
          */
         ingestFiling(cik: string, adsh: string, options?: any): AxiosPromise<void> {
             return localVarFp.ingestFiling(cik, adsh, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {number} year 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        ingestQ4Facts(cik: string, year: number, options?: any): AxiosPromise<void> {
+            return localVarFp.ingestQ4Facts(cik, year, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1536,6 +1667,18 @@ export class FactBaseControllerApi extends BaseAPI {
      */
     public ingestFiling(cik: string, adsh: string, options?: any) {
         return FactBaseControllerApiFp(this.configuration).ingestFiling(cik, adsh, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} cik 
+     * @param {number} year 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FactBaseControllerApi
+     */
+    public ingestQ4Facts(cik: string, year: number, options?: any) {
+        return FactBaseControllerApiFp(this.configuration).ingestQ4Facts(cik, year, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

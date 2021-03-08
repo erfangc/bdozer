@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import NumberFormat from 'react-number-format'
 import { useFilingEntityManagerApi } from '../../apiHooks'
 import { FilingEntity } from '../../client'
 import { PrimaryButton } from '../../components/PrimaryButton'
@@ -37,48 +36,6 @@ export default function CikOverview() {
         setFilingEntity(filingEntity)
     }
 
-    const rows = filingEntity?.proFormaModel?.incomeStatementItems?.map(item => {
-        const cells = item.historicalValues?.map(historicalValue => {
-            return (
-                <td
-                    key={historicalValue.factId}
-                    className="py-3 pl-2 border-b border-blueGray-500"
-                >
-                    <NumberFormat value={historicalValue.value} thousandSeparator displayType="text" />
-                </td>
-            )
-        })
-
-        return (
-            <tr key={item.name} className="">
-                <td
-                    key='label'
-                    className="py-3 pr-3 ext-sm font-bold"
-                >
-                    <div className="overflow-hidden overflow-ellipsis w-56 whitespace-nowrap">
-                        {item.description ?? item.name}
-                    </div>
-                </td>
-                {cells}
-            </tr>
-        )
-    })
-
-    let head = null
-    if (filingEntity?.proFormaModel?.incomeStatementItems?.length) {
-        const hv = filingEntity.proFormaModel.incomeStatementItems[0].historicalValues
-        head = <tr>
-            <th></th>
-            {
-                hv.map((h, idx) => {
-                    return <th key={h.endDate ?? h.instant} className={`font-light ${idx === 0 ? 'font-bold' : null}`}>
-                        {h.endDate ?? h.instant}
-                    </th>
-                })
-            }
-        </tr>
-    }
-
     return (
         <div className="bg-blueGray-700 text-blueGray-50 m-10 p-8 shadow-lg rounded-lg">
             <PrimaryButton className="mb-4 font-sans text-base" onClick={rerunModel}>
@@ -91,13 +48,6 @@ export default function CikOverview() {
             <div>
                 Status: {filingEntity?.statusMessage}
             </div>
-            <br />
-            <table className="text-right mb-32">
-                <thead>{head}</thead>
-                <tbody>
-                    {rows}
-                </tbody>
-            </table>
             {
                 filingEntity
                     ?
