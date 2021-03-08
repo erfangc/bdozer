@@ -32,6 +32,11 @@ export default function CikOverview() {
         setFilingEntity({ ...filingEntity, proFormaModel: model })
     }
 
+    async function rebootstrap() {
+        const { data: filingEntity } = await filingEntityManagerApi.bootstrapFilingEntity(cik as string)
+        setFilingEntity(filingEntity)
+    }
+
     const rows = filingEntity?.proFormaModel?.incomeStatementItems?.map(item => {
         const cells = item.historicalValues?.map(historicalValue => {
             return (
@@ -78,6 +83,9 @@ export default function CikOverview() {
         <div className="bg-blueGray-700 text-blueGray-50 m-10 p-8 shadow-lg rounded-lg">
             <PrimaryButton className="mb-4 font-sans text-base" onClick={rerunModel}>
                 Rerun Model
+            </PrimaryButton>
+            <PrimaryButton className="mb-4 font-sans text-base" onClick={rebootstrap}>
+                Bootstrap Again
             </PrimaryButton>
             <br />
             <div>

@@ -1,5 +1,6 @@
 import {
   EdgarExplorerControllerApi,
+  FilingEntityBootstrapperControllerApi,
   FilingEntityManagerControllerApi,
   ModelBuilderControllerApi,
   ModelsControllerApi,

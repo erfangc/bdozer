@@ -1552,10 +1552,10 @@ export class FactBaseControllerApi extends BaseAPI {
 
 
 /**
- * FilingEntityBootstrapperControllerApi - axios parameter creator
+ * FilingEntityManagerControllerApi - axios parameter creator
  * @export
  */
-export const FilingEntityBootstrapperControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const FilingEntityManagerControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -1566,7 +1566,8 @@ export const FilingEntityBootstrapperControllerApiAxiosParamCreator = function (
         bootstrapFilingEntity: async (cik: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'cik' is not null or undefined
             assertParamExists('bootstrapFilingEntity', 'cik', cik)
-            const localVarPath = `/api/filing-entity-bootstrapper`;
+            const localVarPath = `/api/filing-entity-manager/{cik}`
+                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1577,10 +1578,6 @@ export const FilingEntityBootstrapperControllerApiAxiosParamCreator = function (
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (cik !== undefined) {
-                localVarQueryParameter['cik'] = cik;
-            }
 
 
     
@@ -1593,74 +1590,6 @@ export const FilingEntityBootstrapperControllerApiAxiosParamCreator = function (
                 options: localVarRequestOptions,
             };
         },
-    }
-};
-
-/**
- * FilingEntityBootstrapperControllerApi - functional programming interface
- * @export
- */
-export const FilingEntityBootstrapperControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = FilingEntityBootstrapperControllerApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async bootstrapFilingEntity(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.bootstrapFilingEntity(cik, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * FilingEntityBootstrapperControllerApi - factory interface
- * @export
- */
-export const FilingEntityBootstrapperControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = FilingEntityBootstrapperControllerApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        bootstrapFilingEntity(cik: string, options?: any): AxiosPromise<void> {
-            return localVarFp.bootstrapFilingEntity(cik, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * FilingEntityBootstrapperControllerApi - object-oriented interface
- * @export
- * @class FilingEntityBootstrapperControllerApi
- * @extends {BaseAPI}
- */
-export class FilingEntityBootstrapperControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} cik 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FilingEntityBootstrapperControllerApi
-     */
-    public bootstrapFilingEntity(cik: string, options?: any) {
-        return FilingEntityBootstrapperControllerApiFp(this.configuration).bootstrapFilingEntity(cik, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * FilingEntityManagerControllerApi - axios parameter creator
- * @export
- */
-export const FilingEntityManagerControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
         /**
          * 
          * @param {string} cik 
@@ -1776,6 +1705,16 @@ export const FilingEntityManagerControllerApiFp = function(configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async bootstrapFilingEntity(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingEntity>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bootstrapFilingEntity(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async getFilingEntity(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingEntity>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFilingEntity(cik, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -1816,6 +1755,15 @@ export const FilingEntityManagerControllerApiFactory = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        bootstrapFilingEntity(cik: string, options?: any): AxiosPromise<FilingEntity> {
+            return localVarFp.bootstrapFilingEntity(cik, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getFilingEntity(cik: string, options?: any): AxiosPromise<FilingEntity> {
             return localVarFp.getFilingEntity(cik, options).then((request) => request(axios, basePath));
         },
@@ -1847,6 +1795,17 @@ export const FilingEntityManagerControllerApiFactory = function (configuration?:
  * @extends {BaseAPI}
  */
 export class FilingEntityManagerControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilingEntityManagerControllerApi
+     */
+    public bootstrapFilingEntity(cik: string, options?: any) {
+        return FilingEntityManagerControllerApiFp(this.configuration).bootstrapFilingEntity(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {string} cik 
