@@ -9,13 +9,18 @@ import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { useEffect } from "react";
 import { serverErrorStore } from "./ServerErrorStore";
+import { v4 as uuid } from 'uuid'
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || undefined;
 
 const axiosInstance = axios.create();
 
 axiosInstance.interceptors.response.use(null, (error) => {
-  serverErrorStore.addError(error?.response?.data);
+  const apiError = {
+    id: uuid(),
+    ...error?.response?.data
+  };
+  serverErrorStore.addError(apiError);
   return Promise.reject(error);
 });
 
