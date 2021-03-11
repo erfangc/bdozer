@@ -1,13 +1,16 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { useFilingEntityManagerApi } from '../../apiHooks'
+import { basePath, useFilingEntityManagerApi } from '../../apiHooks'
 import { FilingEntity } from '../../client'
 import { PrimaryButton } from '../../components/PrimaryButton'
+import { saveAs } from 'file-saver';
+import { useAuth0 } from '@auth0/auth0-react'
 
 export default function CikOverview() {
 
     const router = useRouter()
     const filingEntityManagerApi = useFilingEntityManagerApi()
+    const { getIdTokenClaims } = useAuth0();
 
     const [filingEntity, setFilingEntity] = useState<FilingEntity>()
     const [loading, setLoading] = useState(false)
@@ -26,6 +29,35 @@ export default function CikOverview() {
         }
     }, [cik])
 
+    async function downloadXls() {
+        const { __raw } = await getIdTokenClaims()
+        const url = `http://localhost:8080/api/filing-entity-manager/1467623/proforma-model`
+        fetch(url, {
+            headers: {
+                'user-agent': 'Mozilla/4.0 MDN Example',
+                'content-type': 'application/vnd.ms-excel;charset=UTF-8',
+                'authorization': `Bearer ${__raw}`
+            },
+            method: 'GET'
+        })
+            .then(res => res.blob().then(blob => {
+                const filename = 'workbook.xlsx'
+                if (window.navigator.msSaveOrOpenBlob) {
+                    navigator.msSaveBlob(blob, filename)
+                } else {
+                    const a = document.createElement('a')
+                    document.body.appendChild(a)
+                    a.href = window.URL.createObjectURL(blob)
+                    a.download = filename
+                    a.target = '_blank'
+                    a.click()
+                    a.remove()
+                    window.URL.revokeObjectURL(url)
+                }
+            }))
+
+    }
+
     async function rerunModel() {
         const { data: model } = await filingEntityManagerApi.rerunModel(cik as string)
         setFilingEntity({ ...filingEntity, proFormaModel: model })
@@ -43,6 +75,9 @@ export default function CikOverview() {
             </PrimaryButton>
             <PrimaryButton className="mb-4 font-sans text-base" onClick={rebootstrap}>
                 Bootstrap Again
+            </PrimaryButton>
+            <PrimaryButton className="mb-4 font-sans text-base" onClick={downloadXls}>
+                Download XLS
             </PrimaryButton>
             <br />
             <div>

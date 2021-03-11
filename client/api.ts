@@ -41,10 +41,16 @@ export interface Address {
     row?: number;
     /**
      * 
+     * @type {number}
+     * @memberof Address
+     */
+    column?: number;
+    /**
+     * 
      * @type {string}
      * @memberof Address
      */
-    column?: string;
+    columnLetter?: string;
 }
 /**
  * 
@@ -82,6 +88,12 @@ export interface Cell {
      * @memberof Cell
      */
     formula?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cell
+     */
+    excelFormula?: string;
     /**
      * 
      * @type {Address}
@@ -572,6 +584,25 @@ export interface FixedCost {
 /**
  * 
  * @export
+ * @interface GeneratorCommentary
+ */
+export interface GeneratorCommentary {
+    /**
+     * 
+     * @type {string}
+     * @memberof GeneratorCommentary
+     */
+    commentary?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GeneratorCommentary
+     */
+    generatorClass?: string;
+}
+/**
+ * 
+ * @export
  * @interface HistoricalValue
  */
 export interface HistoricalValue {
@@ -693,12 +724,6 @@ export interface Item {
     expression?: string;
     /**
      * 
-     * @type {string}
-     * @memberof Item
-     */
-    segment?: string;
-    /**
-     * 
      * @type {SubscriptionRevenue}
      * @memberof Item
      */
@@ -739,6 +764,12 @@ export interface Item {
      * @memberof Item
      */
     nonCashExpense?: boolean;
+    /**
+     * 
+     * @type {Array<GeneratorCommentary>}
+     * @memberof Item
+     */
+    generatorCommentaries?: Array<GeneratorCommentary>;
     /**
      * 
      * @type {boolean}
@@ -892,6 +923,18 @@ export interface Model {
      * @memberof Model
      */
     periods?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Model
+     */
+    excelColumnOffset?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Model
+     */
+    excelRowOffset?: number;
     /**
      * 
      * @type {string}
@@ -1470,39 +1513,6 @@ export const FactBaseControllerApiAxiosParamCreator = function (configuration?: 
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        latestNonDimensionalFacts: async (cik: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('latestNonDimensionalFacts', 'cik', cik)
-            const localVarPath = `/api/fact-base/{cik}/latest-non-dimensional-facts`
-                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -1556,16 +1566,6 @@ export const FactBaseControllerApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.ingestQ4Facts(cik, year, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async latestNonDimensionalFacts(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: Fact; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.latestNonDimensionalFacts(cik, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -1614,15 +1614,6 @@ export const FactBaseControllerApiFactory = function (configuration?: Configurat
          */
         ingestQ4Facts(cik: string, year: number, options?: any): AxiosPromise<void> {
             return localVarFp.ingestQ4Facts(cik, year, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        latestNonDimensionalFacts(cik: string, options?: any): AxiosPromise<{ [key: string]: Fact; }> {
-            return localVarFp.latestNonDimensionalFacts(cik, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1680,17 +1671,6 @@ export class FactBaseControllerApi extends BaseAPI {
     public ingestQ4Facts(cik: string, year: number, options?: any) {
         return FactBaseControllerApiFp(this.configuration).ingestQ4Facts(cik, year, options).then((request) => request(this.axios, this.basePath));
     }
-
-    /**
-     * 
-     * @param {string} cik 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FactBaseControllerApi
-     */
-    public latestNonDimensionalFacts(cik: string, options?: any) {
-        return FactBaseControllerApiFp(this.configuration).latestNonDimensionalFacts(cik, options).then((request) => request(this.axios, this.basePath));
-    }
 }
 
 
@@ -1719,6 +1699,39 @@ export const FilingEntityManagerControllerApiAxiosParamCreator = function (confi
             }
 
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadProformaExcelModel: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('downloadProformaExcelModel', 'cik', cik)
+            const localVarPath = `/api/filing-entity-manager/{cik}/proforma-model`
+                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1858,6 +1871,16 @@ export const FilingEntityManagerControllerApiFp = function(configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async downloadProformaExcelModel(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.downloadProformaExcelModel(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async getFilingEntity(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingEntity>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFilingEntity(cik, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -1907,6 +1930,15 @@ export const FilingEntityManagerControllerApiFactory = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        downloadProformaExcelModel(cik: string, options?: any): AxiosPromise<any> {
+            return localVarFp.downloadProformaExcelModel(cik, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getFilingEntity(cik: string, options?: any): AxiosPromise<FilingEntity> {
             return localVarFp.getFilingEntity(cik, options).then((request) => request(axios, basePath));
         },
@@ -1947,6 +1979,17 @@ export class FilingEntityManagerControllerApi extends BaseAPI {
      */
     public bootstrapFilingEntity(cik: string, options?: any) {
         return FilingEntityManagerControllerApiFp(this.configuration).bootstrapFilingEntity(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilingEntityManagerControllerApi
+     */
+    public downloadProformaExcelModel(cik: string, options?: any) {
+        return FilingEntityManagerControllerApiFp(this.configuration).downloadProformaExcelModel(cik, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

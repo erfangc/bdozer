@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { serverErrorStore } from "./ServerErrorStore";
 import { v4 as uuid } from 'uuid'
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || undefined;
+export const basePath = process.env.NEXT_PUBLIC_BASE_PATH || undefined;
 
 const axiosInstance = axios.create();
 
