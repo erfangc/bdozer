@@ -31,7 +31,7 @@ export default function CikOverview() {
 
     async function downloadXls() {
         const { __raw } = await getIdTokenClaims()
-        const url = `http://localhost:8080/api/filing-entity-manager/1467623/proforma-model`
+        const url = `${basePath}/api/filing-entity-manager/1467623/proforma-model`
         fetch(url, {
             headers: {
                 'user-agent': 'Mozilla/4.0 MDN Example',
