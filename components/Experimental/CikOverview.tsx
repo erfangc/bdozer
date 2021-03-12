@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { basePath, useFilingEntityManagerApi } from '../../apiHooks'
 import { FilingEntity } from '../../client'
 import { PrimaryButton } from '../../components/PrimaryButton'
-import { saveAs } from 'file-saver';
 import { useAuth0 } from '@auth0/auth0-react'
 
 export default function CikOverview() {
@@ -34,7 +33,6 @@ export default function CikOverview() {
         const url = `${basePath}/api/filing-entity-manager/1467623/proforma-model`
         fetch(url, {
             headers: {
-                'user-agent': 'Mozilla/4.0 MDN Example',
                 'content-type': 'application/vnd.ms-excel;charset=UTF-8',
                 'authorization': `Bearer ${__raw}`
             },
