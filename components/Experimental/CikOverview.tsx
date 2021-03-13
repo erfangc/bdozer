@@ -30,7 +30,7 @@ export default function CikOverview() {
 
     async function downloadXls() {
         const { __raw } = await getIdTokenClaims()
-        const url = `${basePath}/api/filing-entity-manager/1467623/proforma-model`
+        const url = `${basePath}/api/filing-entity-manager/${cik}/proforma-model`
         fetch(url, {
             headers: {
                 'content-type': 'application/vnd.ms-excel;charset=UTF-8',
@@ -39,7 +39,7 @@ export default function CikOverview() {
             method: 'GET'
         })
             .then(res => res.blob().then(blob => {
-                const filename = 'workbook.xlsx'
+                const filename = `${cik}-proforma-model.xlsx`
                 if (window.navigator.msSaveOrOpenBlob) {
                     navigator.msSaveBlob(blob, filename)
                 } else {
