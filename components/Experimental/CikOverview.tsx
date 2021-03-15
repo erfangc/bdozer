@@ -29,8 +29,9 @@ export default function CikOverview() {
     }, [cik])
 
     async function downloadXls() {
+        const ticker = filingEntity.tickers[0]
         const { __raw } = await getIdTokenClaims()
-        const url = `${basePath}/api/filing-entity-manager/${cik}/proforma-model`
+        const url = `${basePath}/api/zacks-model-builder/${ticker}`
         fetch(url, {
             headers: {
                 'content-type': 'application/vnd.ms-excel;charset=UTF-8',
@@ -39,7 +40,7 @@ export default function CikOverview() {
             method: 'GET'
         })
             .then(res => res.blob().then(blob => {
-                const filename = `${cik}-proforma-model.xlsx`
+                const filename = `${ticker}.xlsx`
                 if (window.navigator.msSaveOrOpenBlob) {
                     navigator.msSaveBlob(blob, filename)
                 } else {
