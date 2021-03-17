@@ -35,6 +35,12 @@ export interface Address {
     sheet?: number;
     /**
      * 
+     * @type {string}
+     * @memberof Address
+     */
+    sheetName?: string;
+    /**
+     * 
      * @type {number}
      * @memberof Address
      */
@@ -106,6 +112,38 @@ export interface Cell {
      * @memberof Cell
      */
     dependentCellNames?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface Commentary
+ */
+export interface Commentary {
+    /**
+     * 
+     * @type {string}
+     * @memberof Commentary
+     */
+    commentary?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Commentary
+     */
+    generatorClass?: string;
+}
+/**
+ * 
+ * @export
+ * @interface Discrete
+ */
+export interface Discrete {
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof Discrete
+     */
+    formulas?: { [key: string]: string; };
 }
 /**
  * 
@@ -289,7 +327,19 @@ export interface Fact {
      * @type {string}
      * @memberof Fact
      */
+    instanceDocumentElementName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
     cik?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    adsh?: string;
     /**
      * 
      * @type {string}
@@ -304,12 +354,6 @@ export interface Fact {
     primarySymbol?: string;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof Fact
-     */
-    symbols?: Array<string>;
-    /**
-     * 
      * @type {string}
      * @memberof Fact
      */
@@ -319,31 +363,43 @@ export interface Fact {
      * @type {string}
      * @memberof Fact
      */
-    elementName?: string;
+    conceptName?: string;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    longNamespace?: string;
+    conceptHref?: string;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    rawElementName?: string;
-    /**
-     * 
-     * @type {XbrlPeriod}
-     * @memberof Fact
-     */
-    period?: XbrlPeriod;
+    namespace?: string;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    documentFiscalPeriodFocus?: string;
+    instant?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
+    documentFiscalPeriodFocus?: FactDocumentFiscalPeriodFocusEnum;
     /**
      * 
      * @type {number}
@@ -391,6 +447,12 @@ export interface Fact {
      * @type {string}
      * @memberof Fact
      */
+    documentation?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Fact
+     */
     stringValue?: string;
     /**
      * 
@@ -404,13 +466,20 @@ export interface Fact {
      * @memberof Fact
      */
     lastUpdated?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Fact
-     */
-    adsh?: string;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum FactDocumentFiscalPeriodFocusEnum {
+    Fy = 'FY',
+    Q1 = 'Q1',
+    Q2 = 'Q2',
+    Q3 = 'Q3',
+    Q4 = 'Q4'
+}
+
 /**
  * 
  * @export
@@ -566,7 +635,7 @@ export interface FilingEntity {
      * @type {Model}
      * @memberof FilingEntity
      */
-    proFormaModel?: Model;
+    model?: Model;
 }
 /**
  * 
@@ -580,25 +649,6 @@ export interface FixedCost {
      * @memberof FixedCost
      */
     cost?: number;
-}
-/**
- * 
- * @export
- * @interface GeneratorCommentary
- */
-export interface GeneratorCommentary {
-    /**
-     * 
-     * @type {string}
-     * @memberof GeneratorCommentary
-     */
-    commentary?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof GeneratorCommentary
-     */
-    generatorClass?: string;
 }
 /**
  * 
@@ -730,6 +780,12 @@ export interface Item {
     subscriptionRevenue?: SubscriptionRevenue;
     /**
      * 
+     * @type {Discrete}
+     * @memberof Item
+     */
+    discrete?: Discrete;
+    /**
+     * 
      * @type {PercentOfTotalAsset}
      * @memberof Item
      */
@@ -766,10 +822,10 @@ export interface Item {
     nonCashExpense?: boolean;
     /**
      * 
-     * @type {Array<GeneratorCommentary>}
+     * @type {Commentary}
      * @memberof Item
      */
-    generatorCommentaries?: Array<GeneratorCommentary>;
+    commentaries?: Commentary;
     /**
      * 
      * @type {boolean}
@@ -783,6 +839,7 @@ export interface Item {
     * @enum {string}
     */
 export enum ItemTypeEnum {
+    Discrete = 'Discrete',
     SubscriptionRevenue = 'SubscriptionRevenue',
     UnitSalesRevenue = 'UnitSalesRevenue',
     Custom = 'Custom',
@@ -1063,6 +1120,67 @@ export interface MxParserEvaluateResponse {
 /**
  * 
  * @export
+ * @interface Narrative
+ */
+export interface Narrative {
+    /**
+     * 
+     * @type {Model}
+     * @memberof Narrative
+     */
+    model?: Model;
+    /**
+     * 
+     * @type {TalkingPoint}
+     * @memberof Narrative
+     */
+    revenueTalkingPoint?: TalkingPoint;
+    /**
+     * 
+     * @type {TalkingPoint}
+     * @memberof Narrative
+     */
+    variableCostTalkingPoint?: TalkingPoint;
+    /**
+     * 
+     * @type {TalkingPoint}
+     * @memberof Narrative
+     */
+    fixedCostTalkingPoint?: TalkingPoint;
+    /**
+     * 
+     * @type {TalkingPoint}
+     * @memberof Narrative
+     */
+    otherExpensesTalkingPoint?: TalkingPoint;
+    /**
+     * 
+     * @type {TalkingPoint}
+     * @memberof Narrative
+     */
+    epsTalkingPoint?: TalkingPoint;
+    /**
+     * 
+     * @type {TalkingPoint}
+     * @memberof Narrative
+     */
+    noGrowthValueTalkingPoint?: TalkingPoint;
+    /**
+     * 
+     * @type {TalkingPoint}
+     * @memberof Narrative
+     */
+    growthTalkingPoint?: TalkingPoint;
+    /**
+     * 
+     * @type {TalkingPoint}
+     * @memberof Narrative
+     */
+    targetPriceTalkingPoint?: TalkingPoint;
+}
+/**
+ * 
+ * @export
  * @interface PercentOfRevenue
  */
 export interface PercentOfRevenue {
@@ -1114,6 +1232,31 @@ export interface SubscriptionRevenue {
 /**
  * 
  * @export
+ * @interface TalkingPoint
+ */
+export interface TalkingPoint {
+    /**
+     * 
+     * @type {number}
+     * @memberof TalkingPoint
+     */
+    data?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TalkingPoint
+     */
+    commentary?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TalkingPoint
+     */
+    forwardCommentary?: string;
+}
+/**
+ * 
+ * @export
  * @interface UnitSalesRevenue
  */
 export interface UnitSalesRevenue {
@@ -1154,31 +1297,6 @@ export interface XbrlExplicitMember {
      * @memberof XbrlExplicitMember
      */
     value?: string;
-}
-/**
- * 
- * @export
- * @interface XbrlPeriod
- */
-export interface XbrlPeriod {
-    /**
-     * 
-     * @type {string}
-     * @memberof XbrlPeriod
-     */
-    instant?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof XbrlPeriod
-     */
-    startDate?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof XbrlPeriod
-     */
-    endDate?: string;
 }
 
 /**
@@ -1402,7 +1520,7 @@ export const FactBaseControllerApiAxiosParamCreator = function (configuration?: 
             assertParamExists('buildModelForFiling', 'adsh', adsh)
             // verify required parameter 'cik' is not null or undefined
             assertParamExists('buildModelForFiling', 'cik', cik)
-            const localVarPath = `/api/fact-base/model-builder/{cik}/{adsh}`
+            const localVarPath = `/api/fact-base/model-factory/{cik}/{adsh}`
                 .replace(`{${"adsh"}}`, encodeURIComponent(String(adsh)))
                 .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1719,109 +1837,10 @@ export const FilingEntityManagerControllerApiAxiosParamCreator = function (confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        downloadProformaExcelModel: async (cik: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('downloadProformaExcelModel', 'cik', cik)
-            const localVarPath = `/api/filing-entity-manager/{cik}/proforma-model`
-                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         getFilingEntity: async (cik: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'cik' is not null or undefined
             assertParamExists('getFilingEntity', 'cik', cik)
             const localVarPath = `/api/filing-entity-manager/{cik}`
-                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        rerunModel: async (cik: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('rerunModel', 'cik', cik)
-            const localVarPath = `/api/filing-entity-manager/{cik}/rerun-model`
-                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        viewLatest10kModel: async (cik: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('viewLatest10kModel', 'cik', cik)
-            const localVarPath = `/api/filing-entity-manager/{cik}/view-latest-10k-model`
                 .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1871,38 +1890,8 @@ export const FilingEntityManagerControllerApiFp = function(configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async downloadProformaExcelModel(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.downloadProformaExcelModel(cik, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         async getFilingEntity(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingEntity>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFilingEntity(cik, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async rerunModel(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Model>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.rerunModel(cik, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async viewLatest10kModel(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Model>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.viewLatest10kModel(cik, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1930,35 +1919,8 @@ export const FilingEntityManagerControllerApiFactory = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        downloadProformaExcelModel(cik: string, options?: any): AxiosPromise<any> {
-            return localVarFp.downloadProformaExcelModel(cik, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         getFilingEntity(cik: string, options?: any): AxiosPromise<FilingEntity> {
             return localVarFp.getFilingEntity(cik, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        rerunModel(cik: string, options?: any): AxiosPromise<Model> {
-            return localVarFp.rerunModel(cik, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        viewLatest10kModel(cik: string, options?: any): AxiosPromise<Model> {
-            return localVarFp.viewLatest10kModel(cik, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1988,41 +1950,8 @@ export class FilingEntityManagerControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FilingEntityManagerControllerApi
      */
-    public downloadProformaExcelModel(cik: string, options?: any) {
-        return FilingEntityManagerControllerApiFp(this.configuration).downloadProformaExcelModel(cik, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} cik 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FilingEntityManagerControllerApi
-     */
     public getFilingEntity(cik: string, options?: any) {
         return FilingEntityManagerControllerApiFp(this.configuration).getFilingEntity(cik, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} cik 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FilingEntityManagerControllerApi
-     */
-    public rerunModel(cik: string, options?: any) {
-        return FilingEntityManagerControllerApiFp(this.configuration).rerunModel(cik, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} cik 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FilingEntityManagerControllerApi
-     */
-    public viewLatest10kModel(cik: string, options?: any) {
-        return FilingEntityManagerControllerApiFp(this.configuration).viewLatest10kModel(cik, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2754,6 +2683,110 @@ export class MxParserControllerApi extends BaseAPI {
      */
     public evaluate(mxParserEvaluateRequest: MxParserEvaluateRequest, options?: any) {
         return MxParserControllerApiFp(this.configuration).evaluate(mxParserEvaluateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * NarrativeBuilderControllerApi - axios parameter creator
+ * @export
+ */
+export const NarrativeBuilderControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        buildNarrative: async (ticker: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ticker' is not null or undefined
+            assertParamExists('buildNarrative', 'ticker', ticker)
+            const localVarPath = `/api/zacks/narrative-builder`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (ticker !== undefined) {
+                localVarQueryParameter['ticker'] = ticker;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * NarrativeBuilderControllerApi - functional programming interface
+ * @export
+ */
+export const NarrativeBuilderControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = NarrativeBuilderControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async buildNarrative(ticker: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Narrative>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.buildNarrative(ticker, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * NarrativeBuilderControllerApi - factory interface
+ * @export
+ */
+export const NarrativeBuilderControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = NarrativeBuilderControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        buildNarrative(ticker: string, options?: any): AxiosPromise<Narrative> {
+            return localVarFp.buildNarrative(ticker, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * NarrativeBuilderControllerApi - object-oriented interface
+ * @export
+ * @class NarrativeBuilderControllerApi
+ * @extends {BaseAPI}
+ */
+export class NarrativeBuilderControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} ticker 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NarrativeBuilderControllerApi
+     */
+    public buildNarrative(ticker: string, options?: any) {
+        return NarrativeBuilderControllerApiFp(this.configuration).buildNarrative(ticker, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

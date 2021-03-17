@@ -4,6 +4,7 @@ import {
   ModelBuilderControllerApi,
   ModelsControllerApi,
   MxParserControllerApi,
+  NarrativeBuilderControllerApi,
 } from "./client";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
@@ -66,4 +67,9 @@ export function useEdgarExplorerApi() {
 export function useFilingEntityManagerApi() {
   const axiosInstance = useAxios();
   return new FilingEntityManagerControllerApi(null, basePath, axiosInstance)
+}
+
+export function useNarrativeBuilderApi() {
+  const axiosInstance = useAxios();
+  return new NarrativeBuilderControllerApi(null, basePath, axiosInstance)
 }
