@@ -37,6 +37,7 @@ export default function CikOverview() {
     const [filingEntity, setFilingEntity] = useState<FilingEntity | undefined>(undefined)
     const [narrative, setNarrative] = useState<Narrative | undefined>(undefined)
     const [loading, setLoading] = useState(false)
+    const [exporting, setExporting] = useState(false)
 
     const { cik } = router.query
 
@@ -60,7 +61,7 @@ export default function CikOverview() {
     }, [cik])
 
     async function downloadExcelModel() {
-        setLoading(true)
+        setExporting(true)
         const ticker = filingEntity.tickers[0]
         const { __raw } = await getIdTokenClaims()
         const url = `${basePath}/api/zacks/narrative-builder/${ticker}/excel`
@@ -85,7 +86,7 @@ export default function CikOverview() {
                     a.remove()
                     window.URL.revokeObjectURL(url)
                 }
-                setLoading(false)
+                setExporting(false)
             }))
 
     }
@@ -93,6 +94,13 @@ export default function CikOverview() {
     const narrativeComponents = loading
         ? null
         : <>
+            <button
+                className="p-2 text-green-500 border-green-500 rounded-md border my-4 focus:outline-none flex items-center"
+                onClick={downloadExcelModel}
+                disabled={exporting}>
+                {exporting ? <Spinner /> : <Download />}
+                Download the Excel Model
+            </button>
             <Section>
                 <Title>The company made <Million value={narrative?.revenueTalkingPoint?.data} /> in the most recent year</Title>
                 <p>{narrative?.revenueTalkingPoint?.forwardCommentary}</p>
@@ -136,15 +144,8 @@ export default function CikOverview() {
     return (
         <main className="text-blueGray-50 m-10">
             <h1 className="font-bold text-4xl">{filingEntity?.name}</h1>
-            <h4 className="mt-4 text-xl">{loading ? <>Loading ... <Spinner /></> : <><b>Symbol: </b>{filingEntity?.tickers}</>}</h4>
+            <h4 className="mt-4 text-xl flex items-center">{loading ? <>Loading ... <Spinner /></> : <><b>Symbol: </b>{filingEntity?.tickers}</>}</h4>
             <br />
-            <button
-                className="p-2 text-green-500 border-green-500 rounded-md border my-4 focus:outline-none flex items-center"
-                onClick={downloadExcelModel}
-                disabled={loading}>
-                {loading ? <Spinner /> : <Download />}
-                Download the Excel Model
-            </button>
             {narrativeComponents}
         </main>
     )
