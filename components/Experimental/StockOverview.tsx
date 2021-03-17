@@ -59,10 +59,11 @@ export default function CikOverview() {
         }
     }, [cik])
 
-    async function downloadXls() {
+    async function downloadExcelModel() {
+        setLoading(true)
         const ticker = filingEntity.tickers[0]
         const { __raw } = await getIdTokenClaims()
-        const url = `${basePath}/api/zacks-model-builder/${ticker}`
+        const url = `${basePath}/api/zacks/narrative-builder/${ticker}/excel`
         fetch(url, {
             headers: {
                 'content-type': 'application/vnd.ms-excel;charset=UTF-8',
@@ -84,6 +85,7 @@ export default function CikOverview() {
                     a.remove()
                     window.URL.revokeObjectURL(url)
                 }
+                setLoading(false)
             }))
 
     }
@@ -136,7 +138,22 @@ export default function CikOverview() {
             <h1 className="font-bold text-4xl">{filingEntity?.name}</h1>
             <h4 className="mt-4 text-xl">{loading ? <>Loading ... <Spinner /></> : <><b>Symbol: </b>{filingEntity?.tickers}</>}</h4>
             <br />
+            <button
+                className="p-2 text-green-500 border-green-500 rounded-md border my-4 focus:outline-none flex items-center"
+                onClick={downloadExcelModel}
+                disabled={loading}>
+                {loading ? <Spinner /> : <Download />}
+                Download the Excel Model
+            </button>
             {narrativeComponents}
         </main>
+    )
+}
+
+function Download() {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 22H5V20H19V22ZM12 18L6 12L7.41 10.59L11 14.17V2H13V14.17L16.59 10.59L18 12L12 18Z" fill="#22C55E" />
+        </svg>
     )
 }
