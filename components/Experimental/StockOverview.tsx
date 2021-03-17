@@ -95,7 +95,7 @@ export default function CikOverview() {
         ? null
         : <>
             <button
-                className="p-2 text-green-500 border-green-500 rounded-md border my-4 focus:outline-none flex items-center"
+                className="p-2 text-green-500 border-green-500 rounded-md border my-12 focus:outline-none flex items-center"
                 onClick={downloadExcelModel}
                 disabled={exporting}>
                 {exporting ? <Spinner /> : <Download />}
