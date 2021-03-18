@@ -15,7 +15,7 @@ function Million({ value }: { value?: number }) {
 }
 
 function Percent({ value }: { value?: number }) {
-    return <><NumberFormat value={value * 100} thousandSeparator displayType="text" suffix="%" decimalScale={1} /></>
+    return <NumberFormat value={value * 100} thousandSeparator displayType="text" suffix="%" decimalScale={1} />
 }
 
 function DollarPerShare({ value }: { value?: number }) {
@@ -26,6 +26,14 @@ function Section(props) {
     return <section className="mb-12 px-3 w-96 shadow-2xl py-4 border rounded-xl border-blueGray-700">{props.children}</section>
 }
 
+function Download({ loading }: { loading: boolean }) {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={loading ? "animate-pulse" : null}>
+            <path d="M19 22H5V20H19V22ZM12 18L6 12L7.41 10.59L11 14.17V2H13V14.17L16.59 10.59L18 12L12 18Z" fill="#22C55E" />
+        </svg>
+    )
+}
+
 export default function CikOverview() {
 
     const router = useRouter()
@@ -34,8 +42,8 @@ export default function CikOverview() {
 
     const { getIdTokenClaims } = useAuth0();
 
-    const [filingEntity, setFilingEntity] = useState<FilingEntity | undefined>(undefined)
-    const [narrative, setNarrative] = useState<Narrative | undefined>(undefined)
+    const [filingEntity, setFilingEntity] = useState<FilingEntity>()
+    const [narrative, setNarrative] = useState<Narrative>()
     const [loading, setLoading] = useState(false)
     const [exporting, setExporting] = useState(false)
 
@@ -71,24 +79,22 @@ export default function CikOverview() {
                 'authorization': `Bearer ${__raw}`
             },
             method: 'GET'
-        })
-            .then(res => res.blob().then(blob => {
-                const filename = `${ticker}.xlsx`
-                if (window.navigator.msSaveOrOpenBlob) {
-                    navigator.msSaveBlob(blob, filename)
-                } else {
-                    const a = document.createElement('a')
-                    document.body.appendChild(a)
-                    a.href = window.URL.createObjectURL(blob)
-                    a.download = filename
-                    a.target = '_blank'
-                    a.click()
-                    a.remove()
-                    window.URL.revokeObjectURL(url)
-                }
-                setExporting(false)
-            }))
-
+        }).then(res => res.blob().then(blob => {
+            const filename = `${ticker}.xlsx`
+            if (window.navigator.msSaveOrOpenBlob) {
+                navigator.msSaveBlob(blob, filename)
+            } else {
+                const a = document.createElement('a')
+                document.body.appendChild(a)
+                a.href = window.URL.createObjectURL(blob)
+                a.download = filename
+                a.target = '_blank'
+                a.click()
+                a.remove()
+                window.URL.revokeObjectURL(url)
+            }
+            setExporting(false)
+        }))
     }
 
     const narrativeComponents = loading
@@ -97,10 +103,12 @@ export default function CikOverview() {
             <button
                 className="p-2 text-green-500 border-green-500 rounded-md border my-12 focus:outline-none flex items-center"
                 onClick={downloadExcelModel}
-                disabled={exporting}>
-                {exporting ? <Spinner /> : <Download />}
+                disabled={exporting}
+            >
+                <Download loading={exporting} />
                 Download the Excel Model
             </button>
+
             <Section>
                 <Title>The company made <Million value={narrative?.revenueTalkingPoint?.data} /> in the most recent year</Title>
                 <p>{narrative?.revenueTalkingPoint?.forwardCommentary}</p>
@@ -143,18 +151,14 @@ export default function CikOverview() {
 
     return (
         <main className="text-blueGray-50 m-10">
-            <h1 className="font-bold text-4xl">{filingEntity?.name}</h1>
-            <h4 className="mt-4 text-xl flex items-center">{loading ? <>Loading ... <Spinner /></> : <><b>Symbol: </b>{filingEntity?.tickers}</>}</h4>
+            <h1 className="font-bold text-4xl">
+                {filingEntity?.name}
+            </h1>
+            <h4 className="mt-4 text-xl flex items-center">
+                {loading ? <><span>Loading ... </span> <Spinner /></> : <><b>Symbol: </b>{filingEntity?.tickers}</>}
+            </h4>
             <br />
             {narrativeComponents}
         </main>
-    )
-}
-
-function Download() {
-    return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19 22H5V20H19V22ZM12 18L6 12L7.41 10.59L11 14.17V2H13V14.17L16.59 10.59L18 12L12 18Z" fill="#22C55E" />
-        </svg>
     )
 }
