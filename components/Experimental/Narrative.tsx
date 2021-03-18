@@ -19,7 +19,7 @@ function DollarPerShare({ value }: { value?: number }) {
 }
 
 function Section(props) {
-    return <section className="mb-12 px-3 w-96 shadow-2xl py-4 border rounded-xl border-blueGray-700">{props.children}</section>
+    return <section className="mb-12 p-4 w-96 shadow-2xl border rounded-xl border-blueGray-700">{props.children}</section>
 }
 
 interface Props {
@@ -61,7 +61,7 @@ function Popover(props) {
         setVisible(false)
     }
     return (
-        <a className="relative text-blue-400 underline block mt-4 cursor-pointer" onMouseEnter={show} onMouseLeave={hide}>
+        <a className="relative text-blue-300 underline block mt-4 cursor-pointer" onMouseEnter={show} onMouseLeave={hide}>
             {props.trigger}
             {
                 visible
@@ -78,7 +78,7 @@ function Popover(props) {
 export function NarrativeComponent({ narrative }: Props) {
 
     return (
-        <>
+        <div className="xl:grid grid-flow-col grid-cols-3 grid-rows-3 gap-4">
             <Section>
                 <Title>The company made <Million value={narrative?.revenueTalkingPoint?.data} /> in the most recent year</Title>
                 <p>
@@ -91,26 +91,29 @@ export function NarrativeComponent({ narrative }: Props) {
             </Section>
 
             <Section>
-                <Title>They spent <Million value={narrative?.variableCostTalkingPoint?.data} /> in varaible cost</Title>
+                <Title>They spent <Million value={narrative?.variableCostTalkingPoint?.data} /> in Cost of Goods</Title>
                 <p>{narrative?.variableCostTalkingPoint?.forwardCommentary}</p>
             </Section>
 
             <Section>
-                <Title>Fixed cost, investments in research and development was <Million value={narrative?.fixedCostTalkingPoint?.data} /></Title>
+                <Title>Research development, administrative cost totaled <Million value={narrative?.fixedCostTalkingPoint?.data} /></Title>
                 <p>{narrative?.fixedCostTalkingPoint?.forwardCommentary}</p>
             </Section>
 
             <Section>
-                <Title>Interest Paid, Taxes was <Million value={narrative?.otherExpensesTalkingPoint?.data} /> </Title>
+                <Title>What else did they have to pay for?</Title>
+                <p>
+                    Interest Paid, Taxes totalling <Million value={narrative?.otherExpensesTalkingPoint?.data} />
+                </p>
             </Section>
 
             <Section>
                 <Title>What's Left for you the shareholder?</Title>
-                <p>Net income: <Million value={narrative?.netIncomeTalkingPoint?.data} /></p>
+                <p>Net income <Million value={narrative?.netIncomeTalkingPoint?.data} /></p>
                 {
                     narrative?.netIncomeTalkingPoint?.data < 0
                         ?
-                        <Popover trigger="When is earnings expected to be positive?">
+                        <Popover trigger="When are they expected to turn a profit?">
                             <h4 className="text-lg font-semibold mb-4">Net Income Projection</h4>
                             <ProjectionTable projections={narrative.netIncomeTalkingPoint.projections} />
                         </Popover>
@@ -137,6 +140,6 @@ export function NarrativeComponent({ narrative }: Props) {
                 <Title>At this growth rate, what is the stock worth?</Title>
                 <p><DollarPerShare value={narrative?.targetPriceTalkingPoint?.data} /></p>
             </Section>
-        </>
+        </div>
     )
 }
