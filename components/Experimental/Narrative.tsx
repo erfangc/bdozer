@@ -3,7 +3,7 @@ import NumberFormat from "react-number-format"
 import { Narrative, Projection } from "../../client"
 
 function Title(props) {
-    return <h1 className="font-bold text-lg mb-2">{props.children}</h1>
+    return <h1 className="font-bold text-lg mb-4">{props.children}</h1>
 }
 
 function Million({ value }: { value?: number }) {
@@ -15,7 +15,7 @@ function Percent({ value }: { value?: number }) {
 }
 
 function DollarPerShare({ value }: { value?: number }) {
-    return <><NumberFormat value={value} thousandSeparator displayType="text" prefix="$" decimalScale={2} /> / share</>
+    return <><NumberFormat value={value} thousandSeparator displayType="text" prefix="$" decimalScale={2} /><span className="text-sm font-light"> / share</span></>
 }
 
 function Section(props) {
