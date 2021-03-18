@@ -1,0 +1,142 @@
+import React, { ReactNode, useState } from "react"
+import NumberFormat from "react-number-format"
+import { Narrative, Projection } from "../../client"
+
+function Title(props) {
+    return <h1 className="font-bold text-lg mb-2">{props.children}</h1>
+}
+
+function Million({ value }: { value?: number }) {
+    return <><NumberFormat value={value} thousandSeparator displayType="text" prefix="$" decimalScale={0} /> million</>
+}
+
+function Percent({ value }: { value?: number }) {
+    return <NumberFormat value={value * 100} thousandSeparator displayType="text" suffix="%" decimalScale={1} />
+}
+
+function DollarPerShare({ value }: { value?: number }) {
+    return <><NumberFormat value={value} thousandSeparator displayType="text" prefix="$" decimalScale={2} /> / share</>
+}
+
+function Section(props) {
+    return <section className="mb-12 px-3 w-96 shadow-2xl py-4 border rounded-xl border-blueGray-700">{props.children}</section>
+}
+
+interface Props {
+    narrative: Narrative
+}
+
+function ProjectionTable({ projections }: { projections: Projection[] }) {
+    return (
+        <table className="table-auto border-collapse">
+            <thead>
+                <tr>{projections.map(rp => <th className="p-2 text-right text-blueGray-300 font-normal">{rp.year}</th>)}</tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {
+                        projections.map(rp =>
+                            <td className="p-2 text-right border-t border-blueGray-700 font-bold">
+                                <NumberFormat
+                                    value={rp.value}
+                                    displayType="text"
+                                    thousandSeparator
+                                    decimalScale={0}
+                                />
+                            </td>
+                        )
+                    }
+                </tr>
+            </tbody>
+        </table>
+    )
+}
+
+function Popover(props) {
+    const [visible, setVisible] = useState(false)
+    function show() {
+        setVisible(true)
+    }
+    function hide() {
+        setVisible(false)
+    }
+    return (
+        <a className="relative text-blue-400 underline block mt-4 cursor-pointer" onMouseEnter={show} onMouseLeave={hide}>
+            {props.trigger}
+            {
+                visible
+                    ?
+                    <div className="absolute top-full text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded-md">
+                        {props.children}
+                    </div>
+                    : null
+            }
+        </a>
+    )
+}
+
+export function NarrativeComponent({ narrative }: Props) {
+
+    return (
+        <>
+            <Section>
+                <Title>The company made <Million value={narrative?.revenueTalkingPoint?.data} /> in the most recent year</Title>
+                <p>
+                    {narrative?.revenueTalkingPoint?.forwardCommentary}
+                    <Popover trigger="See projections">
+                        <h4 className="text-lg font-semibold mb-4">Revenue Projection from Zacks</h4>
+                        <ProjectionTable projections={narrative.revenueTalkingPoint.projections} />
+                    </Popover>
+                </p>
+            </Section>
+
+            <Section>
+                <Title>They spent <Million value={narrative?.variableCostTalkingPoint?.data} /> in varaible cost</Title>
+                <p>{narrative?.variableCostTalkingPoint?.forwardCommentary}</p>
+            </Section>
+
+            <Section>
+                <Title>Fixed cost, investments in research and development was <Million value={narrative?.fixedCostTalkingPoint?.data} /></Title>
+                <p>{narrative?.fixedCostTalkingPoint?.forwardCommentary}</p>
+            </Section>
+
+            <Section>
+                <Title>Interest Paid, Taxes was <Million value={narrative?.otherExpensesTalkingPoint?.data} /> </Title>
+            </Section>
+
+            <Section>
+                <Title>What's Left for you the shareholder?</Title>
+                <p>Net income: <Million value={narrative?.netIncomeTalkingPoint?.data} /></p>
+                {
+                    narrative?.netIncomeTalkingPoint?.data < 0
+                        ?
+                        <Popover trigger="When is earnings expected to be positive?">
+                            <h4 className="text-lg font-semibold mb-4">Net Income Projection</h4>
+                            <ProjectionTable projections={narrative.netIncomeTalkingPoint.projections} />
+                        </Popover>
+                        : null
+                }
+            </Section>
+
+            <Section>
+                <Title>How much per share?</Title>
+                <p><DollarPerShare value={narrative?.epsTalkingPoint?.data} /></p>
+            </Section>
+
+            <Section>
+                <Title>If sales does not grow, how much is the stock worth?</Title>
+                <p><DollarPerShare value={narrative?.noGrowthValueTalkingPoint?.data} /></p>
+            </Section>
+
+            <Section>
+                <Title>How much is sales expected to grow?</Title>
+                <p><Percent value={narrative?.growthTalkingPoint?.data} /></p>
+            </Section>
+
+            <Section>
+                <Title>At this growth rate, what is the stock worth?</Title>
+                <p><DollarPerShare value={narrative?.targetPriceTalkingPoint?.data} /></p>
+            </Section>
+        </>
+    )
+}

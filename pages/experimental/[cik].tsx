@@ -1,11 +1,11 @@
 import React from 'react'
 import { App } from '../../components/App'
-import CikOverview from '../../components/Experimental/StockOverview'
+import { StockOverview } from '../../components/Experimental/StockOverview'
 
-export default function StockOverview() {
+export default function StockOverviewPage() {
     return (
         <App>
-            <CikOverview />
+            <StockOverview />
         </App>
     )
 }

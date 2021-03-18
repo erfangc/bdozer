@@ -1177,6 +1177,12 @@ export interface Narrative {
      * @memberof Narrative
      */
     targetPriceTalkingPoint?: TalkingPoint;
+    /**
+     * 
+     * @type {TalkingPoint}
+     * @memberof Narrative
+     */
+    netIncomeTalkingPoint?: TalkingPoint;
 }
 /**
  * 
@@ -1203,6 +1209,25 @@ export interface PercentOfTotalAsset {
      * @memberof PercentOfTotalAsset
      */
     percentOfTotalAsset?: number;
+}
+/**
+ * 
+ * @export
+ * @interface Projection
+ */
+export interface Projection {
+    /**
+     * 
+     * @type {number}
+     * @memberof Projection
+     */
+    year?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Projection
+     */
+    value?: number;
 }
 /**
  * 
@@ -1241,6 +1266,12 @@ export interface TalkingPoint {
      * @memberof TalkingPoint
      */
     data?: number;
+    /**
+     * 
+     * @type {Array<Projection>}
+     * @memberof TalkingPoint
+     */
+    projections?: Array<Projection>;
     /**
      * 
      * @type {string}
