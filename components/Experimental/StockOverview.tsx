@@ -97,7 +97,7 @@ export function StockOverview() {
                     <h1 className="font-bold text-4xl">
                         {filingEntity?.name}
                     </h1>
-                    <h4 className="mt-4 text-xl flex items-center">
+                    <h4 className="mt-4 text-xl flex items-center space-x-2">
                         <b>Symbol: </b>{filingEntity?.tickers}
                     </h4>
                     <DownloadButton loading={exporting} onClick={downloadExcelModel} />

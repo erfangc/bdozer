@@ -19,7 +19,7 @@ function DollarPerShare({ value }: { value?: number }) {
 }
 
 function Section(props) {
-    return <section className="p-4 w-96 shadow-2xl border rounded-xl border-blueGray-700">{props.children}</section>
+    return <section className="p-4 w-96 lg:w-full shadow-2xl border rounded-xl border-blueGray-700">{props.children}</section>
 }
 
 interface Props {
@@ -78,10 +78,12 @@ function Popover(props) {
 export function NarrativeComponent({ narrative }: Props) {
 
     return (
-        <div className="xl:grid grid-flow-row grid-cols-3 grid-rows-3 gap-4">
+        <div className="space-y-4">
             <Section>
-                <Title>The company made <Million value={narrative?.revenueTalkingPoint?.data} /> in the most recent year</Title>
+                <Title>How much they made?</Title>
                 <p>
+                    The company made <Million value={narrative?.revenueTalkingPoint?.data} /> in the most recent year
+                    <br />
                     {narrative?.revenueTalkingPoint?.forwardCommentary}
                     <Popover trigger="See projections">
                         <h4 className="text-lg font-semibold mb-4">Revenue Projection from Zacks</h4>
@@ -114,6 +116,8 @@ export function NarrativeComponent({ narrative }: Props) {
                     narrative?.netIncomeTalkingPoint?.data < 0
                         ?
                         <Popover trigger="When are they expected to turn a profit?">
+                            Earnings are expected to turn positive in 2021
+                            <br />
                             <h4 className="text-lg font-semibold mb-4">Net Income Projection</h4>
                             <ProjectionTable projections={narrative.netIncomeTalkingPoint.projections} />
                         </Popover>
