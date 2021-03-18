@@ -89,13 +89,6 @@ export function StockOverview() {
         }))
     }
 
-    const narrativeComponents = loading
-        ? null
-        : <>
-            <DownloadButton loading={exporting} onClick={downloadExcelModel} />
-            <NarrativeComponent narrative={narrative} />
-        </>
-
     return (
         <main className="text-blueGray-50 flex items-center p-4 xl:pt-10 justify-center flex-grow bg-blueGray-900">
             {loading
@@ -107,7 +100,8 @@ export function StockOverview() {
                     <h4 className="mt-4 text-xl flex items-center">
                         <b>Symbol: </b>{filingEntity?.tickers}
                     </h4>
-                    {narrativeComponents}
+                    <DownloadButton loading={exporting} onClick={downloadExcelModel} />
+                    <NarrativeComponent narrative={narrative} />
                 </div>}
         </main>
     )

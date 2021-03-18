@@ -19,7 +19,7 @@ function DollarPerShare({ value }: { value?: number }) {
 }
 
 function Section(props) {
-    return <section className="mb-12 p-4 w-96 shadow-2xl border rounded-xl border-blueGray-700">{props.children}</section>
+    return <section className="p-4 w-96 shadow-2xl border rounded-xl border-blueGray-700">{props.children}</section>
 }
 
 interface Props {
@@ -78,14 +78,14 @@ function Popover(props) {
 export function NarrativeComponent({ narrative }: Props) {
 
     return (
-        <div className="xl:grid grid-flow-col grid-cols-3 grid-rows-3 gap-4">
+        <div className="xl:grid grid-flow-row grid-cols-3 grid-rows-3 gap-4">
             <Section>
                 <Title>The company made <Million value={narrative?.revenueTalkingPoint?.data} /> in the most recent year</Title>
                 <p>
                     {narrative?.revenueTalkingPoint?.forwardCommentary}
                     <Popover trigger="See projections">
                         <h4 className="text-lg font-semibold mb-4">Revenue Projection from Zacks</h4>
-                        <ProjectionTable projections={narrative.revenueTalkingPoint.projections} />
+                        <ProjectionTable projections={narrative?.revenueTalkingPoint.projections} />
                     </Popover>
                 </p>
             </Section>
@@ -127,7 +127,7 @@ export function NarrativeComponent({ narrative }: Props) {
             </Section>
 
             <Section>
-                <Title>If sales does not grow, how much is the stock worth?</Title>
+                <Title>If sales remains the same, how much is the stock worth?</Title>
                 <p><DollarPerShare value={narrative?.noGrowthValueTalkingPoint?.data} /></p>
             </Section>
 
