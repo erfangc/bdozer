@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from "react"
 import NumberFormat from "react-number-format"
-import { Narrative, Projection } from "../../client"
+import { Model, Narrative, Projection } from "../../client"
 
 function Title(props) {
     return <h1 className="font-bold text-lg mb-4">{props.children}</h1>
@@ -23,14 +23,14 @@ function Section(props) {
 }
 
 interface Props {
-    narrative: Narrative
+    narrative: Narrative,
 }
 
 function ProjectionTable({ projections }: { projections: Projection[] }) {
     return (
         <table className="table-auto border-collapse">
             <thead>
-                <tr>{projections.map(rp => <th className="p-2 text-right text-blueGray-300 font-normal">{rp.year}</th>)}</tr>
+                <tr>{projections.map(projection => <th className="p-2 text-right text-blueGray-300 font-normal">{projection.year}</th>)}</tr>
             </thead>
             <tbody>
                 <tr>
@@ -39,6 +39,7 @@ function ProjectionTable({ projections }: { projections: Projection[] }) {
                             <td className="p-2 text-right border-t border-blueGray-700 font-bold">
                                 <NumberFormat
                                     value={rp.value}
+                                    prefix="$"
                                     displayType="text"
                                     thousandSeparator
                                     decimalScale={0}
@@ -86,7 +87,7 @@ export function NarrativeComponent({ narrative }: Props) {
                     <br />
                     {narrative?.revenueTalkingPoint?.forwardCommentary}
                     <Popover trigger="See projections">
-                        <h4 className="text-lg font-semibold mb-4">Revenue Projection from Zacks</h4>
+                        <h4 className="my-2 text-base font-semibold">Net Income Projection:</h4>
                         <ProjectionTable projections={narrative?.revenueTalkingPoint.projections} />
                     </Popover>
                 </p>
@@ -116,9 +117,8 @@ export function NarrativeComponent({ narrative }: Props) {
                     narrative?.netIncomeTalkingPoint?.data < 0
                         ?
                         <Popover trigger="When are they expected to turn a profit?">
-                            Earnings are expected to turn positive in 2021
-                            <br />
-                            <h4 className="text-lg font-semibold mb-4">Net Income Projection</h4>
+                            <p className="mb-4 text-lg">Earnings are expected to turn <span className="font-bold">positive in 2022</span></p>
+                            <h4 className="my-2 text-base font-semibold">Net Income Projection:</h4>
                             <ProjectionTable projections={narrative.netIncomeTalkingPoint.projections} />
                         </Popover>
                         : null
@@ -137,7 +137,7 @@ export function NarrativeComponent({ narrative }: Props) {
 
             <Section>
                 <Title>How much is sales expected to grow?</Title>
-                <p><Percent value={narrative?.growthTalkingPoint?.data} /></p>
+                <p><Percent value={narrative?.growthTalkingPoint?.data} /> on average, for {narrative?.model?.periods} years</p>
             </Section>
 
             <Section>
