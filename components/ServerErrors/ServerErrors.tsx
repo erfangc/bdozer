@@ -34,20 +34,19 @@ export class ServerErrors extends Component<{}, State> {
         return errors.length
             ?
             <div
-                className="z-10 px-4 py-3 bg-red-500 rounded-lg shadow-lg font-semibold text-lg text-blueGray-50 w-32 text-center transition ease-linear hover:bg-red-400 cursor-pointer fixed bottom-2 left-2"
+                className="fixed top-2 right-2 z-10 px-4 py-3 bg-red-500 rounded-lg shadow-lg font-semibold text-lg text-blueGray-50 w-32 text-center transition ease-linear hover:bg-red-400 cursor-pointer"
             >
                 <span className="rounded-full bg-red-700 px-2 mr-2">{errors.length}</span>
                 <span>Errors</span>
-                <ul className="absolute bottom-full left-0 mb-2 text-gray-700 flex-col space-y-4 whitespace-nowrap">
+                <ul className="absolute top-full right-0 mt-2 text-gray-700 flex-col space-y-4 whitespace-nowrap">
                     {
                         errors.map(
-                            error => (
+                            error =>
                                 <ErrorMessage
                                     key={error?.id}
                                     error={error}
                                     onDismiss={() => this.dismissError(error.id)}
                                 />
-                            )
                         )
                     }
                 </ul>

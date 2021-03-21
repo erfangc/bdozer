@@ -15,7 +15,7 @@ export function App({ children }) {
         return (
             <>
                 <Head>
-                    <title>Equity Model Builder - UI</title>
+                    <title>Bulldozer | Home</title>
                     <link rel="icon" href="/favicon.ico" />
                     <script type="text/javascript" src="/fullstory.js"></script>
                 </Head>
