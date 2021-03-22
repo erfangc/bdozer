@@ -129,6 +129,61 @@ export interface Calculation {
 /**
  * 
  * @export
+ * @interface Cell
+ */
+export interface Cell {
+    /**
+     * 
+     * @type {number}
+     * @memberof Cell
+     */
+    period?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cell
+     */
+    name?: string;
+    /**
+     * 
+     * @type {Item}
+     * @memberof Cell
+     */
+    item?: Item;
+    /**
+     * 
+     * @type {number}
+     * @memberof Cell
+     */
+    value?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cell
+     */
+    formula?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Cell
+     */
+    excelFormula?: string;
+    /**
+     * 
+     * @type {Address}
+     * @memberof Cell
+     */
+    address?: Address;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Cell
+     */
+    dependentCellNames?: Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface Commentary
  */
 export interface Commentary {
@@ -316,6 +371,31 @@ export interface EdgarFilingMetadata {
      * @memberof EdgarFilingMetadata
      */
     inc_states?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface EvaluateModelResult
+ */
+export interface EvaluateModelResult {
+    /**
+     * 
+     * @type {Model}
+     * @memberof EvaluateModelResult
+     */
+    model?: Model;
+    /**
+     * 
+     * @type {Array<Cell>}
+     * @memberof EvaluateModelResult
+     */
+    cells?: Array<Cell>;
+    /**
+     * 
+     * @type {number}
+     * @memberof EvaluateModelResult
+     */
+    targetPrice?: number;
 }
 /**
  * 
@@ -2024,6 +2104,107 @@ export class FilingEntityManagerControllerApi extends BaseAPI {
      */
     public getFilingEntity(cik: string, options?: any) {
         return FilingEntityManagerControllerApiFp(this.configuration).getFilingEntity(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ModelBuilderFactoryControllerApi - axios parameter creator
+ * @export
+ */
+export const ModelBuilderFactoryControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        model: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('model', 'cik', cik)
+            const localVarPath = `/api/model-builder-factory/{cik}`
+                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ModelBuilderFactoryControllerApi - functional programming interface
+ * @export
+ */
+export const ModelBuilderFactoryControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ModelBuilderFactoryControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async model(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvaluateModelResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.model(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ModelBuilderFactoryControllerApi - factory interface
+ * @export
+ */
+export const ModelBuilderFactoryControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ModelBuilderFactoryControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        model(cik: string, options?: any): AxiosPromise<EvaluateModelResult> {
+            return localVarFp.model(cik, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ModelBuilderFactoryControllerApi - object-oriented interface
+ * @export
+ * @class ModelBuilderFactoryControllerApi
+ * @extends {BaseAPI}
+ */
+export class ModelBuilderFactoryControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelBuilderFactoryControllerApi
+     */
+    public model(cik: string, options?: any) {
+        return ModelBuilderFactoryControllerApiFp(this.configuration).model(cik, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

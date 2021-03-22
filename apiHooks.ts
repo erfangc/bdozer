@@ -1,6 +1,7 @@
 import {
   EdgarExplorerControllerApi,
   FilingEntityManagerControllerApi,
+  ModelBuilderFactoryControllerApi,
   MxParserControllerApi,
   NarrativeBuilderControllerApi,
 } from "./client";
@@ -45,6 +46,11 @@ function useAxios() {
 export function useMxParserApi() {
   const axiosInstance = useAxios();
   return new MxParserControllerApi(null, basePath, axiosInstance);
+}
+
+export function useModelBuilderFactoryApi() {
+  const axiosInstance = useAxios();
+  return new ModelBuilderFactoryControllerApi(null, basePath, axiosInstance);
 }
 
 export function useEdgarExplorerApi() {
