@@ -4,10 +4,13 @@ import { useState } from 'react'
 import { useEdgarExplorerApi, useFilingEntityManagerApi } from '../../apiHooks'
 import { EdgarEntity, EdgarEntitySource } from '../../client'
 
-export function Search() {
+interface Props {
+    onSubmit: (cik: string) => void
+}
+
+export function Search(props: Props) {
 
     const edgarExplorerApi = useEdgarExplorerApi()
-    const router = useRouter()
     const filingEntityManagerApi = useFilingEntityManagerApi()
     const ref = useRef<HTMLInputElement>()
 
@@ -32,7 +35,7 @@ export function Search() {
     async function submit(edgarEntity: EdgarEntity) {
         setFound([])
         const { data } = await filingEntityManagerApi.getFilingEntity(edgarEntity['_id'])
-        router.push(`/experimental/${data.cik}`)
+        props.onSubmit(data.cik)
     }
 
     function changeTerm(newTerm: string) {

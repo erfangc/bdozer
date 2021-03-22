@@ -27,7 +27,7 @@ function DownloadButton(props) {
     )
 }
 
-export function StockOverview() {
+export function StockNarrative() {
 
     const router = useRouter()
     const { cik } = router.query
