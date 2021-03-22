@@ -62,7 +62,7 @@ export class BalanceSheetItemComponent extends Component<ItemComponentProps, Sta
                         thousandSeparator
                         decimalScale={0}
                         displayType='text'
-                        value={item.historicalValue}
+                        value={item.historicalValue?.value}
                     />
                     {checked ? <Check /> : <Attention />}
                 </span>

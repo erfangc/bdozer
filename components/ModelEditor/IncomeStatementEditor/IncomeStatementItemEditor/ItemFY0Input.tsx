@@ -13,7 +13,7 @@ interface ItemFY0InputProps {
  */
 export function ItemFY0Input({ item, onChange }: ItemFY0InputProps) {
 
-    const [value, setValue] = useState(item.historicalValue)
+    const [value, setValue] = useState(item.historicalValue?.value)
     const [editing, setEditing] = useState(false)
     const [evalResult, setEvalResult] = useState<number | 'Error'>(undefined)
     const mxparser = useMxParserApi()

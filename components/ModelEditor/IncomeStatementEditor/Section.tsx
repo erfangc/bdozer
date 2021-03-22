@@ -22,7 +22,6 @@ export function IncomeStatementSection({ items, subtotal, onChange, model }: Sec
 
         const newItem: Item = {
             name: `Item_${model.incomeStatementItems.length + 1}`,
-            historicalValue: 0,
             description: `Item_${model.incomeStatementItems.length + 1}`.replace("_", " ")
         }
 
@@ -44,7 +43,7 @@ export function IncomeStatementSection({ items, subtotal, onChange, model }: Sec
                 <span className="flex">
                     <NumberFormat
                         displayType="text"
-                        value={subtotal.historicalValue}
+                        value={subtotal.historicalValue?.value}
                         thousandSeparator
                         decimalScale={0}
                     />

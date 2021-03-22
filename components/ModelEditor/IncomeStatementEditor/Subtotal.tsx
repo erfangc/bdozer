@@ -13,7 +13,7 @@ export function Subtotal({ subtotal }: SubtotalProps) {
             <span className="flex">
                 <NumberFormat
                     displayType="text"
-                    value={subtotal.historicalValue}
+                    value={subtotal.historicalValue?.value}
                     thousandSeparator
                     decimalScale={0}
                 />

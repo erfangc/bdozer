@@ -23,7 +23,6 @@ export function BalanceSheetSection({ items, subtotal, onChange, model }: Sectio
         const name = `Balance_Sheet_Item_${model.balanceSheetItems.length + 1}`
         const newItem: Item = {
             name: name,
-            historicalValue: 0,
             description: name.replace(/_/g, " ")
         }
 
@@ -45,7 +44,7 @@ export function BalanceSheetSection({ items, subtotal, onChange, model }: Sectio
                 <span className="flex">
                     <NumberFormat
                         displayType="text"
-                        value={subtotal.historicalValue}
+                        value={subtotal.historicalValue?.value}
                         thousandSeparator
                         decimalScale={0}
                     />
