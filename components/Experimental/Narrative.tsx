@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from "react"
 import NumberFormat from "react-number-format"
-import { Model, Narrative, Projection } from "../../client"
+import { Narrative, Projection } from "../../client"
 
 function Title(props) {
     return <h1 className="font-bold text-lg mb-4">{props.children}</h1>
@@ -53,7 +53,12 @@ function ProjectionTable({ projections }: { projections: Projection[] }) {
     )
 }
 
-function Popover(props) {
+interface PopoverProps {
+    trigger: ReactNode
+    children: ReactNode
+}
+
+export function Popover(props: PopoverProps) {
     const [visible, setVisible] = useState(false)
     function show() {
         setVisible(true)
