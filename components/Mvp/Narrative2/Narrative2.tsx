@@ -3,8 +3,9 @@ import { ModelResult } from "../../../client";
 import { simpleNumber } from "../../../simple-number";
 import { SubTitle } from "../../Title";
 import { Money, Percent, Number } from "./Card";
-import { EarningsPerShare } from "./EarningsPerShare";
+import { EarningsPerShareCalculation } from "./EarningsPerShareCalculation";
 import { FutureEarningsPerShare } from "./FutureEarningsPerShare";
+import { PresentValueSankey } from "./PresentValueSankey";
 import { ProfitWaterFall } from "./ProfitWaterFall";
 import { ValueBreakdown } from "./ValueBreakdown";
 
@@ -54,7 +55,7 @@ export function Narrative2(props: Props) {
                 </div>
                 <div>
                     <SubTitle className="mb-6">Earning Per Share</SubTitle>
-                    <EarningsPerShare result={result} />
+                    <EarningsPerShareCalculation result={result} />
                 </div>
                 <div>
                     <SubTitle className="mb-6">Future Earnings per Share</SubTitle>
@@ -62,11 +63,7 @@ export function Narrative2(props: Props) {
                 </div>
                 <div>
                     <SubTitle className="mb-6">Present Value</SubTitle>
-                    <p>How much profit will be generated in the future?</p>
-                    <div className="mt-4 grid grid-cols-2 gap-2">
-                        <Percent title="Discount Rate" value={discountRate} />
-                        <Number title="Beta" value={beta} />
-                    </div>
+                    <PresentValueSankey result={result} />
                 </div>
             </div>
         </main>

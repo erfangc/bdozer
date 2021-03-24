@@ -5,14 +5,15 @@ interface Props {
     result: ModelResult
 }
 
-export function EarningsPerShare({ result }: Props) {
+export function EarningsPerShareCalculation({ result }: Props) {
     const profit = result.businessWaterfall[0].profit
     const sharesOutstanding = result.shareOutstanding.historicalValue?.value
     const profitPerShare = result.profitPerShare.historicalValue?.value
+    const profitSpan = <span className={`font-bold ${profit.value > 0 ? 'text-green-600' : 'text-red-500'}`}>{simpleNumber(profit.value)}</span>;
     return (
         <div>
             <p>
-                Latest year profit was <span className={`font-bold ${profit.value > 0 ? 'text-green-600' : 'text-red-500'}`}>{simpleNumber(profit.value)}</span>, as
+                Latest year profit was {profitSpan}, as
                 a shareholder you are entitled to:
             </p>
             <div className="flex flex-col text-blueGray-300 mt-10">

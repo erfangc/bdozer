@@ -1,5 +1,6 @@
 import Highcharts from "highcharts";
 import HC_more from 'highcharts/highcharts-more';
+import HighchartsSankey from 'highcharts/modules/sankey';
 
 export const blueGray = "#F8FAFC";
 export const blueGray600 = "#475569";
@@ -152,9 +153,10 @@ Highcharts.theme = {
   },
 };
 
-if (Highcharts.setOptions) {
+if (typeof Highcharts === 'object') {
   Highcharts.setOptions(Highcharts.theme);
   HC_more(Highcharts);
+  HighchartsSankey(Highcharts)
 }
 
 export const highcharts = Highcharts;

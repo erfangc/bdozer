@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
 import { ModelResult } from "../../../client";
 import { highcharts } from "../../../highcharts";
-import { SubTitle } from "../../Title";
-import { PopoverGeneric } from "../FullModelDisplay";
 import { Popover } from "../Narrative1/Narrative";
 
 interface Props {

@@ -7,3 +7,7 @@ export function Title({ className, ...props }: React.DetailedHTMLProps<React.HTM
 export function SubTitle({ className, ...props }: React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>) {
     return <h2 {...props} className={`text-3xl font-semibold text-blueGray-300 ${className}`} />
 }
+
+export function Label({ className, ...props }: React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>) {
+    return <h5 {...props} className={`text-xl font-semibold text-blueGray-400 ${className}`} />
+}
