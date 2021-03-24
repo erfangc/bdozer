@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useModelBuilderFactoryApi } from '../../api-hooks'
 import { ModelResult } from '../../client'
 import { App } from '../../components/App'
-import { ModelResultComponent as ModelResultDisplay } from '../../components/Mvp/ModelDisplay'
+import { FullModelDisplay as ModelResultDisplay } from '../../components/Mvp/FullModelDisplay'
 import { Title } from '../../components/Title'
 
-function ModelComponent() {
+function FullModelComponent() {
     const router = useRouter()
     const api = useModelBuilderFactoryApi()
     const { cik } = router.query
@@ -37,10 +37,10 @@ function ModelComponent() {
     )
 }
 
-export default function ModelPage() {
+export default function FullModelPage() {
     return (
         <App>
-            <ModelComponent />
+            <FullModelComponent />
         </App>
     )
 }

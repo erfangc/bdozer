@@ -8,7 +8,7 @@ interface Props {
     result: ModelResult
 }
 
-export function ModelResultComponent(props: Props) {
+export function FullModelDisplay(props: Props) {
     const model = props.result.model
     const cells = props.result.cells
     const periods = []

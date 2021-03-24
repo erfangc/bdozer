@@ -66,5 +66,14 @@ export function ProfitWaterFall(props: Props) {
         })
     }, [])
 
-    return <HighchartsReact highcharts={highcharts} options={options} />
+    return <>
+        <HighchartsReact highcharts={highcharts} options={options} />
+        <div className="flex space-x-1 text-sm">
+            <button className="focus:outline-none bg-blueGray-500 rounded-full px-4 py-1 shadow-md">2021</button>
+            <button className="focus:outline-none hover:bg-blueGray-500 rounded-full border border-blueGray-700 px-4 py-1 shadow-md">2022</button>
+            <button className="focus:outline-none hover:bg-blueGray-500 rounded-full border border-blueGray-700 px-4 py-1 shadow-md">2023</button>
+            <button className="focus:outline-none hover:bg-blueGray-500 rounded-full border border-blueGray-700 px-4 py-1 shadow-md">2024</button>
+            <button className="focus:outline-none hover:bg-blueGray-500 rounded-full border border-blueGray-700 px-4 py-1 shadow-md">2025</button>
+        </div>
+    </>
 }
