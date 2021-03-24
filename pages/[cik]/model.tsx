@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useModelBuilderFactoryApi } from '../../apiHooks'
-import { EvaluateModelResult } from '../../client'
+import { ModelResult } from '../../client'
 import { App } from '../../components/App'
-import { ModelResult } from '../../components/Experimental/ModelDisplay'
+import { ModelResult as ModelResultDisplay } from '../../components/Mvp/ModelDisplay'
 import { Title } from '../../components/Title'
 
 function ModelComponent() {
@@ -11,12 +11,12 @@ function ModelComponent() {
     const api = useModelBuilderFactoryApi()
     const { cik } = router.query
 
-    const [result, setResult] = useState<EvaluateModelResult>()
+    const [result, setResult] = useState<ModelResult>()
     const [loading, setLoading] = useState(false)
 
     async function refreshModel(cik: string) {
         setLoading(true)
-        const { data } = await api.model(cik)
+        const { data } = await api.createModel(cik)
         setResult(data)
         setLoading(false)
     }
@@ -31,7 +31,7 @@ function ModelComponent() {
             {
                 loading || result === undefined
                     ? null
-                    : <ModelResult result={result} />
+                    : <ModelResultDisplay result={result} />
             }
         </main>
     )

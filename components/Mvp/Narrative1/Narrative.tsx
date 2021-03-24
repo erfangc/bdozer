@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from "react"
 import NumberFormat from "react-number-format"
-import { Narrative, Projection } from "../../client"
+import { Narrative, Projection } from "../../../client"
 
 function Title(props) {
     return <h1 className="font-bold text-lg mb-4">{props.children}</h1>

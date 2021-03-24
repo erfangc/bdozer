@@ -375,31 +375,6 @@ export interface EdgarFilingMetadata {
 /**
  * 
  * @export
- * @interface EvaluateModelResult
- */
-export interface EvaluateModelResult {
-    /**
-     * 
-     * @type {Model}
-     * @memberof EvaluateModelResult
-     */
-    model?: Model;
-    /**
-     * 
-     * @type {Array<Cell>}
-     * @memberof EvaluateModelResult
-     */
-    cells?: Array<Cell>;
-    /**
-     * 
-     * @type {number}
-     * @memberof EvaluateModelResult
-     */
-    targetPrice?: number;
-}
-/**
- * 
- * @export
  * @interface Fact
  */
 export interface Fact {
@@ -1148,6 +1123,79 @@ export interface Model {
      * @memberof Model
      */
     updatedBy?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ModelResult
+ */
+export interface ModelResult {
+    /**
+     * 
+     * @type {Array<Cell>}
+     * @memberof ModelResult
+     */
+    cells?: Array<Cell>;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelResult
+     */
+    zeroGrowthPrice?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelResult
+     */
+    impliedPriceFromGrowth?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelResult
+     */
+    currentPrice?: number;
+    /**
+     * 
+     * @type {Model}
+     * @memberof ModelResult
+     */
+    model?: Model;
+    /**
+     * 
+     * @type {Item}
+     * @memberof ModelResult
+     */
+    revenue?: Item;
+    /**
+     * 
+     * @type {Array<Item>}
+     * @memberof ModelResult
+     */
+    categorizedExpenses?: Array<Item>;
+    /**
+     * 
+     * @type {Item}
+     * @memberof ModelResult
+     */
+    profit?: Item;
+    /**
+     * 
+     * @type {Item}
+     * @memberof ModelResult
+     */
+    shareOutstanding?: Item;
+    /**
+     * 
+     * @type {Item}
+     * @memberof ModelResult
+     */
+    profitPerShare?: Item;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelResult
+     */
+    targetPrice?: number;
 }
 /**
  * 
@@ -2120,9 +2168,9 @@ export const ModelBuilderFactoryControllerApiAxiosParamCreator = function (confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        model: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+        createModel: async (cik: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'cik' is not null or undefined
-            assertParamExists('model', 'cik', cik)
+            assertParamExists('createModel', 'cik', cik)
             const localVarPath = `/api/model-builder-factory/{cik}`
                 .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2163,8 +2211,8 @@ export const ModelBuilderFactoryControllerApiFp = function(configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async model(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvaluateModelResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.model(cik, options);
+        async createModel(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createModel(cik, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2183,8 +2231,8 @@ export const ModelBuilderFactoryControllerApiFactory = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        model(cik: string, options?: any): AxiosPromise<EvaluateModelResult> {
-            return localVarFp.model(cik, options).then((request) => request(axios, basePath));
+        createModel(cik: string, options?: any): AxiosPromise<ModelResult> {
+            return localVarFp.createModel(cik, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2203,8 +2251,8 @@ export class ModelBuilderFactoryControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ModelBuilderFactoryControllerApi
      */
-    public model(cik: string, options?: any) {
-        return ModelBuilderFactoryControllerApiFp(this.configuration).model(cik, options).then((request) => request(this.axios, this.basePath));
+    public createModel(cik: string, options?: any) {
+        return ModelBuilderFactoryControllerApiFp(this.configuration).createModel(cik, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

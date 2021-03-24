@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { basePath, useFilingEntityManagerApi, useNarrativeBuilderApi } from '../../apiHooks'
-import { FilingEntity, Narrative } from '../../client'
+import { basePath, useFilingEntityManagerApi, useNarrativeBuilderApi } from '../../../apiHooks'
+import { FilingEntity, Narrative } from '../../../client'
 import { useAuth0 } from '@auth0/auth0-react'
-import { Spinner } from '../ButtonSvgs/Spinner'
+import { Spinner } from '../../ButtonSvgs/Spinner'
 import { NarrativeComponent } from './Narrative'
 
 function DownloadIcon({ loading }: { loading: boolean }) {

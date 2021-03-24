@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React from 'react'
 import { App } from '../components/App'
-import { Search } from '../components/Experimental/Search'
+import { Search } from '../components/Mvp/Search'
 
 export default function Home() {
   const router = useRouter()

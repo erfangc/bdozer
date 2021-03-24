@@ -1,4 +1,5 @@
 import Highcharts from "highcharts";
+import HC_more from 'highcharts/highcharts-more';
 
 export const blueGray = "#F8FAFC";
 export const blueGray600 = "#475569";
@@ -72,6 +73,7 @@ Highcharts.theme = {
 
 if (Highcharts.setOptions) {
   Highcharts.setOptions(Highcharts.theme);
+  HC_more(Highcharts);
 }
 
 export const highcharts = Highcharts;
