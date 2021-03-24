@@ -1196,6 +1196,30 @@ export interface ModelResult {
      * @memberof ModelResult
      */
     targetPrice?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelResult
+     */
+    discountRate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelResult
+     */
+    beta?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelResult
+     */
+    riskFreeRate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ModelResult
+     */
+    equityRiskPremium?: number;
 }
 /**
  * 

@@ -1,13 +1,14 @@
 import React, { useState } from "react"
 import { ReactNode } from "react"
 import NumberFormat from "react-number-format"
-import { EvaluateModelResult } from "../../client"
+import { ModelResult } from "../../client"
+import { simpleNumber } from "../../simple-number"
 
 interface Props {
-    result: EvaluateModelResult
+    result: ModelResult
 }
 
-export function ModelResult(props: Props) {
+export function ModelResultComponent(props: Props) {
     const model = props.result.model
     const cells = props.result.cells
     const periods = []
@@ -36,7 +37,7 @@ export function ModelResult(props: Props) {
                                         </PopoverGeneric> : description ?? name}
                                     </div>
                                 </td>
-                                {/* for every period layout the prediction for that period */}
+                                {/* For every period layout the prediction for that period */}
                                 {periods.map(period => {
                                     const cell = cells.find(cell =>
                                         cell.period == period && cell.item.name == name
@@ -45,13 +46,10 @@ export function ModelResult(props: Props) {
                                     return (
                                         <td className={`text-right px-1 py-0.5 ${className}`}>
                                             {
-                                                cell.value ?
-                                                    <NumberFormat
-                                                        displayType="text"
-                                                        value={cell.value}
-                                                        thousandSeparator
-                                                        decimalScale={0}
-                                                    />
+                                                cell.value
+                                                    ? Math.abs(cell.value) < 100
+                                                        ? <NumberFormat value={cell.value} displayType="text" decimalScale={2} thousandSeparator />
+                                                        : simpleNumber(cell.value.toFixed(0))
                                                     : null
                                             }
                                         </td>

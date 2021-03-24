@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { basePath, useFilingEntityManagerApi, useNarrativeBuilderApi } from '../../../apiHooks'
+import { basePath, useFilingEntityManagerApi, useNarrativeBuilderApi } from '../../../api-hooks'
 import { FilingEntity, Narrative } from '../../../client'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Spinner } from '../../ButtonSvgs/Spinner'

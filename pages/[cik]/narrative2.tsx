@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useModelBuilderFactoryApi } from "../../apiHooks";
+import { useModelBuilderFactoryApi } from "../../api-hooks";
 import { ModelResult } from "../../client";
 import { App } from "../../components/App";
 import { Narrative2 } from "../../components/Mvp/Narrative2/Narrative2";

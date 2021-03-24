@@ -1,11 +1,9 @@
-
-import HighchartsReact from "highcharts-react-official";
 import React from "react";
-import NumberFormat from "react-number-format";
-import { ModelResult } from "../../../client"
-import { highcharts } from "../../../highcharts";
+import { ModelResult } from "../../../client";
+import { simpleNumber } from "../../../simple-number";
 import { SubTitle } from "../../Title";
-import { ProfitWaterFall } from "./ProfitWaterFall"
+import { Money, Percent, Number } from "./Card";
+import { ProfitWaterFall } from "./ProfitWaterFall";
 import { ValueBreakdown } from "./ValueBreakdown";
 
 interface Props {
@@ -17,42 +15,75 @@ export function Narrative2(props: Props) {
         result,
         result: {
             cells,
-            model,
+            model: {
+                description,
+                symbol,
+            },
+            profit,
             currentPrice,
             targetPrice,
+            discountRate,
+            beta,
+            equityRiskPremium,
+            riskFreeRate,
         }
     } = props;
 
     return (
         <main className="text-blueGray-50 flex-grow min-h-screen px-2 py-8 flex justify-center bg-blueGray-900">
-            <div className="max-w-lg">
-                <div className="grid grid-cols-2 gap-2">
-                    <Card title="Target Price" value={targetPrice} />
-                    <Card title="Current Price" value={currentPrice} />
+            <div className="max-w-lg flex-col space-y-16">
+                <div>
+                    <span className="font-extralight">Company</span><SubTitle>{symbol}</SubTitle>
+                    <div>
+
+                    </div>
                 </div>
                 <div>
+                    <div className="grid grid-cols-2 gap-2">
+                        <Money title="Target Price" value={targetPrice} />
+                        <Money title="Current Price" value={currentPrice} />
+                    </div>
+                </div>
+                <div>
+                    <SubTitle className="mb-6">Value Breakdown</SubTitle>
                     <ValueBreakdown result={result} />
                 </div>
                 <div>
-                    <SubTitle className="mb-4">Business Breakdown</SubTitle>
+                    <SubTitle className="mb-6">Business Breakdown</SubTitle>
                     <p>How did AAL make and spend it's money in the most recent year</p>
                     <ProfitWaterFall result={result} />
+                    <div className="flex space-x-1 text-sm">
+                        <button className="focus:outline-none bg-blueGray-500 rounded-full px-4 py-1 shadow-md">2021</button>
+                        <button className="focus:outline-none hover:bg-blueGray-500 rounded-full border border-blueGray-700 px-4 py-1 shadow-md">2022</button>
+                        <button className="focus:outline-none hover:bg-blueGray-500 rounded-full border border-blueGray-700 px-4 py-1 shadow-md">2023</button>
+                        <button className="focus:outline-none hover:bg-blueGray-500 rounded-full border border-blueGray-700 px-4 py-1 shadow-md">2024</button>
+                        <button className="focus:outline-none hover:bg-blueGray-500 rounded-full border border-blueGray-700 px-4 py-1 shadow-md">2025</button>
+                    </div>
+                </div>
+                <div>
+                    <SubTitle className="mb-6">Earning Per Share</SubTitle>
+                    <div>
+                        <p>
+                            Since current year profit was <span className={`font-bold ${profit.historicalValue?.value > 0 ? 'text-green-600' : 'text-red-500'}`}>{simpleNumber(profit.historicalValue?.value)}</span>, then:
+                        </p>
+                        <div className="flex space-x-3 items-center text-blueGray-300 mt-10">
+                            <span className="px-2 py-3 border border-blueGray-500 rounded-md">{simpleNumber(profit.historicalValue?.value)}</span>
+                            <span>/</span>
+                            <span className="px-2 py-3 border border-blueGray-500 rounded-md">300,000 shares outstanding</span>
+                            <span>=</span>
+                            <span className="px-2 py-3 border border-blueGray-500 rounded-md">Earnings per Share</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <SubTitle className="mb-6">Present Value</SubTitle>
+                    <p>How much profit will be generated in the future?</p>
+                    <div className="mt-4 grid grid-cols-2 gap-2">
+                        <Percent title="Discount Rate" value={discountRate} />
+                        <Number title="Beta" value={beta} />
+                    </div>
                 </div>
             </div>
         </main>
-    )
-}
-
-interface CardProps {
-    title: string
-    value: number
-}
-
-function Card(props: CardProps) {
-    return (
-        <div className="flex-col flex space-y-1 shadow-lg px-4 py-2 bg-blueGray-700 rounded-md">
-            <span className="font-semibold text-lg">{props.title}</span>
-            <NumberFormat className="font-light" value={props.value} displayType="text" prefix="$" decimalScale={2} />
-        </div>
     )
 }

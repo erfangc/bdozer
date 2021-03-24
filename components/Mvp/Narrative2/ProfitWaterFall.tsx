@@ -3,6 +3,7 @@ import { ModelResult } from "../../../client"
 import { highcharts } from "../../../highcharts";
 
 import HighchartsReact from "highcharts-react-official";
+import { simpleNumber } from "../../../simple-number";
 
 interface Props {
     result: ModelResult
@@ -19,21 +20,22 @@ export function ProfitWaterFall(props: Props) {
                 inverted: true
             },
             xAxis: {
-                type: 'category'
+                type: 'category',
+                lineWidth: 0,
             },
             title: {
-                text: ''
+                text: null
             },
             yAxis: {
                 title: {
-                    text: 'USD'
+                    text: null
+                },
+                labels: {
+                    enabled: false
                 }
             },
             legend: {
                 enabled: false
-            },
-            tooltip: {
-                pointFormat: '<b>${point.y:,.2f}</b> USD'
             },
             series: [{
                 data: [{
@@ -41,20 +43,23 @@ export function ProfitWaterFall(props: Props) {
                     y: revenue?.historicalValue?.value,
                     color: '#84CC16',
                 },
-                ...categorizedExpenses.map(({ name, historicalValue, description }) => ({ name: description ?? name, y: -historicalValue?.value, color: '#F43F5E' })),
+                ...categorizedExpenses
+                    .map(({ name, historicalValue, description }) => ({
+                        name: description ?? name,
+                        y: -historicalValue?.value,
+                        color: '#DC2626',
+                    })
+                    ),
                 {
                     name: 'Profit',
                     y: profit.historicalValue?.value,
-                    color: profit.historicalValue?.value < 0 ? '#22C55E' : '#EF4444'
+                    color: profit.historicalValue?.value < 0 ? '#EF4444' : '#22C55E'
                 }],
                 dataLabels: {
                     enabled: true,
                     formatter: function () {
-                        return highcharts.numberFormat(this.y, 1, '.');
+                        return simpleNumber(this.y);
                     },
-                    style: {
-                        fontWeight: 'bold'
-                    }
                 },
                 pointPadding: 0
             }] as any

@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { useModelBuilderFactoryApi } from '../../apiHooks'
+import { useModelBuilderFactoryApi } from '../../api-hooks'
 import { ModelResult } from '../../client'
 import { App } from '../../components/App'
-import { ModelResult as ModelResultDisplay } from '../../components/Mvp/ModelDisplay'
+import { ModelResultComponent as ModelResultDisplay } from '../../components/Mvp/ModelDisplay'
 import { Title } from '../../components/Title'
 
 function ModelComponent() {

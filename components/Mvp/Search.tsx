@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
-import { useEdgarExplorerApi, useFilingEntityManagerApi } from '../../apiHooks'
+import { useEdgarExplorerApi, useFilingEntityManagerApi } from '../../api-hooks'
 import { EdgarEntity, EdgarEntitySource } from '../../client'
 
 interface Props {
