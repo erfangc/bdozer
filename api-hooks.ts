@@ -1,9 +1,9 @@
 import {
   EdgarExplorerControllerApi,
   FilingEntityManagerControllerApi,
-  ModelBuilderFactoryControllerApi,
   MxParserControllerApi,
   NarrativeBuilderControllerApi,
+  StockAnalyzerFactoryControllerApi,
 } from "./client";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
@@ -43,27 +43,27 @@ function useAxios() {
   return axiosInstance;
 }
 
-export function useMxParserApi() {
+export function useMxParser() {
   const axiosInstance = useAxios();
   return new MxParserControllerApi(null, basePath, axiosInstance);
 }
 
-export function useModelBuilderFactoryApi() {
+export function useStockAnalyzerFactory() {
   const axiosInstance = useAxios();
-  return new ModelBuilderFactoryControllerApi(null, basePath, axiosInstance);
+  return new StockAnalyzerFactoryControllerApi(null, basePath, axiosInstance);
 }
 
-export function useEdgarExplorerApi() {
+export function useEdgarExplorer() {
   const axiosInstance = useAxios();
   return new EdgarExplorerControllerApi(null, basePath, axiosInstance)
 }
 
-export function useFilingEntityManagerApi() {
+export function useFilingEntityManager() {
   const axiosInstance = useAxios();
   return new FilingEntityManagerControllerApi(null, basePath, axiosInstance)
 }
 
-export function useNarrativeBuilderApi() {
+export function useNarrativeBuilder() {
   const axiosInstance = useAxios();
   return new NarrativeBuilderControllerApi(null, basePath, axiosInstance)
 }

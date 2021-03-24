@@ -1,6 +1,6 @@
 import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
-import { ModelResult } from "../../../client";
+import { StockAnalysis } from "../../../client";
 import { DiscountFactor, EarningsPerShareDiluted, PresentValuePerShare, TerminalValuePerShare } from "../../../constants/ReservedItemNames";
 import { highcharts } from "../../../highcharts";
 import { simpleNumber } from "../../../simple-number";
@@ -8,7 +8,7 @@ import { Label } from "../../Title";
 import { Number, Percent } from "./Card";
 
 interface Props {
-    result: ModelResult
+    result: StockAnalysis
 }
 export function TargetPriceDerivation(props: Props) {
     const { result: { cells, model, discountRate, targetPrice } } = props

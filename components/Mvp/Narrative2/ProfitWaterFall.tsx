@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { ModelResult } from "../../../client"
+import { StockAnalysis } from "../../../client"
 import { highcharts, lime500, lime700, red500, rose300, rose500 } from "../../../highcharts";
 
 import HighchartsReact from "highcharts-react-official";
 import { simpleNumber } from "../../../simple-number";
 
 interface Props {
-    result: ModelResult
+    result: StockAnalysis
 }
 
 export function ProfitWaterFall(props: Props) {

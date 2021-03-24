@@ -1,11 +1,19 @@
 import { App } from "../components/App";
 
-export default function Settings() {
+function SettingsComponent() {
+    return (
+        <main className="text-4xl font-bold text-white flex-grow h-screen flex items-center justify-center">
+            <h1 className="">
+                Advanced Panel
+            </h1>
+        </main>
+    )
+}
+
+export default function SettingsPage() {
     return (
         <App>
-            <h1 className="text-4xl font-bold text-white flex-grow h-screen flex items-center justify-center">
-                This page has not been implemented yet
-            </h1>
+            <SettingsComponent />
         </App>
     )
 }

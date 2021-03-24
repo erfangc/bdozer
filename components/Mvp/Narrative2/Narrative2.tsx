@@ -1,6 +1,6 @@
 import React from "react";
 import NumberFormat from "react-number-format";
-import { ModelResult } from "../../../client";
+import { StockAnalysis } from "../../../client";
 import { simpleNumber } from "../../../simple-number";
 import { SubTitle } from "../../Title";
 import { Money, Percent, Number } from "./Card";
@@ -11,7 +11,7 @@ import { ProfitWaterFall } from "./ProfitWaterFall";
 import { ValueBreakdown } from "./ValueBreakdown";
 
 interface Props {
-    result: ModelResult
+    result: StockAnalysis
 }
 
 export function Narrative2(props: Props) {

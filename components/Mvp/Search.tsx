@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
-import { useEdgarExplorerApi, useFilingEntityManagerApi } from '../../api-hooks'
+import { useEdgarExplorer, useFilingEntityManager } from '../../api-hooks'
 import { EdgarEntity, EdgarEntitySource } from '../../client'
 
 interface Props {
@@ -10,8 +10,8 @@ interface Props {
 
 export function Search(props: Props) {
 
-    const edgarExplorerApi = useEdgarExplorerApi()
-    const filingEntityManagerApi = useFilingEntityManagerApi()
+    const edgarExplorerApi = useEdgarExplorer()
+    const filingEntityManagerApi = useFilingEntityManager()
     const ref = useRef<HTMLInputElement>()
 
     const [term, setTerm] = useState<string>()

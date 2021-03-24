@@ -30,3 +30,22 @@ export function App({ children }) {
         )
     }
 }
+
+export function UnsecuredApp({ children }) {
+    return (
+        <>
+            <Head>
+                <title>Bulldozer | Home</title>
+                <link rel="icon" href="/favicon.ico" />
+                <script type="text/javascript" src="/fullstory.js"></script>
+            </Head>
+            <div className="bg-blueGray-900 min-h-screen antialiased">
+                <Nav />
+                <ServerErrors />
+                <div className="lg:ml-20 flex">
+                    {children}
+                </div>
+            </div>
+        </>
+    )
+}

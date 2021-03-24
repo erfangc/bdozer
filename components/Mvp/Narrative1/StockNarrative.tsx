@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { basePath, useFilingEntityManagerApi, useNarrativeBuilderApi } from '../../../api-hooks'
+import { basePath, useFilingEntityManager, useNarrativeBuilder } from '../../../api-hooks'
 import { FilingEntity, Narrative } from '../../../client'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Spinner } from '../../ButtonSvgs/Spinner'
@@ -31,8 +31,8 @@ export function StockNarrative() {
 
     const router = useRouter()
     const { cik } = router.query
-    const filingEntityManagerApi = useFilingEntityManagerApi()
-    const narrativeBuilderApi = useNarrativeBuilderApi()
+    const filingEntityManagerApi = useFilingEntityManager()
+    const narrativeBuilderApi = useNarrativeBuilder()
 
     const { getIdTokenClaims } = useAuth0();
 

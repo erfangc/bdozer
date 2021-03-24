@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import NumberFormat from "react-number-format";
-import { useMxParserApi } from "../../../../api-hooks";
+import { useMxParser } from "../../../../api-hooks";
 import { Item } from "../../../../client";
 
 interface ItemFY0InputProps {
@@ -16,7 +16,7 @@ export function ItemFY0Input({ item, onChange }: ItemFY0InputProps) {
     const [value, setValue] = useState(item.historicalValue?.value)
     const [editing, setEditing] = useState(false)
     const [evalResult, setEvalResult] = useState<number | 'Error'>(undefined)
-    const mxparser = useMxParserApi()
+    const mxparser = useMxParser()
 
     /**
      * process the key stroke and evaluate the content so far

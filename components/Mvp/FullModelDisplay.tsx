@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 import { ReactNode } from "react"
 import NumberFormat from "react-number-format"
-import { ModelResult } from "../../client"
+import { StockAnalysis } from "../../client"
 import { simpleNumber } from "../../simple-number"
 
 interface Props {
-    result: ModelResult
+    result: StockAnalysis
 }
 
 export function FullModelDisplay(props: Props) {
