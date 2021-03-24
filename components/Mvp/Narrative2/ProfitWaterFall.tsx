@@ -40,27 +40,17 @@ export function ProfitWaterFall(props: Props) {
 
         setOptions({
             chart: {
-                type: 'waterfall',
-                inverted: true
+                type: 'waterfall', inverted: true
             },
             xAxis: {
-                type: 'category',
-                lineWidth: 0,
+                type: 'category', lineWidth: 0,
             },
-            title: {
-                text: null
-            },
+            title: { text: null },
             yAxis: {
-                title: {
-                    text: null
-                },
-                labels: {
-                    enabled: false
-                }
+                title: { text: null },
+                labels: { enabled: false }
             },
-            legend: {
-                enabled: false
-            },
+            legend: { enabled: false },
             series: [{
                 data: [
                     revenue,

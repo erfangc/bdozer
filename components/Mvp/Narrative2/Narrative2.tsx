@@ -1,13 +1,12 @@
 import React from "react";
 import NumberFormat from "react-number-format";
 import { StockAnalysis } from "../../../client";
-import { simpleNumber } from "../../../simple-number";
 import { SubTitle } from "../../Title";
-import { Money, Percent, Number } from "./Card";
+import { Money } from "./Card";
 import { EarningsPerShareCalculation } from "./EarningsPerShareCalculation";
 import { FutureEarningsPerShare } from "./FutureEarningsPerShare";
-import { TargetPriceDerivation } from "./TargetPriceDerivation";
 import { ProfitWaterFall } from "./ProfitWaterFall";
+import { TargetPriceDerivation } from "./TargetPriceDerivation";
 import { ValueBreakdown } from "./ValueBreakdown";
 
 interface Props {
@@ -18,17 +17,11 @@ export function Narrative2(props: Props) {
     const {
         result,
         result: {
-            cells,
             model: {
-                description,
                 symbol,
-                beta,
-                equityRiskPremium,
-                riskFreeRate,
             },
             currentPrice,
             targetPrice,
-            discountRate,
         }
     } = props;
 

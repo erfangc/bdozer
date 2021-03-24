@@ -2,10 +2,11 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
 import { useEdgarExplorer, useFilingEntityManager } from '../../api-hooks'
-import { EdgarEntity, EdgarEntitySource } from '../../client'
+import { EdgarEntity, EdgarEntitySource, FilingEntity } from '../../client'
 
 interface Props {
-    onSubmit: (cik: string) => void
+    className?: string
+    onSubmit: (cik: FilingEntity) => void
 }
 
 export function Search(props: Props) {
@@ -35,7 +36,7 @@ export function Search(props: Props) {
     async function submit(edgarEntity: EdgarEntity) {
         setFound([])
         const { data } = await filingEntityManagerApi.getFilingEntity(edgarEntity['_id'])
-        props.onSubmit(data.cik)
+        props.onSubmit(data)
     }
 
     function changeTerm(newTerm: string) {
@@ -63,7 +64,7 @@ export function Search(props: Props) {
     }).slice(0, 5)
 
     return (
-        <main className="min-h-screen flex-grow flex bg-blueGray-900 justify-center text-blueGray-50 px-2 pt-10 items-start xl:items-center xl:px-0 xl:pt-0">
+        <div className={`w-full text-blueGray-50 ${props.className}`}>
             <div className="relative container max-w-lg">
                 <div className={`bg-blueGray-700 px-4 ${entities.length > 0 ? 'rounded-t-lg' : 'rounded-lg'}`}>
                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline">
@@ -91,7 +92,7 @@ export function Search(props: Props) {
                     </ul>
                 </div>
             </div>
-        </main>
+        </div>
     )
 }
 

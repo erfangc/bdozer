@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useStockAnalyzerFactory } from "../../api-hooks";
 import { StockAnalysis } from "../../client";
-import { App } from "../../components/App";
+import { App, UnsecuredApp } from "../../components/App";
 import { Narrative2 } from "../../components/Mvp/Narrative2/Narrative2";
 
 function Component() {
@@ -15,7 +15,7 @@ function Component() {
 
     async function refreshModel(cik: string) {
         setLoading(true)
-        const { data } = await api.analyze(cik)
+        const { data } = await api.getAnalysis(cik)
         setResult(data)
         setLoading(false)
     }
@@ -28,5 +28,9 @@ function Component() {
 }
 
 export default function Page() {
-    return <App><Component /></App>
+    return (
+        <UnsecuredApp>
+            <Component />
+        </UnsecuredApp>
+    )
 }

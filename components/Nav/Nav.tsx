@@ -24,20 +24,24 @@ export function Nav(props: NavProps) {
                 <div className="h-px w-full border-b border-blueGray-700"></div>
                 <div className="flex-col space-y-6">
                     <NavButton active={router.pathname === '/'} linkTo="/" />
-                    <NavButton active={router.pathname.endsWith("stock-narrative")} icon={<ModelIcon />} linkTo="/" />
+                    <NavButton active={router.pathname.endsWith("narrative2")} icon={<ModelIcon />} linkTo="/" />
                     <NavButton active={router.pathname === '/settings'} icon={<Settings />} linkTo="/settings" />
                 </div>
             </div>
             <div className="text-blueGray-50 pb-6 flex-col space-y-2 flex items-center">
                 <img
-                    src={user.picture} className="w-10 h-10 rounded-full" alt=""
+                    src={user?.picture} className="w-10 h-10 rounded-full" alt=""
                 />
-                <a
-                    className="text-sm cursor-pointer hover:bg-blueGray-400 hover:text-blueGray-900 rounded transition ease-linear p-2"
-                    onClick={() => logout({ returnTo: origin })}
-                >
-                    Logout
-                </a>
+                {
+                    user
+                        ? <a
+                            className="text-sm cursor-pointer hover:bg-blueGray-400 hover:text-blueGray-900 rounded transition ease-linear p-2"
+                            onClick={() => logout({ returnTo: origin })}
+                        >
+                            Logout
+                        </a>
+                        : null
+                }
             </div>
         </nav>
     )
