@@ -29,6 +29,7 @@ export function ValueBreakdown(props: Props) {
             About <NumberFormat className="font-extrabold text-lg text-blue-400" value={(impliedPriceFromGrowth / currentPrice) * 100} decimalScale={1} displayType="text" suffix="%" /> of
              the current stock price must be earned through growing (or recovering) earnings than
             keeping existing level of earning
+            <br />
             <Popover trigger="How is this computed?">
                 <h2 className="font-bold">Step 1</h2>
                 Share value <em>assuming no growth</em> is computed by assuming

@@ -79,7 +79,7 @@ export function TargetPriceDerivation(props: Props) {
                 <span className="font-light"> {(terminalFcfGrowthRate * 100).toFixed(1)}%</span>
             </div>
             <div className="flex justify-between">
-                <b className="">Terminal Multiple <br /><code className="text-xs font-normal">1 / (Discount Rate - Longterm Growth)</code></b>
+                <b className="">Terminal Multiple <code className="block text-xs font-normal mt-2 mb-4">1 / (Discount Rate - Longterm Growth)</code></b>
                 <span className="font-light">{(1 / (discountRate - terminalFcfGrowthRate)).toFixed(1)} x</span>
             </div>
             <div className="flex justify-between">
@@ -92,7 +92,7 @@ export function TargetPriceDerivation(props: Props) {
             </div>
             <div className="flex justify-between mt-2">
                 <b className="pt-2">Terminal Value</b>
-                <span className="font-light border-t pt-2">${terminalValuePerShare.toFixed(1)}</span>
+                <span className="border-t pt-2 font-bold ">${terminalValuePerShare.toFixed(1)}</span>
             </div>
         </div>
     </>
