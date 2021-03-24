@@ -3,6 +3,7 @@ import { Logo } from "./Logo"
 import { ModelIcon, NavButton, Settings } from "./NavButton"
 import { useAuth0 } from '@auth0/auth0-react'
 import { useRouter } from 'next/router'
+
 interface NavProps {
 
 }
@@ -29,17 +30,18 @@ export function Nav(props: NavProps) {
                 </div>
             </div>
             <div className="text-blueGray-50 pb-6 flex-col space-y-2 flex items-center">
-                <img
-                    src={user?.picture} className="w-10 h-10 rounded-full" alt=""
-                />
                 {
                     user
-                        ? <a
-                            className="text-sm cursor-pointer hover:bg-blueGray-400 hover:text-blueGray-900 rounded transition ease-linear p-2"
-                            onClick={() => logout({ returnTo: origin })}
-                        >
-                            Logout
+                        ?
+                        <>
+                            <img src={user?.picture} className="w-10 h-10 rounded-full" alt="" />
+                            <a
+                                className="text-sm cursor-pointer hover:bg-blueGray-400 hover:text-blueGray-900 rounded transition ease-linear p-2"
+                                onClick={() => logout({ returnTo: origin })}
+                            >
+                                Logout
                         </a>
+                        </>
                         : null
                 }
             </div>
