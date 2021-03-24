@@ -1,11 +1,12 @@
 import React from "react";
+import NumberFormat from "react-number-format";
 import { ModelResult } from "../../../client";
 import { simpleNumber } from "../../../simple-number";
 import { SubTitle } from "../../Title";
 import { Money, Percent, Number } from "./Card";
 import { EarningsPerShareCalculation } from "./EarningsPerShareCalculation";
 import { FutureEarningsPerShare } from "./FutureEarningsPerShare";
-import { PresentValueSankey } from "./PresentValueSankey";
+import { TargetPriceDerivation } from "./TargetPriceDerivation";
 import { ProfitWaterFall } from "./ProfitWaterFall";
 import { ValueBreakdown } from "./ValueBreakdown";
 
@@ -31,6 +32,7 @@ export function Narrative2(props: Props) {
         }
     } = props;
 
+    const upside = (targetPrice / currentPrice - 1) * 100;
     return (
         <main className="text-blueGray-50 flex-grow min-h-screen px-2 py-8 flex justify-center bg-blueGray-900">
             <div className="max-w-lg flex-col space-y-16">
@@ -41,7 +43,17 @@ export function Narrative2(props: Props) {
                 </div>
                 <div>
                     <div className="grid grid-cols-2 gap-2">
-                        <Money title="Target Price" value={targetPrice} />
+                        <div className="flex justify-between shadow-lg px-4 py-2 bg-blueGray-700 rounded-md">
+                            <div className="flex flex-col">
+                                <span className="font-semibold text-lg">Target Price</span>
+                                <NumberFormat className="font-light" value={targetPrice} displayType="text" prefix="$" decimalScale={2} />
+                            </div>
+                            <div className="flex flex-col justify-center mr-2">
+                                <span className={`text-xs ${upside > 0 ? 'text-lime-400' : 'bg-rose-500'} font-bold`}>
+                                    {upside.toFixed(1)}% <span className="font-normal">Upside</span>
+                                </span>
+                            </div>
+                        </div>
                         <Money title="Current Price" value={currentPrice} />
                     </div>
                 </div>
@@ -62,8 +74,8 @@ export function Narrative2(props: Props) {
                     <FutureEarningsPerShare result={result} />
                 </div>
                 <div>
-                    <SubTitle className="mb-6">Present Value</SubTitle>
-                    <PresentValueSankey result={result} />
+                    <SubTitle className="mb-6">Target Price Derivation</SubTitle>
+                    <TargetPriceDerivation result={result} />
                 </div>
             </div>
         </main>

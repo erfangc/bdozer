@@ -10,7 +10,7 @@ import { Number, Percent } from "./Card";
 interface Props {
     result: ModelResult
 }
-export function PresentValueSankey(props: Props) {
+export function TargetPriceDerivation(props: Props) {
     const { result: { cells, model, discountRate, targetPrice } } = props
     const { beta, terminalFcfGrowthRate } = model
     const pvs = cells
@@ -60,7 +60,7 @@ export function PresentValueSankey(props: Props) {
     const terminalValuePerShare = cells.find(cell => cell.item?.name === PresentValuePerShare && cell.period == model.periods)?.value
     const terminalDiscountFactor = cells.find(cell => cell.item?.name === DiscountFactor && cell.period == model.periods)?.value
     return <>
-        <p>How do the the EPS from future years to the target price of ${targetPrice.toFixed(1)}?</p>
+        <p>How do the EPS from future years contribute to the target price of ${targetPrice.toFixed(1)}?</p>
         <HighchartsReact highcharts={highcharts} options={options} />
         <Label>Assumptions</Label>
         <div className="mt-4 grid grid-cols-2 gap-2">

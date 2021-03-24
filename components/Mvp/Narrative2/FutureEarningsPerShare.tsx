@@ -58,7 +58,7 @@ export function FutureEarningsPerShare(props: Props) {
     }, [])
     return (
         <>
-            <p>Based on the above projections. How much per share earnings is expected going forward?</p>
+            <p>Based on the above projections. What are the earnings per share going forward?</p>
             <br />
             <HighchartsReact highcharts={highcharts} options={options} />
         </>
