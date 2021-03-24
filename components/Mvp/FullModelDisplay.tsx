@@ -47,9 +47,7 @@ export function FullModelDisplay(props: Props) {
                                         <td className={`text-right px-1 py-0.5 ${className}`}>
                                             {
                                                 cell.value
-                                                    ? Math.abs(cell.value) < 100
-                                                        ? <NumberFormat value={cell.value} displayType="text" decimalScale={2} thousandSeparator />
-                                                        : simpleNumber(cell.value.toFixed(0))
+                                                    ? <NumberFormat value={cell.value} displayType="text" decimalScale={2} thousandSeparator />
                                                     : null
                                             }
                                         </td>

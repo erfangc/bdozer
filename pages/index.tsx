@@ -7,7 +7,7 @@ export default function Home() {
   const router = useRouter()
 
   function navigate(cik: string) {
-    router.push(`/${cik}/stock-narrative`)
+    router.push(`/${cik}/narrative2`)
   }
 
   return (

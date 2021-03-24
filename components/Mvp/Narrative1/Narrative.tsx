@@ -72,7 +72,7 @@ export function Popover(props: PopoverProps) {
             {
                 visible
                     ?
-                    <div className="absolute top-full text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded-md">
+                    <div className="absolute top-full text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded-md z-10">
                         {props.children}
                     </div>
                     : null

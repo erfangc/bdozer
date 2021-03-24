@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ModelResult } from "../../../client"
-import { highcharts } from "../../../highcharts";
+import { highcharts, lime500, lime700, red500, rose300, rose500 } from "../../../highcharts";
 
 import HighchartsReact from "highcharts-react-official";
 import { simpleNumber } from "../../../simple-number";
@@ -10,10 +10,34 @@ interface Props {
 }
 
 export function ProfitWaterFall(props: Props) {
-    const { result: { revenue, categorizedExpenses, profit } } = props;
-    const [options, setOptions] = useState<Highcharts.Options>()
+    const { result: { businessWaterfall } } = props;
 
-    useEffect(() => {
+    const [options, setOptions] = useState<Highcharts.Options>()
+    const [period, setPeriod] = useState<number>(0)
+
+    function updateChart(period: number) {
+        const cells = businessWaterfall[period]
+
+        const revenue = {
+            name: cells.revenue.item?.description ?? cells.revenue.item?.name,
+            y: cells.revenue.value,
+            color: lime700,
+        }
+
+        const topExpenses = cells.topExpenses.map(({ item, value }) => {
+            return {
+                name: item.description ?? item.name,
+                y: -value,
+                color: red500,
+            }
+        })
+
+        const profit = {
+            name: cells.profit.item?.description ?? cells.profit.item?.name,
+            y: cells.profit.value,
+            color: cells.profit.value > 0 ? lime700 : rose500,
+        }
+
         setOptions({
             chart: {
                 type: 'waterfall',
@@ -38,42 +62,51 @@ export function ProfitWaterFall(props: Props) {
                 enabled: false
             },
             series: [{
-                data: [{
-                    name: 'Revenue',
-                    y: revenue?.historicalValue?.value,
-                    color: '#84CC16',
-                },
-                ...categorizedExpenses
-                    .map(({ name, historicalValue, description }) => ({
-                        name: description ?? name,
-                        y: -historicalValue?.value,
-                        color: '#DC2626',
-                    })
-                    ),
-                {
-                    name: 'Profit',
-                    y: profit.historicalValue?.value,
-                    color: profit.historicalValue?.value < 0 ? '#EF4444' : '#22C55E'
-                }],
+                data: [
+                    revenue,
+                    ...topExpenses,
+                    profit,
+                ],
                 dataLabels: {
                     enabled: true,
                     formatter: function () {
-                        return simpleNumber(this.y);
+                        return simpleNumber(this.y.toFixed(0));
                     },
                 },
                 pointPadding: 0
             }] as any
         })
+    }
+
+    useEffect(() => {
+        updateChart(period)
     }, [])
 
+    function updatePeriod(period) {
+        setPeriod(period)
+        updateChart(period)
+    }
+
     return <>
+        <p>How did AAL make and spend it's money in the most recent year. You can click different years to see analyst projections</p>
         <HighchartsReact highcharts={highcharts} options={options} />
         <div className="flex space-x-1 text-sm">
-            <button className="focus:outline-none bg-blueGray-500 rounded-full px-4 py-1 shadow-md">2021</button>
-            <button className="focus:outline-none hover:bg-blueGray-500 rounded-full border border-blueGray-700 px-4 py-1 shadow-md">2022</button>
-            <button className="focus:outline-none hover:bg-blueGray-500 rounded-full border border-blueGray-700 px-4 py-1 shadow-md">2023</button>
-            <button className="focus:outline-none hover:bg-blueGray-500 rounded-full border border-blueGray-700 px-4 py-1 shadow-md">2024</button>
-            <button className="focus:outline-none hover:bg-blueGray-500 rounded-full border border-blueGray-700 px-4 py-1 shadow-md">2025</button>
+            {Object.keys(businessWaterfall).map(currentPeriod => {
+                const currPeriod = parseInt(currentPeriod)
+                return <Pill active={currPeriod === period} period={currPeriod} onClick={() => updatePeriod(currPeriod)} />
+            })}
         </div>
     </>
+}
+
+function Pill(props: { period: number, active: boolean, onClick: () => void }) {
+    const { active, onClick, period } = props;
+    return (
+        <button
+            className={`focus:outline-none ${active ? 'bg-blueGray-500' : 'hover:bg-blueGray-500 border-blueGray-700'} rounded-full border px-4 py-1 shadow-md`}
+            onClick={onClick}
+        >
+            {new Date().getFullYear() + period}
+        </button>
+    )
 }

@@ -3,6 +3,8 @@ import { ModelResult } from "../../../client";
 import { simpleNumber } from "../../../simple-number";
 import { SubTitle } from "../../Title";
 import { Money, Percent, Number } from "./Card";
+import { EarningsPerShare } from "./EarningsPerShare";
+import { FutureEarningsPerShare } from "./FutureEarningsPerShare";
 import { ProfitWaterFall } from "./ProfitWaterFall";
 import { ValueBreakdown } from "./ValueBreakdown";
 
@@ -18,14 +20,13 @@ export function Narrative2(props: Props) {
             model: {
                 description,
                 symbol,
+                beta,
+                equityRiskPremium,
+                riskFreeRate,
             },
-            profit,
             currentPrice,
             targetPrice,
             discountRate,
-            beta,
-            equityRiskPremium,
-            riskFreeRate,
         }
     } = props;
 
@@ -35,7 +36,6 @@ export function Narrative2(props: Props) {
                 <div>
                     <span className="font-extralight">Company</span><SubTitle>{symbol}</SubTitle>
                     <div>
-
                     </div>
                 </div>
                 <div>
@@ -50,23 +50,15 @@ export function Narrative2(props: Props) {
                 </div>
                 <div>
                     <SubTitle className="mb-6">Business Breakdown</SubTitle>
-                    <p>How did AAL make and spend it's money in the most recent year</p>
                     <ProfitWaterFall result={result} />
                 </div>
                 <div>
                     <SubTitle className="mb-6">Earning Per Share</SubTitle>
-                    <div>
-                        <p>
-                            Since current year profit was <span className={`font-bold ${profit.historicalValue?.value > 0 ? 'text-green-600' : 'text-red-500'}`}>{simpleNumber(profit.historicalValue?.value)}</span>, then:
-                        </p>
-                        <div className="flex space-x-3 items-center text-blueGray-300 mt-10">
-                            <span className="px-2 py-3 border border-blueGray-500 rounded-md">{simpleNumber(profit.historicalValue?.value)}</span>
-                            <span>/</span>
-                            <span className="px-2 py-3 border border-blueGray-500 rounded-md">300,000 shares outstanding</span>
-                            <span>=</span>
-                            <span className="px-2 py-3 border border-blueGray-500 rounded-md">Earnings per Share</span>
-                        </div>
-                    </div>
+                    <EarningsPerShare result={result} />
+                </div>
+                <div>
+                    <SubTitle className="mb-6">Future Earnings per Share</SubTitle>
+                    <FutureEarningsPerShare result={result} />
                 </div>
                 <div>
                     <SubTitle className="mb-6">Present Value</SubTitle>

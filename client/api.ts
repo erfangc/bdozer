@@ -1132,12 +1132,6 @@ export interface Model {
 export interface ModelResult {
     /**
      * 
-     * @type {Array<Cell>}
-     * @memberof ModelResult
-     */
-    cells?: Array<Cell>;
-    /**
-     * 
      * @type {number}
      * @memberof ModelResult
      */
@@ -1162,22 +1156,16 @@ export interface ModelResult {
     model?: Model;
     /**
      * 
-     * @type {Item}
+     * @type {Array<Cell>}
      * @memberof ModelResult
      */
-    revenue?: Item;
+    cells?: Array<Cell>;
     /**
      * 
-     * @type {Array<Item>}
+     * @type {{ [key: string]: Waterfall; }}
      * @memberof ModelResult
      */
-    categorizedExpenses?: Array<Item>;
-    /**
-     * 
-     * @type {Item}
-     * @memberof ModelResult
-     */
-    profit?: Item;
+    businessWaterfall?: { [key: string]: Waterfall; };
     /**
      * 
      * @type {Item}
@@ -1202,24 +1190,6 @@ export interface ModelResult {
      * @memberof ModelResult
      */
     discountRate?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelResult
-     */
-    beta?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelResult
-     */
-    riskFreeRate?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ModelResult
-     */
-    equityRiskPremium?: number;
 }
 /**
  * 
@@ -1445,6 +1415,31 @@ export interface UnitSalesRevenue {
      * @memberof UnitSalesRevenue
      */
     initialUnitsSold?: number;
+}
+/**
+ * 
+ * @export
+ * @interface Waterfall
+ */
+export interface Waterfall {
+    /**
+     * 
+     * @type {Cell}
+     * @memberof Waterfall
+     */
+    revenue?: Cell;
+    /**
+     * 
+     * @type {Array<Cell>}
+     * @memberof Waterfall
+     */
+    topExpenses?: Array<Cell>;
+    /**
+     * 
+     * @type {Cell}
+     * @memberof Waterfall
+     */
+    profit?: Cell;
 }
 /**
  * 

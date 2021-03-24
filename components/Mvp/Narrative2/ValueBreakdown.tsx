@@ -4,6 +4,8 @@ import NumberFormat from "react-number-format";
 import { ModelResult } from "../../../client";
 import { highcharts } from "../../../highcharts";
 import { SubTitle } from "../../Title";
+import { PopoverGeneric } from "../FullModelDisplay";
+import { Popover } from "../Narrative1/Narrative";
 
 interface Props {
     result: ModelResult
@@ -27,8 +29,20 @@ export function ValueBreakdown(props: Props) {
         :
         <p>
             About <NumberFormat className="font-extrabold text-lg text-blue-400" value={(impliedPriceFromGrowth / currentPrice) * 100} decimalScale={1} displayType="text" suffix="%" /> of
-             the current stock price must be earned through growing earnings than
+             the current stock price must be earned through growing (or recovering) earnings than
             keeping existing level of earning
+            <Popover trigger="How is this computed?">
+                <h2 className="font-bold">Step 1</h2>
+                Share value <em>assuming no growth</em> is computed by assuming
+                <ul className="mt-2 list-disc px-8">
+                    <li>No revenue growth</li>
+                    <li>Expenses to run the business remains the same</li>
+                    <li>Taking out one time expenses and benefits</li>
+                </ul>
+                <h2 className="font-bold mt-12">Step 2</h2>
+                Implied value from future growth is computed as the difference between the current exchange
+                price of the stock minus the share value assuming no growth
+            </Popover>
         </p>
     return (
         <div>
@@ -79,7 +93,7 @@ function ValueBreakdownPieChart(props: Props) {
                     dataLabels: {
                         enabled: true,
                         formatter: function () {
-                            return `<span className="text-lg">${this.series.name}<br> ${this.y.toFixed(2)} / Share</span>`
+                            return `<span className="text-4xl">${this.series.name}<br> ${this.y.toFixed(2)} / Share</span>`
                         },
                         useHTML: true,
                     },
@@ -87,12 +101,12 @@ function ValueBreakdownPieChart(props: Props) {
             },
             series: [
                 {
-                    name: 'Implied Value from Growth',
+                    name: 'Value / Share Assuming From Growth',
                     data: [impliedPriceFromGrowth],
                     stack: '1',
                 },
                 {
-                    name: 'Zero Growth Value',
+                    name: 'Value / Share Assuming No Growth',
                     data: [zeroGrowthPrice],
                     stack: '1',
                 },
