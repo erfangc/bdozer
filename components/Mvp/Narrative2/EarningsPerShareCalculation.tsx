@@ -21,11 +21,11 @@ export function EarningsPerShareCalculation({ result }: Props) {
                     <b>Profit</b>
                     <span className="font-light">{simpleNumber(profit.value)}</span>
                 </div>
-                <div className="flex justify-between mb-2">
+                <div className="flex justify-between">
                     <b>Shares Outstanding</b>
                     <span className="font-light"> <span className="font-semibold text-lg">÷</span> {simpleNumber(sharesOutstanding)}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between mt-2">
                     <b className="pt-2">Earning Per Share</b>
                     <span className="font-light border-t pt-2">{profitPerShare}</span>
                 </div>

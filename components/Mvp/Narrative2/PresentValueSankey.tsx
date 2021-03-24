@@ -1,8 +1,9 @@
 import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
 import { ModelResult } from "../../../client";
-import { PresentValuePerShare, TerminalValuePerShare } from "../../../constants/ReservedItemNames";
+import { DiscountFactor, EarningsPerShareDiluted, PresentValuePerShare, TerminalValuePerShare } from "../../../constants/ReservedItemNames";
 import { highcharts } from "../../../highcharts";
+import { simpleNumber } from "../../../simple-number";
 import { Label } from "../../Title";
 import { Number, Percent } from "./Card";
 
@@ -11,7 +12,7 @@ interface Props {
 }
 export function PresentValueSankey(props: Props) {
     const { result: { cells, model, discountRate, targetPrice } } = props
-    const { beta } = model
+    const { beta, terminalFcfGrowthRate } = model
     const pvs = cells
         .filter(cell => cell.item.name === PresentValuePerShare)
         .map(
@@ -55,6 +56,9 @@ export function PresentValueSankey(props: Props) {
         setOptions(options)
     }, [])
 
+    const finalEps = cells.find(cell => cell.item?.name === EarningsPerShareDiluted && cell.period == model.periods)?.value
+    const terminalValuePerShare = cells.find(cell => cell.item?.name === PresentValuePerShare && cell.period == model.periods)?.value
+    const terminalDiscountFactor = cells.find(cell => cell.item?.name === DiscountFactor && cell.period == model.periods)?.value
     return <>
         <p>How do the the EPS from future years to the target price of ${targetPrice.toFixed(1)}?</p>
         <HighchartsReact highcharts={highcharts} options={options} />
@@ -62,6 +66,34 @@ export function PresentValueSankey(props: Props) {
         <div className="mt-4 grid grid-cols-2 gap-2">
             <Percent title="Discount Rate" value={discountRate} />
             <Number title="Beta" value={beta} />
+        </div>
+        {/* Breakdown terminal value calculation */}
+        <Label className="mt-8 mb-4">Terminal Value Calculation</Label>
+        <div className="flex flex-col text-blueGray-300">
+            <div className="flex justify-between">
+                <b>Discount Rate</b>
+                <span className="font-light">{(discountRate * 100).toFixed(1)}%</span>
+            </div>
+            <div className="flex justify-between">
+                <b>Long-term Earnings Growth Rate</b>
+                <span className="font-light"> {(terminalFcfGrowthRate * 100).toFixed(1)}%</span>
+            </div>
+            <div className="flex justify-between">
+                <b className="">Terminal Multiple <br /><code className="text-xs font-normal">1 / (Discount Rate - Longterm Growth)</code></b>
+                <span className="font-light">{(1 / (discountRate - terminalFcfGrowthRate)).toFixed(1)} x</span>
+            </div>
+            <div className="flex justify-between">
+                <b className="">Final Year EPS</b>
+                <span className="font-light">${finalEps.toFixed(1)}</span>
+            </div>
+            <div className="flex justify-between">
+                <b className="">Discount Factor</b>
+                <span className="font-light">{terminalDiscountFactor.toFixed(1)}</span>
+            </div>
+            <div className="flex justify-between mt-2">
+                <b className="pt-2">Terminal Value</b>
+                <span className="font-light border-t pt-2">${terminalValuePerShare.toFixed(1)}</span>
+            </div>
         </div>
     </>
 }

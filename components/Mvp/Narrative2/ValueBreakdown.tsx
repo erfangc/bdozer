@@ -2,7 +2,7 @@ import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
 import { ModelResult } from "../../../client";
-import { highcharts } from "../../../highcharts";
+import { blue600, highcharts, indigo700, lime700 } from "../../../highcharts";
 import { Popover } from "../Narrative1/Narrative";
 
 interface Props {
@@ -91,7 +91,9 @@ function ValueBreakdownPieChart(props: Props) {
                     dataLabels: {
                         enabled: true,
                         formatter: function () {
-                            return `<span className="text-4xl">${this.series.name}<br> ${this.y.toFixed(2)} / Share</span>`
+                            return `<span class="text-xs text-left">
+                            ${this.series.name}<br> $${this.y.toFixed(2)} / Share
+                            </span>`
                         },
                         useHTML: true,
                     },
@@ -99,13 +101,15 @@ function ValueBreakdownPieChart(props: Props) {
             },
             series: [
                 {
-                    name: 'Value / Share Assuming From Growth',
+                    name: 'Value from Growth',
                     data: [impliedPriceFromGrowth],
+                    color: indigo700,
                     stack: '1',
                 },
                 {
-                    name: 'Value / Share Assuming No Growth',
+                    name: 'Value from Current Operations',
                     data: [zeroGrowthPrice],
+                    color: lime700,
                     stack: '1',
                 },
             ] as any
