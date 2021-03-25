@@ -1,11 +1,10 @@
 import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
-import { StockAnalysis } from "../../../client";
-import { DiscountFactor, EarningsPerShareDiluted, PresentValuePerShare, TerminalValuePerShare } from "../../../constants/ReservedItemNames";
-import { highcharts } from "../../../highcharts";
-import { simpleNumber } from "../../../simple-number";
-import { Label } from "../../Title";
-import { Number, Percent } from "./Card";
+import { StockAnalysis } from "../../../../client";
+import { PresentValuePerShare, EarningsPerShareDiluted, DiscountFactor } from "../../../../constants/ReservedItemNames";
+import { highcharts } from "../../../../highcharts";
+import { Label } from "../../../Title";
+import { Percent, Number } from "../Card";
 
 interface Props {
     result: StockAnalysis

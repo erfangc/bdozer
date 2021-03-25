@@ -52,6 +52,10 @@ function SettingsComponent() {
         router.push(`/${filingEntity?.cik}/narrative2`)
     }
 
+    function seeFullModel() {
+        router.push(`/settings/${filingEntity?.cik}/full-model`)
+    }
+
     return (
         <main className="text-blueGray-50 flex-grow flex-col space-y-12 h-screen flex p-10">
             <div>
@@ -87,6 +91,9 @@ function SettingsComponent() {
                     </DeleteButton>
                     <GhostButton onClick={seeModel} className={loading ? `animate-pulse` : ``} disabled={loading}>
                         See Model
+                    </GhostButton>
+                    <GhostButton onClick={seeFullModel} className={loading ? `animate-pulse` : ``} disabled={loading}>
+                        See Full Model
                     </GhostButton>
                 </div>
             </div>

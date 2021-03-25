@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { ReactNode } from "react"
 import NumberFormat from "react-number-format"
 import { StockAnalysis } from "../../client"
-import { simpleNumber } from "../../simple-number"
 
 interface Props {
     result: StockAnalysis
@@ -18,7 +17,7 @@ export function FullModelDisplay(props: Props) {
     }
 
     return (
-        <>
+        <div>
             <table>
                 <thead>
                     <tr>
@@ -58,7 +57,7 @@ export function FullModelDisplay(props: Props) {
                     })}
                 </tbody>
             </table>
-        </>
+        </div>
     )
 }
 
@@ -68,7 +67,7 @@ interface PopoverProps {
     children: ReactNode
 }
 
-export function PopoverGeneric(props: PopoverProps) {
+function PopoverGeneric(props: PopoverProps) {
     const [visible, setVisible] = useState(false)
     function show() {
         setVisible(true)

@@ -1,8 +1,8 @@
 import HighchartsReact from "highcharts-react-official";
 import { useEffect, useState } from "react";
-import { StockAnalysis } from "../../../client";
-import { EarningsPerShareBasic } from "../../../constants/ReservedItemNames";
-import { green500, highcharts, rose500 } from "../../../highcharts";
+import { StockAnalysis } from "../../../../client";
+import { EarningsPerShareBasic } from "../../../../constants/ReservedItemNames";
+import { green500, highcharts, rose500 } from "../../../../highcharts";
 
 interface Props {
     result: StockAnalysis

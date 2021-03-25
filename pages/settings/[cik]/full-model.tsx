@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { useStockAnalyzerFactory } from '../../api-hooks'
-import { StockAnalysis } from '../../client'
-import { App } from '../../components/App'
-import { FullModelDisplay as StockAnalysisDisplay } from '../../components/Mvp/FullModelDisplay'
-import { Title } from '../../components/Title'
+import { useStockAnalyzerFactory } from '../../../api-hooks'
+import { StockAnalysis } from '../../../client'
+import { App } from '../../../components/App'
+import { FullModelDisplay as StockAnalysisDisplay } from '../../../components/Mvp/FullModelDisplay'
+import { Title } from '../../../components/Title'
 
 function FullModelComponent() {
     const router = useRouter()
@@ -16,7 +16,7 @@ function FullModelComponent() {
 
     async function refreshModel(cik: string) {
         setLoading(true)
-        const { data } = await api.analyze(cik)
+        const { data } = await api.getAnalysis(cik)
         setResult(data)
         setLoading(false)
     }

@@ -1,15 +1,13 @@
 import React from "react";
-import NumberFormat from "react-number-format";
 import { StockAnalysis } from "../../../client";
 import { SubTitle } from "../../Title";
-import { Money } from "./Card";
 import { Comments } from "./Comments";
-import { EarningsPerShareCalculation } from "./EarningsPerShareCalculation";
-import { FutureEarningsPerShare } from "./FutureEarningsPerShare";
-import { Overview } from "./Overview";
-import { ProfitWaterFall } from "./ProfitWaterFall";
-import { TargetPriceDerivation } from "./TargetPriceDerivation";
-import { ValueBreakdown } from "./ValueBreakdown";
+import { FutureEarningsPerShare } from "./subcomponents/FutureEarningsPerShare";
+import { Overview } from "./subcomponents/Overview";
+import { ProfitWaterFall } from "./subcomponents/ProfitWaterFall";
+import { EarningsPerShareCalculation } from "./subcomponents/EarningsPerShareCalculation";
+import { TargetPriceDerivation } from "./subcomponents/TargetPriceDerivation";
+import { ValueBreakdown } from "./subcomponents/ValueBreakdown";
 
 interface Props {
     result: StockAnalysis

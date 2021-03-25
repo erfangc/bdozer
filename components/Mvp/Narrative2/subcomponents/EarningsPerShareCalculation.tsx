@@ -1,5 +1,5 @@
-import { StockAnalysis } from "../../../client";
-import { simpleNumber } from "../../../simple-number";
+import { StockAnalysis } from "../../../../client";
+import { simpleNumber } from "../../../../simple-number";
 
 interface Props {
     result: StockAnalysis

@@ -1,8 +1,8 @@
 import React from "react";
 import NumberFormat from "react-number-format";
-import { StockAnalysis } from "../../../client";
-import { SubTitle } from "../../Title";
-import { Money } from "./Card";
+import { StockAnalysis } from "../../../../client";
+import { SubTitle } from "../../../Title";
+import { Money } from "../Card";
 
 interface Props {
     result: StockAnalysis

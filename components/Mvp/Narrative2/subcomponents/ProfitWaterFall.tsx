@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { StockAnalysis } from "../../../client"
-import { highcharts, lime500, lime700, red500, rose300, rose500 } from "../../../highcharts";
 
 import HighchartsReact from "highcharts-react-official";
-import { simpleNumber } from "../../../simple-number";
+import { StockAnalysis } from "../../../../client";
+import { lime700, red500, rose500, highcharts } from "../../../../highcharts";
+import { simpleNumber } from "../../../../simple-number";
 
 interface Props {
     result: StockAnalysis
