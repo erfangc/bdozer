@@ -3,6 +3,7 @@ import NumberFormat from "react-number-format";
 import { StockAnalysis } from "../../../client";
 import { SubTitle } from "../../Title";
 import { Money } from "./Card";
+import { Comments } from "./Comments";
 import { EarningsPerShareCalculation } from "./EarningsPerShareCalculation";
 import { FutureEarningsPerShare } from "./FutureEarningsPerShare";
 import { Overview } from "./Overview";
@@ -42,6 +43,9 @@ export function Narrative2(props: Props) {
                 <div>
                     <SubTitle className="mb-6">Target Price Derivation</SubTitle>
                     <TargetPriceDerivation result={result} />
+                </div>
+                <div>
+                    <Comments result={result} />
                 </div>
             </div>
         </main>

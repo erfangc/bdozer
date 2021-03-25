@@ -1,4 +1,5 @@
 import {
+  CommentsControllerApi,
   EdgarExplorerControllerApi,
   FilingEntityManagerControllerApi,
   MxParserControllerApi,
@@ -61,6 +62,11 @@ export function useEdgarExplorer() {
 export function useFilingEntityManager() {
   const axiosInstance = useAxios();
   return new FilingEntityManagerControllerApi(null, basePath, axiosInstance)
+}
+
+export function useComments() {
+  const axiosInstance = useAxios();
+  return new CommentsControllerApi(null, basePath, axiosInstance)
 }
 
 export function useNarrativeBuilder() {

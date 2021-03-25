@@ -184,6 +184,49 @@ export interface Cell {
 /**
  * 
  * @export
+ * @interface Comment
+ */
+export interface Comment {
+    /**
+     * 
+     * @type {string}
+     * @memberof Comment
+     */
+    get_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Comment
+     */
+    stockAnalysisId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Comment
+     */
+    text?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Comment
+     */
+    lastUpdated?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Comment
+     */
+    userId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Comment
+     */
+    name?: string;
+}
+/**
+ * 
+ * @export
  * @interface Commentary
  */
 export interface Commentary {
@@ -1491,6 +1534,172 @@ export interface XbrlExplicitMember {
      */
     value?: string;
 }
+
+/**
+ * CommentsControllerApi - axios parameter creator
+ * @export
+ */
+export const CommentsControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} stockAnalysisId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getComments: async (stockAnalysisId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'stockAnalysisId' is not null or undefined
+            assertParamExists('getComments', 'stockAnalysisId', stockAnalysisId)
+            const localVarPath = `/public/comments/{stockAnalysisId}`
+                .replace(`{${"stockAnalysisId"}}`, encodeURIComponent(String(stockAnalysisId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Comment} comment 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postComment: async (comment: Comment, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'comment' is not null or undefined
+            assertParamExists('postComment', 'comment', comment)
+            const localVarPath = `/public/comments`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(comment, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CommentsControllerApi - functional programming interface
+ * @export
+ */
+export const CommentsControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CommentsControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} stockAnalysisId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getComments(stockAnalysisId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Comment>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getComments(stockAnalysisId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Comment} comment 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postComment(comment: Comment, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postComment(comment, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * CommentsControllerApi - factory interface
+ * @export
+ */
+export const CommentsControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CommentsControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} stockAnalysisId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getComments(stockAnalysisId: string, options?: any): AxiosPromise<Array<Comment>> {
+            return localVarFp.getComments(stockAnalysisId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Comment} comment 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postComment(comment: Comment, options?: any): AxiosPromise<void> {
+            return localVarFp.postComment(comment, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * CommentsControllerApi - object-oriented interface
+ * @export
+ * @class CommentsControllerApi
+ * @extends {BaseAPI}
+ */
+export class CommentsControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} stockAnalysisId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommentsControllerApi
+     */
+    public getComments(stockAnalysisId: string, options?: any) {
+        return CommentsControllerApiFp(this.configuration).getComments(stockAnalysisId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Comment} comment 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommentsControllerApi
+     */
+    public postComment(comment: Comment, options?: any) {
+        return CommentsControllerApiFp(this.configuration).postComment(comment, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 /**
  * EdgarExplorerControllerApi - axios parameter creator
