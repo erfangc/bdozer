@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import HighchartsReact from "highcharts-react-official";
 import { StockAnalysis } from "../../../../client";
-import { lime700, red500, rose500, highcharts } from "../../../../highcharts";
+import { lime700, rose500, highcharts } from "../../../../highcharts";
 import { simpleNumber } from "../../../../simple-number";
 
 interface Props {
