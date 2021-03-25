@@ -1,8 +1,7 @@
 import React from "react";
 import NumberFormat from "react-number-format";
 import { StockAnalysis } from "../../../../client";
-import { SubTitle, Title } from "../../../Title";
-import { Money } from "../Card";
+import { Title } from "../../../Title";
 
 interface Props {
     result: StockAnalysis
@@ -21,7 +20,7 @@ export function Overview(props: Props) {
     return (
         <div className="flex-col space-y-8" id="overview">
             <div className="flex justify-between items-center">
-                <div>
+                <div className="flex-col flex space-y-2">
                     <span>{name}</span>
                     <div className="flex items-baseline">
                         <Title>{symbol}</Title>

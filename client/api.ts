@@ -1408,6 +1408,12 @@ export interface StockAnalysis {
      * @memberof StockAnalysis
      */
     discountRate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StockAnalysis
+     */
+    revenueCAGR?: number;
 }
 /**
  * 

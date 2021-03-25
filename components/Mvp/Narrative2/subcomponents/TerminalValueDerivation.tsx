@@ -28,9 +28,14 @@ export function TerminalValueDerivation(props: Props) {
             <p className="mt-4">
                 {
                     beta > 1
-                        ? <>As compensation for the additional uncertainty, our model discounts future earnings at <b>{fmtDiscountRate}</b>.
-                            Giving you greater margin of safety</>
-                        : <>As compensation for the uncertainty, our model discounts future earnings at <b>${fmtDiscountRate}</b></>
+                        ?
+                        <>
+                            As compensation for the additional uncertainty, our model discounts future earnings at <b>{fmtDiscountRate}</b>. Giving you greater margin of safety
+                        </>
+                        :
+                        <>
+                            As compensation for the uncertainty, our model discounts future earnings at <b>${fmtDiscountRate}</b>
+                        </>
                 }
             </p>
             <p className="mt-4 mb-20 rounded-lg bg-blueGray-800 p-4">

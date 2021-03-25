@@ -1,25 +1,28 @@
 import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
 import { StockAnalysis } from "../../../../client";
-import { EarningsPerShareBasic, PresentValueOfEarningsPerShare, PresentValueOfTerminalValuePerShare, PresentValuePerShare, TerminalValuePerShare } from "../../../../constants/ReservedItemNames";
-import { amber400, amber600, blueGray200, highcharts, indigo400, indigo500, indigo600 } from "../../../../highcharts";
+import { EarningsPerShareBasic, PresentValueOfEarningsPerShare, PresentValueOfTerminalValuePerShare, TerminalValuePerShare } from "../../../../constants/ReservedItemNames";
+import { amber400, amber600, blueGray200, highcharts, indigo400, indigo600 } from "../../../../highcharts";
 import { SubTitle } from "../../../Title";
 
 interface Props {
     result: StockAnalysis
 }
 export function TargetPriceDerivation(props: Props) {
-    const { result: { cells, discountRate, targetPrice } } = props
+    const { result: { model, cells, discountRate, targetPrice } } = props
 
-    const data = cells
-        .filter(cell => cell.item.name === PresentValuePerShare)
+    const to = `Target Price $${targetPrice.toFixed(1)} / share`
+    const sandkeys = cells
+        .filter(cell => cell.item.name === PresentValueOfEarningsPerShare)
         .map(
             cell => {
                 const period = new Date().getFullYear() + cell.period
                 const from = period.toString();
-                return [from, `Target Price $${targetPrice.toFixed(1)} / share`, cell.value]
+                return [from, to, cell.value]
             }
         )
+    const pvTvps = cells.find(cell => cell.item.name === PresentValueOfTerminalValuePerShare && cell.period === model.periods)?.value
+    sandkeys.push(['Terminal Value', to, pvTvps])
 
     const [sankeyOptions, setSandkeyOptions] = useState<Highcharts.Options>()
     const [columnOptions, setColumnOptions] = useState<Highcharts.Options>()
@@ -56,7 +59,7 @@ export function TargetPriceDerivation(props: Props) {
             },
             series: [{
                 keys: ['from', 'to', 'weight'],
-                data: data,
+                data: sandkeys,
                 type: 'sankey',
             }] as any
         }
@@ -116,11 +119,12 @@ export function TargetPriceDerivation(props: Props) {
                 the present at a discount rate of {(discountRate * 100).toFixed(1)}%
             </p>
             <HighchartsReact highcharts={highcharts} options={sankeyOptions} />
-            <p className="mt-4">
+            {/* <p className="mt-4">
                 Below is a different graph showing the same math. We take computed future earnings
                 and discounted them back the present
-            </p>
-            <HighchartsReact highcharts={highcharts} options={columnOptions} />
+            </p> */}
+            {/* this chart shows decomposition of the target price by terminal value as well as earnings from each year */}
+            {/* <HighchartsReact highcharts={highcharts} options={columnOptions} /> */}
         </div>
     )
 }
