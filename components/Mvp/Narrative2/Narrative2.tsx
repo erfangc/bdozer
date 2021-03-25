@@ -4,7 +4,7 @@ import { SubTitle } from "../../Title";
 import { Comments } from "./Comments";
 import { FutureEarningsPerShare } from "./subcomponents/FutureEarningsPerShare";
 import { Overview } from "./subcomponents/Overview";
-import { ProfitWaterFall } from "./subcomponents/ProfitWaterFall";
+import { BusinessBreakdown } from "./subcomponents/BusinessBreakdown";
 import { EarningsPerShareCalculation } from "./subcomponents/EarningsPerShareCalculation";
 import { TargetPriceDerivation } from "./subcomponents/TargetPriceDerivation";
 import { ValueBreakdown } from "./subcomponents/ValueBreakdown";
@@ -28,7 +28,7 @@ export function Narrative2(props: Props) {
                 </div>
                 <div>
                     <SubTitle className="mb-6">Business Breakdown</SubTitle>
-                    <ProfitWaterFall result={result} />
+                    <BusinessBreakdown result={result} />
                 </div>
                 <div>
                     <SubTitle className="mb-6">Earning Per Share</SubTitle>

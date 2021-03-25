@@ -9,33 +9,34 @@ interface Props {
     result: StockAnalysis
 }
 
-export function ProfitWaterFall(props: Props) {
+export function BusinessBreakdown(props: Props) {
     const { result: { businessWaterfall } } = props;
 
     const [options, setOptions] = useState<Highcharts.Options>()
     const [period, setPeriod] = useState<number>(0)
 
     function updateChart(period: number) {
-        const cells = businessWaterfall[period]
+        const waterfall = businessWaterfall[period]
 
         const revenue = {
-            name: cells.revenue.item?.description ?? cells.revenue.item?.name,
-            y: cells.revenue.value,
+            name: waterfall.revenue.item?.description ?? waterfall.revenue.item?.name,
+            y: waterfall.revenue.value,
             color: lime700,
         }
 
-        const topExpenses = cells.topExpenses.map(({ item, value }) => {
+        const topExpenses = waterfall.topExpenses.map(({ item, value }) => {
             return {
                 name: item.description ?? item.name,
-                y: -value,
-                color: red500,
+                y: value,
+                color: value > 0 ? lime700 : rose500,
             }
         })
 
         const profit = {
-            name: cells.profit.item?.description ?? cells.profit.item?.name,
-            y: cells.profit.value,
-            color: cells.profit.value > 0 ? lime700 : rose500,
+            name: waterfall.profit.item?.description ?? waterfall.profit.item?.name,
+            y: waterfall.profit.value,
+            color: waterfall.profit.value > 0 ? lime700 : rose500,
+            isSum: true,
         }
 
         setOptions({
