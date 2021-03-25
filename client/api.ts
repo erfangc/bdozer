@@ -1135,7 +1135,7 @@ export interface Model {
      * @type {number}
      * @memberof Model
      */
-    terminalFcfGrowthRate?: number;
+    terminalGrowthRate?: number;
     /**
      * 
      * @type {number}

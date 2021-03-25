@@ -5,6 +5,7 @@ import { StockAnalysis } from "../../../../client";
 import { lime700, rose500, highcharts } from "../../../../highcharts";
 import { simpleNumber } from "../../../../simple-number";
 import { SubTitle } from "../../../Title";
+import { Pill } from "../Pill";
 
 interface Props {
     result: StockAnalysis
@@ -87,21 +88,10 @@ export function BusinessBreakdown(props: Props) {
             <div className="flex space-x-1 text-sm">
                 {Object.keys(businessWaterfall).map(currentPeriod => {
                     const currPeriod = parseInt(currentPeriod)
-                    return <Pill active={currPeriod === period} period={currPeriod} onClick={() => updatePeriod(currPeriod)} />
+                    const year = new Date().getFullYear() + currPeriod
+                    return <Pill active={currPeriod === period} label={year.toString()} onClick={() => updatePeriod(currPeriod)} />
                 })}
             </div>
         </div>
-    )
-}
-
-function Pill(props: { period: number, active: boolean, onClick: () => void }) {
-    const { active, onClick, period } = props;
-    return (
-        <button
-            className={`focus:outline-none ${active ? 'bg-blueGray-500' : 'hover:bg-blueGray-500 border-blueGray-700'} rounded-full border px-4 py-1 shadow-md`}
-            onClick={onClick}
-        >
-            {new Date().getFullYear() + period}
-        </button>
     )
 }

@@ -11,7 +11,7 @@ interface Props {
 }
 export function TargetPriceDerivation(props: Props) {
     const { result: { cells, model, discountRate, targetPrice } } = props
-    const { beta, terminalFcfGrowthRate } = model
+    const { beta, terminalGrowthRate } = model
     const pvs = cells
         .filter(cell => cell.item.name === PresentValuePerShare)
         .map(
@@ -58,11 +58,17 @@ export function TargetPriceDerivation(props: Props) {
     const finalEps = cells.find(cell => cell.item?.name === EarningsPerShareDiluted && cell.period == model.periods)?.value
     const terminalValuePerShare = cells.find(cell => cell.item?.name === PresentValuePerShare && cell.period == model.periods)?.value
     const terminalDiscountFactor = cells.find(cell => cell.item?.name === DiscountFactor && cell.period == model.periods)?.value
+
     return (
         <div>
             <SubTitle className="mb-6">Target Price Derivation</SubTitle>
-            <p>How do the EPS from future years contribute to the target price of ${targetPrice.toFixed(1)}?</p>
+            <p>
+                To derive the target price of ${targetPrice.toFixed(1)}, we will discount future earnings into
+                the present at a discount rate of {(discountRate * 100).toFixed(1)}%
+            </p>
+
             <HighchartsReact highcharts={highcharts} options={options} />
+
             <Label>Assumptions</Label>
             <div className="mt-4 grid grid-cols-2 gap-2">
                 <Percent title="Discount Rate" value={discountRate} />
@@ -77,11 +83,11 @@ export function TargetPriceDerivation(props: Props) {
                 </div>
                 <div className="flex justify-between">
                     <b>Long-term Earnings Growth Rate</b>
-                    <span className="font-light"> {(terminalFcfGrowthRate * 100).toFixed(1)}%</span>
+                    <span className="font-light"> {(terminalGrowthRate * 100).toFixed(1)}%</span>
                 </div>
                 <div className="flex justify-between">
                     <b className="">Terminal Multiple <code className="block text-xs font-normal mt-2 mb-4">1 / (Discount Rate - Longterm Growth)</code></b>
-                    <span className="font-light">{(1 / (discountRate - terminalFcfGrowthRate)).toFixed(1)} x</span>
+                    <span className="font-light">{(1 / (discountRate - terminalGrowthRate)).toFixed(1)} x</span>
                 </div>
                 <div className="flex justify-between">
                     <b className="">Final Year EPS</b>

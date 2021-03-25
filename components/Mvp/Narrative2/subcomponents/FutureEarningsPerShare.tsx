@@ -2,8 +2,9 @@ import HighchartsReact from "highcharts-react-official";
 import React from "react";
 import { useEffect, useState } from "react";
 import { StockAnalysis } from "../../../../client";
-import { EarningsPerShareBasic } from "../../../../constants/ReservedItemNames";
+import { EarningsPerShareBasic, NetIncomeLoss, WeightedAverageNumberOfSharesOutstandingBasic } from "../../../../constants/ReservedItemNames";
 import { green500, highcharts, rose500 } from "../../../../highcharts";
+import { simpleNumber } from "../../../../simple-number";
 import { SubTitle } from "../../../Title";
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 export function FutureEarningsPerShare(props: Props) {
     const { result: { cells } } = props;
     const [options, setOptions] = useState<Highcharts.Options>()
+
     useEffect(() => {
         const eps = cells
             .filter(cell => cell.item.name === EarningsPerShareBasic)
@@ -48,7 +50,14 @@ export function FutureEarningsPerShare(props: Props) {
             },
             plotOptions: {
                 column: {
-                    pointPadding: 0
+                    pointPadding: 0,
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function () {
+                            return `<span class="text-blueGray-50">$${this.y.toFixed(1)} / share</span>`
+                        },
+                        useHTML: true
+                    }
                 }
             },
             series: [{
@@ -58,12 +67,54 @@ export function FutureEarningsPerShare(props: Props) {
         }
         setOptions(options)
     }, [])
+
     return (
         <div>
             <SubTitle className="mb-6">Future Earnings per Share</SubTitle>
-            <p>Based on the above projections. What are the earnings per share going forward?</p>
+            <p>
+                To compute a target price, we calculate future earnings per share.
+                Let's take projected <b>net income from above</b> for each future period and divide it by shares outstanding
+            </p>
+            <br />
+            <table className="w-full">
+                <thead>
+                    <tr>
+                        <th className="text-left px-2">Year</th>
+                        <th className="text-right px-2">Net Income</th>
+                        <th></th>
+                        <th className="text-right px-2"># Shares</th>
+                        <th></th>
+                        <th className="text-right px-2">EPS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {range(0, props.result.model.periods).map(period => {
+                        const netIncomeLoss = cells.find(cell => cell.period == period && cell.item?.name === NetIncomeLoss)?.value
+                        const sharesOutstanding = cells.find(cell => cell.period == period && cell.item?.name === WeightedAverageNumberOfSharesOutstandingBasic)?.value
+                        const eps = cells.find(cell => cell.period == period && cell.item?.name === EarningsPerShareBasic)?.value
+                        return (
+                            <tr>
+                                <td className="font-light text-left text-blueGray-300 px-2 py-1">{new Date().getFullYear() + period}</td>
+                                <td className="text-right px-2 py-1">{simpleNumber(netIncomeLoss.toFixed(0))}</td>
+                                <td className="text-right px-2 py-1"><span className="font-semibold text-lg">÷</span></td>
+                                <td className="text-right px-2 py-1">{simpleNumber(sharesOutstanding.toFixed(0))}</td>
+                                <td className="text-right px-2 py-1"><span className="font-semibold text-lg">=</span></td>
+                                <td className="text-right px-2 py-1">${eps.toFixed(1)}</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
             <br />
             <HighchartsReact highcharts={highcharts} options={options} />
         </div>
     )
+}
+
+function range(start: number, end: number) {
+    let ret = []
+    for (let i = start; i <= end; i++) {
+        ret.push(i)
+    }
+    return ret
 }
