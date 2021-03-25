@@ -33,7 +33,7 @@ export function ExecutiveSummary(props: Props) {
                 <li>They spend more than ${simpleNumber(totalExpense)} with a {profit.value > 0 ? 'profit' : 'loss'} of ${simpleNumber(profit.value)}. </li>
                 <li>This left investors ${eps.toFixed(1)} per share.</li>
                 <li>If they stop growing , the company will be worth ${zeroGrowthPrice.toFixed(1)} per share.</li>
-                <li>Based on Wall Street forecasts, the company will grow at {(revenueCAGR * 100).toFixed(1)}% a year for the next {periods} years. That means American Airlines will be worth ${targetPrice.toFixed(1)},
+                <li>Based on Wall Street forecasts, the company will grow at {(revenueCAGR * 100).toFixed(1)}% a year for the next {periods} years. That means {name} will be worth ${targetPrice.toFixed(1)},
                 which represents <span className="font-bold text-lime-400">{upside.toFixed(1)}%</span> upside from current price.</li>
             </ul>
         </div>
