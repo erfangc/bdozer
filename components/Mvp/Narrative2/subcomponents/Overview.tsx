@@ -1,7 +1,7 @@
 import React from "react";
 import NumberFormat from "react-number-format";
 import { StockAnalysis } from "../../../../client";
-import { SubTitle } from "../../../Title";
+import { SubTitle, Title } from "../../../Title";
 import { Money } from "../Card";
 
 interface Props {
@@ -22,12 +22,12 @@ export function Overview(props: Props) {
         <div className="flex-col space-y-8">
             <div className="flex justify-between items-center">
                 <div>
-                    <span className="font-extralight">Company Trading Symbol</span>
-                    <SubTitle>{symbol}</SubTitle>
+                    <span>{name}</span>
+                    <div className="flex items-baseline">
+                        <Title>{symbol}</Title>
+                        <span className="ml-4">Latest Price <span className={currentPrice < targetPrice ? `text-rose-500` : null}>${currentPrice.toFixed(2)}</span></span>
+                    </div>
                 </div>
-                <span>{name}</span>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
                 <div className="flex justify-between shadow-lg px-4 py-2 bg-blueGray-700 rounded-md">
                     <div className="flex flex-col">
                         <span className="font-semibold text-lg">Target Price</span>
@@ -39,7 +39,6 @@ export function Overview(props: Props) {
                         </div>
                     </div>
                 </div>
-                <Money title="Current Price" value={currentPrice} />
             </div>
         </div>
     )

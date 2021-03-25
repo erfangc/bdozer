@@ -39,7 +39,7 @@ export function Comments({ result }: Props) {
     }, [])
 
     return (
-        <>
+        <div>
             <TextInput
                 placeholder="Enter comment"
                 value={text}
@@ -47,7 +47,7 @@ export function Comments({ result }: Props) {
                 onKeyDown={({ key }) => { if (key === 'Enter') postComment() }}
             />
             {comments.map(comment => <CommentComponent comment={comment} />)}
-        </>
+        </div>
     )
 }
 

@@ -1,8 +1,10 @@
 import HighchartsReact from "highcharts-react-official";
+import React from "react";
 import { useEffect, useState } from "react";
 import { StockAnalysis } from "../../../../client";
 import { EarningsPerShareBasic } from "../../../../constants/ReservedItemNames";
 import { green500, highcharts, rose500 } from "../../../../highcharts";
+import { SubTitle } from "../../../Title";
 
 interface Props {
     result: StockAnalysis
@@ -57,10 +59,11 @@ export function FutureEarningsPerShare(props: Props) {
         setOptions(options)
     }, [])
     return (
-        <>
+        <div>
+            <SubTitle className="mb-6">Future Earnings per Share</SubTitle>
             <p>Based on the above projections. What are the earnings per share going forward?</p>
             <br />
             <HighchartsReact highcharts={highcharts} options={options} />
-        </>
+        </div>
     )
 }

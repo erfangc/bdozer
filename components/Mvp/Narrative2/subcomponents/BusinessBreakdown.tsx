@@ -4,6 +4,7 @@ import HighchartsReact from "highcharts-react-official";
 import { StockAnalysis } from "../../../../client";
 import { lime700, rose500, highcharts } from "../../../../highcharts";
 import { simpleNumber } from "../../../../simple-number";
+import { SubTitle } from "../../../Title";
 
 interface Props {
     result: StockAnalysis
@@ -78,16 +79,19 @@ export function BusinessBreakdown(props: Props) {
         updateChart(period)
     }
 
-    return <>
-        <p>How did AAL make and spend it's money in the most recent year. You can click different years to see analyst projections</p>
-        <HighchartsReact highcharts={highcharts} options={options} />
-        <div className="flex space-x-1 text-sm">
-            {Object.keys(businessWaterfall).map(currentPeriod => {
-                const currPeriod = parseInt(currentPeriod)
-                return <Pill active={currPeriod === period} period={currPeriod} onClick={() => updatePeriod(currPeriod)} />
-            })}
+    return (
+        <div>
+            <SubTitle className="mb-6">Business Breakdown</SubTitle>
+            <p>How did AAL make and spend it's money in the most recent year. You can click different years to see analyst projections</p>
+            <HighchartsReact highcharts={highcharts} options={options} />
+            <div className="flex space-x-1 text-sm">
+                {Object.keys(businessWaterfall).map(currentPeriod => {
+                    const currPeriod = parseInt(currentPeriod)
+                    return <Pill active={currPeriod === period} period={currPeriod} onClick={() => updatePeriod(currPeriod)} />
+                })}
+            </div>
         </div>
-    </>
+    )
 }
 
 function Pill(props: { period: number, active: boolean, onClick: () => void }) {

@@ -2,14 +2,15 @@ import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
 import { StockAnalysis } from "../../../../client";
-import { indigo700, lime700, highcharts } from "../../../../highcharts";
+import { indigo700, lime700, highcharts, blue500, blue700, green500, green800 } from "../../../../highcharts";
+import { SubTitle } from "../../../Title";
 import { Popover } from "../../Narrative1/Narrative";
 
 interface Props {
     result: StockAnalysis
 }
 
-export function ValueBreakdown(props: Props) {
+export function TargetPriceBreakdown(props: Props) {
     const {
         result: {
             zeroGrowthPrice,
@@ -27,7 +28,7 @@ export function ValueBreakdown(props: Props) {
         :
         <p>
             About <NumberFormat className="font-extrabold text-lg text-blue-400" value={(impliedPriceFromGrowth / currentPrice) * 100} decimalScale={1} displayType="text" suffix="%" /> of
-             the current stock price must be earned through growing (or recovering) earnings than
+             the target stock price must be earned through growing (or recovering) earnings than
             keeping existing level of earning
             <br />
             <Popover trigger="How is this computed?">
@@ -45,6 +46,7 @@ export function ValueBreakdown(props: Props) {
         </p>
     return (
         <div>
+            <SubTitle className="mb-6">Target Price Breakdown</SubTitle>
             {text}
             {
                 zeroGrowthPrice > 0
@@ -69,7 +71,8 @@ function ValueBreakdownPieChart(props: Props) {
     useEffect(() => {
         setOptions({
             chart: {
-                type: 'column'
+                type: 'column',
+                inverted: true,
             },
             title: { text: null },
             yAxis: {
@@ -79,12 +82,12 @@ function ValueBreakdownPieChart(props: Props) {
             xAxis: {
                 type: 'category',
                 labels: {
-                    enabled: false
+                    enabled: false,
                 },
                 lineWidth: 0,
             },
             legend: {
-                enabled: false,
+                enabled: true,
             },
             plotOptions: {
                 column: {
@@ -92,11 +95,13 @@ function ValueBreakdownPieChart(props: Props) {
                     dataLabels: {
                         enabled: true,
                         formatter: function () {
-                            return `<span class="text-xs text-left">
-                            ${this.series.name}<br> $${this.y.toFixed(2)} / Share
-                            </span>`
+                            return (
+                                `<span class="text-sm text-left">
+                                    $${this.y.toFixed(2)} / Share
+                                </span>
+                                `
+                            )
                         },
-                        useHTML: true,
                     },
                 },
             },
@@ -104,13 +109,13 @@ function ValueBreakdownPieChart(props: Props) {
                 {
                     name: 'Value from Growth',
                     data: [impliedPriceFromGrowth],
-                    color: indigo700,
+                    color: blue700,
                     stack: '1',
                 },
                 {
                     name: 'Value from Current Operations',
                     data: [zeroGrowthPrice],
-                    color: lime700,
+                    color: green800,
                     stack: '1',
                 },
             ] as any

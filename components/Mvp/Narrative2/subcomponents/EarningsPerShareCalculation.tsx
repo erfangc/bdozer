@@ -1,5 +1,7 @@
+import React from "react";
 import { StockAnalysis } from "../../../../client";
 import { simpleNumber } from "../../../../simple-number";
+import { SubTitle } from "../../../Title";
 
 interface Props {
     result: StockAnalysis
@@ -12,6 +14,7 @@ export function EarningsPerShareCalculation({ result }: Props) {
     const profitSpan = <span className={`font-bold ${profit.value > 0 ? 'text-green-600' : 'text-red-500'}`}>{simpleNumber(profit.value)}</span>;
     return (
         <div>
+            <SubTitle className="mb-6">Earning Per Share</SubTitle>
             <p>
                 Latest year profit was {profitSpan}, as
                 a shareholder you are entitled to:
