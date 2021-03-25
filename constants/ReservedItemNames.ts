@@ -34,6 +34,8 @@ export const SharesOutstanding = "SharesOutstanding"
 export const DilutedSharesOutstanding = "DilutedSharesOutstanding"
 export const DiscountFactor = "DiscountFactor"
 export const TerminalValuePerShare = "TerminalValuePerShare"
+export const PresentValueOfEarningsPerShare = "PresentValueOfEarningsPerShare"
+export const PresentValueOfTerminalValuePerShare = "PresentValueOfTerminalValuePerShare"
 export const PresentValuePerShare = "PresentValuePerShare"
 export const EarningsPerShare = "EarningsPerShare"
 

@@ -6,6 +6,7 @@ import { FutureEarningsPerShare } from "./subcomponents/FutureEarningsPerShare";
 import { Overview } from "./subcomponents/Overview";
 import { TargetPriceDerivation } from "./subcomponents/TargetPriceDerivation";
 import { TargetPriceBreakdown } from "./subcomponents/TargetPriceBreakdown";
+import { TerminalValueDerivation } from "./subcomponents/TerminalValueDerivation";
 
 interface Props {
     result: StockAnalysis
@@ -16,11 +17,12 @@ export function Narrative2(props: Props) {
 
     return (
         <main className="flex-grow min-h-screen px-3 py-8 flex justify-center bg-blueGray-900">
-            <div className="max-w-lg flex-col space-y-16">
+            <div className="max-w-lg flex-col space-y-20">
                 <Overview result={result} />
                 <TargetPriceBreakdown result={result} />
                 <BusinessBreakdown result={result} />
                 <FutureEarningsPerShare result={result} />
+                <TerminalValueDerivation result={result} />
                 <TargetPriceDerivation result={result} />
                 <Comments result={result} />
             </div>

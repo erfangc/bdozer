@@ -19,7 +19,7 @@ export function Overview(props: Props) {
     } = props;
     const upside = (targetPrice / currentPrice - 1) * 100;
     return (
-        <div className="flex-col space-y-8">
+        <div className="flex-col space-y-8" id="overview">
             <div className="flex justify-between items-center">
                 <div>
                     <span>{name}</span>

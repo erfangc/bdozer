@@ -69,7 +69,7 @@ export function FutureEarningsPerShare(props: Props) {
     }, [])
 
     return (
-        <div>
+        <div className="future-earnings-per-share">
             <SubTitle className="mb-6">Future Earnings per Share</SubTitle>
             <p>
                 To compute a target price, we calculate future earnings per share.
@@ -79,7 +79,7 @@ export function FutureEarningsPerShare(props: Props) {
             <table className="w-full">
                 <thead>
                     <tr>
-                        <th className="text-left px-2">Year</th>
+                        <th></th>
                         <th className="text-right px-2">Net Income</th>
                         <th></th>
                         <th className="text-right px-2"># Shares</th>

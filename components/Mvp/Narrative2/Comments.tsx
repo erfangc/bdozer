@@ -39,7 +39,7 @@ export function Comments({ result }: Props) {
     }, [])
 
     return (
-        <div>
+        <div id="comments">
             <TextInput
                 placeholder="Enter comment"
                 value={text}

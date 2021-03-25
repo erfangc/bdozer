@@ -81,7 +81,7 @@ export function BusinessBreakdown(props: Props) {
     }
 
     return (
-        <div>
+        <div id="business-breakdown">
             <SubTitle className="mb-6">Business Breakdown</SubTitle>
             <p>How did AAL make and spend it's money in the most recent year. You can click different years to see analyst projections</p>
             <HighchartsReact highcharts={highcharts} options={options} />

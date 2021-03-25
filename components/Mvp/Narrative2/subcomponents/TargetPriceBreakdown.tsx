@@ -45,7 +45,7 @@ export function TargetPriceBreakdown(props: Props) {
             </Popover>
         </p>
     return (
-        <div>
+        <div id="target-price-breakdown">
             <SubTitle className="mb-6">Target Price Breakdown</SubTitle>
             {text}
             {
