@@ -20,10 +20,10 @@ export function Overview(props: Props) {
     return (
         <div className="flex justify-between items-center">
             <div className="flex-col flex space-y-2">
-                <span>{name}</span>
+                <span className="text-blueGray-300">{name}</span>
                 <div className="flex items-baseline">
                     <Title>{symbol}</Title>
-                    <span className="ml-4">Latest Price <span className={currentPrice < targetPrice ? `text-rose-500` : null}>${currentPrice.toFixed(2)}</span></span>
+                    <span className="ml-4"><span className="text-blueGray-300">Latest Price</span> <span className={currentPrice < targetPrice ? `text-rose-500` : null}>${currentPrice.toFixed(2)}</span></span>
                 </div>
             </div>
             <div className="flex justify-between shadow-lg px-4 py-2 bg-blueGray-700 rounded-md">

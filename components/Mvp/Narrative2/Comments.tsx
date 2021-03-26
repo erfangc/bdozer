@@ -57,7 +57,7 @@ function CommentComponent(props: { comment: Comment }) {
         <div className="flex-col flex space-y-4 pt-4 mt-4 border-t border-blueGray-700">
             <div className="flex space-x-4">
                 <div className="w-12 h-12 rounded-full bg-indigo-500"></div>
-                <div className="">
+                <div>
                     <div className="font-bold">{name ?? 'Anonymous'}</div>
                     <div className="text-sm text-coolGray-400">{new Date(lastUpdated).toLocaleString()}</div>
                 </div>

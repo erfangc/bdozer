@@ -2,6 +2,7 @@ import {
   CommentsControllerApi,
   EdgarExplorerControllerApi,
   FilingEntityManagerControllerApi,
+  MarketingControllerApi,
   MxParserControllerApi,
   NarrativeBuilderControllerApi,
   StockAnalyzerFactoryControllerApi,
@@ -42,6 +43,11 @@ function useAxios() {
     });
   }, []);
   return axiosInstance;
+}
+
+export function useMarketing() {
+  const axiosInstance = useAxios();
+  return new MarketingControllerApi(null, basePath, axiosInstance);
 }
 
 export function useMxParser() {

@@ -259,6 +259,31 @@ export interface Discrete {
 /**
  * 
  * @export
+ * @interface EarlyAccessRequest
+ */
+export interface EarlyAccessRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EarlyAccessRequest
+     */
+    get_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EarlyAccessRequest
+     */
+    email?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EarlyAccessRequest
+     */
+    lastUpdated?: string;
+}
+/**
+ * 
+ * @export
  * @interface EdgarEntity
  */
 export interface EdgarEntity {
@@ -1418,6 +1443,68 @@ export interface StockAnalysis {
 /**
  * 
  * @export
+ * @interface StockAnalysisInterest
+ */
+export interface StockAnalysisInterest {
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysisInterest
+     */
+    get_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysisInterest
+     */
+    email?: string;
+    /**
+     * 
+     * @type {Array<StockAnalysisRequest>}
+     * @memberof StockAnalysisInterest
+     */
+    requests?: Array<StockAnalysisRequest>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysisInterest
+     */
+    lastUpdated?: string;
+}
+/**
+ * 
+ * @export
+ * @interface StockAnalysisRequest
+ */
+export interface StockAnalysisRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysisRequest
+     */
+    get_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysisRequest
+     */
+    cik?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysisRequest
+     */
+    ticker?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysisRequest
+     */
+    lastUpdated?: string;
+}
+/**
+ * 
+ * @export
  * @interface SubscriptionRevenue
  */
 export interface SubscriptionRevenue {
@@ -2482,6 +2569,239 @@ export class FilingEntityManagerControllerApi extends BaseAPI {
      */
     public saveFilingEntity(filingEntity: FilingEntity, options?: any) {
         return FilingEntityManagerControllerApiFp(this.configuration).saveFilingEntity(filingEntity, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * MarketingControllerApi - axios parameter creator
+ * @export
+ */
+export const MarketingControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {EarlyAccessRequest} earlyAccessRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        earlyAccessRequests: async (earlyAccessRequest: EarlyAccessRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'earlyAccessRequest' is not null or undefined
+            assertParamExists('earlyAccessRequests', 'earlyAccessRequest', earlyAccessRequest)
+            const localVarPath = `/public/marketing/early-access-requests`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(earlyAccessRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {StockAnalysisInterest} stockAnalysisInterest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stockAnalysisInterest: async (stockAnalysisInterest: StockAnalysisInterest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'stockAnalysisInterest' is not null or undefined
+            assertParamExists('stockAnalysisInterest', 'stockAnalysisInterest', stockAnalysisInterest)
+            const localVarPath = `/public/marketing/stock-analysis-interest`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(stockAnalysisInterest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Array<StockAnalysisRequest>} stockAnalysisRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stockAnalysisRequest: async (stockAnalysisRequest: Array<StockAnalysisRequest>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'stockAnalysisRequest' is not null or undefined
+            assertParamExists('stockAnalysisRequest', 'stockAnalysisRequest', stockAnalysisRequest)
+            const localVarPath = `/public/marketing/stock-analysis-request`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(stockAnalysisRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * MarketingControllerApi - functional programming interface
+ * @export
+ */
+export const MarketingControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MarketingControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {EarlyAccessRequest} earlyAccessRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async earlyAccessRequests(earlyAccessRequest: EarlyAccessRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.earlyAccessRequests(earlyAccessRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {StockAnalysisInterest} stockAnalysisInterest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stockAnalysisInterest(stockAnalysisInterest: StockAnalysisInterest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stockAnalysisInterest(stockAnalysisInterest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Array<StockAnalysisRequest>} stockAnalysisRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stockAnalysisRequest(stockAnalysisRequest: Array<StockAnalysisRequest>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stockAnalysisRequest(stockAnalysisRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * MarketingControllerApi - factory interface
+ * @export
+ */
+export const MarketingControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MarketingControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {EarlyAccessRequest} earlyAccessRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        earlyAccessRequests(earlyAccessRequest: EarlyAccessRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.earlyAccessRequests(earlyAccessRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {StockAnalysisInterest} stockAnalysisInterest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stockAnalysisInterest(stockAnalysisInterest: StockAnalysisInterest, options?: any): AxiosPromise<void> {
+            return localVarFp.stockAnalysisInterest(stockAnalysisInterest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Array<StockAnalysisRequest>} stockAnalysisRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stockAnalysisRequest(stockAnalysisRequest: Array<StockAnalysisRequest>, options?: any): AxiosPromise<void> {
+            return localVarFp.stockAnalysisRequest(stockAnalysisRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * MarketingControllerApi - object-oriented interface
+ * @export
+ * @class MarketingControllerApi
+ * @extends {BaseAPI}
+ */
+export class MarketingControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {EarlyAccessRequest} earlyAccessRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingControllerApi
+     */
+    public earlyAccessRequests(earlyAccessRequest: EarlyAccessRequest, options?: any) {
+        return MarketingControllerApiFp(this.configuration).earlyAccessRequests(earlyAccessRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {StockAnalysisInterest} stockAnalysisInterest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingControllerApi
+     */
+    public stockAnalysisInterest(stockAnalysisInterest: StockAnalysisInterest, options?: any) {
+        return MarketingControllerApiFp(this.configuration).stockAnalysisInterest(stockAnalysisInterest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Array<StockAnalysisRequest>} stockAnalysisRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingControllerApi
+     */
+    public stockAnalysisRequest(stockAnalysisRequest: Array<StockAnalysisRequest>, options?: any) {
+        return MarketingControllerApiFp(this.configuration).stockAnalysisRequest(stockAnalysisRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
 import { useEdgarExplorer, useFilingEntityManager } from '../../api-hooks'
@@ -36,7 +35,13 @@ export function Search(props: Props) {
     async function submit(edgarEntity: EdgarEntity) {
         setFound([])
         const { data } = await filingEntityManagerApi.getFilingEntity(edgarEntity['_id'])
-        props.onSubmit(data)
+        try {
+            props.onSubmit(data)
+        } catch (e) {
+            console.error(e);
+        }
+        setTerm('')
+        setFound([])
     }
 
     function changeTerm(newTerm: string) {
