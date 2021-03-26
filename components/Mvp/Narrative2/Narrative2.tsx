@@ -2,6 +2,7 @@ import React from "react";
 import { StockAnalysis } from "../../../client";
 import { Comments } from "./Comments";
 import { BusinessBreakdown } from "./subcomponents/BusinessBreakdown";
+import { DiscountFactorDerivation } from "./subcomponents/DiscountFactorDerivation";
 import { ExecutiveSummary } from "./subcomponents/ExecutiveSummary";
 import { FutureEarningsPerShare } from "./subcomponents/FutureEarningsPerShare";
 import { Overview } from "./subcomponents/Overview";
@@ -25,6 +26,7 @@ export function Narrative2(props: Props) {
                 <BusinessBreakdown result={result} />
                 <FutureEarningsPerShare result={result} />
                 <TerminalValueDerivation result={result} />
+                <DiscountFactorDerivation result={result} />
                 <TargetPriceDerivation result={result} />
                 <TargetPriceBreakdown result={result} />
                 <Comments result={result} />
