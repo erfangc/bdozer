@@ -4,7 +4,7 @@ interface TextInputProps extends React.DetailedHTMLProps<React.InputHTMLAttribut
     label?: string
 }
 
-export function TextInput({ label, className, ...props }: TextInputProps) {
+export const TextInput = React.forwardRef(function ({ label, className, ...props }: TextInputProps) {
     return (
         <div className="flex-col flex">
             {label ? <label className="mb-2 text-sm">{label}</label> : null}
@@ -15,4 +15,4 @@ export function TextInput({ label, className, ...props }: TextInputProps) {
             />
         </div>
     )
-}
+})

@@ -72,6 +72,7 @@ function Confirm(props: { onSubmit: (email: string) => void }) {
                 !submitted ?
                     <div className="flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2">
                         <TextInput
+                            autoFocus
                             type="email"
                             name="email"
                             placeholder="Email Address"

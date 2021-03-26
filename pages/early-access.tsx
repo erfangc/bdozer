@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMarketing } from "../api-hooks";
 import { UnsecuredApp } from "../components/App";
 import { PrimaryButton } from "../components/PrimaryButton";
@@ -63,6 +63,7 @@ function Request(props: { onSubmit: (email: string) => void }) {
                 </ul>
                 <div className="flex flex-col space-y-2 lg:flex-row lg:space-x-1 lg:space-y-0">
                     <TextInput
+                        autoFocus
                         type="email"
                         name="email"
                         placeholder="Your Email"

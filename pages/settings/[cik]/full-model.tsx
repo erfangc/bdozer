@@ -26,7 +26,7 @@ function FullModelComponent() {
     }, [cik])
 
     return (
-        <main className="text-blueGray-50 flex flex-grow flex-col items-center justify-center">
+        <main className="flex flex-grow flex-col items-center justify-center">
             <Title className="mt-4 mb-8">Model {loading ? ' Loading ... ' : null}</Title>
             {
                 loading || result === undefined
