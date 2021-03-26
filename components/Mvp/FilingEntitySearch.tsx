@@ -69,7 +69,7 @@ export function FilingEntitySearch(props: Props) {
     }).slice(0, 5)
 
     return (
-        <div className={`w-full text-blueGray-50 ${props.className}`}>
+        <div className={`text-blueGray-50 ${props.className}`}>
             <div className="relative container max-w-lg">
                 <div className={`bg-blueGray-700 px-4 ${entities.length > 0 ? 'rounded-t-lg' : 'rounded-lg'}`}>
                     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline">

@@ -63,27 +63,28 @@ export function Settings(props: Props) {
     }
 
     return (
-        <main className="flex-grow flex flex-col space-y-12 min-h-screen p-2 xl:p-10 lg:p-8">
-            <Title>Advanced Model Controls</Title>
+        <main className="flex-grow flex flex-col space-y-12 min-h-screen p-3 xl:p-10 lg:p-8">
+            <Title>Model Controls</Title>
             <section className="flex flex-col space-y-4">
-                {filingEntity ?
+                {filingEntity
+                    ?
                     <>
                         <div className='bg-blueGray-800 shadow-md rounded-md grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-6 px-4 gap-4'>
-                            <div className="w-96 flex flex-col items-center">
+                            <div className="flex flex-col">
                                 <div className="font-light text-sm">Name</div>
-                                <span>{filingEntity?.name}</span>
+                                <span className="font-semibold">{filingEntity?.name}</span>
                             </div>
-                            <div className="w-96 flex flex-col items-center">
+                            <div className="flex flex-col">
                                 <div className="font-light text-sm">Trading Symbol</div>
-                                <span>{filingEntity?.tradingSymbol}</span>
+                                <span className="font-semibold">{filingEntity?.tradingSymbol}</span>
                             </div>
-                            <div className="w-96 flex flex-col items-center">
+                            <div className="flex flex-col">
                                 <div className="font-light text-sm">SIC Description</div>
-                                <span>{filingEntity?.sicDescription}</span>
+                                <span className="font-semibold">{filingEntity?.sicDescription}</span>
                             </div>
-                            <div className="w-96 flex flex-col items-center">
+                            <div className="flex flex-col">
                                 <div className="font-light text-sm">Exchange</div>
-                                <span className="space-x-1">{filingEntity?.exchanges.map(exchange => <span>{exchange}</span>)}</span>
+                                <span className="font-semibold space-x-1">{filingEntity?.exchanges.map(exchange => <span>{exchange}</span>)}</span>
                             </div>
                         </div>
                         <p className="self-end text-sm">
@@ -94,13 +95,18 @@ export function Settings(props: Props) {
                     : null
                 }
                 {
-                    filingEntity ?
-                        <div className="w-96">
-                            <Select onChange={({ currentTarget: { value } }) => changeModelTemplate(value)} value={filingEntity?.modelTemplate?.template} label="Choose Model Template">
-                                <option></option>
-                                <option value="Recovery">Recovery</option>
-                            </Select>
-                        </div> : null
+                    filingEntity
+                        ?
+                        <Select
+                            onChange={({ currentTarget: { value } }) => changeModelTemplate(value)}
+                            value={filingEntity?.modelTemplate?.template}
+                            label="Choose Model Template"
+                            className="lg:w-96"
+                        >
+                            <option></option>
+                            <option value="Recovery">Recovery</option>
+                        </Select>
+                        : null
                 }
                 <div className="flex space-x-2 pt-8">
                     <PrimaryButton onClick={runStockAnalysis} className={loading ? `animate-pulse` : ``} disabled={loading}>

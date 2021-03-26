@@ -140,7 +140,10 @@ function Request({ onSubmit }: { onSubmit: (entities: FilingEntity[]) => void })
             </div>
             {
                 entities.length > 0
-                    ? <PrimaryButton onClick={submit} className="mt-4">Request {entities.length} Stock{entities.length > 1 ? 's' : null}</PrimaryButton>
+                    ?
+                    <PrimaryButton onClick={submit} className="mt-4">
+                        Request {entities.length} Stock{entities.length > 1 ? 's' : null}
+                    </PrimaryButton>
                     : null
             }
         </section>

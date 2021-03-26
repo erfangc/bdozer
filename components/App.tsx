@@ -39,7 +39,7 @@ export function UnsecuredApp({ children }) {
                 <link rel="icon" href="/favicon.ico" />
                 <script type="text/javascript" src="/fullstory.js"></script>
             </Head>
-            <div className="bg-blueGray-900 min-h-screen antialiased">
+            <div className="bg-blueGray-900 min-h-screen antialiased border border-black">
                 <Nav />
                 <ServerErrors />
                 <div className="lg:ml-20 flex text-blueGray-50 bg-blueGray-900">
