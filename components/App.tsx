@@ -42,7 +42,7 @@ export function UnsecuredApp({ children }) {
             <div className="bg-blueGray-900 min-h-screen antialiased">
                 <Nav />
                 <ServerErrors />
-                <div className="lg:ml-20 flex text-blueGray-50">
+                <div className="lg:ml-20 flex text-blueGray-50 bg-blueGray-900">
                     {children}
                 </div>
             </div>
