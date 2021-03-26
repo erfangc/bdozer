@@ -2,8 +2,8 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useStockAnalyzerFactory } from '../api-hooks'
 import { StockAnalysis } from '../client'
-import { App, UnsecuredApp } from '../components/App'
-import { Search } from '../components/Mvp/Search'
+import { UnsecuredApp } from '../components/App'
+import { StockAnalysisSearch } from '../components/Mvp/StockAnalysisSearch'
 
 export default function Home() {
 
@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <UnsecuredApp>
       <main className="min-h-screen mx-auto pt-12 px-2 w-full max-w-lg">
-        <Search onSubmit={({ cik }) => navigate(cik)} className="mb-12" />
+        <StockAnalysisSearch onSubmit={({ cik }) => navigate(cik)} className="mb-12" />
         <div className="text-blueGray-50">
           <h1 className="border-b mb-8 pb-2 border-blueGray-500"><span className="bg-rose-600 p-1 rounded-lg font-bold">New</span> Stock Analysis</h1>
         </div>

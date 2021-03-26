@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import { useMarketing } from '../api-hooks'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+import { useFilingEntityManager, useMarketing } from '../api-hooks'
 import { FilingEntity } from '../client'
 import { UnsecuredApp } from '../components/App'
-import { Search } from '../components/Mvp/Search'
+import { FilingEntitySearch } from '../components/Mvp/FilingEntitySearch'
 import { TextInput } from '../components/TextInput'
 
 export default function RequestStockPage() {
@@ -26,7 +27,7 @@ export default function RequestStockPage() {
 
     return (
         <UnsecuredApp>
-            <main className="flex-col flex flex-grow min-h-screen items-center justify-center text-blueGray-200">
+            <main className="flex-col flex flex-grow min-h-screen items-center justify-center text-blueGray-200 bg-blueGray-900">
                 {
                     entities.length === 0
                         ? <Request onSubmit={handleSubmit} />
@@ -89,6 +90,16 @@ function Confirm(props: { onSubmit: (email: string) => void }) {
 function Request({ onSubmit }: { onSubmit: (entities: FilingEntity[]) => void }) {
 
     const [entities, setEntities] = useState<FilingEntity[]>([])
+    const router = useRouter()
+    const filingEntityManager = useFilingEntityManager()
+    const { cik } = router.query
+    useEffect(() => {
+        if (cik) {
+            filingEntityManager
+                .getFilingEntity(cik as string)
+                .then(({ data }) => setEntities([data]))
+        }
+    }, [cik])
 
     function submit() {
         onSubmit(entities)
@@ -106,7 +117,7 @@ function Request({ onSubmit }: { onSubmit: (entities: FilingEntity[]) => void })
                 If you enjoyed our analysis so far, and would like for us to run our algorithm on a stock you are interested in, then
                 just fill out the form below. We will initiate coverage when there is enough demand
             </p>
-            <Search onSubmit={entity => setEntities([...entities, entity])} />
+            <FilingEntitySearch onSubmit={entity => setEntities([...entities, entity])} />
             <div className="flex flex-col space-y-4 mt-8">
                 {
                     entities.map(entity => (

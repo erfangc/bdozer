@@ -5,7 +5,7 @@ import { FilingEntity } from "../../client";
 import { App } from "../../components/App";
 import { DeleteButton } from "../../components/DeleteButton";
 import { GhostButton } from "../../components/GhostButton";
-import { Search } from "../../components/Mvp/Search";
+import { FilingEntitySearch } from "../../components/Mvp/FilingEntitySearch";
 import { PrimaryButton } from "../../components/PrimaryButton";
 import { Select } from "../../components/Select";
 
@@ -62,7 +62,7 @@ function SettingsComponent() {
                 <h1 className="text-xl font-bold mb-4">
                     Advanced Model Controls
                 </h1>
-                <Search onSubmit={switchFilingEntity} className="" />
+                <FilingEntitySearch onSubmit={switchFilingEntity} className="" />
             </div>
 
             <div className="flex-col space-y-4">

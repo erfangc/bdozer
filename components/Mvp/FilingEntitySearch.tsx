@@ -8,7 +8,7 @@ interface Props {
     onSubmit: (cik: FilingEntity) => void
 }
 
-export function Search(props: Props) {
+export function FilingEntitySearch(props: Props) {
 
     const edgarExplorerApi = useEdgarExplorer()
     const filingEntityManagerApi = useFilingEntityManager()
