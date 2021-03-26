@@ -89,6 +89,9 @@ function ValueBreakdownPieChart(props: Props) {
             legend: {
                 enabled: true,
             },
+            tooltip: {
+                enabled: false,
+            },
             plotOptions: {
                 column: {
                     stacking: 'normal',

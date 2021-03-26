@@ -48,6 +48,9 @@ export function FutureEarningsPerShare(props: Props) {
                 lineWidth: 0,
                 type: 'category'
             },
+            tooltip: {
+                enabled: false,
+            },
             plotOptions: {
                 column: {
                     pointPadding: 0,
