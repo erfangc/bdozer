@@ -20,9 +20,9 @@ export function ExecutiveSummary(props: Props) {
         }
     } = props;
 
-    const { profit, topExpenses, revenue } = businessWaterfall[0]
+    const { profit, expenses, revenue } = businessWaterfall[0]
     const upside = (targetPrice / currentPrice - 1) * 100
-    const totalExpense = topExpenses.map(expense => expense.value).reduce((a, b) => a + b, 0)
+    const totalExpense = expenses.map(expense => expense.value).reduce((a, b) => a + b, 0)
     const eps = cells.find(cell => cell.item.name === EarningsPerShareBasic && cell.period === 0)?.value
 
     return (

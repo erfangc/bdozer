@@ -964,7 +964,7 @@ export interface Item {
      * @type {string}
      * @memberof Item
      */
-    expression?: string;
+    formula?: string;
     /**
      * 
      * @type {SubscriptionRevenue}
@@ -1600,7 +1600,7 @@ export interface Waterfall {
      * @type {Array<Cell>}
      * @memberof Waterfall
      */
-    topExpenses?: Array<Cell>;
+    expenses?: Array<Cell>;
     /**
      * 
      * @type {Cell}
@@ -2954,9 +2954,9 @@ export const NarrativeBuilderControllerApiAxiosParamCreator = function (configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        exportExcel: async (ticker: string, options: any = {}): Promise<RequestArgs> => {
+        exportExcel1: async (ticker: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'ticker' is not null or undefined
-            assertParamExists('exportExcel', 'ticker', ticker)
+            assertParamExists('exportExcel1', 'ticker', ticker)
             const localVarPath = `/api/zacks/narrative-builder/{ticker}/excel`
                 .replace(`{${"ticker"}}`, encodeURIComponent(String(ticker)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3007,8 +3007,8 @@ export const NarrativeBuilderControllerApiFp = function(configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async exportExcel(ticker: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.exportExcel(ticker, options);
+        async exportExcel1(ticker: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.exportExcel1(ticker, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3036,8 +3036,8 @@ export const NarrativeBuilderControllerApiFactory = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        exportExcel(ticker: string, options?: any): AxiosPromise<Array<string>> {
-            return localVarFp.exportExcel(ticker, options).then((request) => request(axios, basePath));
+        exportExcel1(ticker: string, options?: any): AxiosPromise<Array<string>> {
+            return localVarFp.exportExcel1(ticker, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3067,8 +3067,109 @@ export class NarrativeBuilderControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NarrativeBuilderControllerApi
      */
-    public exportExcel(ticker: string, options?: any) {
-        return NarrativeBuilderControllerApiFp(this.configuration).exportExcel(ticker, options).then((request) => request(this.axios, this.basePath));
+    public exportExcel1(ticker: string, options?: any) {
+        return NarrativeBuilderControllerApiFp(this.configuration).exportExcel1(ticker, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * StockAnalysisExcelDownloaderApi - axios parameter creator
+ * @export
+ */
+export const StockAnalysisExcelDownloaderApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        exportExcel: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('exportExcel', 'cik', cik)
+            const localVarPath = `/public/stock-analysis-excel-downloader/{cik}`
+                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * StockAnalysisExcelDownloaderApi - functional programming interface
+ * @export
+ */
+export const StockAnalysisExcelDownloaderApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = StockAnalysisExcelDownloaderApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async exportExcel(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.exportExcel(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * StockAnalysisExcelDownloaderApi - factory interface
+ * @export
+ */
+export const StockAnalysisExcelDownloaderApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = StockAnalysisExcelDownloaderApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        exportExcel(cik: string, options?: any): AxiosPromise<Array<string>> {
+            return localVarFp.exportExcel(cik, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * StockAnalysisExcelDownloaderApi - object-oriented interface
+ * @export
+ * @class StockAnalysisExcelDownloaderApi
+ * @extends {BaseAPI}
+ */
+export class StockAnalysisExcelDownloaderApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StockAnalysisExcelDownloaderApi
+     */
+    public exportExcel(cik: string, options?: any) {
+        return StockAnalysisExcelDownloaderApiFp(this.configuration).exportExcel(cik, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3105,39 +3206,6 @@ export const StockAnalyzerFactoryControllerApiAxiosParamCreator = function (conf
             if (save !== undefined) {
                 localVarQueryParameter['save'] = save;
             }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        excelModel: async (cik: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('excelModel', 'cik', cik)
-            const localVarPath = `/public/model-builder-factory/{cik}/excel-model`
-                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
 
     
@@ -3235,16 +3303,6 @@ export const StockAnalyzerFactoryControllerApiFp = function(configuration?: Conf
         },
         /**
          * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async excelModel(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.excelModel(cik, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3284,15 +3342,6 @@ export const StockAnalyzerFactoryControllerApiFactory = function (configuration?
         },
         /**
          * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        excelModel(cik: string, options?: any): AxiosPromise<Array<string>> {
-            return localVarFp.excelModel(cik, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3328,17 +3377,6 @@ export class StockAnalyzerFactoryControllerApi extends BaseAPI {
      */
     public analyze(cik: string, save?: boolean, options?: any) {
         return StockAnalyzerFactoryControllerApiFp(this.configuration).analyze(cik, save, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} cik 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StockAnalyzerFactoryControllerApi
-     */
-    public excelModel(cik: string, options?: any) {
-        return StockAnalyzerFactoryControllerApiFp(this.configuration).excelModel(cik, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

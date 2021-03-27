@@ -26,7 +26,7 @@ export function BusinessBreakdown(props: Props) {
             color: lime700,
         }
 
-        const topExpenses = waterfall.topExpenses.map(({ item, value }) => {
+        const topExpenses = waterfall.expenses.map(({ item, value }) => {
             return {
                 name: item.description ?? item.name,
                 y: value,

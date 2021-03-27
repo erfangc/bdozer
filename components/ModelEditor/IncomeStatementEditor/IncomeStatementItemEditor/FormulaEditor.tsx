@@ -4,7 +4,7 @@ import { PrimaryButton } from "../../../PrimaryButton"
 
 export function FormulaEditor({ item, onSubmit }: { item: Item, onSubmit: (string) => void }) {
 
-    const [value, setValue] = useState(item.expression)
+    const [value, setValue] = useState(item.formula)
     const ref = useRef<HTMLTextAreaElement>(null)
 
     function focus() {

@@ -42,7 +42,7 @@ export class IncomeStatementItemComponent extends Component<ItemComponentProps, 
         const { editorOpen } = this.state
         // TODO fix this validation error
 
-        const checked = item.expression || item.fixedCost || item.subscriptionRevenue || item.percentOfRevenue
+        const checked = item.formula || item.fixedCost || item.subscriptionRevenue || item.percentOfRevenue
         return (
             <div
                 className="flex items-center justify-between relative cursor-pointer"
