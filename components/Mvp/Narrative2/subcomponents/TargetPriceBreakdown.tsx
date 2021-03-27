@@ -2,7 +2,7 @@ import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
 import { StockAnalysis } from "../../../../client";
-import { indigo700, lime700, highcharts, blue500, blue700, green500, green800 } from "../../../../highcharts";
+import { blue700, green800, highcharts } from "../../../../highcharts";
 import { SubTitle } from "../../../Title";
 import { Popover } from "../../Narrative1/Narrative";
 
