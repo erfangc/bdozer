@@ -5,6 +5,7 @@ import { StockAnalysis } from "../../../../client";
 import { EarningsPerShareBasic, NetIncomeLoss, WeightedAverageNumberOfSharesOutstandingBasic } from "../../../../constants/ReservedItemNames";
 import { green500, highcharts, rose500 } from "../../../../highcharts";
 import { simpleNumber } from "../../../../simple-number";
+import { year } from "../../../../year";
 import { SubTitle } from "../../../Title";
 
 interface Props {
@@ -21,7 +22,7 @@ export function FutureEarningsPerShare(props: Props) {
             .map(cell => {
                 const { value, period } = cell
                 return {
-                    x: new Date().getFullYear() + period,
+                    x: year(period),
                     y: value,
                     color: value < 0 ? rose500 : green500,
                 }
@@ -97,7 +98,7 @@ export function FutureEarningsPerShare(props: Props) {
                         const eps = cells.find(cell => cell.period == period && cell.item?.name === EarningsPerShareBasic)?.value
                         return (
                             <tr>
-                                <td className="font-light text-left text-blueGray-300 px-2 py-1">{new Date().getFullYear() + period}</td>
+                                <td className="font-light text-left text-blueGray-300 px-2 py-1">{year(period)}</td>
                                 <td className="text-right px-2 py-1">{simpleNumber(netIncomeLoss.toFixed(0))}</td>
                                 <td className="text-right px-2 py-1"><span className="font-semibold text-lg">÷</span></td>
                                 <td className="text-right px-2 py-1">{simpleNumber(sharesOutstanding.toFixed(0))}</td>

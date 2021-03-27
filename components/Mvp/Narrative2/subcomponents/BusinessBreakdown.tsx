@@ -6,6 +6,7 @@ import { lime700, rose500, highcharts, blueGray900 } from "../../../../highchart
 import { simpleNumber } from "../../../../simple-number";
 import { SubTitle } from "../../../Title";
 import { Pill } from "../Pill";
+import { year } from "../../../../year"
 
 interface Props {
     result: StockAnalysis
@@ -93,8 +94,7 @@ export function BusinessBreakdown(props: Props) {
             <div className="flex space-x-1 text-sm">
                 {Object.keys(businessWaterfall).map(currentPeriod => {
                     const currPeriod = parseInt(currentPeriod)
-                    const year = new Date().getFullYear() + currPeriod
-                    return <Pill active={currPeriod === period} label={year.toString()} onClick={() => updatePeriod(currPeriod)} />
+                    return <Pill active={currPeriod === period} label={year(currPeriod).toString()} onClick={() => updatePeriod(currPeriod)} />
                 })}
             </div>
         </div>
