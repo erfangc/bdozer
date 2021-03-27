@@ -2,7 +2,7 @@ import React from 'react'
 import { StockAnalysis } from '../../../../client'
 import { EarningsPerShareDiluted, TerminalValuePerShare } from '../../../../constants/ReservedItemNames'
 import { year } from '../../../../year'
-import { Label, SubTitle } from '../../../Title'
+import { SubTitle } from '../../../Title'
 import { Popover } from '../../Narrative1/Narrative'
 interface Props {
     result: StockAnalysis
@@ -15,6 +15,7 @@ export function TerminalValueDerivation(props: Props) {
     const finalTvps = cells.find(cell => cell.item?.name === TerminalValuePerShare && cell.period == model.periods)?.value
 
     return (
+
         <div>
             <SubTitle className="mt-8 mb-4">Terminal Value Calculation</SubTitle>
             <p className="mb-4">

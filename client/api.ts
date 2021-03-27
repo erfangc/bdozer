@@ -1106,12 +1106,6 @@ export interface Model {
      * @type {number}
      * @memberof Model
      */
-    currentPrice?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Model
-     */
     beta?: number;
     /**
      * 
@@ -1381,18 +1375,6 @@ export interface StockAnalysis {
     zeroGrowthPrice?: number;
     /**
      * 
-     * @type {number}
-     * @memberof StockAnalysis
-     */
-    impliedPriceFromGrowth?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof StockAnalysis
-     */
-    currentPrice?: number;
-    /**
-     * 
      * @type {Model}
      * @memberof StockAnalysis
      */
@@ -1439,6 +1421,12 @@ export interface StockAnalysis {
      * @memberof StockAnalysis
      */
     revenueCAGR?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StockAnalysis
+     */
+    currentPrice?: number;
 }
 /**
  * 
