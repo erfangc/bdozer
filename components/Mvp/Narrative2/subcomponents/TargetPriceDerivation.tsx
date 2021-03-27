@@ -4,6 +4,8 @@ import { StockAnalysis } from "../../../../client";
 import { EarningsPerShareBasic, PresentValueOfEarningsPerShare, PresentValueOfTerminalValuePerShare, TerminalValuePerShare } from "../../../../constants/ReservedItemNames";
 import { amber400, amber600, blueGray200, highcharts, indigo400, indigo600 } from "../../../../highcharts";
 import { SubTitle } from "../../../Title";
+import { Popover } from "../../Narrative1/Narrative";
+import { DiscountFactorDerivation } from "./DiscountFactorDerivation";
 
 interface Props {
     result: StockAnalysis
@@ -116,7 +118,9 @@ export function TargetPriceDerivation(props: Props) {
             <SubTitle className="mb-6">Target Price Derivation</SubTitle>
             <p>
                 To derive the target price of ${targetPrice.toFixed(1)}, we will discount future earnings into
-                the present at a discount rate of {(discountRate * 100).toFixed(1)}%
+                the present at a discount rate of <Popover trigger={`${(discountRate * 100).toFixed(1)}%`}>
+                    <DiscountFactorDerivation {...props} />
+                </Popover>
             </p>
             <HighchartsReact highcharts={highcharts} options={sankeyOptions} />
             {/* <p className="mt-4">

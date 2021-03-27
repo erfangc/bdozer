@@ -26,7 +26,6 @@ export function Narrative2(props: Props) {
                 <BusinessBreakdown result={result} />
                 <FutureEarningsPerShare result={result} />
                 <TerminalValueDerivation result={result} />
-                <DiscountFactorDerivation result={result} />
                 <TargetPriceDerivation result={result} />
                 <TargetPriceBreakdown result={result} />
                 <Comments result={result} />

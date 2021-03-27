@@ -12,7 +12,6 @@ export function DiscountFactorDerivation(props: Props) {
     const fmtDiscountRate = `${(discountRate * 100).toFixed(1)}%`
     return (
         <div>
-            <SubTitle>Discount Future Earnings</SubTitle>
             <div className="mt-4 grid grid-cols-2 gap-2">
                 <Percent title="Discount Rate" value={discountRate} />
                 <Number title="Beta" value={beta} />

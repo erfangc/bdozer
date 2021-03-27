@@ -28,7 +28,8 @@ export function ExecutiveSummary(props: Props) {
     return (
         <div>
             <SubTitle className="mb-6">Executive Summary</SubTitle>
-            <ul className="list-disc pl-4 space-y-4">
+            <div className="font-bold mt-8 mb-4">Current Business Situation</div>
+            <ul className="list-disc pl-4 space-y-2">
                 <li>
                     Last year, {name} made ${simpleNumber(revenue.value)} revenue.
                 </li>
@@ -36,10 +37,13 @@ export function ExecutiveSummary(props: Props) {
                     They spend more than ${simpleNumber(totalExpense)} with a {profit.value > 0 ? 'profit' : 'loss'} of ${simpleNumber(profit.value)}.
                 </li>
                 <li>
-                    This left investors ${eps.toFixed(1)} per share.
+                    Investors {eps > 0 ? 'made' : 'lost'} ${eps.toFixed(1)} per share.
                 </li>
+            </ul>
+            <div className="font-bold mt-8 mb-4">Future Projections</div>
+            <ul className="list-disc pl-4 space-y-2">
                 <li>
-                    If they stop growing , the company will be worth ${zeroGrowthPrice.toFixed(1)} per share.
+                    If they stop growing, the company will be worth ${zeroGrowthPrice.toFixed(1)} per share.
                 </li>
                 <li>
                     Based on Wall Street forecasts, the company will grow at {(revenueCAGR * 100).toFixed(1)}% a year for the next {periods} years.
