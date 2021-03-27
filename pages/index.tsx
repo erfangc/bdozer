@@ -23,10 +23,10 @@ export default function Home() {
 
   return (
     <UnsecuredApp>
-      <main className="min-h-screen mx-auto pt-12 px-2 w-full max-w-lg">
-        <StockAnalysisSearch onSubmit={({ cik }) => navigate(cik)} className="mb-12" />
-        <div className="text-blueGray-50">
-          <h1 className="border-b mb-8 pb-2 border-blueGray-500"><span className="bg-rose-600 p-1 rounded-lg font-bold">New</span> Stock Analysis</h1>
+      <main className="min-h-screen mx-auto px-2 w-full max-w-lg">
+        <StockAnalysisSearch onSubmit={({ cik }) => navigate(cik)} className="mb-20 mt-16" />
+        <div className="mb-8">
+          <h1 className="border-b inline pb-4 border-blueGray-700"><span className="bg-indigo-600 px-2 py-1 rounded font-extrabold uppercase">New</span> Stock Analyses</h1>
         </div>
         {
           stockAnalyses.map(stockAnalysis => {
@@ -35,13 +35,13 @@ export default function Home() {
             return (
               <div
                 key={cik}
-                className="text-blueGray-50 bg-blueGray-700 px-4 py-6 rounded-md shadow-md flex-col flex space-y-4 cursor-pointer hover:bg-blueGray-600 transition ease-linear"
+                className="bg-blueGray-700 px-6 py-6 rounded-md shadow-md flex-col flex space-y-4 cursor-pointer hover:bg-blueGray-600 transition ease-linear"
                 onClick={() => navigate(stockAnalysis['_id'])}
               >
                 <div className="flex flex-col space-y-4">
                   <div className="flex justify-between">
-                    <span className="text-2xl font-bold">{symbol}</span>
-                    <span className="text-lg text-blueGray-300">{name}</span>
+                    <span className="text-lg text-blueGray-200 tracking-wide">{name}</span>
+                    <span className="text-4xl text-blueGray-200 font-bold">{symbol}</span>
                   </div>
                   <span className="flex space-x-4">
                     <div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import HighchartsReact from "highcharts-react-official";
 import { StockAnalysis } from "../../../../client";
-import { lime700, rose500, highcharts } from "../../../../highcharts";
+import { lime700, rose500, highcharts, blueGray900 } from "../../../../highcharts";
 import { simpleNumber } from "../../../../simple-number";
 import { SubTitle } from "../../../Title";
 import { Pill } from "../Pill";
@@ -37,13 +37,18 @@ export function BusinessBreakdown(props: Props) {
         const profit = {
             name: waterfall.profit.item?.description ?? waterfall.profit.item?.name,
             y: waterfall.profit.value,
-            color: waterfall.profit.value > 0 ? lime700 : rose500,
+            color: blueGray900,
+            borderColor: waterfall.profit.value > 0 ? lime700 : rose500,
+            borderWidth: 1,
             isSum: true,
         }
 
         setOptions({
             chart: {
                 type: 'waterfall', inverted: true
+            },
+            tooltip: {
+                enabled: false,
             },
             xAxis: {
                 type: 'category', lineWidth: 0,
