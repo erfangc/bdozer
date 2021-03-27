@@ -19,7 +19,7 @@ export function Toolbar() {
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 17V19H9V17H3ZM3 5V7H13V5H3ZM13 21V19H21V17H13V15H11V21H13ZM7 9V11H3V13H7V15H9V9H7ZM21 13V11H11V13H21ZM15 9H17V7H21V5H17V3H15V9Z" fill="#CBD5E1" />
                 </svg>
-                Assumptions
+                Change Assumptions
             </ToolButton>
             <ToolButton onClick={requestStock}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,12 +28,12 @@ export function Toolbar() {
                 </svg>
                 Request Stock
             </ToolButton>
-            <ToolButton onClick={requestEarlyAccess}>
+            {/* <ToolButton onClick={requestEarlyAccess}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 14H5V19H10V17H7V14ZM5 10H7V7H10V5H5V10ZM17 17H14V19H19V14H17V17ZM14 5V7H17V10H19V5H14Z" fill="#CBD5E1" />
                 </svg>
                 Size Trade
-            </ToolButton>
+            </ToolButton> */}
         </div>
     )
 
@@ -42,7 +42,7 @@ export function Toolbar() {
 function ToolButton({ className, children, ...props }: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) {
     return (
         <button
-            className={`text-blueGray-50 px-4 py-2 text-sm font-light rounded-md focus:outline-none flex flex-col hover:bg-blueGray-600 justify-center items-center ${className} transition ease-linear bg-blueGray-700`}
+            className={`text-blueGray-50 px-4 py-2 text-sm font-light shadow-md rounded-md focus:outline-none flex flex-col hover:bg-blueGray-600 justify-center items-center ${className} transition ease-linear bg-blueGray-900`}
             {...props}
         >
             {children}
