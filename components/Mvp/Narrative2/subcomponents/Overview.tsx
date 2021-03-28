@@ -85,7 +85,7 @@ export function Overview(props: Props) {
                     <div>
                         <NumberFormat className="font-light" value={targetPrice} displayType="text" prefix="$" decimalScale={2} />
                         <span className={`text-xs ml-3 ${upside > 0 ? 'text-lime-400' : 'text-rose-500'} font-bold`}>
-                            {upside.toFixed(1)}% <span className="font-normal">Upside</span>
+                            {upside.toFixed(1)}% <span className="font-normal">{upside > 0 ? 'Upside' : 'Downside'}</span>
                         </span>
                     </div>
                 </div>
