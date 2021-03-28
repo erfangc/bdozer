@@ -47,7 +47,7 @@ export function ExecutiveSummary(props: Props) {
                 </li>
                 <li>
                     Based on Wall Street forecasts, the company will grow at {(revenueCAGR * 100).toFixed(1)}% a year for the next {periods} years.
-                    That means {name} will be worth ${targetPrice.toFixed(1)}, which represents <span className="font-bold text-lime-400">{upside.toFixed(1)}%</span> upside from current price.
+                    That means {name} will be worth ${targetPrice.toFixed(1)}, which represents <span className={`font-bold ${upside > 0 ? 'text-lime-400' : 'text-rose-500'}`}>{upside.toFixed(1)}%</span> upside from current price.
                 </li>
             </ul>
         </div>

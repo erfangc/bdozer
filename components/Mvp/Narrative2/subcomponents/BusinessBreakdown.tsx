@@ -19,12 +19,14 @@ export function BusinessBreakdown(props: Props) {
     const [period, setPeriod] = useState<number>(0)
 
     function updateChart(period: number) {
+
         const waterfall = businessWaterfall[period]
 
         const revenue = {
             name: waterfall.revenue.item?.description ?? waterfall.revenue.item?.name,
             y: waterfall.revenue.value,
             color: lime700,
+            item: waterfall.revenue.item,
         }
 
         const topExpenses = waterfall.expenses.map(({ item, value }) => {
@@ -32,6 +34,7 @@ export function BusinessBreakdown(props: Props) {
                 name: item.description ?? item.name,
                 y: value,
                 color: value > 0 ? lime700 : rose500,
+                item: item,
             }
         })
 
@@ -49,7 +52,16 @@ export function BusinessBreakdown(props: Props) {
                 type: 'waterfall', inverted: true
             },
             tooltip: {
-                enabled: false,
+                enabled: true,
+                formatter: function () {
+                    console.log(this);
+
+                    return `
+                    <div class="p-1 flex space-x-2 text-blueGray-50">
+                      <b class="font-semibold">${this.series.name}:</b>
+                      <span>${this.y.toLocaleString()}</span>
+                    </div>`;
+                },
             },
             xAxis: {
                 type: 'category', lineWidth: 0,

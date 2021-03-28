@@ -12,7 +12,9 @@ interface Props {
     result: StockAnalysis
 }
 export function TargetPriceDerivation(props: Props) {
-    const { result: { model, cells, discountRate, targetPrice } } = props
+    const {
+        result: { model, cells, discountRate, targetPrice }
+    } = props
 
     const to = `Target Price $${targetPrice.toFixed(1)} / share`
     const sandkeys = cells
@@ -80,9 +82,7 @@ export function TargetPriceDerivation(props: Props) {
                 title: { text: '$ / Share', style: { color: blueGray200 } }
             },
             plotOptions: {
-                column: {
-                    stacking: 'normal'
-                }
+                column: { stacking: 'normal' }
             },
             series: [
                 {
@@ -124,12 +124,6 @@ export function TargetPriceDerivation(props: Props) {
                 </Popover>
             </p>
             <HighchartsReact highcharts={highcharts} options={sankeyOptions} />
-            {/* <p className="mt-4">
-                Below is a different graph showing the same math. We take computed future earnings
-                and discounted them back the present
-            </p> */}
-            {/* this chart shows decomposition of the target price by terminal value as well as earnings from each year */}
-            {/* <HighchartsReact highcharts={highcharts} options={columnOptions} /> */}
         </div>
     )
 }

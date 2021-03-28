@@ -6,12 +6,11 @@ import { DeleteButton } from '../../DeleteButton'
 import { GhostButton } from '../../GhostButton'
 import { PrimaryButton } from '../../PrimaryButton'
 import { Select } from '../../Select'
-import { Title, SubTitle } from '../../Title'
+import { TextInput } from '../../TextInput'
+import { SubTitle, Title } from '../../Title'
+import { FilingEntityCard } from './FilingEntityCard'
 
-interface Props {
-}
-
-export function Settings(props: Props) {
+export function Settings() {
 
     const router = useRouter()
     const [filingEntity, setFilingEntity] = useState<FilingEntity>()
@@ -42,7 +41,9 @@ export function Settings(props: Props) {
         setLoading(true)
         try {
             await stockAnalysisFactory.analyze(filingEntity.cik, true)
-        } catch (e) { }
+        } catch (e) {
+            console.error(e);
+        }
         setLoading(false)
     }
 
@@ -50,7 +51,9 @@ export function Settings(props: Props) {
         setLoading(true)
         try {
             await filingEntityManager.bootstrapFilingEntity(filingEntity.cik)
-        } catch (e) { }
+        } catch (e) {
+            console.error(e);
+        }
         setLoading(false)
     }
 
@@ -62,50 +65,39 @@ export function Settings(props: Props) {
         router.push(`/settings/${filingEntity?.cik}/full-model`)
     }
 
+    async function updateBeta(event: React.ChangeEvent<HTMLInputElement>) {
+        const updatedFilingEntity: FilingEntity = {
+            ...filingEntity,
+            beta: parseFloat(event.currentTarget.value)
+        }
+        await filingEntityManager.saveFilingEntity(updatedFilingEntity)
+        setFilingEntity(updatedFilingEntity)
+    }
+
     return (
         <main className="flex-grow flex flex-col space-y-12 min-h-screen p-3 xl:p-10 lg:p-8">
             <Title>Model Controls</Title>
             <section className="flex flex-col space-y-4">
                 {filingEntity
                     ?
-                    <>
-                        <div className='bg-blueGray-800 shadow-md rounded-md grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-6 px-4 gap-4'>
-                            <div className="flex flex-col">
-                                <div className="font-light text-sm">Name</div>
-                                <span className="font-semibold">{filingEntity?.name}</span>
-                            </div>
-                            <div className="flex flex-col">
-                                <div className="font-light text-sm">Trading Symbol</div>
-                                <span className="font-semibold">{filingEntity?.tradingSymbol}</span>
-                            </div>
-                            <div className="flex flex-col">
-                                <div className="font-light text-sm">SIC Description</div>
-                                <span className="font-semibold">{filingEntity?.sicDescription}</span>
-                            </div>
-                            <div className="flex flex-col">
-                                <div className="font-light text-sm">Exchange</div>
-                                <span className="font-semibold space-x-1">{filingEntity?.exchanges.map(exchange => <span>{exchange}</span>)}</span>
-                            </div>
-                        </div>
-                        <p className="self-end text-sm">
-                            <div className="font-light text-blueGray-300">Last Updated</div>
-                            <div className="text-blueGray-200">{new Date(filingEntity.lastUpdated).toLocaleString()}</div>
-                        </p>
-                    </>
+                    <FilingEntityCard filingEntity={filingEntity} />
                     : null
                 }
                 {
                     filingEntity
                         ?
-                        <Select
-                            onChange={({ currentTarget: { value } }) => changeModelTemplate(value)}
-                            value={filingEntity?.modelTemplate?.template}
-                            label="Choose Model Template"
-                            className="lg:w-96"
-                        >
-                            <option></option>
-                            <option value="Recovery">Recovery</option>
-                        </Select>
+                        <>
+                            <Select
+                                onChange={({ currentTarget: { value } }) => changeModelTemplate(value)}
+                                value={filingEntity?.modelTemplate?.template}
+                                label="Choose Model Template"
+                                className="lg:w-96"
+                            >
+                                <option></option>
+                                <option value="Recovery">Recovery</option>
+                            </Select>
+                            <TextInput value={filingEntity.beta} type="number" onChange={updateBeta} label="Beta" className="w-24" />
+                        </>
                         : null
                 }
                 <div className="flex space-x-2 pt-8">
@@ -121,10 +113,10 @@ export function Settings(props: Props) {
             <section>
                 <SubTitle className="mb-4">View Built Models</SubTitle>
                 <div className="space-x-2">
-                    <GhostButton onClick={seeModel} className={loading ? `animate-pulse` : ``} disabled={loading}>
+                    <GhostButton onClick={seeModel}>
                         Narrative Model
                     </GhostButton>
-                    <GhostButton onClick={seeFullModel} className={loading ? `animate-pulse` : ``} disabled={loading}>
+                    <GhostButton onClick={seeFullModel}>
                         See Full Model
                     </GhostButton>
                 </div>

@@ -74,19 +74,19 @@ export function Overview(props: Props) {
                 <span className="text-blueGray-300">{name}</span>
                 <div className="flex items-baseline">
                     <Title>{symbol}</Title>
-                    <span className="ml-4"><span className="text-blueGray-300">Latest Price</span> <span className={currentPrice < targetPrice ? `text-rose-500` : null}>${currentPrice.toFixed(2)}</span></span>
+                    <span className="ml-4">
+                        <span className="text-blueGray-300">Latest Price</span> <span className={currentPrice < targetPrice ? `text-rose-500` : null}>${currentPrice.toFixed(2)}</span>
+                    </span>
                 </div>
             </div>
             <div className="flex-col space-y-2">
-                <div className="flex justify-between shadow-lg px-4 py-2 bg-blueGray-700 rounded-md">
-                    <div className="flex flex-col">
-                        <span className="font-semibold text-lg">Target Price</span>
-                        <div>
-                            <NumberFormat className="font-light" value={targetPrice} displayType="text" prefix="$" decimalScale={2} />
-                            <span className={`text-xs ml-3 ${upside > 0 ? 'text-lime-400' : 'bg-rose-500'} font-bold`}>
-                                {upside.toFixed(1)}% <span className="font-normal">Upside</span>
-                            </span>
-                        </div>
+                <div className="flex flex-col justify-between shadow-lg space-y-1 px-6 py-3 bg-blueGray-700 rounded-md">
+                    <span className="font-semibold">Target Price</span>
+                    <div>
+                        <NumberFormat className="font-light" value={targetPrice} displayType="text" prefix="$" decimalScale={2} />
+                        <span className={`text-xs ml-3 ${upside > 0 ? 'text-lime-400' : 'text-rose-500'} font-bold`}>
+                            {upside.toFixed(1)}% <span className="font-normal">Upside</span>
+                        </span>
                     </div>
                 </div>
                 <DownloadToExcel onClick={downloadModel} />

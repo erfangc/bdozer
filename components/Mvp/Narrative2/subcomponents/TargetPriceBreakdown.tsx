@@ -12,17 +12,14 @@ interface Props {
 
 export function TargetPriceBreakdown(props: Props) {
     const {
-        result: {
-            zeroGrowthPrice,
-            targetPrice,
-        }
+        result: { zeroGrowthPrice, targetPrice, }
     } = props;
     const impliedPriceFromGrowth = targetPrice - zeroGrowthPrice
     const text = zeroGrowthPrice <= 0
         ?
         <p>
             The net income for this stock is currently negative.
-                The entire value of <span className="font-bold text-blue-400">${targetPrice}</span> per share
+                The entire value of <span className="font-bold text-blue-400">${targetPrice.toFixed(2)}</span> per share
                 comes from expectation of future growth or recovery of profits
         </p>
         :
@@ -59,12 +56,7 @@ export function TargetPriceBreakdown(props: Props) {
 }
 
 function ValueBreakdownPieChart(props: Props) {
-    const {
-        result: {
-            zeroGrowthPrice,
-            targetPrice,
-        }
-    } = props;
+    const { result: { zeroGrowthPrice, targetPrice, } } = props;
 
     const impliedPriceFromGrowth = targetPrice - zeroGrowthPrice
 
