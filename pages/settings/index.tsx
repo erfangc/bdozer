@@ -15,7 +15,7 @@ function SettingsComponent() {
 
     return (
         <main className="text-blueGray-50 flex-grow flex flex-col space-y-6 justify-center items-center min-h-screen p-2 xl:p-10 lg:p-8">
-            <Title>Model Controls</Title>
+            <Title>Model Controls and Settings</Title>
             <FilingEntitySearch onSubmit={switchFilingEntity} className="w-80 lg:w-96" />
         </main>
     )
