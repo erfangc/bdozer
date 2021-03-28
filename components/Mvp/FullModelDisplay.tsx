@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { ReactNode } from "react"
 import NumberFormat from "react-number-format"
 import { StockAnalysis } from "../../client"
+import { year } from "../../year"
 
 interface Props {
     result: StockAnalysis
@@ -22,18 +23,22 @@ export function FullModelDisplay(props: Props) {
                 <thead>
                     <tr>
                         <th></th>
-                        {periods.map(period => <th className="text-right" key={period}>FY{period}</th>)}
+                        {periods.map(period => <th className="text-right" key={period}>{year(period)}</th>)}
                     </tr>
                 </thead>
                 <tbody>
-                    {model?.incomeStatementItems?.map(({ name, description, commentaries }) => {
+                    {model?.incomeStatementItems?.map(item => {
+                        const { name, description, commentaries } = item;
                         return (
-                            <tr key={name}>
-                                <td>
+                            <tr key={name} className="hover:bg-blueGray-700 cursor-pointer">
+                                <td className="pl-2">
                                     <div className="whitespace-nowrap">
-                                        {!!commentaries ? <PopoverGeneric trigger={description ?? name}>
-                                            <span>{commentaries?.commentary}</span>
-                                        </PopoverGeneric> : description ?? name}
+                                        <PopoverGeneric trigger={description ?? name}>
+                                            <div className="flex flex-col space-y-1">
+                                                <h1><b>Item Name:</b> {item.name}</h1>
+                                                {commentaries ? <span>{commentaries?.commentary}</span> : null}
+                                            </div>
+                                        </PopoverGeneric>
                                     </div>
                                 </td>
                                 {/* For every period layout the prediction for that period */}
@@ -76,12 +81,12 @@ function PopoverGeneric(props: PopoverProps) {
         setVisible(false)
     }
     return (
-        <a className="block relative cursor-pointer underline" onMouseEnter={show} onMouseLeave={hide}>
+        <a className="block relative cursor-pointer" onMouseEnter={show} onMouseLeave={hide}>
             {props.trigger}
             {
                 visible
                     ?
-                    <div className="absolute top-full text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded-md z-10">
+                    <div className="mt-1 absolute top-full text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded-md z-10">
                         {props.children}
                     </div>
                     : null
