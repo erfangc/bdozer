@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import HighchartsReact from "highcharts-react-official";
-import { StockAnalysis } from "../../../../client";
+import { Item, StockAnalysis } from "../../../../client";
 import { lime700, rose500, highcharts, blueGray900 } from "../../../../highcharts";
 import { simpleNumber } from "../../../../simple-number";
 import { SubTitle } from "../../../Title";
@@ -53,14 +53,16 @@ export function BusinessBreakdown(props: Props) {
             },
             tooltip: {
                 enabled: true,
+                useHTML: true,
                 formatter: function () {
-                    console.log(this);
-
-                    return `
-                    <div class="p-1 flex space-x-2 text-blueGray-50">
-                      <b class="font-semibold">${this.series.name}:</b>
-                      <span>${this.y.toLocaleString()}</span>
-                    </div>`;
+                    const item = (this.point.options as any).item as Item
+                    const commentary = item?.commentaries?.commentary
+                    return commentary ? `
+                    <div class="px-2 text-blueGray-50 z-10">
+                      <span>${commentary}</span>
+                    </div>`
+                        :
+                        `<div class="px-2  text-blueGray-50 z-10">No commentary</div>`;
                 },
             },
             xAxis: {
@@ -80,9 +82,11 @@ export function BusinessBreakdown(props: Props) {
                 ],
                 dataLabels: {
                     enabled: true,
+                    useHTML: false,
                     formatter: function () {
-                        return simpleNumber(this.y.toFixed(0));
+                        return `<div class="z-0">${simpleNumber(this.y.toFixed(0))}</div>`;
                     },
+                    zIndex: 0,
                 },
                 pointPadding: 0
             }] as any
