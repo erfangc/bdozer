@@ -5,7 +5,6 @@ import { StockAnalysis } from '../../../../client'
 import { highcharts } from '../../../../highcharts'
 import { simpleNumber } from '../../../../simple-number'
 import { year } from '../../../../year'
-import { SubTitle } from '../../../Title'
 
 interface Props {
     result: StockAnalysis
@@ -35,36 +34,28 @@ export function RevenueTimeSeries({ result }: Props) {
                 x: new Date(fact.documentPeriodEndDate).getFullYear(),
                 y: fact.doubleValue,
             }
-        }
-        )
+        })
+
         const options: Highcharts.Options = {
             chart: {
                 type: 'column'
             },
-            title: {
-                text: null,
-            },
+            title: { text: null, },
             yAxis: {
-                title: {
-                    text: null,
-                },
+                title: { text: null, },
                 labels: {
                     formatter: function () {
                         return `${simpleNumber(this.value)}`
                     }
                 }
             },
-            xAxis: {
-                lineWidth: 0,
-            },
+            xAxis: { lineWidth: 0, },
             series: [
                 {
-                    data: pastData,
-                    name: 'Past Revenue',
+                    data: pastData, name: 'Past Revenue',
                 },
                 {
-                    data: futureData,
-                    name: 'Projected Revenue',
+                    data: futureData, name: 'Projected Revenue',
                 }
             ] as any
         }
@@ -77,7 +68,6 @@ export function RevenueTimeSeries({ result }: Props) {
 
     return (
         <div>
-            <SubTitle className="mb-4">Revenue Projection Details</SubTitle>
             <p className="mb-8">
                 See past revenue and median analyst projection for revenue going forward
             </p>

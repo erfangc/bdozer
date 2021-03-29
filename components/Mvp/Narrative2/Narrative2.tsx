@@ -5,6 +5,7 @@ import { BusinessBreakdown } from "./subcomponents/BusinessBreakdown";
 import { ExecutiveSummary } from "./subcomponents/ExecutiveSummary";
 import { FutureEarningsPerShare } from "./subcomponents/FutureEarningsPerShare";
 import { Overview } from "./subcomponents/Overview";
+import { Survey } from "./subcomponents/Survey";
 import { TargetPriceBreakdown } from "./subcomponents/TargetPriceBreakdown";
 import { TargetPriceDerivation } from "./subcomponents/TargetPriceDerivation";
 import { TerminalValueDerivation } from "./subcomponents/TerminalValueDerivation";
@@ -27,6 +28,7 @@ export function Narrative2(props: Props) {
                 <TerminalValueDerivation result={result} />
                 <TargetPriceDerivation result={result} />
                 <TargetPriceBreakdown result={result} />
+                <Survey result={result} />
                 <Comments result={result} />
                 <div className="mb-20"></div>
             </div>

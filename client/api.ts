@@ -1561,6 +1561,37 @@ export interface SubscriptionRevenue {
 /**
  * 
  * @export
+ * @interface Survey
+ */
+export interface Survey {
+    /**
+     * 
+     * @type {string}
+     * @memberof Survey
+     */
+    get_id?: string;
+    /**
+     * 
+     * @type {object}
+     * @memberof Survey
+     */
+    body?: object;
+    /**
+     * 
+     * @type {string}
+     * @memberof Survey
+     */
+    lastUpdated?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Survey
+     */
+    version?: string;
+}
+/**
+ * 
+ * @export
  * @interface TalkingPoint
  */
 export interface TalkingPoint {
@@ -2778,6 +2809,41 @@ export const MarketingControllerApiAxiosParamCreator = function (configuration?:
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {Survey} survey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        survey20210329: async (survey: Survey, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'survey' is not null or undefined
+            assertParamExists('survey20210329', 'survey', survey)
+            const localVarPath = `/public/marketing/2021-03-29/survey`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(survey, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2818,6 +2884,16 @@ export const MarketingControllerApiFp = function(configuration?: Configuration) 
             const localVarAxiosArgs = await localVarAxiosParamCreator.stockAnalysisRequest(stockAnalysisRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {Survey} survey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async survey20210329(survey: Survey, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.survey20210329(survey, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -2854,6 +2930,15 @@ export const MarketingControllerApiFactory = function (configuration?: Configura
          */
         stockAnalysisRequest(stockAnalysisRequest: Array<StockAnalysisRequest>, options?: any): AxiosPromise<void> {
             return localVarFp.stockAnalysisRequest(stockAnalysisRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Survey} survey 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        survey20210329(survey: Survey, options?: any): AxiosPromise<void> {
+            return localVarFp.survey20210329(survey, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2896,6 +2981,17 @@ export class MarketingControllerApi extends BaseAPI {
      */
     public stockAnalysisRequest(stockAnalysisRequest: Array<StockAnalysisRequest>, options?: any) {
         return MarketingControllerApiFp(this.configuration).stockAnalysisRequest(stockAnalysisRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Survey} survey 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketingControllerApi
+     */
+    public survey20210329(survey: Survey, options?: any) {
+        return MarketingControllerApiFp(this.configuration).survey20210329(survey, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
