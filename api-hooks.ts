@@ -1,6 +1,7 @@
 import {
   CommentsControllerApi,
   EdgarExplorerControllerApi,
+  FactBaseControllerApi,
   FilingEntityManagerControllerApi,
   MarketingControllerApi,
   MxParserControllerApi,
@@ -48,6 +49,11 @@ function useAxios() {
 export function useMarketing() {
   const axiosInstance = useAxios();
   return new MarketingControllerApi(null, basePath, axiosInstance);
+}
+
+export function useFactBase() {
+  const axiosInstance = useAxios();
+  return new FactBaseControllerApi(null, basePath, axiosInstance);
 }
 
 export function useMxParser() {

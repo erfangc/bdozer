@@ -620,6 +620,31 @@ export enum FactDocumentFiscalPeriodFocusEnum {
 /**
  * 
  * @export
+ * @interface FactTimeSeries
+ */
+export interface FactTimeSeries {
+    /**
+     * 
+     * @type {Array<Fact>}
+     * @memberof FactTimeSeries
+     */
+    fyFacts?: Array<Fact>;
+    /**
+     * 
+     * @type {Array<Fact>}
+     * @memberof FactTimeSeries
+     */
+    quarterlyFacts?: Array<Fact>;
+    /**
+     * 
+     * @type {Array<Fact>}
+     * @memberof FactTimeSeries
+     */
+    ltmFacts?: Array<Fact>;
+}
+/**
+ * 
+ * @export
  * @interface FilingCalculations
  */
 export interface FilingCalculations {
@@ -1985,7 +2010,7 @@ export const FactBaseControllerApiAxiosParamCreator = function (configuration?: 
         calculations: async (cik: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'cik' is not null or undefined
             assertParamExists('calculations', 'cik', cik)
-            const localVarPath = `/api/fact-base/{cik}/calculations`
+            const localVarPath = `/public/fact-base/{cik}/calculations`
                 .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2018,8 +2043,41 @@ export const FactBaseControllerApiAxiosParamCreator = function (configuration?: 
         facts: async (cik: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'cik' is not null or undefined
             assertParamExists('facts', 'cik', cik)
-            const localVarPath = `/api/fact-base/{cik}/facts`
+            const localVarPath = `/public/fact-base/{cik}/facts`
                 .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} factId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFactTimeSeries: async (factId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'factId' is not null or undefined
+            assertParamExists('getFactTimeSeries', 'factId', factId)
+            const localVarPath = `/public/fact-base/{factId}/time-series`
+                .replace(`{${"factId"}}`, encodeURIComponent(String(factId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2054,7 +2112,7 @@ export const FactBaseControllerApiAxiosParamCreator = function (configuration?: 
             assertParamExists('ingestFiling', 'cik', cik)
             // verify required parameter 'adsh' is not null or undefined
             assertParamExists('ingestFiling', 'adsh', adsh)
-            const localVarPath = `/api/fact-base/filing-ingestor`;
+            const localVarPath = `/public/fact-base/filing-ingestor`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2097,7 +2155,7 @@ export const FactBaseControllerApiAxiosParamCreator = function (configuration?: 
             assertParamExists('ingestQ4Facts', 'cik', cik)
             // verify required parameter 'year' is not null or undefined
             assertParamExists('ingestQ4Facts', 'year', year)
-            const localVarPath = `/api/fact-base/filing-ingestor/q4`;
+            const localVarPath = `/public/fact-base/filing-ingestor/q4`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2135,7 +2193,7 @@ export const FactBaseControllerApiAxiosParamCreator = function (configuration?: 
          * @throws {RequiredError}
          */
         runRssFilingIngestor: async (numYearsToLookback?: number, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/fact-base/rss-filing-ingestor`;
+            const localVarPath = `/public/fact-base/rss-filing-ingestor`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2190,6 +2248,16 @@ export const FactBaseControllerApiFp = function(configuration?: Configuration) {
          */
         async facts(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Fact>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.facts(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} factId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFactTimeSeries(factId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FactTimeSeries>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFactTimeSeries(factId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2254,6 +2322,15 @@ export const FactBaseControllerApiFactory = function (configuration?: Configurat
         },
         /**
          * 
+         * @param {string} factId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFactTimeSeries(factId: string, options?: any): AxiosPromise<FactTimeSeries> {
+            return localVarFp.getFactTimeSeries(factId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} cik 
          * @param {string} adsh 
          * @param {*} [options] Override http request option.
@@ -2311,6 +2388,17 @@ export class FactBaseControllerApi extends BaseAPI {
      */
     public facts(cik: string, options?: any) {
         return FactBaseControllerApiFp(this.configuration).facts(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} factId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FactBaseControllerApi
+     */
+    public getFactTimeSeries(factId: string, options?: any) {
+        return FactBaseControllerApiFp(this.configuration).getFactTimeSeries(factId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

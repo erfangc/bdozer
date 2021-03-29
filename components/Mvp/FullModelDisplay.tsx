@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { ReactNode } from "react"
 import NumberFormat from "react-number-format"
+import { useFactBase } from "../../api-hooks"
 import { StockAnalysis } from "../../client"
 import { year } from "../../year"
 
@@ -9,6 +10,9 @@ interface Props {
 }
 
 export function FullModelDisplay(props: Props) {
+
+    const factBase = useFactBase()
+
     const model = props.result.model
     const cells = props.result.cells
     const periods = []

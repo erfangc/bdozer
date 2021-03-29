@@ -6,6 +6,7 @@ import { DiscountFactorDerivation } from "./subcomponents/DiscountFactorDerivati
 import { ExecutiveSummary } from "./subcomponents/ExecutiveSummary";
 import { FutureEarningsPerShare } from "./subcomponents/FutureEarningsPerShare";
 import { Overview } from "./subcomponents/Overview";
+import { RevenueTimeSeries } from "./subcomponents/RevenueTimeSeries";
 import { TargetPriceBreakdown } from "./subcomponents/TargetPriceBreakdown";
 import { TargetPriceDerivation } from "./subcomponents/TargetPriceDerivation";
 import { TerminalValueDerivation } from "./subcomponents/TerminalValueDerivation";
@@ -22,6 +23,7 @@ export function Narrative2(props: Props) {
             <div className="max-w-lg flex-col space-y-20">
                 <Toolbar />
                 <Overview result={result} />
+                <RevenueTimeSeries result={result} />
                 <ExecutiveSummary result={result} />
                 <BusinessBreakdown result={result} />
                 <FutureEarningsPerShare result={result} />

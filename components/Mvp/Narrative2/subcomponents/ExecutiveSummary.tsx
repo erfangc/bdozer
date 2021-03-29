@@ -3,12 +3,15 @@ import { StockAnalysis } from "../../../../client";
 import { EarningsPerShareBasic } from "../../../../constants/ReservedItemNames";
 import { simpleNumber } from "../../../../simple-number";
 import { SubTitle } from "../../../Title";
+import { Popover } from "../../Narrative1/Narrative";
+import { RevenueTimeSeries } from "./RevenueTimeSeries";
 
 interface Props {
     result: StockAnalysis
 }
 export function ExecutiveSummary(props: Props) {
     const {
+        result,
         result: {
             cells,
             model: { name, periods, },
@@ -25,6 +28,11 @@ export function ExecutiveSummary(props: Props) {
     const totalExpense = expenses.map(expense => expense.value).reduce((a, b) => a + b, 0)
     const eps = cells.find(cell => cell.item.name === EarningsPerShareBasic && cell.period === 0)?.value
 
+    const growthRatePopover = (
+        <Popover trigger={(revenueCAGR * 100).toFixed(1)}>
+            <RevenueTimeSeries result={result} />
+        </Popover>
+    )
     return (
         <div>
             <SubTitle className="mb-6">Executive Summary</SubTitle>
@@ -46,7 +54,7 @@ export function ExecutiveSummary(props: Props) {
                     If they stop growing, the company will be worth ${zeroGrowthPrice.toFixed(1)} per share.
                 </li>
                 <li>
-                    Based on Wall Street forecasts, the company will grow at {(revenueCAGR * 100).toFixed(1)}% a year for the next {periods} years.
+                    Based on Wall Street forecasts, the company will grow at {growthRatePopover} a year for the next {periods} years.
                     That means {name} will be worth ${targetPrice.toFixed(1)}, which represents <span className={`font-bold ${upside > 0 ? 'text-lime-400' : 'text-rose-500'}`}>
                         {upside.toFixed(1)}%
                     </span> {upside > 0 ? 'upside' : 'downside'} from current price.

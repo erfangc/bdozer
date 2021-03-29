@@ -67,12 +67,12 @@ export function Popover(props: PopoverProps) {
         setVisible(false)
     }
     return (
-        <a className="relative text-blue-300 mt-4 cursor-pointer pb-1 border-b border-blue-300" onMouseEnter={show} onMouseLeave={hide}>
+        <a className="relative text-blue-300 mt-4 cursor-pointer pb-1 border-b border-blue-300" onClick={show} onMouseEnter={show} onMouseLeave={hide}>
             {props.trigger}
             {
                 visible
                     ?
-                    <div className="absolute top-full text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded-md z-10 w-96">
+                    <div className="absolute top-full text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded-md z-10 w-screen lg:w-screen lg:max-w-md">
                         {props.children}
                     </div>
                     : null
