@@ -8,7 +8,7 @@ interface Props {
     result: StockAnalysis
 }
 
-export function Survey(props: Props) {
+export function Feedback(props: Props) {
     const marketing = useMarketing()
     const [submitted, setSubmitted] = useState(false)
 
@@ -19,7 +19,7 @@ export function Survey(props: Props) {
 
     return (
         <section>
-            <SubTitle className="mb-2">Survey</SubTitle>
+            <SubTitle className="mb-2">Feedback</SubTitle>
             {
                 !submitted
                     ?
