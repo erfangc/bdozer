@@ -2514,9 +2514,9 @@ export const FilingEntityManagerControllerApiAxiosParamCreator = function (confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFilingEntity: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+        getFilingEntity1: async (cik: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'cik' is not null or undefined
-            assertParamExists('getFilingEntity', 'cik', cik)
+            assertParamExists('getFilingEntity1', 'cik', cik)
             const localVarPath = `/api/filing-entity-manager/{cik}`
                 .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2602,8 +2602,8 @@ export const FilingEntityManagerControllerApiFp = function(configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFilingEntity(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingEntity>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getFilingEntity(cik, options);
+        async getFilingEntity1(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingEntity>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFilingEntity1(cik, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2641,8 +2641,8 @@ export const FilingEntityManagerControllerApiFactory = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFilingEntity(cik: string, options?: any): AxiosPromise<FilingEntity> {
-            return localVarFp.getFilingEntity(cik, options).then((request) => request(axios, basePath));
+        getFilingEntity1(cik: string, options?: any): AxiosPromise<FilingEntity> {
+            return localVarFp.getFilingEntity1(cik, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2681,8 +2681,8 @@ export class FilingEntityManagerControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof FilingEntityManagerControllerApi
      */
-    public getFilingEntity(cik: string, options?: any) {
-        return FilingEntityManagerControllerApiFp(this.configuration).getFilingEntity(cik, options).then((request) => request(this.axios, this.basePath));
+    public getFilingEntity1(cik: string, options?: any) {
+        return FilingEntityManagerControllerApiFp(this.configuration).getFilingEntity1(cik, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3259,6 +3259,107 @@ export class NarrativeBuilderControllerApi extends BaseAPI {
      */
     public exportExcel1(ticker: string, options?: any) {
         return NarrativeBuilderControllerApiFp(this.configuration).exportExcel1(ticker, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * PublicFilingEntityManagerController1Api - axios parameter creator
+ * @export
+ */
+export const PublicFilingEntityManagerController1ApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFilingEntity: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('getFilingEntity', 'cik', cik)
+            const localVarPath = `/public/filing-entity-manager1/{cik}`
+                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PublicFilingEntityManagerController1Api - functional programming interface
+ * @export
+ */
+export const PublicFilingEntityManagerController1ApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PublicFilingEntityManagerController1ApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFilingEntity(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingEntity>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFilingEntity(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * PublicFilingEntityManagerController1Api - factory interface
+ * @export
+ */
+export const PublicFilingEntityManagerController1ApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PublicFilingEntityManagerController1ApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFilingEntity(cik: string, options?: any): AxiosPromise<FilingEntity> {
+            return localVarFp.getFilingEntity(cik, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PublicFilingEntityManagerController1Api - object-oriented interface
+ * @export
+ * @class PublicFilingEntityManagerController1Api
+ * @extends {BaseAPI}
+ */
+export class PublicFilingEntityManagerController1Api extends BaseAPI {
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublicFilingEntityManagerController1Api
+     */
+    public getFilingEntity(cik: string, options?: any) {
+        return PublicFilingEntityManagerController1ApiFp(this.configuration).getFilingEntity(cik, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
