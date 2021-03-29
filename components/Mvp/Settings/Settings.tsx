@@ -22,7 +22,7 @@ export function Settings() {
     useEffect(() => {
         if (cik) {
             filingEntityManager
-                .getFilingEntity(cik as string)
+                .getFilingEntity1(cik as string)
                 .then(resp => setFilingEntity(resp.data))
         }
     }, [cik])

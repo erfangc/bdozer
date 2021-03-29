@@ -52,7 +52,7 @@ export function StockNarrative() {
         if (cik) {
             setLoading(true)
             filingEntityManagerApi
-                .getFilingEntity(cik as string)
+                .getFilingEntity1(cik as string)
                 .then(resp => {
                     setFilingEntity(resp.data)
                     getNarrative(resp.data.tickers[0])
