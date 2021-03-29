@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
-import { useEdgarExplorer, useFilingEntityManager, usePublicFilingEntityManager, useStockAnalyzerFactory } from '../../api-hooks'
+import { useEdgarExplorer, useFilingEntityManager, useFilingEntityManagerUnsecured, useStockAnalyzerFactory } from '../../api-hooks'
 import { EdgarEntity, EdgarEntitySource, FilingEntity, StockAnalysis } from '../../client'
 import { GhostButton } from '../GhostButton'
 
@@ -16,7 +16,7 @@ export function StockAnalysisSearch(props: Props) {
     const stockAnalyzer = useStockAnalyzerFactory()
     const edgarExplorer = useEdgarExplorer()
     const filingEntityManager = useFilingEntityManager()
-    const publicFilingEntityManager = usePublicFilingEntityManager()
+    const publicFilingEntityManager = useFilingEntityManagerUnsecured()
     const ref = useRef<HTMLInputElement>()
 
     const [term, setTerm] = useState<string>()
