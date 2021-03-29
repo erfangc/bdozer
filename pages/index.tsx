@@ -29,11 +29,7 @@ export default function Home() {
         </div>
         <div className="flex flex-col space-y-4 mb-8">
           {
-            stockAnalyses.map(stockAnalysis => {
-              const { currentPrice, targetPrice, model, model: { symbol, name, cik } } = stockAnalysis
-              const percentUpside = (targetPrice / currentPrice - 1) * 100
-              return <StockAnalysisCard stockAnalysis={stockAnalysis} />
-            })
+            stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis} />)
           }
         </div>
       </main>
