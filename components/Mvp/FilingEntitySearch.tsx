@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
-import { useEdgarExplorer, useFilingEntityManager, usePublicFilingEntityManager } from '../../api-hooks'
+import { useEdgarExplorer, useFilingEntityManager, useFilingEntityManagerUnsecured } from '../../api-hooks'
 import { EdgarEntity, EdgarEntitySource, FilingEntity } from '../../client'
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 export function FilingEntitySearch(props: Props) {
 
     const edgarExplorerApi = useEdgarExplorer()
-    const filingEntityManagerApi = usePublicFilingEntityManager()
+    const filingEntityManagerApi = useFilingEntityManagerUnsecured()
     const ref = useRef<HTMLInputElement>()
 
     const [term, setTerm] = useState<string>()

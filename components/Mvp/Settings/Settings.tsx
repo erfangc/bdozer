@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { useFilingEntityManager, useStockAnalyzerFactory } from '../../../api-hooks'
+import { useFilingEntityManager, useFilingEntityManagerUnsecured, useStockAnalyzerFactory } from '../../../api-hooks'
 import { FilingEntity } from '../../../client'
 import { DeleteButton } from '../../DeleteButton'
 import { GhostButton } from '../../GhostButton'
@@ -15,14 +15,15 @@ export function Settings() {
     const router = useRouter()
     const [filingEntity, setFilingEntity] = useState<FilingEntity>()
     const [loading, setLoading] = useState(false)
+    const filingEntityManagerUnsecured = useFilingEntityManagerUnsecured()
     const filingEntityManager = useFilingEntityManager()
     const stockAnalysisFactory = useStockAnalyzerFactory()
 
     const { cik } = router.query
     useEffect(() => {
         if (cik) {
-            filingEntityManager
-                .getFilingEntity1(cik as string)
+            filingEntityManagerUnsecured
+                .getFilingEntity(cik as string)
                 .then(resp => setFilingEntity(resp.data))
         }
     }, [cik])

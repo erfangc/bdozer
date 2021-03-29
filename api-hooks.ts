@@ -2,11 +2,12 @@ import {
   CommentsControllerApi,
   EdgarExplorerControllerApi,
   FactBaseControllerApi,
+  FactBaseUnsecuredControllerApi,
   FilingEntityManagerControllerApi,
+  FilingEntityManagerUnsecuredControllerApi,
   MarketingControllerApi,
   MxParserControllerApi,
   NarrativeBuilderControllerApi,
-  PublicFilingEntityManagerController1Api,
   StockAnalyzerFactoryControllerApi,
 } from "./client";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -56,6 +57,11 @@ export function useFactBase() {
   return new FactBaseControllerApi(null, basePath, axiosInstance);
 }
 
+export function useFactBaseUnsecured() {
+  const axiosInstance = useAxios();
+  return new FactBaseUnsecuredControllerApi(null, basePath, axiosInstance);
+}
+
 export function useMxParser() {
   const axiosInstance = useAxios();
   return new MxParserControllerApi(null, basePath, axiosInstance);
@@ -76,9 +82,9 @@ export function useFilingEntityManager() {
   return new FilingEntityManagerControllerApi(null, basePath, axiosInstance)
 }
 
-export function usePublicFilingEntityManager() {
+export function useFilingEntityManagerUnsecured() {
   const axiosInstance = useAxios();
-  return new PublicFilingEntityManagerController1Api(null, basePath, axiosInstance)
+  return new FilingEntityManagerUnsecuredControllerApi(null, basePath, axiosInstance)
 }
 
 export function useComments() {
