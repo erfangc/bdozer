@@ -25,7 +25,7 @@ export default function Home() {
       <main className="min-h-screen mx-auto px-2 w-full max-w-lg">
         <StockAnalysisSearch onSubmit={({ cik }) => navigate(cik)} className="mb-20 mt-16" />
         <div className="mb-8">
-          <h1 className="border-b inline pb-4 border-blueGray-700"><span className="bg-indigo-600 px-2 py-1 rounded font-extrabold uppercase">New</span> Stock Analyses</h1>
+          <h1 className="border-b inline pb-4 border-blueGray-700"><span className="bg-fuchsia-600 px-2 py-1 rounded font-extrabold uppercase">New</span> Stock Analyses</h1>
         </div>
         <div className="flex flex-col space-y-4 mb-8">
           {
