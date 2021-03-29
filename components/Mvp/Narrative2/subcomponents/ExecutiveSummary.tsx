@@ -29,7 +29,7 @@ export function ExecutiveSummary(props: Props) {
     const eps = cells.find(cell => cell.item.name === EarningsPerShareBasic && cell.period === 0)?.value
 
     const growthRatePopover = (
-        <Popover trigger={(revenueCAGR * 100).toFixed(1)}>
+        <Popover trigger={`${(revenueCAGR * 100).toFixed(1)}%`}>
             <RevenueTimeSeries result={result} />
         </Popover>
     )
