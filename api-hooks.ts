@@ -6,6 +6,7 @@ import {
   MarketingControllerApi,
   MxParserControllerApi,
   NarrativeBuilderControllerApi,
+  PublicFilingEntityManagerController1Api,
   StockAnalyzerFactoryControllerApi,
 } from "./client";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -73,6 +74,11 @@ export function useEdgarExplorer() {
 export function useFilingEntityManager() {
   const axiosInstance = useAxios();
   return new FilingEntityManagerControllerApi(null, basePath, axiosInstance)
+}
+
+export function usePublicFilingEntityManager() {
+  const axiosInstance = useAxios();
+  return new PublicFilingEntityManagerController1Api(null, basePath, axiosInstance)
 }
 
 export function useComments() {

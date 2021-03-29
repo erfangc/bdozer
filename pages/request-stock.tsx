@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { useFilingEntityManager, useMarketing } from '../api-hooks'
+import { useFilingEntityManager, useMarketing, usePublicFilingEntityManager } from '../api-hooks'
 import { FilingEntity } from '../client'
 import { UnsecuredApp } from '../components/App'
 import { FilingEntitySearch } from '../components/Mvp/FilingEntitySearch'
@@ -92,11 +92,11 @@ function Request({ onSubmit }: { onSubmit: (entities: FilingEntity[]) => void })
 
     const [entities, setEntities] = useState<FilingEntity[]>([])
     const router = useRouter()
-    const filingEntityManager = useFilingEntityManager()
+    const publicFilingEntityManager = usePublicFilingEntityManager()
     const { cik } = router.query
     useEffect(() => {
         if (cik) {
-            filingEntityManager
+            publicFilingEntityManager
                 .getFilingEntity(cik as string)
                 .then(({ data }) => setEntities([data]))
         }

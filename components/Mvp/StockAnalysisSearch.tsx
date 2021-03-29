@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
-import { useEdgarExplorer, useFilingEntityManager, useStockAnalyzerFactory } from '../../api-hooks'
+import { useEdgarExplorer, useFilingEntityManager, usePublicFilingEntityManager, useStockAnalyzerFactory } from '../../api-hooks'
 import { EdgarEntity, EdgarEntitySource, FilingEntity, StockAnalysis } from '../../client'
 import { GhostButton } from '../GhostButton'
 
@@ -16,6 +16,7 @@ export function StockAnalysisSearch(props: Props) {
     const stockAnalyzer = useStockAnalyzerFactory()
     const edgarExplorer = useEdgarExplorer()
     const filingEntityManager = useFilingEntityManager()
+    const publicFilingEntityManager = usePublicFilingEntityManager()
     const ref = useRef<HTMLInputElement>()
 
     const [term, setTerm] = useState<string>()
@@ -42,7 +43,7 @@ export function StockAnalysisSearch(props: Props) {
 
     async function submit(edgarEntity: EdgarEntity) {
         setFound([])
-        const { data } = await filingEntityManager.getFilingEntity(edgarEntity['_id'])
+        const { data } = await publicFilingEntityManager.getFilingEntity(edgarEntity['_id'])
         try {
             props.onSubmit(data)
         } catch (e) {
@@ -58,7 +59,7 @@ export function StockAnalysisSearch(props: Props) {
     }
 
     async function requestCoverage(cik: string) {
-        const { data: filingEntity } = await filingEntityManager.getFilingEntity(cik)
+        const { data: filingEntity } = await publicFilingEntityManager.getFilingEntity(cik)
         router.push(`/request-stock?cik=${filingEntity.cik}`)
     }
 
