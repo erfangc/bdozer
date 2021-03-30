@@ -23,7 +23,10 @@ function Home(props: Props) {
         <section>
           <StockAnalysisSearch onSubmit={({ cik }) => navigate(cik)} className="mb-20 mt-16" />
           <div className="mb-8">
-            <h1 className="border-b inline pb-4 border-blueGray-700"><span className="bg-fuchsia-600 px-2 py-1 rounded font-extrabold uppercase">New</span> Stock Analyses</h1>
+            <h1 className="border-b pb-4 border-blueGray-700">
+              <span><span className="bg-fuchsia-600 px-2 py-1 rounded font-extrabold uppercase">featured</span> Stock Analyses</span>
+            </h1>
+            <span className="block mt-8 ml-2 text-sm text-blueGray-300">Click to see detail</span>
           </div>
           <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
             {
