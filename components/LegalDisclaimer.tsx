@@ -11,7 +11,7 @@ export function LegalDisclaimer(props: { className?: string }) {
                 We have done our best to ensure that the information provided on this website and the resources available for download are accurate and provide valuable information. We expressly
                 recommend that you conduct your own due diligence and analysis or seek advice from a professional
                 </p>
-            <p className="text-center my-10 text-sm text-blueGray-300">bdozer.co &#169; 2021 All Rights Reserved</p>
+            <p className="text-center my-10 text-sm text-blueGray-300">&#169; 2021 bdozer.co <br />All Rights Reserved</p>
         </footer>
     )
 }
