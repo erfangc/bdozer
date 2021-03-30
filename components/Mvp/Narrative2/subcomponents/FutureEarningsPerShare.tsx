@@ -97,7 +97,7 @@ export function FutureEarningsPerShare(props: Props) {
                         const sharesOutstanding = cells.find(cell => cell.period == period && cell.item?.name === WeightedAverageNumberOfSharesOutstandingBasic)?.value
                         const eps = cells.find(cell => cell.period == period && cell.item?.name === EarningsPerShareBasic)?.value
                         return (
-                            <tr>
+                            <tr key={period}>
                                 <td className="font-light text-left text-blueGray-300 px-2 py-1">{year(period)}</td>
                                 <td className="text-right px-2 py-1">{simpleNumber(netIncomeLoss.toFixed(0))}</td>
                                 <td className="text-right px-2 py-1"><span className="font-semibold text-lg">÷</span></td>
