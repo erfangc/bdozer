@@ -11,6 +11,7 @@ import { TargetPriceDerivation } from "./subcomponents/TargetPriceDerivation";
 import { TerminalValueDerivation } from "./subcomponents/TerminalValueDerivation";
 import { Toolbar } from "./Toolbar";
 import { LegalDisclaimer } from "../../LegalDisclaimer";
+import Link from "next/link";
 
 interface Props {
     result: StockAnalysis

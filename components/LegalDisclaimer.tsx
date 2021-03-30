@@ -1,8 +1,8 @@
 import React from 'react'
 
-export function LegalDisclaimer() {
+export function LegalDisclaimer(props: { className?: string }) {
     return (
-        <footer>
+        <footer className={props.className}>
             <h5 className="mb-2 mt-4 font-bold uppercase text-blueGray-300">Legal Disclaimer</h5>
             <p className="text-sm tracking-wide text-blueGray-400">
                 The information contained on this website and the resources available for download through this website is not intended as, and shall not be understood or construed as, financial advice.
