@@ -22,7 +22,8 @@ export function RevenueTimeSeries({ result }: Props) {
         const { data: factTimeSeries } = await factBase.getFactTimeSeries(factId)
 
         const futureData = cells
-            .filter(cell => cell.item.name === revenue?.item.name && cell.period !== 0).map(cell => {
+            .filter(cell => cell.item.name === revenue?.item.name && cell.period !== 0)
+            .map(cell => {
                 return {
                     x: year(cell.period),
                     y: cell.value,
@@ -57,12 +58,8 @@ export function RevenueTimeSeries({ result }: Props) {
             },
             xAxis: { lineWidth: 0, },
             series: [
-                {
-                    data: pastData, name: 'Past Revenue',
-                },
-                {
-                    data: futureData, name: 'Projected Revenue',
-                }
+                { data: pastData, name: 'Past Revenue', },
+                { data: futureData, name: 'Projected Revenue', }
             ] as any
         }
         setOptions(options)

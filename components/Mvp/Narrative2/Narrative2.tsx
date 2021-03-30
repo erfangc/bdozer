@@ -18,20 +18,18 @@ interface Props {
 export function Narrative2(props: Props) {
     const { result } = props;
     return (
-        <main className="flex-grow min-h-screen px-3 py-8 flex justify-center bg-blueGray-900">
-            <div className="max-w-lg flex-col space-y-20">
-                <Toolbar />
-                <Overview result={result} />
-                <ExecutiveSummary result={result} />
-                <BusinessBreakdown result={result} />
-                <FutureEarningsPerShare result={result} />
-                <TerminalValueDerivation result={result} />
-                <TargetPriceDerivation result={result} />
-                <TargetPriceBreakdown result={result} />
-                <Feedback result={result} />
-                <Comments result={result} />
-                <div className="mb-20"></div>
-            </div>
+        <main className="flex-col space-y-20 pb-20 min-h-screen px-3 md:px-0 md:container md:mx-auto lg:pt-20 lg:max-w-prose bg-blueGray-900">
+            <Toolbar />
+            <Overview result={result} />
+            <ExecutiveSummary result={result} />
+            <BusinessBreakdown result={result} />
+            <FutureEarningsPerShare result={result} />
+            <TerminalValueDerivation result={result} />
+            <TargetPriceDerivation result={result} />
+            <TargetPriceBreakdown result={result} />
+            <Feedback result={result} />
+            <Comments result={result} />
+            <div className="mb-20"></div>
         </main>
     )
 }

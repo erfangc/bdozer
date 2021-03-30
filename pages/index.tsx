@@ -22,12 +22,12 @@ export default function Home() {
 
   return (
     <UnsecuredApp>
-      <main className="min-h-screen mx-auto px-2 w-full max-w-lg">
+      <main className="min-h-screen mx-auto container px-2">
         <StockAnalysisSearch onSubmit={({ cik }) => navigate(cik)} className="mb-20 mt-16" />
         <div className="mb-8">
-          <h1 className="border-b inline pb-4 border-blueGray-700"><span className="bg-fuchsia-700 px-2 py-1 rounded font-extrabold uppercase">New</span> Stock Analyses</h1>
+          <h1 className="border-b inline pb-4 border-blueGray-700"><span className="bg-fuchsia-600 px-2 py-1 rounded font-extrabold uppercase">New</span> Stock Analyses</h1>
         </div>
-        <div className="flex flex-col space-y-4 mb-8">
+        <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
           {
             stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis} />)
           }
@@ -56,8 +56,8 @@ function StockAnalysisCard(props: { stockAnalysis: StockAnalysis }) {
     >
       <div className="flex flex-col space-y-4">
         <div className="flex justify-between">
-          <span className="text-lg text-blueGray-200 tracking-wide">{name}</span>
-          <span className="text-4xl text-blueGray-200 font-bold">{symbol}</span>
+          <span className="text-lg text-blueGray-200">{name}</span>
+          <span className="text-4xl text-blueGray-200 font-bold tracking-tight">{symbol}</span>
         </div>
         <span className="flex space-x-4">
           <div>
