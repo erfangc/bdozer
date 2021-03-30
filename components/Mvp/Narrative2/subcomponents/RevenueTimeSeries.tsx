@@ -38,7 +38,8 @@ export function RevenueTimeSeries({ result }: Props) {
 
         const options: Highcharts.Options = {
             chart: {
-                type: 'column'
+                type: 'column',
+                height: 300
             },
             title: { text: null, },
             yAxis: {
@@ -47,6 +48,11 @@ export function RevenueTimeSeries({ result }: Props) {
                     formatter: function () {
                         return `${simpleNumber(this.value)}`
                     }
+                }
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0, pointWidth: 20
                 }
             },
             xAxis: { lineWidth: 0, },

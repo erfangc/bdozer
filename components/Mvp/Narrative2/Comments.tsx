@@ -46,7 +46,7 @@ export function Comments({ result }: Props) {
                 onChange={({ currentTarget: { value } }) => setText(value)}
                 onKeyDown={({ key }) => { if (key === 'Enter') postComment() }}
             />
-            {comments.map(comment => <CommentComponent comment={comment} />)}
+            {comments.map(comment => <CommentComponent key={comment['_id']} comment={comment} />)}
         </div>
     )
 }
