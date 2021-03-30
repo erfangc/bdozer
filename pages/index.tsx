@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useStockAnalyzerFactory } from '../api-hooks'
 import { StockAnalysis } from '../client'
 import { UnsecuredApp } from '../components/App'
+import { LegalDisclaimer } from '../components/LegalDisclaimer'
 import { StockAnalysisSearch } from '../components/Mvp/StockAnalysisSearch'
 
 export default function Home() {
@@ -27,16 +28,19 @@ export default function Home() {
 
   return (
     <UnsecuredApp>
-      <main className="min-h-screen mx-auto container px-2">
-        <StockAnalysisSearch onSubmit={({ cik }) => navigate(cik)} className="mb-20 mt-16" />
-        <div className="mb-8">
-          <h1 className="border-b inline pb-4 border-blueGray-700"><span className="bg-fuchsia-600 px-2 py-1 rounded font-extrabold uppercase">New</span> Stock Analyses</h1>
-        </div>
-        <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
-          {
-            loading ? <LoadingSkeletons /> : stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis} />)
-          }
-        </div>
+      <main className="min-h-screen mx-auto container px-2 flex flex-col justify-between">
+        <section>
+          <StockAnalysisSearch onSubmit={({ cik }) => navigate(cik)} className="mb-20 mt-16" />
+          <div className="mb-8">
+            <h1 className="border-b inline pb-4 border-blueGray-700"><span className="bg-fuchsia-600 px-2 py-1 rounded font-extrabold uppercase">New</span> Stock Analyses</h1>
+          </div>
+          <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
+            {
+              loading ? <LoadingSkeletons /> : stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis} />)
+            }
+          </div>
+        </section>
+        <LegalDisclaimer />
       </main>
     </UnsecuredApp>
   )

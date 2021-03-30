@@ -10,6 +10,7 @@ import { TargetPriceBreakdown } from "./subcomponents/TargetPriceBreakdown";
 import { TargetPriceDerivation } from "./subcomponents/TargetPriceDerivation";
 import { TerminalValueDerivation } from "./subcomponents/TerminalValueDerivation";
 import { Toolbar } from "./Toolbar";
+import { LegalDisclaimer } from "../../LegalDisclaimer";
 
 interface Props {
     result: StockAnalysis
@@ -29,7 +30,7 @@ export function Narrative2(props: Props) {
             <TargetPriceBreakdown result={result} />
             <Feedback result={result} />
             <Comments result={result} />
-            <div className="mb-20"></div>
+            <LegalDisclaimer />
         </main>
     )
 }
