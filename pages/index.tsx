@@ -15,7 +15,7 @@ function Home() {
   }
 
   function browse() {
-    router.push(`/search`)
+    router.push(`/browse`)
   }
 
   return (

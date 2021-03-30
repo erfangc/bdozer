@@ -24,9 +24,9 @@ function Home(props: Props) {
                     <StockAnalysisSearch onSubmit={({ cik }) => navigate(cik)} className="mb-20 mt-16" />
                     <div className="mb-8">
                         <h1 className="border-b pb-4 border-blueGray-700">
-                            <span><span className="bg-fuchsia-600 px-2 py-1 rounded font-extrabold uppercase">featured</span> Stock Analyses</span>
+                            <span className="bg-fuchsia-600 px-2 py-1 rounded font-extrabold uppercase">featured stocks</span>
                         </h1>
-                        <span className="block mt-8 ml-2 text-sm text-blueGray-300">Click to see detail</span>
+                        <blockquote className="mt-8 pl-6 border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300">Click on the Cards to View the Analysis</blockquote>
                     </div>
                     <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
                         {
@@ -67,7 +67,7 @@ function StockAnalysisCard(props: { stockAnalysis: StockAnalysis }) {
         >
             <div className="flex flex-col space-y-4">
                 <div className="flex justify-between">
-                    <span className="text-lg text-blueGray-200">{name}</span>
+                    <span className="text-lg underline text-blue-400">{name}</span>
                     <span className="text-4xl text-blueGray-200 font-bold tracking-tight">{symbol}</span>
                 </div>
                 <span className="flex space-x-4">

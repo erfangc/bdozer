@@ -14,7 +14,7 @@ export function Toolbar() {
     }
 
     function browse() {
-        router.push('/search')
+        router.push('/browse')
     }
 
     return (
