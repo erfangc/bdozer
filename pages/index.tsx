@@ -9,11 +9,16 @@ export default function Home() {
   const router = useRouter()
   const stockAnalyzer = useStockAnalyzerFactory()
   const [stockAnalyses, setStockAnalyses] = useState<StockAnalysis[]>([])
+  const [loading, setloading] = useState(false)
 
   useEffect(() => {
+    setloading(true)
     stockAnalyzer
       .getAnalyses()
-      .then(({ data }) => setStockAnalyses(data))
+      .then(({ data }) => {
+        setStockAnalyses(data);
+        setloading(false)
+      })
   }, [])
 
   function navigate(cik: string) {
@@ -29,7 +34,7 @@ export default function Home() {
         </div>
         <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
           {
-            stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis} />)
+            loading ? <LoadingSkeletons /> : stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis} />)
           }
         </div>
       </main>
@@ -72,4 +77,28 @@ function StockAnalysisCard(props: { stockAnalysis: StockAnalysis }) {
       </div>
     </div>
   )
+}
+
+function LoadingSkeletons() {
+  return <>
+    {[1, 2, 3].map(i => (
+      <div
+        key={i}
+        className="bg-blueGray-700 px-6 py-6 rounded-md shadow-md flex-col flex space-y-4 cursor-pointer hover:bg-blueGray-600 transition ease-linear"
+      >
+        <div className="flex flex-col space-y-4">
+          <div className="flex justify-between">
+            <span className="w-48 h-8 bg-blueGray-500 rounded-md animate-pulse"></span>
+            <span className="w-24 h-8 bg-blueGray-500 rounded-md animate-pulse"></span>
+          </div>
+          <span className="flex space-x-4">
+            <div className="w-20 h-12 bg-blueGray-500 rounded-md animate-pulse">
+            </div>
+            <div className="w-20 h-12 bg-blueGray-500 rounded-md animate-pulse">
+            </div>
+          </span>
+        </div>
+      </div>
+    ))}
+  </>
 }
