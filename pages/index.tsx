@@ -1,26 +1,17 @@
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import { useStockAnalyzerFactory } from '../api-hooks'
-import { StockAnalysis } from '../client'
+import React from 'react'
+import { basePath } from '../api-hooks'
+import { StockAnalysis, StockAnalyzerFactoryControllerApi } from '../client'
 import { UnsecuredApp } from '../components/App'
 import { LegalDisclaimer } from '../components/LegalDisclaimer'
 import { StockAnalysisSearch } from '../components/Mvp/StockAnalysisSearch'
-
-export default function Home() {
+interface Props {
+  stockAnalyses: StockAnalysis[]
+}
+function Home(props: Props) {
   const router = useRouter()
-  const stockAnalyzer = useStockAnalyzerFactory()
-  const [stockAnalyses, setStockAnalyses] = useState<StockAnalysis[]>([])
-  const [loading, setloading] = useState(false)
 
-  useEffect(() => {
-    setloading(true)
-    stockAnalyzer
-      .getAnalyses()
-      .then(({ data }) => {
-        setStockAnalyses(data);
-        setloading(false)
-      })
-  }, [])
+  const { stockAnalyses } = props
 
   function navigate(cik: string) {
     router.push(`/${cik}/narrative2`)
@@ -36,7 +27,7 @@ export default function Home() {
           </div>
           <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
             {
-              loading ? <LoadingSkeletons /> : stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis} />)
+              stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis} />)
             }
           </div>
         </section>
@@ -45,6 +36,14 @@ export default function Home() {
     </UnsecuredApp>
   )
 }
+
+Home.getInitialProps = async () => {
+  const stockAnalyzer = new StockAnalyzerFactoryControllerApi(null, basePath);
+  const { data } = await stockAnalyzer.getAnalyses()
+  return { stockAnalyses: data }
+}
+
+export default Home
 
 function StockAnalysisCard(props: { stockAnalysis: StockAnalysis }) {
   const router = useRouter()
