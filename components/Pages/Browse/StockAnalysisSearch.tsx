@@ -15,16 +15,12 @@ export function StockAnalysisSearch(props: Props) {
     const stockAnalyzer = useStockAnalyzerFactory()
     const edgarExplorer = useEdgarExplorer()
     const publicFilingEntityManager = useFilingEntityManagerUnsecured()
-    const ref = useRef<HTMLInputElement>()
 
     const [term, setTerm] = useState<string>()
     const [found, setFound] = useState<EdgarEntity[]>([])
     const [stockAnalyses, setStockAnalyses] = useState<StockAnalysis[]>([])
 
     useEffect(() => {
-        if (ref.current) {
-            ref.current.select()
-        }
         stockAnalyzer
             .getAnalyses()
             .then(resp => setStockAnalyses(resp.data))
@@ -87,7 +83,7 @@ export function StockAnalysisSearch(props: Props) {
                 }
             </li>
         )
-    }).slice(0, 6)
+    }).slice(0, 5)
 
     return (
         <div className={`w-full text-blueGray-50 ${props.className}`}>
@@ -96,7 +92,7 @@ export function StockAnalysisSearch(props: Props) {
                     <SearchIcon />
                     <input
                         value={term}
-                        ref={ref}
+                        autoFocus
                         placeholder="Search for a company"
                         onChange={e => changeTerm(e.currentTarget.value)}
                         className="relative text-blueGray-50 pl-4 py-4 focus:outline-none bg-blueGray-700 placeholder-blueGray-400 text-lg"
