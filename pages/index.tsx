@@ -19,7 +19,7 @@ function Home() {
   }
 
   return (
-    <main className="bg-blueGray-900 min-h-screen antialiased text-blueGray-50 ">
+    <main className="bg-blueGray-900 min-h-screen antialiased text-blueGray-50">
       <Head>
         <title>Bulldozer | Home</title>
         <link rel="icon" href="/favicon.ico" />

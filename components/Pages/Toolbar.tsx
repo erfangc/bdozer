@@ -18,7 +18,7 @@ export function Toolbar() {
     }
 
     return (
-        <div className="shadow-md bg-blueGray-800 px-2 py-2 flex space-x-6 fixed bottom-0 lg:top-0 lg:bottom-auto left-0 lg:left-20 right-0 justify-center z-10">
+        <div className="shadow-md bg-blueGray-800 px-2 py-2 flex space-x-6 fixed bottom-0 lg:top-0 lg:bottom-auto left-0 lg:left-20 right-0 justify-center z-10 overflow-x-scroll lg:overflow-x-auto">
             <ToolButton onClick={browse}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 13H5V11H3V13ZM3 17H5V15H3V17ZM3 9H5V7H3V9ZM7 13H21V11H7V13ZM7 17H21V15H7V17ZM7 7V9H21V7H7ZM3 13H5V11H3V13ZM3 17H5V15H3V17ZM3 9H5V7H3V9ZM7 13H21V11H7V13ZM7 17H21V15H7V17ZM7 7V9H21V7H7Z" fill="#CBD5E1" />

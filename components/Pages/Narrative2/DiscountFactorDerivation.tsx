@@ -1,6 +1,6 @@
 import React from "react";
-import { StockAnalysis } from "../../../../client";
-import { SubTitle } from "../../../Title";
+import { StockAnalysis } from "../../../client";
+import { SubTitle } from "../../Title";
 import { Number, Percent } from "../Card";
 interface Props {
     result: StockAnalysis

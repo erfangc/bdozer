@@ -1,8 +1,8 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import React, { useEffect, useState } from 'react'
-import { useComments } from '../../../api-hooks'
-import { Comment, StockAnalysis } from '../../../client'
-import { TextInput } from '../../TextInput'
+import { useComments } from '../../api-hooks'
+import { StockAnalysis, Comment } from '../../client'
+import { TextInput } from '../TextInput'
 
 interface Props {
     result: StockAnalysis

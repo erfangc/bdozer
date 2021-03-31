@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { FilingEntity } from "../../client";
 import { App } from "../../components/App";
-import { FilingEntitySearch } from "../../components/Mvp/FilingEntitySearch";
+import { FilingEntitySearch } from "../../components/Pages/FilingEntitySearch";
 import { Title } from "../../components/Title";
 
 function SettingsComponent() {

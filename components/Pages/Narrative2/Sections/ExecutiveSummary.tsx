@@ -2,9 +2,9 @@ import React from "react";
 import { StockAnalysis } from "../../../../client";
 import { EarningsPerShareBasic } from "../../../../constants/ReservedItemNames";
 import { simpleNumber } from "../../../../simple-number";
+import { Popover } from "../../../Popover";
 import { SubTitle } from "../../../Title";
-import { Popover } from "../../Narrative1/Narrative";
-import { RevenueTimeSeries } from "./RevenueTimeSeries";
+import { RevenueTimeSeries } from "../RevenueTimeSeries";
 
 interface Props {
     result: StockAnalysis

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useFilingEntityManager, useMarketing, useFilingEntityManagerUnsecured } from '../api-hooks'
 import { FilingEntity } from '../client'
 import { UnsecuredApp } from '../components/App'
-import { FilingEntitySearch } from '../components/Mvp/FilingEntitySearch'
+import { FilingEntitySearch } from '../components/Pages/FilingEntitySearch'
 import { TextInput } from '../components/TextInput'
 
 export default function RequestStockPage() {

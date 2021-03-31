@@ -1,11 +1,11 @@
 import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
-import { StockAnalysis } from "../../../../client";
-import { EarningsPerShareBasic, PresentValueOfEarningsPerShare, PresentValueOfTerminalValuePerShare, TerminalValuePerShare } from "../../../../constants/ReservedItemNames";
-import { amber400, amber600, blueGray200, highcharts, indigo400, indigo600 } from "../../../../highcharts";
-import { year } from "../../../../year";
-import { SubTitle } from "../../../Title";
-import { Popover } from "../../Narrative1/Narrative";
+import { StockAnalysis } from "../../../client";
+import { EarningsPerShareBasic, PresentValueOfEarningsPerShare, PresentValueOfTerminalValuePerShare, TerminalValuePerShare } from "../../../constants/ReservedItemNames";
+import { amber400, amber600, blueGray200, highcharts, indigo400, indigo600 } from "../../../highcharts";
+import { year } from "../../../year";
+import { Popover } from "../../Popover";
+import { SubTitle } from "../../Title";
 import { DiscountFactorDerivation } from "./DiscountFactorDerivation";
 
 interface Props {

@@ -4,10 +4,12 @@ import { basePath } from '../api-hooks'
 import { StockAnalysis, StockAnalyzerFactoryControllerApi } from '../client'
 import { UnsecuredApp } from '../components/App'
 import { LegalDisclaimer } from '../components/LegalDisclaimer'
-import { StockAnalysisSearch } from '../components/Mvp/StockAnalysisSearch'
+import { StockAnalysisSearch } from '../components/Pages/StockAnalysisSearch'
+
 interface Props {
     stockAnalyses: StockAnalysis[]
 }
+
 function Home(props: Props) {
     const router = useRouter()
 

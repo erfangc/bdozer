@@ -1,8 +1,8 @@
 import { Field, Form, Formik } from "formik";
 import { useState } from "react";
-import { useMarketing } from "../../../../api-hooks";
-import { StockAnalysis } from "../../../../client";
-import { Label, SubTitle } from "../../../Title";
+import { useMarketing } from "../../../api-hooks";
+import { StockAnalysis } from "../../../client";
+import { Label, SubTitle } from "../../Title";
 
 interface Props {
     result: StockAnalysis
