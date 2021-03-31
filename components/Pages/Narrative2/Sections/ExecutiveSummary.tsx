@@ -1,10 +1,10 @@
 import React from "react";
 import { StockAnalysis } from "../../../../client";
-import { EarningsPerShareBasic } from "../../../../constants/ReservedItemNames";
+import { EarningsPerShareBasic } from "../../../../constants";
 import { simpleNumber } from "../../../../simple-number";
 import { Popover } from "../../../Popover";
-import { SubTitle } from "../../../Title";
-import { RevenueTimeSeries } from "../RevenueTimeSeries";
+import { SubTitle } from "../../../Common/Title";
+import { RevenueTimeSeries } from "./RevenueTimeSeries";
 
 interface Props {
     result: StockAnalysis

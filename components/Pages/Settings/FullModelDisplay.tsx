@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { ReactNode } from "react"
 import NumberFormat from "react-number-format"
-import { useFactBase } from "../../api-hooks"
-import { StockAnalysis } from "../../client"
-import { year } from "../../year"
+import { useFactBase } from "../../../api-hooks"
+import { StockAnalysis } from "../../../client"
+import { year } from "../../../year"
 
 interface Props {
     result: StockAnalysis

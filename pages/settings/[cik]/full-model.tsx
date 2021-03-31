@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useStockAnalyzerFactory } from '../../../api-hooks'
 import { StockAnalysis } from '../../../client'
 import { App } from '../../../components/App'
-import { FullModelDisplay as StockAnalysisDisplay } from '../../../components/Pages/FullModelDisplay'
-import { Title } from '../../../components/Title'
+import { FullModelDisplay as StockAnalysisDisplay } from '../../../components/Pages/Settings/FullModelDisplay'
+import { Title } from '../../../components/Common/Title'
 
 function FullModelComponent() {
     const router = useRouter()

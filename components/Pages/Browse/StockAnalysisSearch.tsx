@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router'
-import React, { useEffect, useRef } from 'react'
-import { useState } from 'react'
-import { useEdgarExplorer, useFilingEntityManager, useFilingEntityManagerUnsecured, useStockAnalyzerFactory } from '../../api-hooks'
-import { EdgarEntity, EdgarEntitySource, FilingEntity, StockAnalysis } from '../../client'
-import { GhostButton } from '../GhostButton'
+import React, { useEffect, useRef, useState } from 'react'
+import { useEdgarExplorer, useFilingEntityManagerUnsecured, useStockAnalyzerFactory } from '../../../api-hooks'
+import { EdgarEntity, EdgarEntitySource, FilingEntity, StockAnalysis } from '../../../client'
+import { PrimaryButton } from '../../Common/PrimaryButton'
 
 interface Props {
     className?: string
@@ -15,7 +14,6 @@ export function StockAnalysisSearch(props: Props) {
 
     const stockAnalyzer = useStockAnalyzerFactory()
     const edgarExplorer = useEdgarExplorer()
-    const filingEntityManager = useFilingEntityManager()
     const publicFilingEntityManager = useFilingEntityManagerUnsecured()
     const ref = useRef<HTMLInputElement>()
 
@@ -70,7 +68,7 @@ export function StockAnalysisSearch(props: Props) {
         return (
             <li
                 key={id}
-                className="px-4 py-2 cursor-pointer hover:bg-blueGray-900 text-sm flex justify-between items-center whitespace-nowrap transition ease-linear"
+                className={`px-4 py-2 ${hasAnalysis ? 'cursor-pointer' : null} hover:bg-blueGray-900 text-sm flex justify-between items-center whitespace-nowrap transition ease-linear`}
                 onClick={() => { if (hasAnalysis) submit(entity) }}
             >
                 <span className="w-56 md:w-96 overflow-hidden overflow-ellipsis">
@@ -83,21 +81,19 @@ export function StockAnalysisSearch(props: Props) {
                             {source.tickers}
                         </span>
                         :
-                        <GhostButton onClick={() => requestCoverage(id)}>
+                        <PrimaryButton onClick={() => requestCoverage(id)}>
                             Request Coverage
-                        </GhostButton>
+                        </PrimaryButton>
                 }
             </li>
         )
-    }).slice(0, 5)
+    }).slice(0, 6)
 
     return (
         <div className={`w-full text-blueGray-50 ${props.className}`}>
             <div className="relative container max-w-lg">
                 <div className={`bg-blueGray-700 px-4 ${entities.length > 0 ? 'rounded-t-lg' : 'rounded-lg'}`}>
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline">
-                        <path d="M31.1283 32.6783L21.6033 23.1517C17.3661 26.1641 11.5274 25.4273 8.17146 21.4566C4.81552 17.4859 5.06194 11.606 8.73834 7.93001C12.4138 4.25242 18.2942 4.00494 22.2657 7.3607C26.2371 10.7165 26.9744 16.5558 23.9617 20.7933L33.4867 30.32L31.13 32.6767L31.1283 32.6783ZM15.8083 8.33332C12.6478 8.33261 9.92116 10.5511 9.27913 13.6457C8.6371 16.7403 10.2562 19.8605 13.1561 21.1171C16.0561 22.3737 19.4398 21.4214 21.2587 18.8368C23.0777 16.2521 22.8318 12.7455 20.67 10.44L21.6783 11.44L20.5417 10.3067L20.5217 10.2867C19.2747 9.03197 17.5773 8.32856 15.8083 8.33332Z" fill="#E2E8F0" />
-                    </svg>
+                    <SearchIcon />
                     <input
                         value={term}
                         ref={ref}
@@ -122,3 +118,10 @@ export function StockAnalysisSearch(props: Props) {
     )
 }
 
+function SearchIcon() {
+    return (
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline">
+            <path d="M31.1283 32.6783L21.6033 23.1517C17.3661 26.1641 11.5274 25.4273 8.17146 21.4566C4.81552 17.4859 5.06194 11.606 8.73834 7.93001C12.4138 4.25242 18.2942 4.00494 22.2657 7.3607C26.2371 10.7165 26.9744 16.5558 23.9617 20.7933L33.4867 30.32L31.13 32.6767L31.1283 32.6783ZM15.8083 8.33332C12.6478 8.33261 9.92116 10.5511 9.27913 13.6457C8.6371 16.7403 10.2562 19.8605 13.1561 21.1171C16.0561 22.3737 19.4398 21.4214 21.2587 18.8368C23.0777 16.2521 22.8318 12.7455 20.67 10.44L21.6783 11.44L20.5417 10.3067L20.5217 10.2867C19.2747 9.03197 17.5773 8.32856 15.8083 8.33332Z" fill="#E2E8F0" />
+        </svg>
+    )
+}

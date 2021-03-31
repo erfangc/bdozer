@@ -1,6 +1,6 @@
 import React from "react";
 import { Model, Item } from "../../client";
-import { SmallGhostButton } from "../GhostButton";
+import { SmallGhostButton } from "../Common/GhostButton";
 import { ItemChooser } from "./ItemChooser";
 
 interface ToolbarProps {

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import React, { useState, useEffect } from "react"
 import { Model } from "../../client"
-import { PrimaryButton } from "../PrimaryButton"
+import { PrimaryButton } from "../Common/PrimaryButton"
 import { ModelComponent } from "./ModelComponent"
 import { ModelSkeleton } from "./ModelSkeleton"
 

@@ -1,16 +1,16 @@
 import React from "react";
-import { StockAnalysis } from "../../client";
-import { LegalDisclaimer } from "../LegalDisclaimer";
-import { Comments } from "./Comments";
-import { Feedback } from "./Narrative2/Feedback";
-import { FutureEarningsPerShare } from "./Narrative2/FutureEarningsPerShare";
-import { BusinessBreakdown } from "./Narrative2/Sections/BusinessBreakdown";
-import { ExecutiveSummary } from "./Narrative2/Sections/ExecutiveSummary";
-import { Overview } from "./Narrative2/Sections/Overview";
-import { TargetPriceBreakdown } from "./Narrative2/TargetPriceBreakdown";
-import { TargetPriceDerivation } from "./Narrative2/TargetPriceDerivation";
-import { TerminalValueDerivation } from "./Narrative2/TerminalValueDerivation";
+import { StockAnalysis } from "../../../client";
+import { LegalDisclaimer } from "../../LegalDisclaimer";
+import { Comments } from "./Sections/Comments";
+import { Feedback } from "./Sections/Feedback";
+import { FutureEarningsPerShare } from "./Sections/FutureEarningsPerShare";
+import { BusinessBreakdown } from "./Sections/BusinessBreakdown";
+import { ExecutiveSummary } from "./Sections/ExecutiveSummary";
+import { Overview } from "./Sections/Overview";
+import { TargetPriceBreakdown } from "./Sections/TargetPriceBreakdown";
+import { TerminalValueDerivation } from "./Sections/TerminalValueDerivation";
 import { Toolbar } from "./Toolbar";
+import { TargetPriceDerivation } from "./Sections/TargetPriceDerivation";
 
 interface Props {
     result: StockAnalysis

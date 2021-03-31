@@ -1,10 +1,10 @@
 import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
-import { StockAnalysis } from "../../../client";
-import { blue700, green800, highcharts } from "../../../highcharts";
-import { Popover } from "../../Popover";
-import { SubTitle } from "../../Title";
+import { StockAnalysis } from "../../../../client";
+import { blue700, green800, highcharts } from "../../../../highcharts";
+import { Popover } from "../../../Popover";
+import { SubTitle } from "../../../Common/Title";
 
 interface Props {
     result: StockAnalysis

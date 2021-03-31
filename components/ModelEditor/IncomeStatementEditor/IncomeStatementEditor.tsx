@@ -1,6 +1,6 @@
 import React from "react";
 import { Item, Model } from "../../../client";
-import { CostOfGoodsSold, GrossProfit, InterestExpense, NetIncome, NonOperatingExpense, OperatingExpense, OperatingIncome, Revenue, TaxExpense } from "../../../constants/ReservedItemNames";
+import { CostOfGoodsSold, GrossProfit, InterestExpense, NetIncome, NonOperatingExpense, OperatingExpense, OperatingIncome, Revenue, TaxExpense } from "../../../constants";
 import { IncomeStatementItemComponent } from "./IncomeStatementItemComponent";
 import { IncomeStatementSection } from "./Section";
 import { Subtotal } from "./Subtotal";

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Modal from 'react-modal';
 import { Model } from "../../client";
 import { AutoForm, Schema } from "../AutoForms/AutoForm";
-import { DeleteButton } from "../DeleteButton";
-import { PrimaryButton } from "../PrimaryButton";
+import { DeleteButton } from "../Common/DeleteButton";
+import { PrimaryButton } from "../Common/PrimaryButton";
 import { Cogs } from "../ButtonSvgs/Cogs";
 
 Modal.setAppElement('#__next');

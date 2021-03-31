@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Item, Model } from "../../client"
-import { SmallGhostButton } from "../GhostButton"
+import { SmallGhostButton } from "../Common/GhostButton"
 
 interface ItemChooserProps {
     chosenItems: Item[]

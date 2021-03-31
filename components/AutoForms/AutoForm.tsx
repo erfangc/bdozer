@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { NumberInput } from "../NumberInput";
-import { PrimaryButton } from "../PrimaryButton";
-import { TextArea } from "../Textarea";
-import { TextInput } from "../TextInput";
+import { NumberInput } from "../Common/NumberInput";
+import { PrimaryButton } from "../Common/PrimaryButton";
+import { TextArea } from "../Common/Textarea";
+import { TextInput } from "../Common/TextInput";
 
 export interface Schema {
     type: 'number' | 'percent' | 'integer' | 'string' | 'textarea',

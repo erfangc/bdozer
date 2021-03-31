@@ -1,7 +1,7 @@
 import React from "react";
 import NumberFormat from "react-number-format";
 import { Item, Model } from "../../../client";
-import { SmallGhostButton } from "../../GhostButton";
+import { SmallGhostButton } from "../../Common/GhostButton";
 import { IncomeStatementItemComponent } from "./IncomeStatementItemComponent";
 import { DashedLine } from "../Svgs";
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DeleteButton } from "../DeleteButton";
+import { DeleteButton } from "../Common/DeleteButton";
 import { More } from "../Nav/NavButton";
 
 export function MoreButton({ onDelete }: { onDelete: () => void }) {

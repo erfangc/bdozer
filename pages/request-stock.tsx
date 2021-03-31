@@ -4,7 +4,7 @@ import { useFilingEntityManager, useMarketing, useFilingEntityManagerUnsecured }
 import { FilingEntity } from '../client'
 import { UnsecuredApp } from '../components/App'
 import { FilingEntitySearch } from '../components/Pages/FilingEntitySearch'
-import { TextInput } from '../components/TextInput'
+import { TextInput } from '../components/Common/TextInput'
 
 export default function RequestStockPage() {
 

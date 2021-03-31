@@ -1,12 +1,12 @@
 import HighchartsReact from "highcharts-react-official";
 import React from "react";
 import { useEffect, useState } from "react";
-import { StockAnalysis } from "../../../client";
-import { EarningsPerShareBasic, NetIncomeLoss, WeightedAverageNumberOfSharesOutstandingBasic } from "../../../constants/ReservedItemNames";
-import { green500, highcharts, rose500 } from "../../../highcharts";
-import { simpleNumber } from "../../../simple-number";
-import { year } from "../../../year";
-import { SubTitle } from "../../Title";
+import { StockAnalysis } from "../../../../client";
+import { EarningsPerShareBasic, NetIncomeLoss, WeightedAverageNumberOfSharesOutstandingBasic } from "../../../../constants";
+import { green500, highcharts, rose500 } from "../../../../highcharts";
+import { simpleNumber } from "../../../../simple-number";
+import { year } from "../../../../year";
+import { SubTitle } from "../../../Common/Title";
 
 interface Props {
     result: StockAnalysis

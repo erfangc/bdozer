@@ -5,8 +5,8 @@ import { StockAnalysis, Item } from "../../../../client";
 import { lime700, rose500, blueGray900, highcharts } from "../../../../highcharts";
 import { simpleNumber } from "../../../../simple-number";
 import { year } from "../../../../year";
-import { SubTitle } from "../../../Title";
-import { Pill } from "../../Pill";
+import { SubTitle } from "../../../Common/Title";
+import { Pill } from "../Pill";
 
 interface Props {
     result: StockAnalysis

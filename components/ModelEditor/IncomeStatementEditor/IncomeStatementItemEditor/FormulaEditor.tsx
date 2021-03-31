@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { Item } from "../../../../client"
-import { PrimaryButton } from "../../../PrimaryButton"
+import { PrimaryButton } from "../../../Common/PrimaryButton"
 
 export function FormulaEditor({ item, onSubmit }: { item: Item, onSubmit: (string) => void }) {
 

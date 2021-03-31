@@ -1,114 +1,29 @@
-import { useRouter } from 'next/router'
 import React from 'react'
 import { basePath } from '../api-hooks'
 import { StockAnalysis, StockAnalyzerFactoryControllerApi } from '../client'
 import { UnsecuredApp } from '../components/App'
-import { LegalDisclaimer } from '../components/LegalDisclaimer'
-import { StockAnalysisSearch } from '../components/Pages/StockAnalysisSearch'
+import { Browse } from '../components/Pages/Browse/Browse'
 
 interface Props {
     stockAnalyses: StockAnalysis[]
 }
 
-function Home(props: Props) {
-    const router = useRouter()
+function BrowsePage(props: Props) {
+
 
     const { stockAnalyses } = props
 
-    function navigate(cik: string) {
-        router.push(`/${cik}/narrative2`)
-    }
-
     return (
         <UnsecuredApp>
-            <main className="min-h-screen mx-auto container px-2 flex flex-col justify-between">
-                <section>
-                    <StockAnalysisSearch onSubmit={({ cik }) => navigate(cik)} className="mb-20 mt-16" />
-                    <div className="mb-8">
-                        <h1 className="border-blueGray-700">
-                            <span className="bg-emerald-500 px-2 py-1 rounded font-extrabold uppercase">featured stocks</span>
-                        </h1>
-                        <blockquote className="mt-8 pl-6 border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300">
-                            Click on the Cards to View Analysis
-                        </blockquote>
-                    </div>
-                    <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
-                        {
-                            stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis} />)
-                        }
-                    </div>
-                </section>
-                <LegalDisclaimer />
-            </main>
+            <Browse stockAnalyses={stockAnalyses} />
         </UnsecuredApp>
     )
 }
 
-Home.getInitialProps = async () => {
+BrowsePage.getInitialProps = async () => {
     const stockAnalyzer = new StockAnalyzerFactoryControllerApi(null, basePath);
     const { data } = await stockAnalyzer.getAnalyses()
     return { stockAnalyses: data }
 }
 
-export default Home
-
-function StockAnalysisCard(props: { stockAnalysis: StockAnalysis }) {
-    const router = useRouter()
-
-    const { stockAnalysis } = props
-    const { currentPrice, targetPrice, model: { symbol, name, cik } } = stockAnalysis
-    const percentUpside = (targetPrice / currentPrice - 1) * 100
-
-    function navigate(cik: string) {
-        router.push(`/${cik}/narrative2`)
-    }
-
-    return (
-        <div
-            key={cik}
-            className="bg-blueGray-700 px-6 py-6 rounded-md shadow-md flex-col flex space-y-4 cursor-pointer hover:bg-blueGray-600 transition ease-linear"
-            onClick={() => navigate(stockAnalysis['_id'])}
-        >
-            <div className="flex flex-col space-y-4">
-                <div className="flex justify-between">
-                    <span className="text-lg underline text-blue-400">{name}</span>
-                    <span className="text-4xl text-blueGray-200 font-bold tracking-tight">{symbol}</span>
-                </div>
-                <span className="flex space-x-4">
-                    <div>
-                        <div className="uppercase text-sm text-blueGray-300">Target Price</div>
-                        <div className="font-extrabold">${targetPrice.toFixed(1)}</div>
-                    </div>
-                    <div>
-                        <div className="uppercase text-sm text-blueGray-300">{percentUpside > 0 ? 'Upside' : 'Downside'}</div>
-                        <div className={`font-extrabold ${percentUpside > 0 ? 'text-lime-500' : 'text-red-500'}`}>{percentUpside.toFixed(1)}%</div>
-                    </div>
-                </span>
-            </div>
-        </div>
-    )
-}
-
-function LoadingSkeletons() {
-    return <>
-        {[1, 2, 3].map(i => (
-            <div
-                key={i}
-                className="bg-blueGray-700 px-6 py-6 rounded-md shadow-md flex-col flex space-y-4 cursor-pointer hover:bg-blueGray-600 transition ease-linear"
-            >
-                <div className="flex flex-col space-y-4">
-                    <div className="flex justify-between">
-                        <span className="w-48 h-8 bg-blueGray-500 rounded-md animate-pulse"></span>
-                        <span className="w-24 h-8 bg-blueGray-500 rounded-md animate-pulse"></span>
-                    </div>
-                    <span className="flex space-x-4">
-                        <div className="w-20 h-12 bg-blueGray-500 rounded-md animate-pulse">
-                        </div>
-                        <div className="w-20 h-12 bg-blueGray-500 rounded-md animate-pulse">
-                        </div>
-                    </span>
-                </div>
-            </div>
-        ))}
-    </>
-}
+export default BrowsePage

@@ -1,9 +1,9 @@
 import React from 'react'
-import { StockAnalysis } from '../../../client'
-import { EarningsPerShareDiluted, TerminalValuePerShare } from '../../../constants/ReservedItemNames'
-import { year } from '../../../year'
-import { Popover } from '../../Popover'
-import { SubTitle } from '../../Title'
+import { StockAnalysis } from '../../../../client'
+import { EarningsPerShareDiluted, TerminalValuePerShare } from '../../../../constants'
+import { year } from '../../../../year'
+import { Popover } from '../../../Popover'
+import { SubTitle } from '../../../Common/Title'
 interface Props {
     result: StockAnalysis
 }

@@ -3,8 +3,8 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { LegalDisclaimer } from '../components/LegalDisclaimer'
 import { Logo } from '../components/Nav/Logo'
-import { PrimaryButton } from '../components/PrimaryButton'
-import { SecondaryButton } from '../components/SecondaryButton'
+import { PrimaryButton } from '../components/Common/PrimaryButton'
+import { SecondaryButton } from '../components/Common/SecondaryButton'
 
 function Home() {
 
