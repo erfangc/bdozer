@@ -1,6 +1,8 @@
+import HighchartsReact from 'highcharts-react-official';
 import React, { ReactNode } from 'react'
-import { StockAnalysis } from '../../../client'
+import { Item, StockAnalysis } from '../../../client'
 import { EarningsPerShareBasic, TerminalValuePerShare } from '../../../constants';
+import { lime700, rose500, blueGray900, highcharts } from '../../../highcharts';
 import { simpleNumber } from '../../../simple-number';
 import { year } from '../../../year';
 
@@ -13,7 +15,7 @@ export function Narrative(props: Props) {
         model,
         model: { name },
         cells,
-        currentPrice
+        currentPrice,
     } = props.result;
 
     const finalTvps = cells.find(cell => cell.item?.name === TerminalValuePerShare && cell.period == model.periods)?.value
@@ -32,8 +34,8 @@ export function Narrative(props: Props) {
 function PageWrapper({ children, id }: { children: ReactNode, id: string }) {
     return (
         <div
-            className="w-full px-6" id={id}
-            style={{ scrollSnapAlign: 'start', flexShrink: 0, transformOrigin: 'center center', transform: 'scale(1)', transition: 'transform 0.5s' }}
+            className="w-full px-6 slide"
+            id={id}
         >
             {children}
         </div>
@@ -119,24 +121,84 @@ function Page3(props: Props) {
         model,
         model: { symbol, },
         cells,
-        currentPrice,
         businessWaterfall,
     } = props.result
 
-    const finalTvps = cells.find(cell => cell.item?.name === TerminalValuePerShare && cell.period == model.periods)?.value
     const finalEps = cells.find(cell => cell.item?.name === EarningsPerShareBasic && cell.period == model.periods)?.value
-    const profit = businessWaterfall[0].profit
+    const waterfall = businessWaterfall[0]
 
-    const upside = ((finalTvps / currentPrice) - 1) * 100
+    const revenue = {
+        name: waterfall.revenue.item?.description ?? waterfall.revenue.item?.name,
+        y: waterfall.revenue.value,
+        color: lime700,
+        item: waterfall.revenue.item,
+    }
+
+    const topExpenses = waterfall.expenses.map(({ item, value }) => {
+        return {
+            name: item.description ?? item.name,
+            y: value,
+            color: value > 0 ? lime700 : rose500,
+            item: item,
+        }
+    })
+
+    const profit = {
+        name: waterfall.profit.item?.description ?? waterfall.profit.item?.name,
+        y: waterfall.profit.value,
+        color: blueGray900,
+        borderColor: waterfall.profit.value > 0 ? lime700 : rose500,
+        borderWidth: 1,
+        isSum: true,
+    }
+
+    const options: Highcharts.Options = {
+        chart: { type: 'waterfall', },
+        tooltip: {
+            enabled: true,
+            useHTML: true,
+            formatter: function () {
+                const item = (this.point.options as any).item as Item
+                const commentary = item?.commentaries?.commentary
+                return commentary
+                    ?
+                    `
+                    <div class="px-2 text-blueGray-50 z-10">
+                        <span>${commentary}</span>
+                    </div>
+                    `
+                    :
+                    `<div class="px-2  text-blueGray-50 z-10">No commentary</div>`;
+            },
+        },
+        xAxis: { type: 'category', lineWidth: 0, },
+        title: { text: null },
+        yAxis: {
+            title: { text: null },
+            labels: { enabled: false }
+        },
+        legend: { enabled: false },
+        series: [{
+            data: [revenue, ...topExpenses, profit,],
+            pointPadding: 0,
+            dataLabels: {
+                enabled: true, useHTML: false,
+                formatter: function () {
+                    return `<div class="z-0">${simpleNumber(this.y.toFixed(0), true)}</div>`;
+                },
+            },
+        }] as any
+    }
 
     return (
         <PageWrapper id="page3">
             <h1 className='font-extrabold text-2xl mt-12'>
                 How did we arrive at ${finalEps.toFixed(1)} earnings per share by {year(model.periods)}?
             </h1>
-            <div>
-                {year(0)}, {symbol}'s profit was ${simpleNumber(profit?.item?.historicalValue?.value)}
-            </div>
+            <h2 className="mt-16">
+                {year(0)}, {symbol}'s profit was ${simpleNumber(businessWaterfall[0]?.profit?.item?.historicalValue?.value)}
+            </h2>
+            <HighchartsReact highcharts={highcharts} options={options} />
             <a href="#page4" className="font-bold">
                 Read more
             </a>
@@ -149,7 +211,7 @@ function Page4(props: Props) {
         model,
         model: { name },
         cells,
-        currentPrice
+        currentPrice,
     } = props.result;
 
     const finalTvps = cells.find(cell => cell.item?.name === TerminalValuePerShare && cell.period == model.periods)?.value

@@ -1,5 +1,4 @@
-
-export function simpleNumber(costOfIt) {
+export function simpleNumber(costOfIt, short?: boolean) {
 
     let visualOfIt = costOfIt.toString();
 
@@ -7,7 +6,7 @@ export function simpleNumber(costOfIt) {
     let maxLeng = 4;
     let letterArrayIndex = 0;
 
-    let letterArray = [" Thousand", " Million", " Billion", " Trillion"];
+    let letterArray = short ? ["K", "MM", "B", "T"] : [" Thousand", " Million", " Billion", " Trillion"];
 
     let leng = 4;
     let slic = 1;
