@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import { StockAnalysis } from '../../../client'
-import { TerminalValuePerShare } from '../../../constants';
+import { EarningsPerShareBasic, TerminalValuePerShare } from '../../../constants';
+import { year } from '../../../year';
 
 interface Props {
     result: StockAnalysis
@@ -62,7 +63,7 @@ function Page1(props: Props) {
                 Including dividends this could be a <span className={`${upside > 0 ? 'text-lime-500' : 'text-rose-500'} font-bold`}>{upside.toFixed(1)}%</span> return opportunity
             </p>
             <p className="mt-20 mb-6">
-                How did we arrive at the $${finalTvps.toFixed(1)} target price?
+                How did we arrive at the ${finalTvps.toFixed(1)} target price?
             </p>
             <a href="#page2" className="font-bold">
                 Read more
@@ -74,28 +75,36 @@ function Page1(props: Props) {
 function Page2(props: Props) {
     const {
         model,
-        model: { name },
+        model: { name, terminalGrowthRate },
         cells,
-        currentPrice
+        discountRate,
     } = props.result;
 
+    const terminalPe = (1 / (discountRate - terminalGrowthRate)).toFixed(1)
     const finalTvps = cells.find(cell => cell.item?.name === TerminalValuePerShare && cell.period == model.periods)?.value
-    const upside = ((finalTvps / currentPrice) - 1) * 100
+    const eps = cells.find(cell => cell.item?.name === EarningsPerShareBasic && cell.period == 0)?.value
+    const finalEps = cells.find(cell => cell.item?.name === EarningsPerShareBasic && cell.period == model.periods)?.value
 
     return (
         <PageWrapper id="page2">
             <h1 className='font-extrabold text-2xl mt-12'>
-                What is <br />{name} worth?
+                How did we<br />
+                arrive at ${finalTvps.toFixed(1)} / share<br />by {year(model.periods)}?
             </h1>
             <p className="mt-20">
-                This stock is trading at <b>${currentPrice.toFixed(1)}</b> today
+                {name} made ${eps.toFixed(1)} / share in {year(0)}, due to dramatic decrease in revenue
             </p>
-            <p className="mt-8">
-                Our analysis indicate that it could be worth ${finalTvps.toFixed(1)} in {model.periods - 1} years.
-                Including dividends this could be a <span className={`${upside > 0 ? 'text-lime-500' : 'text-rose-500'} font-bold`}>{upside.toFixed(1)}%</span> return opportunity
+            <p className="mt-12">
+                However, their earnings per share is expected to recover to ${finalEps.toFixed(1)} / share in {year(model.periods)}
             </p>
-            <p className="mt-20 mb-6">
-                How did we arrive at the $${finalTvps.toFixed(1)} target price?
+            <p className="mt-12 mb-4">
+                Normally a business like {name} should be trading at {terminalPe}x earnings per share
+            </p>
+            <div className="p-3 rounded bg-blueGray-700 my-4 text-center">
+                {terminalPe} x ${finalEps.toFixed(1)} = ${finalTvps.toFixed(1)} / share
+            </div>
+            <p className="mb-6">
+                How do we know earnings per share should be ${finalEps.toFixed(1)}?
             </p>
             <a href="#page3" className="font-bold">
                 Read more
@@ -118,18 +127,9 @@ function Page3(props: Props) {
     return (
         <PageWrapper id="page3">
             <h1 className='font-extrabold text-2xl mt-12'>
-                What is <br />{name} worth?
+                How did we arrive at $4.1 earnings per share by 2025?
             </h1>
-            <p className="mt-20">
-                This stock is trading at <b>${currentPrice.toFixed(1)}</b> today
-            </p>
-            <p className="mt-8">
-                Our analysis indicate that it could be worth ${finalTvps.toFixed(1)} in {model.periods - 1} years.
-                Including dividends this could be a <span className={`${upside > 0 ? 'text-lime-500' : 'text-rose-500'} font-bold`}>{upside.toFixed(1)}%</span> return opportunity
-            </p>
-            <p className="mt-20 mb-6">
-                How did we arrive at the $${finalTvps.toFixed(1)} target price?
-            </p>
+
             <a href="#page4" className="font-bold">
                 Read more
             </a>
@@ -161,7 +161,7 @@ function Page4(props: Props) {
                 Including dividends this could be a <span className={`${upside > 0 ? 'text-lime-500' : 'text-rose-500'} font-bold`}>{upside.toFixed(1)}%</span> return opportunity
             </p>
             <p className="mt-20 mb-6">
-                How did we arrive at the $${finalTvps.toFixed(1)} target price?
+                How did we arrive at the ${finalTvps.toFixed(1)} target price?
             </p>
             <a href="#page1" className="font-bold">
                 Back
