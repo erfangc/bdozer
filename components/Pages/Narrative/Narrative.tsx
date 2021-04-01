@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import { StockAnalysis } from '../../../client'
 import { EarningsPerShareBasic, TerminalValuePerShare } from '../../../constants';
+import { simpleNumber } from '../../../simple-number';
 import { year } from '../../../year';
 
 interface Props {
@@ -116,20 +117,26 @@ function Page2(props: Props) {
 function Page3(props: Props) {
     const {
         model,
-        model: { name },
+        model: { symbol, },
         cells,
-        currentPrice
-    } = props.result;
+        currentPrice,
+        businessWaterfall,
+    } = props.result
 
     const finalTvps = cells.find(cell => cell.item?.name === TerminalValuePerShare && cell.period == model.periods)?.value
+    const finalEps = cells.find(cell => cell.item?.name === EarningsPerShareBasic && cell.period == model.periods)?.value
+    const profit = businessWaterfall[0].profit
+
     const upside = ((finalTvps / currentPrice) - 1) * 100
 
     return (
         <PageWrapper id="page3">
             <h1 className='font-extrabold text-2xl mt-12'>
-                How did we arrive at $4.1 earnings per share by 2025?
+                How did we arrive at ${finalEps.toFixed(1)} earnings per share by {year(model.periods)}?
             </h1>
-
+            <div>
+                {year(0)}, {symbol}'s profit was ${simpleNumber(profit?.item?.historicalValue?.value)}
+            </div>
             <a href="#page4" className="font-bold">
                 Read more
             </a>
