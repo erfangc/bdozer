@@ -27,16 +27,15 @@ function Home() {
       </Head>
       <div className="flex flex-col justify-between min-h-screen lg:container lg:mx-auto">
         <div>
-          <div className="flex space-x-2 items-end px-2 pt-4">
+          <div className="flex space-x-2 items-end px-2 pt-4 lg:mt-10">
             <Logo className="inline" /> <div className="text-blueGray-300 font-extrabold text-xl">bdzoer</div>
           </div>
           <div className="lg:flex">
             {/* tag line + subtext */}
             <div className="px-4 mt-14 space-y-16 flex flex-col lg:w-1/2 xl:w-1/3 lg:space-y-8 lg:mt-24">
-              <h1 className="text-4xl font-bold tracking-tighter">Save Time Finding Your Next Trade</h1>
+              <h1 className="text-4xl font-bold tracking-tighter">Save Time <br />Finding Your Next Trade</h1>
               <p className="leading-relaxed">
-                Discover how much a stock <span className="border-b-2 border-rose-500">should be</span> worth in <span className="text-orange-400 font-extrabold">under 3 minute</span> with our easy to follow step-by-step guides.
-              Take the guessing out of buying stocks
+                Take the guessing out of buying stocks. Discover what a stock <span className="border-b-2 border-rose-500 italic leading-snug font-semibold">should be</span> worth in <span className="text-orange-400 font-extrabold">under 3 minutes</span> with easy-to-follow step-by-step explanations.
             </p>
               <div className="flex flex-col space-y-4 lg:w-64">
                 <PrimaryButton onClick={seeSampleReport}>
@@ -55,7 +54,7 @@ function Home() {
         </div>
         <LegalDisclaimer className="px-4 lg:px-0 mt-32" />
       </div>
-    </main>
+    </main >
   )
 }
 
