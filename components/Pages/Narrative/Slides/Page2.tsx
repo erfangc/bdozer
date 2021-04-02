@@ -6,9 +6,11 @@ import { Navigation } from '../Navigation';
 import { PageTitle } from '../PageTitle';
 import { PageWrapper } from '../PageWrapper';
 import { Statistic } from '../Statistic';
+
 interface Props {
     result: StockAnalysis
 }
+
 export function Page2(props: Props) {
     const {
         model,
@@ -44,15 +46,15 @@ export function Page2(props: Props) {
 
                 <div className="flex flex-col text-blueGray-200">
                     <div className="flex justify-between">
-                        <b>{year(model.periods)} EPS</b>
-                        <span className="font-light">${finalEps.toFixed(1)}</span>
+                        <b>{year(model.periods)} P/E Multiple</b>
+                        <span className="font-light">{(1 / (discountRate - terminalGrowthRate)).toFixed(1)}</span>
                     </div>
                     <div className="flex justify-between">
-                        <b>{year(model.periods)} P/E Multiple</b>
-                        <span className="font-light">{(1 / (discountRate - terminalGrowthRate)).toFixed(1)} x</span>
+                        <b>{year(model.periods)} EPS</b>
+                        <span className="font-light">x ${finalEps.toFixed(1)}</span>
                     </div>
                     <div className="flex justify-between mt-2">
-                        <b className="pt-2">Future Price <code className="block text-xs font-normal mt-2 mb-4"> = {year(model.periods)} EPS * {year(model.periods)} P/E Multiple</code></b>
+                        <b className="pt-2">Future Price</b>
                         <span className="border-t pt-2 font-bold ">${finalTvps.toFixed(1)}</span>
                     </div>
                 </div>

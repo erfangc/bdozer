@@ -54,12 +54,11 @@ export function Page3(props: Props) {
                     </div>
                     <div className="flex justify-between">
                         <b>Shares Outstanding</b>
-                        <span className="font-light">{simpleNumber(sharesOutstanding?.toFixed(0))}</span>
+                        <span className="font-light">&#247; {simpleNumber(sharesOutstanding?.toFixed(0))}</span>
                     </div>
                     <div className="flex justify-between mt-2">
                         <b className="pt-2">
                             Earning per Share
-                                <code className="block text-xs font-normal mt-2 mb-4"> = {year(model.periods)} Profit &#247;  Shares Outstanding</code>
                         </b>
                         <span className="border-t pt-2 font-bold ">${eps.toFixed(1)}</span>
                     </div>

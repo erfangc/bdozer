@@ -71,9 +71,11 @@ export function Page4({ result }: Props) {
         }
         setOptions(options)
     }
+
     useEffect(() => {
         refresh()
     }, [])
+
     return (
         <PageWrapper id="page4">
             <div className="w-full space-y-12 mt-20">
@@ -87,13 +89,15 @@ export function Page4({ result }: Props) {
                     <HighchartsReact highcharts={highcharts} options={options} />
                 </div>
                 <div>
-                    <div className="mb-6">
+                    <div>
                         Want to see more?
                     </div>
-                    <Link href={`/${cik}/narrative2`}><a className="bg-blue-500 px-6 py-4 rounded">See the Full Analysis «</a></Link>
+                    <div className="flex space-x-2">
+                        <Link href={`/${cik}/narrative2`}><a className="bg-blue-500 px-6 py-3 rounded text-white">See the Full Analysis «</a></Link>
+                    </div>
                 </div>
                 <Navigation prev="page3" />
             </div>
-        </PageWrapper>
+        </PageWrapper >
     )
 }
