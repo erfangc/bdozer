@@ -29,6 +29,7 @@ export function Page3(props: Props) {
         series: waterfallSeries(businessWaterfall[model.periods])
     }
     const profit = businessWaterfall[model.periods]?.profit?.value;
+    const eps = cells.find(cell => cell.item?.name === EarningsPerShareBasic && cell.period == model.periods)?.value
     const sharesOutstanding = cells.find(cell => cell.period == model.periods && cell.item?.name === WeightedAverageNumberOfSharesOutstandingBasic)?.value
 
     return (
@@ -60,7 +61,7 @@ export function Page3(props: Props) {
                             Earning per Share
                                 <code className="block text-xs font-normal mt-2 mb-4"> = {year(model.periods)} Profit &#247;  Shares Outstanding</code>
                         </b>
-                        <span className="border-t pt-2 font-bold ">$4.1</span>
+                        <span className="border-t pt-2 font-bold ">${eps.toFixed(1)}</span>
                     </div>
                 </div>
                 <Navigation next="page4" prev="page2" />
