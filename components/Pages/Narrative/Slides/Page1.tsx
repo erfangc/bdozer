@@ -20,7 +20,7 @@ export function Page1(props: Props) {
     const upside = ((finalTvps / currentPrice) - 1) * 100
 
     return (
-        <PageWrapper id="page1" className="flex items-center px-4 md:px-0 md:container md:mx-auto">
+        <PageWrapper id="page1">
             <div className="flex flex-col space-y-12 mt-20">
                 <PageTitle>
                     What's <br />{name} stock worth?

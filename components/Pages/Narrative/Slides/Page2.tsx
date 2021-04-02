@@ -23,7 +23,7 @@ export function Page2(props: Props) {
     const finalEps = cells.find(cell => cell.item?.name === EarningsPerShareBasic && cell.period == model.periods)?.value
 
     return (
-        <PageWrapper id="page2" className="flex items-center px-4 md:px-0 md:container md:mx-auto">
+        <PageWrapper id="page2">
             <div className="flex flex-col space-y-12 mt-20">
                 <PageTitle>
                     How did we get the ${finalTvps.toFixed(1)} future price?

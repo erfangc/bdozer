@@ -2,9 +2,9 @@ import React from 'react'
 
 export function Navigation(props: { next?: string, prev?: string }) {
     return (
-        <div className="flex flex-col space-y-4 py-6">
-            {props.next ? <Forward target={props.next} /> : null}
+        <div className="grid grid-flow-row grid-cols-1 gap-4 lg:grid-cols-2 py-6">
             {props.prev ? <Backward target={props.prev} /> : null}
+            {props.next ? <Forward target={props.next} /> : null}
         </div>
     )
 }

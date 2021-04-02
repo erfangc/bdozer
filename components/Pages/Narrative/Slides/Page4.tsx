@@ -71,7 +71,7 @@ export function Page4({ result }: Props) {
         refresh()
     }, [])
     return (
-        <PageWrapper id="page4" className="flex items-center px-4 md:px-0 md:container md:mx-auto">
+        <PageWrapper id="page4">
             <div className="w-full space-y-12 mt-20">
                 <PageTitle>Revenue Past and Future</PageTitle>
                 <p>

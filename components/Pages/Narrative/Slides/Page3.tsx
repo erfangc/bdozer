@@ -32,7 +32,7 @@ export function Page3(props: Props) {
     const sharesOutstanding = cells.find(cell => cell.period == model.periods && cell.item?.name === WeightedAverageNumberOfSharesOutstandingBasic)?.value
 
     return (
-        <PageWrapper id="page3" className="flex items-center px-4 md:px-0 md:container md:mx-auto">
+        <PageWrapper id="page3">
             <div className="flex flex-col space-y-12 mt-20 w-full">
                 <PageTitle>
                     In {year(model.periods)}, why would earnings be ${finalEps.toFixed(1)} per share?
