@@ -3,18 +3,19 @@
 @tailwind utilities;
 
 .slides {
+  display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
 }
 
 .slides::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 0px;
+  height: 0px;
 }
 
 .slides::-webkit-scrollbar-thumb {
-  background:transparent;
+  background: transparent;
   border-radius: 10px;
 }
 
@@ -25,6 +26,7 @@
 .slide {
   scroll-snap-align: start;
   flex-shrink: 0;
+  height: fit-content;
   transform-origin: center center;
   transform: scale(1);
   transition: transform 0.5s;

@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { serverErrorStore } from "./ServerErrorStore";
 import { v4 as uuid } from 'uuid'
 
-export const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "http://localhost:8080";
+export const basePath = process.env.NEXT_PUBLIC_BASE_PATH;
 const axiosInstance = axios.create();
 
 axiosInstance.interceptors.response.use(null, (error) => {
