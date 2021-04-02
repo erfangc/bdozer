@@ -1,4 +1,6 @@
 import HighchartsReact from 'highcharts-react-official';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useFactBaseUnsecured } from '../../../../api-hooks';
 import { StockAnalysis } from '../../../../client';
@@ -15,6 +17,8 @@ interface Props {
 
 export function Page4({ result }: Props) {
 
+    const router = useRouter()
+    const { cik } = router.query
     const factBase = useFactBaseUnsecured()
     const [options, setOptions] = useState<Highcharts.Options>()
     const { cells, model: { name } } = result
@@ -81,6 +85,12 @@ export function Page4({ result }: Props) {
                 </p>
                 <div className="w-full">
                     <HighchartsReact highcharts={highcharts} options={options} />
+                </div>
+                <div>
+                    <div className="mb-6">
+                        Want to see more?
+                    </div>
+                    <Link href={`/${cik}/narrative2`}><a className="bg-blue-500 px-6 py-4 rounded">See the Full Analysis «</a></Link>
                 </div>
                 <Navigation prev="page3" />
             </div>
