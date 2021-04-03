@@ -30,19 +30,20 @@ export function Page2(props: Props) {
                 <PageTitle>
                     How did we get the ${finalTvps.toFixed(1)} future price?
                     </PageTitle>
-                <div className="space-y-6">
-                    <Statistic
-                        value={`$${eps.toFixed(1)}`}
-                        label={`${year(0)} EPS`}
-                    />
+                <div className="grid grid-cols-2 gap-4">
                     <Statistic
                         value={`$${finalEps.toFixed(1)}`}
-                        label={`${year(model.periods)} EPS`}
+                        label={`${year(model.periods)} Earnings per Share (EPS)`}
+                    />
+                    <Statistic
+                        value={`${terminalPe}x`}
+                        label={`Estimated P/E Multiple`}
                     />
                 </div>
+
                 <div className="max-w-2xl">
-                    Normally, businesses like {name} trades at <span className="font-extrabold text-lg">{terminalPe}</span>x earnings per share
-                    </div>
+                    Normally, businesses with similar risk as {name} trades at <span className="font-extrabold text-lg">{terminalPe}</span>x EPS
+                </div>
 
                 <div className="flex flex-col text-blueGray-200">
                     <div className="flex justify-between">

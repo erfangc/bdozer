@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useFactBaseUnsecured } from '../../../../api-hooks';
 import { StockAnalysis } from '../../../../client';
-import { highcharts } from '../../../../highcharts';
+import { blueGray50, highcharts } from '../../../../highcharts';
 import { simpleNumber } from '../../../../simple-number';
 import { year } from '../../../../year';
 import { Navigation } from '../Navigation';
@@ -21,9 +21,12 @@ export function Page4({ result }: Props) {
     const { cik } = router.query
     const factBase = useFactBaseUnsecured()
     const [options, setOptions] = useState<Highcharts.Options>()
-    const { cells, model: { name } } = result
+    const { cells, model } = result
     const revenue = result.businessWaterfall[0]?.revenue
     const factId = revenue?.item?.historicalValue?.factId
+
+    const revenueFy0 = cells.find(cell => cell.period === 0 && cell.item.name === revenue.item.name)?.value?.toFixed(0)
+    const revenueFinal = cells.find(cell => cell.period === model.periods && cell.item.name === revenue.item.name)?.value?.toFixed(0)
 
     async function refresh() {
         const { data: factTimeSeries } = await factBase.getFactTimeSeries(factId)
@@ -53,15 +56,25 @@ export function Page4({ result }: Props) {
             yAxis: {
                 title: { text: null, },
                 labels: {
-                    formatter: function () {
-                        return `${simpleNumber(this.value)}`
-                    }
-                }
+                    enabled: false,
+                },
+            },
+            tooltip: {
+                enabled: false,
             },
             plotOptions: {
                 column: {
-                    pointWidth: 35,
-                }
+                    dataLabels: {
+                        enabled: true,
+                        useHTML: false,
+                        style: {
+                            color: blueGray50,
+                        },
+                        formatter: function () {
+                            return `<div class="text-white z-0">${simpleNumber(this.y.toFixed(0), true)}</div>`;
+                        },
+                    },
+                },
             },
             xAxis: { lineWidth: 0, tickWidth: 0, },
             series: [
@@ -81,19 +94,18 @@ export function Page4({ result }: Props) {
             <div className="w-full space-y-12 mt-20">
                 <PageTitle>Revenue Past and Future</PageTitle>
                 <p>
-                    Median analyst estimate for {name}'s revenue going forward. <br />
-                    <span className="font-bold text-blue-400">Blue</span> columns
-                    show historical revenue.
+                    Our analysis relies on revenue growing from ${simpleNumber(revenueFy0)} to ${simpleNumber(revenueFinal)}.
+                    Below shows historical and projected revenues year by year.
                 </p>
                 <div className="w-full">
                     <HighchartsReact highcharts={highcharts} options={options} />
                 </div>
                 <div>
-                    <div>
-                        Want to see more?
-                    </div>
+                    <div>Want to see more?</div>
                     <div className="flex space-x-2">
-                        <Link href={`/${cik}/narrative2`}><a className="bg-blue-500 px-6 py-3 rounded text-white">See the Full Analysis «</a></Link>
+                        <Link href={`/${cik}/narrative2`}>
+                            <a className="bg-blue-500 px-6 py-3 rounded text-white">See the Full Analysis «</a>
+                        </Link>
                     </div>
                 </div>
                 <Navigation prev="page3" />

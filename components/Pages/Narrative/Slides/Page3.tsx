@@ -32,24 +32,24 @@ export function Page3(props: Props) {
     const eps = cells.find(cell => cell.item?.name === EarningsPerShareBasic && cell.period == model.periods)?.value
     const sharesOutstanding = cells.find(cell => cell.period == model.periods && cell.item?.name === WeightedAverageNumberOfSharesOutstandingBasic)?.value
 
+    const finalYear = year(model.periods);
     return (
         <PageWrapper id="page3">
             <div className="flex flex-col space-y-12 mt-20 w-full">
-                <PageTitle>
-                    In {year(model.periods)}, why would earnings be ${finalEps.toFixed(1)} per share?
-                </PageTitle>
+                <PageTitle>In {finalYear}, why would earnings be ${finalEps.toFixed(1)} per share?</PageTitle>
                 <div className="w-full">
                     <p>
                         <span>{symbol}'s profit is projected to be </span>
                         <span className={`${profit > 0 ? 'text-lime-500' : 'text-rose-500'} font-extrabold text-lg`}>
                             ${simpleNumber(profit?.toFixed(0))}
                         </span>
+                        <span> in {finalYear}, see details below</span>
                     </p>
                     <HighchartsReact highcharts={highcharts} options={fyFinalWaterFall} />
                 </div>
                 <div className="flex flex-col text-blueGray-200">
                     <div className="flex justify-between">
-                        <b>{year(model.periods)} Profit</b>
+                        <b>{finalYear} Profit</b>
                         <span className="font-light">${simpleNumber(profit?.toFixed(0))}</span>
                     </div>
                     <div className="flex justify-between">
@@ -57,9 +57,7 @@ export function Page3(props: Props) {
                         <span className="font-light">&#247; {simpleNumber(sharesOutstanding?.toFixed(0))}</span>
                     </div>
                     <div className="flex justify-between mt-2">
-                        <b className="pt-2">
-                            Earning per Share
-                        </b>
+                        <b className="pt-2">Earning per Share</b>
                         <span className="border-t pt-2 font-bold ">${eps.toFixed(1)}</span>
                     </div>
                 </div>

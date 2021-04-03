@@ -58,7 +58,8 @@ export function waterfallSeries(waterfall: Waterfall) {
         data: [revenue, ...topExpenses, profit,],
         pointPadding: 0,
         dataLabels: {
-            enabled: true, useHTML: false,
+            enabled: true,
+            useHTML: false,
             formatter: function () {
                 return `<div class="z-0">${simpleNumber(this.y.toFixed(0), true)}</div>`;
             },

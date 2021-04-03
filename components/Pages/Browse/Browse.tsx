@@ -25,14 +25,14 @@ export function Browse(props: Props) {
                         {/* <StockTab >#FAANG</StockTab> */}
                     </div>
                 </div>
+                <blockquote className="my-4 pl-6 border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300">
+                    Click on the Cards to View Analysis
+                </blockquote>
                 <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
                     {
                         stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis} />)
                     }
                 </div>
-                <blockquote className="mt-8 pl-6 border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300">
-                    Click on the Cards to View Analysis
-                </blockquote>
             </section>
             <LegalDisclaimer />
         </main>

@@ -10,8 +10,8 @@ export function Statistic({ label, value, ...props }: Props) {
     }
     return (
         <div {...props}>
-            {v}
             <div>{label}</div>
+            {v}
         </div>
     )
 }

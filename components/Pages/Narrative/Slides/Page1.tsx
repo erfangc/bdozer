@@ -27,8 +27,11 @@ export function Page1(props: Props) {
                 </PageTitle>
                 <div className="space-y-6">
                     <Statistic label="Current Price" value={`$${currentPrice.toFixed(2)}`} />
-                    <Statistic label={`Price in ${model.periods - 1} Years`} value={`$${finalTvps.toFixed(2)}`} />
-                    <Statistic label="% Upside" value={<div className={`${upside > 0 ? 'text-lime-500' : 'text-rose-500'} font-extrabold text-2xl`}>{upside.toFixed(1)}%</div>} />
+                    <Statistic label={`Estimated Price in ${model.periods - 1} Years`} value={`$${finalTvps.toFixed(2)}`} />
+                    <Statistic
+                        label={`% ${upside > 0 ? 'Upside' : 'Downside'}`}
+                        value={<div className={`${upside > 0 ? 'text-lime-500' : 'text-rose-500'} font-extrabold text-2xl`}>{upside.toFixed(1)}%</div>}
+                    />
                 </div>
                 <Navigation next="page2" />
             </div>
