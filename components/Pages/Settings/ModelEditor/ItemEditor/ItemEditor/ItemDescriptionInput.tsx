@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Item } from "../../../../client";
-import { TextInput } from "../../../Common/TextInput";
+import { Item } from "../../../../../../client";
+import { TextInput } from "../../../../../Common/TextInput";
 
 export function ItemDescriptionInput(props: { item: Item, onChange: (newValue) => void }) {
     const { item, onChange } = props;

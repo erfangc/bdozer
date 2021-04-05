@@ -4,7 +4,7 @@ import { FilingEntity, StockAnalysis } from '../../../client'
 import { Select } from '../../Common/Select'
 import Tab from '../../Common/Tab'
 import { TextInput } from '../../Common/TextInput'
-import { ItemDisplayComponent } from '../../ModelEditor/ItemEditor/ItemDisplay'
+import { ItemDisplayComponent } from './ModelEditor/ItemEditor/ItemDisplay'
 
 interface Props {
     filingEntity: FilingEntity

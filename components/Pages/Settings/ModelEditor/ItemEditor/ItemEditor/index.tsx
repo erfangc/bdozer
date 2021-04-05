@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Item, ItemTypeEnum, Model } from "../../../../client";
-import { AutoForm } from "../../../AutoForms/AutoForm";
-import { bodyOf, merge, schemaOf } from "../../../AutoForms/Schemas";
-import { DeleteButton } from "../../../Common/DeleteButton";
-import { Select } from "../../../Common/Select";
+import { Item, ItemTypeEnum, Model } from "../../../../../../client";
+import { AutoForm } from "../../../../../AutoForms/AutoForm";
+import { bodyOf, merge, schemaOf } from "../../../../../AutoForms/Schemas";
+import { DeleteButton } from "../../../../../Common/DeleteButton";
+import { Select } from "../../../../../Common/Select";
 import { FormulaEditor } from "./FormulaEditor";
 import { ItemDescriptionInput } from "./ItemDescriptionInput";
 import { ItemFY0Input } from "./ItemFY0Input";
@@ -18,7 +18,7 @@ interface ItemEditorProps {
  * Shows an editor for the Item but also 
  * can be swapped to edit the Drivers that belong to the Item
  */
-export class IncomeStatementItemEditor extends Component<ItemEditorProps> {
+export class ItemEditor extends Component<ItemEditorProps> {
 
     updateDescription(newDescription) {
         const { model, item, onChange } = this.props;

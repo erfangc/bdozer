@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import NumberFormat from "react-number-format"
-import { Item, Model } from "../../../client"
-import { IncomeStatementItemEditor } from "./ItemEditor"
+import { Item, Model } from "../../../../../client"
+import { ItemEditor } from "./ItemEditor"
 import { Attention, Check } from "./Svgs"
 
 interface ItemComponentProps {
@@ -68,7 +68,7 @@ export class ItemDisplayComponent extends Component<ItemComponentProps, State> {
                 {
                     editorOpen
                         ? (
-                            <IncomeStatementItemEditor
+                            <ItemEditor
                                 item={item}
                                 onChange={onChange}
                                 model={model}
