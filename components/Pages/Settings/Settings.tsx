@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useFilingEntityManager, useFilingEntityManagerUnsecured, useStockAnalyzerFactory } from '../../../api-hooks'
-import { FilingEntity } from '../../../client'
+import { FilingEntity, StockAnalysis } from '../../../client'
+import { Card, CardPercent } from '../../Common/Card'
 import { DeleteButton } from '../../Common/DeleteButton'
 import { GhostButton } from '../../Common/GhostButton'
 import { PrimaryButton } from '../../Common/PrimaryButton'
@@ -18,13 +19,23 @@ export function Settings() {
     const filingEntityManagerUnsecured = useFilingEntityManagerUnsecured()
     const filingEntityManager = useFilingEntityManager()
     const stockAnalysisFactory = useStockAnalyzerFactory()
+    const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis>()
 
     const { cik } = router.query
+
+    async function init() {
+        try {
+            const resp = await filingEntityManagerUnsecured.getFilingEntity(cik as string)
+            setFilingEntity(resp.data)
+            const resp2 = await stockAnalysisFactory.getAnalysis(cik as string)
+            setStockAnalysis(resp2.data)
+        } catch (e) {
+            console.error(e);
+        }
+    }
     useEffect(() => {
         if (cik) {
-            filingEntityManagerUnsecured
-                .getFilingEntity(cik as string)
-                .then(resp => setFilingEntity(resp.data))
+            init()
         }
     }, [cik])
 
@@ -41,7 +52,8 @@ export function Settings() {
     async function runStockAnalysis() {
         setLoading(true)
         try {
-            await stockAnalysisFactory.analyze(filingEntity.cik, true)
+            const { data } = await stockAnalysisFactory.analyze(filingEntity.cik, true)
+            setStockAnalysis(data)
         } catch (e) {
             console.error(e);
         }
@@ -58,11 +70,21 @@ export function Settings() {
         setLoading(false)
     }
 
-    function seeModel() {
+    async function saveStockAnalysis() {
+        setLoading(true)
+        try {
+            await stockAnalysisFactory.saveAnalysis(stockAnalysis)
+        } catch (e) {
+            console.error(e);
+        }
+        setLoading(false)
+    }
+
+    function viewModel() {
         router.push(`/${filingEntity?.cik}/narrative2`)
     }
 
-    function seeFullModel() {
+    function viewFullModel() {
         router.push(`/settings/${filingEntity?.cik}/full-model`)
     }
 
@@ -76,7 +98,7 @@ export function Settings() {
     }
 
     return (
-        <main className="flex-grow flex flex-col space-y-12 min-h-screen p-3 xl:p-10 lg:p-8">
+        <main className="flex-grow flex flex-col space-y-12 min-h-screen p-3 xl:p-10 lg:p-8 pb-20">
             <Title>Model Control Panel</Title>
             <section className="flex flex-col space-y-4">
                 {filingEntity
@@ -112,16 +134,29 @@ export function Settings() {
             </section>
 
             <section>
-                <SubTitle className="mb-4">View Built Models</SubTitle>
-                <div className="space-x-2">
-                    <GhostButton onClick={seeModel}>
-                        Narrative Model
-                    </GhostButton>
-                    <GhostButton onClick={seeFullModel}>
-                        See Full Model
-                    </GhostButton>
-                </div>
+                {
+                    stockAnalysis !== undefined
+                        ?
+                        <div>
+                            <SubTitle className="mb-4">Model Output Preview</SubTitle>
+                            <div className="space-x-2">
+                                <GhostButton onClick={viewModel}>
+                                    Narrative Model
+                                </GhostButton>
+                                <GhostButton onClick={viewFullModel}>
+                                    See Full Model
+                                </GhostButton>
+                            </div>
+                            <div className="grid grid-flow-row gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-4">
+                                <Card value={stockAnalysis.currentPrice} label={"Current Price"} running={loading} />
+                                <Card value={stockAnalysis.targetPrice} label={"Target Price"} running={loading} />
+                                <Card value={stockAnalysis.zeroGrowthPrice} label={"Zero Growth Price"} running={loading} />
+                                <CardPercent value={stockAnalysis.revenueCAGR} label={"Revenue CAGR"} running={loading} />
+                            </div>
+                        </div>
+                        : null
+                }
             </section>
-        </main>
+        </main >
     )
 }
