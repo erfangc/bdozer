@@ -4,7 +4,7 @@ import { FilingEntity, StockAnalysis } from '../../../client'
 import { Select } from '../../Common/Select'
 import Tab from '../../Common/Tab'
 import { TextInput } from '../../Common/TextInput'
-import { IncomeStatementItemComponent } from '../../ModelEditor/IncomeStatementEditor/IncomeStatementItemComponent'
+import { ItemDisplayComponent } from '../../ModelEditor/ItemEditor/ItemDisplay'
 
 interface Props {
     filingEntity: FilingEntity
@@ -57,7 +57,7 @@ export default function Editor(props: Props) {
                     {
                         stockAnalysis.model.incomeStatementItems.filter(item => item.formula !== '0.0').map(item => {
                             return (
-                                <IncomeStatementItemComponent
+                                <ItemDisplayComponent
                                     model={stockAnalysis.model}
                                     item={item}
                                     onChange={console.log}

@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import NumberFormat from "react-number-format"
 import { Item, Model } from "../../../client"
-import { IncomeStatementItemEditor } from "./IncomeStatementItemEditor/IncomeStatementItemEditor"
-import { Attention, Check } from "../Svgs"
+import { IncomeStatementItemEditor } from "./ItemEditor"
+import { Attention, Check } from "./Svgs"
 
 interface ItemComponentProps {
     model: Model
@@ -14,7 +14,7 @@ interface State {
     editorOpen: boolean
 }
 
-export class IncomeStatementItemComponent extends Component<ItemComponentProps, State> {
+export class ItemDisplayComponent extends Component<ItemComponentProps, State> {
 
     clickOutsideHandler = null
     node = null
