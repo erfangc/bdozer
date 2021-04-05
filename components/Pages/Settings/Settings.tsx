@@ -2,15 +2,13 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useFilingEntityManager, useFilingEntityManagerUnsecured, useStockAnalyzerFactory } from '../../../api-hooks'
 import { FilingEntity, StockAnalysis } from '../../../client'
-import { Card, CardPercent } from '../../Common/Card'
 import { DeleteButton } from '../../Common/DeleteButton'
-import { GhostButton } from '../../Common/GhostButton'
 import { PrimaryButton } from '../../Common/PrimaryButton'
 import { SecondaryButton } from '../../Common/SecondaryButton'
-import { Select } from '../../Common/Select'
-import { TextInput } from '../../Common/TextInput'
-import { SubTitle, Title } from '../../Common/Title'
+import { Title } from '../../Common/Title'
+import Editor from './Editor'
 import { FilingEntityCard } from './FilingEntityCard'
+import StockAnalysisSummary from './StockAnalysisSummary'
 
 export function Settings() {
 
@@ -34,21 +32,12 @@ export function Settings() {
             console.error(e);
         }
     }
+
     useEffect(() => {
         if (cik) {
             init()
         }
     }, [cik])
-
-    async function changeModelTemplate(template: string) {
-        const updatedFilingEntity: FilingEntity = {
-            ...filingEntity, modelTemplate: {
-                name: template, template
-            }
-        };
-        await filingEntityManager.saveFilingEntity(updatedFilingEntity)
-        setFilingEntity(updatedFilingEntity)
-    }
 
     async function runStockAnalysis() {
         setLoading(true)
@@ -81,73 +70,15 @@ export function Settings() {
         setLoading(false)
     }
 
-    function viewModel() {
-        router.push(`/${filingEntity?.cik}/narrative2`)
-    }
-
-    function viewFullModel() {
-        router.push(`/settings/${filingEntity?.cik}/full-model`)
-    }
-
-    async function updateBeta(event: React.ChangeEvent<HTMLInputElement>) {
-        const updatedFilingEntity: FilingEntity = {
-            ...filingEntity,
-            beta: parseFloat(event.currentTarget.value)
-        }
-        await filingEntityManager.saveFilingEntity(updatedFilingEntity)
-        setFilingEntity(updatedFilingEntity)
-    }
-
     return (
         <main className="flex-grow flex flex-col space-y-12 min-h-screen p-3 xl:p-10 lg:p-8 pb-20">
             <Title>Model Control Panel</Title>
             <section className="flex flex-col space-y-6">
-                {
-                    filingEntity
-                        ?
-                        <FilingEntityCard filingEntity={filingEntity} />
-                        : null
-                }
-                {
-                    stockAnalysis !== undefined
-                        ?
-                        <div>
-                            <div className="grid grid-flow-row gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-4">
-                                <Card value={stockAnalysis.currentPrice} label={"Current Price"} running={loading} />
-                                <Card value={stockAnalysis.targetPrice} label={"Target Price"} running={loading} />
-                                <Card value={stockAnalysis.zeroGrowthPrice} label={"Zero Growth Price"} running={loading} />
-                                <CardPercent value={stockAnalysis.revenueCAGR} label={"Revenue CAGR"} running={loading} />
-                            </div>
-                            <div className="space-x-2">
-                                <GhostButton onClick={viewModel}>
-                                    Narrative Model
-                                </GhostButton>
-                                <GhostButton onClick={viewFullModel}>
-                                    See Full Model
-                                </GhostButton>
-                            </div>
-                        </div>
-                        : null
-                }
+                <FilingEntityCard filingEntity={filingEntity} />
+                <StockAnalysisSummary stockAnalysis={stockAnalysis} loading={loading} />
             </section>
             <section className="flex flex-col space-y-4">
-                {
-                    filingEntity
-                        ?
-                        <div className="border border-blueGray-500 rounded p-4 space-y-4">
-                            <Select
-                                onChange={({ currentTarget: { value } }) => changeModelTemplate(value)}
-                                value={filingEntity?.modelTemplate?.template}
-                                label="Choose Model Template"
-                                className="lg:w-96"
-                            >
-                                <option></option>
-                                <option value="Recovery">Recovery</option>
-                            </Select>
-                            <TextInput value={filingEntity.beta} type="number" onChange={updateBeta} label="Beta" className="w-24" />
-                        </div>
-                        : null
-                }
+                <Editor filingEntity={filingEntity} stockAnalysis={stockAnalysis} onFilingEntityUpdate={setFilingEntity} />
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-6">
                     <PrimaryButton onClick={runStockAnalysis} disabled={loading} className="py-2">
                         {loading ? 'Loading ...' : 'Run Analysis'}

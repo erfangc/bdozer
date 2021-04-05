@@ -1,6 +1,7 @@
 import { FilingEntity } from "../../../client";
 
-export function FilingEntityCard({ filingEntity }: { filingEntity: FilingEntity }) {
+export function FilingEntityCard({ filingEntity }: { filingEntity?: FilingEntity }) {
+    if (!filingEntity) return null;
     return (
         <>
             <div className='bg-blueGray-700 shadow-md rounded-md grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-6 px-4 gap-4'>
