@@ -6,6 +6,7 @@ import { Card, CardPercent } from '../../Common/Card'
 import { DeleteButton } from '../../Common/DeleteButton'
 import { GhostButton } from '../../Common/GhostButton'
 import { PrimaryButton } from '../../Common/PrimaryButton'
+import { SecondaryButton } from '../../Common/SecondaryButton'
 import { Select } from '../../Common/Select'
 import { TextInput } from '../../Common/TextInput'
 import { SubTitle, Title } from '../../Common/Title'
@@ -100,16 +101,40 @@ export function Settings() {
     return (
         <main className="flex-grow flex flex-col space-y-12 min-h-screen p-3 xl:p-10 lg:p-8 pb-20">
             <Title>Model Control Panel</Title>
-            <section className="flex flex-col space-y-4">
-                {filingEntity
-                    ?
-                    <FilingEntityCard filingEntity={filingEntity} />
-                    : null
-                }
+            <section className="flex flex-col space-y-6">
                 {
                     filingEntity
                         ?
-                        <>
+                        <FilingEntityCard filingEntity={filingEntity} />
+                        : null
+                }
+                {
+                    stockAnalysis !== undefined
+                        ?
+                        <div>
+                            <div className="grid grid-flow-row gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-4">
+                                <Card value={stockAnalysis.currentPrice} label={"Current Price"} running={loading} />
+                                <Card value={stockAnalysis.targetPrice} label={"Target Price"} running={loading} />
+                                <Card value={stockAnalysis.zeroGrowthPrice} label={"Zero Growth Price"} running={loading} />
+                                <CardPercent value={stockAnalysis.revenueCAGR} label={"Revenue CAGR"} running={loading} />
+                            </div>
+                            <div className="space-x-2">
+                                <GhostButton onClick={viewModel}>
+                                    Narrative Model
+                                </GhostButton>
+                                <GhostButton onClick={viewFullModel}>
+                                    See Full Model
+                                </GhostButton>
+                            </div>
+                        </div>
+                        : null
+                }
+            </section>
+            <section className="flex flex-col space-y-4">
+                {
+                    filingEntity
+                        ?
+                        <div className="border border-blueGray-500 rounded p-4 space-y-4">
                             <Select
                                 onChange={({ currentTarget: { value } }) => changeModelTemplate(value)}
                                 value={filingEntity?.modelTemplate?.template}
@@ -120,42 +145,20 @@ export function Settings() {
                                 <option value="Recovery">Recovery</option>
                             </Select>
                             <TextInput value={filingEntity.beta} type="number" onChange={updateBeta} label="Beta" className="w-24" />
-                        </>
-                        : null
-                }
-                <div className="flex space-x-2 pt-8">
-                    <PrimaryButton onClick={runStockAnalysis} className={loading ? `animate-pulse` : ``} disabled={loading}>
-                        {loading ? 'Loading ...' : 'Run Stock Analysis'}
-                    </PrimaryButton>
-                    <DeleteButton onClick={bootstrap} className={loading ? `animate-pulse` : ``} disabled={loading}>
-                        Rebootstrap
-                    </DeleteButton>
-                </div>
-            </section>
-
-            <section>
-                {
-                    stockAnalysis !== undefined
-                        ?
-                        <div>
-                            <SubTitle className="mb-4">Model Output Preview</SubTitle>
-                            <div className="space-x-2">
-                                <GhostButton onClick={viewModel}>
-                                    Narrative Model
-                                </GhostButton>
-                                <GhostButton onClick={viewFullModel}>
-                                    See Full Model
-                                </GhostButton>
-                            </div>
-                            <div className="grid grid-flow-row gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-4">
-                                <Card value={stockAnalysis.currentPrice} label={"Current Price"} running={loading} />
-                                <Card value={stockAnalysis.targetPrice} label={"Target Price"} running={loading} />
-                                <Card value={stockAnalysis.zeroGrowthPrice} label={"Zero Growth Price"} running={loading} />
-                                <CardPercent value={stockAnalysis.revenueCAGR} label={"Revenue CAGR"} running={loading} />
-                            </div>
                         </div>
                         : null
                 }
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-6">
+                    <PrimaryButton onClick={runStockAnalysis} disabled={loading} className="py-2">
+                        {loading ? 'Loading ...' : 'Run Analysis'}
+                    </PrimaryButton>
+                    <DeleteButton onClick={bootstrap} disabled={loading} className="py-2">
+                        {loading ? '-' : 'Rebootstrap'}
+                    </DeleteButton>
+                    <SecondaryButton onClick={saveStockAnalysis} className="py-2">
+                        {loading ? '-' : 'Save'}
+                    </SecondaryButton>
+                </div>
             </section>
         </main >
     )
