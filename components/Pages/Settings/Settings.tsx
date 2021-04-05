@@ -78,7 +78,6 @@ export function Settings() {
                 <StockAnalysisSummary stockAnalysis={stockAnalysis} loading={loading} />
             </section>
             <section className="flex flex-col space-y-4">
-                <Editor filingEntity={filingEntity} stockAnalysis={stockAnalysis} onFilingEntityUpdate={setFilingEntity} />
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-6">
                     <PrimaryButton onClick={runStockAnalysis} disabled={loading} className="py-2">
                         {loading ? 'Loading ...' : 'Run Analysis'}
@@ -90,6 +89,7 @@ export function Settings() {
                         {loading ? '-' : 'Save'}
                     </SecondaryButton>
                 </div>
+                <Editor filingEntity={filingEntity} stockAnalysis={stockAnalysis} onFilingEntityUpdate={setFilingEntity} />
             </section>
         </main >
     )

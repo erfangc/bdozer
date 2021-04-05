@@ -2,7 +2,9 @@ import React from 'react'
 import { useFilingEntityManager } from '../../../api-hooks'
 import { FilingEntity, StockAnalysis } from '../../../client'
 import { Select } from '../../Common/Select'
+import Tab from '../../Common/Tab'
 import { TextInput } from '../../Common/TextInput'
+import { IncomeStatementItemComponent } from '../../ModelEditor/IncomeStatementEditor/IncomeStatementItemComponent'
 
 interface Props {
     filingEntity: FilingEntity
@@ -12,8 +14,7 @@ interface Props {
 
 export default function Editor(props: Props) {
 
-    const { filingEntity, onFilingEntityUpdate } = props
-
+    const { filingEntity, stockAnalysis, onFilingEntityUpdate } = props
     const filingEntityManager = useFilingEntityManager()
 
     async function changeModelTemplate(template: string) {
@@ -35,7 +36,7 @@ export default function Editor(props: Props) {
         onFilingEntityUpdate(updatedFilingEntity)
     }
 
-    return filingEntity
+    return filingEntity && stockAnalysis
         ?
         <div className="border border-blueGray-500 rounded p-4 space-y-4">
             <Select
@@ -48,6 +49,24 @@ export default function Editor(props: Props) {
                 <option value="Recovery">Recovery</option>
             </Select>
             <TextInput value={filingEntity.beta} type="number" onChange={updateBeta} label="Beta" className="w-24" />
+            <div className="pt-6">
+                <div className="flex space-x-4 mb-4">
+                    <Tab active>Income Statement</Tab>
+                </div>
+                <div className="space-y-2">
+                    {
+                        stockAnalysis.model.incomeStatementItems.filter(item => item.formula !== '0.0').map(item => {
+                            return (
+                                <IncomeStatementItemComponent
+                                    model={stockAnalysis.model}
+                                    item={item}
+                                    onChange={console.log}
+                                />
+                            )
+                        })
+                    }
+                </div>
+            </div>
         </div>
         : null
 

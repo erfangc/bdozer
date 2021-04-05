@@ -92,7 +92,7 @@ export class IncomeStatementItemEditor extends Component<ItemEditorProps> {
     render() {
         const { item } = this.props;
         return (
-            <div className="absolute top-0 z-10 left-full ml-4 bg-blueGray-800 px-20 py-8 rounded-lg shadow-md flex-col space-y-8">
+            <div className="fixed top-32 left-32 right-32 z-10 ml-4 bg-blueGray-800 px-20 py-8 rounded-lg shadow-md flex-col space-y-8">
                 <div className="flex-col space-y-4">
                     <ItemDescriptionInput item={item} onChange={this.updateDescription.bind(this)} />
                     <ItemFY0Input item={item} onChange={this.updateHistoricalValue.bind(this)} />
