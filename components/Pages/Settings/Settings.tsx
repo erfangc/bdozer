@@ -77,7 +77,7 @@ export function Settings() {
 
     return (
         <main className="flex-grow flex flex-col space-y-12 min-h-screen p-3 xl:p-10 lg:p-8">
-            <Title>Model Controls and Settings</Title>
+            <Title>Model Control Panel</Title>
             <section className="flex flex-col space-y-4">
                 {filingEntity
                     ?

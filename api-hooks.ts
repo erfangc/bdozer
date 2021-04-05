@@ -7,7 +7,6 @@ import {
   FilingEntityManagerUnsecuredControllerApi,
   MarketingControllerApi,
   MxParserControllerApi,
-  NarrativeBuilderControllerApi,
   StockAnalyzerFactoryControllerApi,
 } from "./client";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -90,9 +89,4 @@ export function useFilingEntityManagerUnsecured() {
 export function useComments() {
   const axiosInstance = useAxios();
   return new CommentsControllerApi(null, basePath, axiosInstance)
-}
-
-export function useNarrativeBuilder() {
-  const axiosInstance = useAxios();
-  return new NarrativeBuilderControllerApi(null, basePath, axiosInstance)
 }
