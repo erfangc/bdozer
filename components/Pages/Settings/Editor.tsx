@@ -1,10 +1,11 @@
-import React from 'react'
-import { useFilingEntityManager } from '../../../api-hooks'
-import { FilingEntity, StockAnalysis } from '../../../client'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
+import { useFilingEntityManager, useModelOverrides } from '../../../api-hooks'
+import { FilingEntity, Item, ModelOverride, StockAnalysis } from '../../../client'
 import { Select } from '../../Common/Select'
 import Tab from '../../Common/Tab'
 import { TextInput } from '../../Common/TextInput'
-import { ItemDisplayComponent } from './ModelEditor/ItemEditor/ItemDisplay'
+import { ItemDisplayComponent } from './ItemEditor/ItemDisplay'
 
 interface Props {
     filingEntity: FilingEntity
@@ -16,6 +17,13 @@ export default function Editor(props: Props) {
 
     const { filingEntity, stockAnalysis, onFilingEntityUpdate } = props
     const filingEntityManager = useFilingEntityManager()
+    const modelOverrides = useModelOverrides()
+    const [modelOverride, setModelOverride] = useState<ModelOverride>()
+
+    async function init() {
+        const resp = await modelOverrides.getOverrides(stockAnalysis.cik)
+        setModelOverride(resp.data)
+    }
 
     async function changeModelTemplate(template: string) {
         const updatedFilingEntity: FilingEntity = {
@@ -34,6 +42,41 @@ export default function Editor(props: Props) {
         }
         await filingEntityManager.saveFilingEntity(updatedFilingEntity)
         onFilingEntityUpdate(updatedFilingEntity)
+    }
+
+    useEffect(() => {
+        if (stockAnalysis?.cik) {
+            init()
+        }
+    }, [stockAnalysis?.cik])
+
+    async function handleItemOverride(updatedItem: Item) {
+        const updatedItems = [
+            ...modelOverride
+                .items
+                .filter(item => updatedItem.name !== item.name),
+            updatedItem
+        ]
+        const updatedModelOverride: ModelOverride = {
+            ...modelOverride,
+            items: updatedItems
+        }
+        setModelOverride(updatedModelOverride)
+        await modelOverrides.saveOverrides(updatedModelOverride)
+    }
+
+    async function handleClear(itemToRemove: Item) {
+        const updatedItems = [
+            ...modelOverride
+                .items
+                .filter(item => itemToRemove.name !== item.name),
+        ]
+        const updatedModelOverride: ModelOverride = {
+            ...modelOverride,
+            items: updatedItems
+        }
+        setModelOverride(updatedModelOverride)
+        await modelOverrides.saveOverrides(updatedModelOverride)
     }
 
     return filingEntity && stockAnalysis
@@ -55,15 +98,21 @@ export default function Editor(props: Props) {
                 </div>
                 <div className="space-y-2">
                     {
-                        stockAnalysis.model.incomeStatementItems.filter(item => item.formula !== '0.0').map(item => {
-                            return (
-                                <ItemDisplayComponent
-                                    model={stockAnalysis.model}
-                                    item={item}
-                                    onChange={console.log}
-                                />
-                            )
-                        })
+                        stockAnalysis
+                            .model
+                            .incomeStatementItems.
+                            filter(item => item.formula !== '0.0')
+                            .map(item => {
+                                const overrideItem = modelOverride?.items?.find(it => it.name === item.name)
+                                return (
+                                    <ItemDisplayComponent
+                                        overriden={overrideItem !== undefined}
+                                        item={overrideItem ?? item}
+                                        onChange={handleItemOverride}
+                                        onClear={handleClear}
+                                    />
+                                )
+                            })
                     }
                 </div>
             </div>

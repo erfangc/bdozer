@@ -112,7 +112,7 @@ export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
                 {components}
             </form>
             <PrimaryButton onClick={handleSubmit}>
-                Confirm &amp; Recalculate
+                Confirm
             </PrimaryButton>
         </div>
     )

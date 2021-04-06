@@ -8,6 +8,7 @@ import {
   MarketingControllerApi,
   MxParserControllerApi,
   StockAnalyzerFactoryControllerApi,
+  ModelOverrideControllerApi,
 } from "./client";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
@@ -89,4 +90,9 @@ export function useFilingEntityManagerUnsecured() {
 export function useComments() {
   const axiosInstance = useAxios();
   return new CommentsControllerApi(null, basePath, axiosInstance)
+}
+
+export function useModelOverrides() {
+  const axiosInstance = useAxios();
+  return new ModelOverrideControllerApi(null, basePath, axiosInstance)
 }

@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { Item } from "../../../../../../client"
-import { PrimaryButton } from "../../../../../Common/PrimaryButton"
+import { Item } from "../../../../client"
+import { PrimaryButton } from "../../../Common/PrimaryButton"
 
 export function FormulaEditor({ item, onSubmit }: { item: Item, onSubmit: (string) => void }) {
 
@@ -26,7 +26,7 @@ export function FormulaEditor({ item, onSubmit }: { item: Item, onSubmit: (strin
                 placeholder="Enter formula"
             >
             </input>
-            <PrimaryButton onClick={() => onSubmit(value)}>Confirm &amp; Rerun</PrimaryButton>
+            <PrimaryButton onClick={() => onSubmit(value)}>Confirm</PrimaryButton>
         </div>
     )
 }

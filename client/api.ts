@@ -1245,6 +1245,31 @@ export interface Model {
 /**
  * 
  * @export
+ * @interface ModelOverride
+ */
+export interface ModelOverride {
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelOverride
+     */
+    get_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelOverride
+     */
+    cik?: string;
+    /**
+     * 
+     * @type {Array<Item>}
+     * @memberof ModelOverride
+     */
+    items?: Array<Item>;
+}
+/**
+ * 
+ * @export
  * @interface ModelTemplate
  */
 export interface ModelTemplate {
@@ -2945,6 +2970,172 @@ export class MarketingControllerApi extends BaseAPI {
      */
     public stockAnalysisRequest(stockAnalysisRequest: Array<StockAnalysisRequest>, options?: any) {
         return MarketingControllerApiFp(this.configuration).stockAnalysisRequest(stockAnalysisRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ModelOverrideControllerApi - axios parameter creator
+ * @export
+ */
+export const ModelOverrideControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOverrides: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('getOverrides', 'cik', cik)
+            const localVarPath = `/api/model-overrides/{cik}`
+                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {ModelOverride} modelOverride 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveOverrides: async (modelOverride: ModelOverride, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'modelOverride' is not null or undefined
+            assertParamExists('saveOverrides', 'modelOverride', modelOverride)
+            const localVarPath = `/api/model-overrides`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(modelOverride, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ModelOverrideControllerApi - functional programming interface
+ * @export
+ */
+export const ModelOverrideControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ModelOverrideControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOverrides(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelOverride>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOverrides(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {ModelOverride} modelOverride 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveOverrides(modelOverride: ModelOverride, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveOverrides(modelOverride, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ModelOverrideControllerApi - factory interface
+ * @export
+ */
+export const ModelOverrideControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ModelOverrideControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOverrides(cik: string, options?: any): AxiosPromise<ModelOverride> {
+            return localVarFp.getOverrides(cik, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {ModelOverride} modelOverride 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveOverrides(modelOverride: ModelOverride, options?: any): AxiosPromise<void> {
+            return localVarFp.saveOverrides(modelOverride, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ModelOverrideControllerApi - object-oriented interface
+ * @export
+ * @class ModelOverrideControllerApi
+ * @extends {BaseAPI}
+ */
+export class ModelOverrideControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelOverrideControllerApi
+     */
+    public getOverrides(cik: string, options?: any) {
+        return ModelOverrideControllerApiFp(this.configuration).getOverrides(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {ModelOverride} modelOverride 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModelOverrideControllerApi
+     */
+    public saveOverrides(modelOverride: ModelOverride, options?: any) {
+        return ModelOverrideControllerApiFp(this.configuration).saveOverrides(modelOverride, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
