@@ -1,6 +1,5 @@
 import React from 'react'
 import { StockAnalysis } from '../../../../client';
-import { TerminalValuePerShare } from '../../../../constants';
 import { Navigation } from '../Navigation';
 import { PageTitle } from '../PageTitle';
 import { PageWrapper } from '../PageWrapper';
@@ -16,7 +15,7 @@ export function Page1(props: Props) {
         currentPrice
     } = props.result;
 
-    const finalTvps = cells.find(cell => cell.item?.name === TerminalValuePerShare && cell.period == model.periods)?.value
+    const finalTvps = cells.find(cell => cell.item?.name === "TerminalValuePerShare" && cell.period == model.periods)?.value
     const upside = ((finalTvps / currentPrice) - 1) * 100
 
     return (

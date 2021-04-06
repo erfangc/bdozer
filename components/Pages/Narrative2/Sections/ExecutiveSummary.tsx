@@ -1,6 +1,5 @@
 import React from "react";
 import { StockAnalysis } from "../../../../client";
-import { EarningsPerShareBasic } from "../../../../constants";
 import { simpleNumber } from "../../../../simple-number";
 import { Popover } from "../../../Popover";
 import { SubTitle } from "../../../Common/Title";
@@ -13,6 +12,7 @@ export function ExecutiveSummary(props: Props) {
     const {
         result,
         result: {
+            epsConceptName,
             cells,
             model: { name, periods, },
             businessWaterfall,
@@ -23,10 +23,11 @@ export function ExecutiveSummary(props: Props) {
         }
     } = props;
 
-    const { profit, expenses, revenue } = businessWaterfall[0]
+    const { profit, expenses, revenue, } = businessWaterfall[0]
+
     const upside = (targetPrice / currentPrice - 1) * 100
     const totalExpense = expenses.map(expense => expense.value).reduce((a, b) => a + b, 0)
-    const eps = cells.find(cell => cell.item.name === EarningsPerShareBasic && cell.period === 0)?.value
+    const eps = cells.find(cell => cell.item.name === epsConceptName && cell.period === 0)?.value
 
     const growthRatePopover = (
         <Popover trigger={`${(revenueCAGR * 100).toFixed(1)}%`}>

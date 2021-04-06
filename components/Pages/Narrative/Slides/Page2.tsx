@@ -1,6 +1,5 @@
 import React from 'react'
 import { StockAnalysis } from '../../../../client/api';
-import { TerminalValuePerShare, EarningsPerShareBasic } from '../../../../constants';
 import { year } from '../../../../year';
 import { Navigation } from '../Navigation';
 import { PageTitle } from '../PageTitle';
@@ -17,12 +16,12 @@ export function Page2(props: Props) {
         model: { name, terminalGrowthRate },
         cells,
         discountRate,
+        epsConceptName,
     } = props.result;
 
     const terminalPe = (1 / (discountRate - terminalGrowthRate)).toFixed(1)
-    const finalTvps = cells.find(cell => cell.item?.name === TerminalValuePerShare && cell.period == model.periods)?.value
-    const eps = cells.find(cell => cell.item?.name === EarningsPerShareBasic && cell.period == 0)?.value
-    const finalEps = cells.find(cell => cell.item?.name === EarningsPerShareBasic && cell.period == model.periods)?.value
+    const finalTvps = cells.find(cell => cell.item?.name === "TerminalValuePerShare" && cell.period == model.periods)?.value
+    const finalEps = cells.find(cell => cell.item?.name === epsConceptName && cell.period == model.periods)?.value
 
     return (
         <PageWrapper id="page2">

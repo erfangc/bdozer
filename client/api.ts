@@ -1434,6 +1434,42 @@ export interface StockAnalysis {
      * @memberof StockAnalysis
      */
     currentPrice?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis
+     */
+    totalRevenueConceptName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis
+     */
+    epsConceptName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis
+     */
+    netIncomeConceptName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis
+     */
+    ebitConceptName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis
+     */
+    operatingCostConceptName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis
+     */
+    sharesOutstandingConceptName?: string;
 }
 /**
  * 

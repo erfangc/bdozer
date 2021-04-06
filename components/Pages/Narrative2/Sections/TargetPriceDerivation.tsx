@@ -1,7 +1,6 @@
 import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
 import { StockAnalysis } from "../../../../client";
-import { PresentValueOfEarningsPerShare, PresentValueOfTerminalValuePerShare, EarningsPerShareBasic, TerminalValuePerShare } from "../../../../constants";
 import { blueGray200, indigo600, indigo400, amber600, amber400, highcharts } from "../../../../highcharts";
 import { year } from "../../../../year";
 import { Popover } from "../../../Popover";
@@ -13,12 +12,12 @@ interface Props {
 }
 export function TargetPriceDerivation(props: Props) {
     const {
-        result: { model, cells, discountRate, targetPrice }
+        result: { model, cells, discountRate, targetPrice, epsConceptName }
     } = props
 
     const to = `Target Price $${targetPrice.toFixed(1)} / share`
     const sandkeys = cells
-        .filter(cell => cell.item.name === PresentValueOfEarningsPerShare)
+        .filter(cell => cell.item.name === "PresentValueOfEarningsPerShare")
         .map(
             cell => {
                 const period = year(cell.period)
@@ -26,7 +25,7 @@ export function TargetPriceDerivation(props: Props) {
                 return [from, to, cell.value]
             }
         )
-    const pvTvps = cells.find(cell => cell.item.name === PresentValueOfTerminalValuePerShare && cell.period === model.periods)?.value
+    const pvTvps = cells.find(cell => cell.item.name === "PresentValueOfTerminalValuePerShare" && cell.period === model.periods)?.value
     sandkeys.push(['Terminal Value', to, pvTvps])
 
     const [sankeyOptions, setSandkeyOptions] = useState<Highcharts.Options>()
@@ -44,10 +43,10 @@ export function TargetPriceDerivation(props: Props) {
             })
     }
 
-    const pvOfEps = itemToSeriesData(PresentValueOfEarningsPerShare)
-    const pvOfTvps = itemToSeriesData(PresentValueOfTerminalValuePerShare)
-    const eps = itemToSeriesData(EarningsPerShareBasic)
-    const tvps = itemToSeriesData(TerminalValuePerShare)
+    const pvOfEps = itemToSeriesData("PresentValueOfEarningsPerShare")
+    const pvOfTvps = itemToSeriesData("PresentValueOfTerminalValuePerShare")
+    const eps = itemToSeriesData(epsConceptName)
+    const tvps = itemToSeriesData("TerminalValuePerShare")
 
     useEffect(() => {
         const options: Highcharts.Options = {

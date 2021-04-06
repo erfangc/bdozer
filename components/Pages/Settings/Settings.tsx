@@ -57,9 +57,8 @@ export function Settings() {
     async function bootstrap() {
         setLoading(true)
         try {
-            const cik = filingEntity.cik
-            await filingEntityManager.bootstrapFilingEntity(cik)
-            const resp = await filingEntityManagerUnsecured.getFilingEntity(cik)
+            await filingEntityManager.bootstrapFilingEntity(cik as string)
+            const resp = await filingEntityManagerUnsecured.getFilingEntity(cik as string)
             setFilingEntity(resp.data)
         } catch (e) {
             console.error(e);

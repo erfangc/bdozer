@@ -2,7 +2,6 @@ import HighchartsReact from "highcharts-react-official";
 import React from "react";
 import { useEffect, useState } from "react";
 import { StockAnalysis } from "../../../../client";
-import { EarningsPerShareBasic, NetIncomeLoss, WeightedAverageNumberOfSharesOutstandingBasic } from "../../../../constants";
 import { green500, highcharts, rose500 } from "../../../../highcharts";
 import { simpleNumber } from "../../../../simple-number";
 import { year } from "../../../../year";
@@ -13,12 +12,12 @@ interface Props {
 }
 
 export function FutureEarningsPerShare(props: Props) {
-    const { result: { cells } } = props;
+    const { result: { cells, epsConceptName, sharesOutstandingConceptName, netIncomeConceptName } } = props;
     const [options, setOptions] = useState<Highcharts.Options>()
 
     useEffect(() => {
         const eps = cells
-            .filter(cell => cell.item.name === EarningsPerShareBasic)
+            .filter(cell => cell.item.name === epsConceptName)
             .map(cell => {
                 const { value, period } = cell
                 return {
@@ -93,9 +92,9 @@ export function FutureEarningsPerShare(props: Props) {
                 </thead>
                 <tbody>
                     {range(0, props.result.model.periods).map(period => {
-                        const netIncomeLoss = cells.find(cell => cell.period == period && cell.item?.name === NetIncomeLoss)?.value
-                        const sharesOutstanding = cells.find(cell => cell.period == period && cell.item?.name === WeightedAverageNumberOfSharesOutstandingBasic)?.value
-                        const eps = cells.find(cell => cell.period == period && cell.item?.name === EarningsPerShareBasic)?.value
+                        const netIncomeLoss = cells.find(cell => cell.period == period && cell.item?.name === netIncomeConceptName)?.value
+                        const sharesOutstanding = cells.find(cell => cell.period == period && cell.item?.name === sharesOutstandingConceptName)?.value
+                        const eps = cells.find(cell => cell.period == period && cell.item?.name === epsConceptName)?.value
                         return (
                             <tr key={period}>
                                 <td className="font-light text-left text-blueGray-300 px-2 py-1">{year(period)}</td>

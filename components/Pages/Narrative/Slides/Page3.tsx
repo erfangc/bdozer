@@ -1,7 +1,6 @@
 import HighchartsReact from 'highcharts-react-official';
 import React from 'react';
 import { StockAnalysis } from '../../../../client';
-import { EarningsPerShareBasic, WeightedAverageNumberOfSharesOutstandingBasic } from '../../../../constants';
 import { highcharts } from '../../../../highcharts';
 import { simpleNumber } from '../../../../simple-number';
 import { year } from '../../../../year';
@@ -16,21 +15,23 @@ interface Props {
 
 export function Page3(props: Props) {
     const {
+        epsConceptName,
+        sharesOutstandingConceptName,
         model,
         model: { symbol, },
         cells,
         businessWaterfall,
     } = props.result
 
-    const finalEps = cells.find(cell => cell.item?.name === EarningsPerShareBasic && cell.period == model.periods)?.value
+    const finalEps = cells.find(cell => cell.item?.name === epsConceptName && cell.period == model.periods)?.value
 
     const fyFinalWaterFall = {
         ...baseOptions,
         series: waterfallSeries(businessWaterfall[model.periods])
     }
     const profit = businessWaterfall[model.periods]?.profit?.value;
-    const eps = cells.find(cell => cell.item?.name === EarningsPerShareBasic && cell.period == model.periods)?.value
-    const sharesOutstanding = cells.find(cell => cell.period == model.periods && cell.item?.name === WeightedAverageNumberOfSharesOutstandingBasic)?.value
+    const eps = cells.find(cell => cell.item?.name === epsConceptName && cell.period == model.periods)?.value
+    const sharesOutstanding = cells.find(cell => cell.period == model.periods && cell.item?.name === sharesOutstandingConceptName)?.value
 
     const finalYear = year(model.periods);
     return (

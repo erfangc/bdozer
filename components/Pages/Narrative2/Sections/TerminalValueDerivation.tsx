@@ -1,6 +1,5 @@
 import React from 'react'
 import { StockAnalysis } from '../../../../client'
-import { EarningsPerShareDiluted, TerminalValuePerShare } from '../../../../constants'
 import { year } from '../../../../year'
 import { Popover } from '../../../Popover'
 import { SubTitle } from '../../../Common/Title'
@@ -8,11 +7,11 @@ interface Props {
     result: StockAnalysis
 }
 export function TerminalValueDerivation(props: Props) {
-    const { result: { cells, model, discountRate } } = props
+    const { result: { cells, model, discountRate, epsConceptName } } = props
     const { terminalGrowthRate, periods, name, } = model
 
-    const finalEps = cells.find(cell => cell.item?.name === EarningsPerShareDiluted && cell.period == model.periods)?.value
-    const finalTvps = cells.find(cell => cell.item?.name === TerminalValuePerShare && cell.period == model.periods)?.value
+    const finalEps = cells.find(cell => cell.item?.name === epsConceptName && cell.period == model.periods)?.value
+    const finalTvps = cells.find(cell => cell.item?.name === "TerminalValuePerShare" && cell.period == model.periods)?.value
 
     return (
 
