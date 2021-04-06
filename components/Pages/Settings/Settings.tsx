@@ -10,6 +10,10 @@ import Editor from './Editor'
 import { FilingEntityCard } from './FilingEntityCard'
 import StockAnalysisSummary from './StockAnalysisSummary'
 
+export const Completed = "Completed"
+export const Bootstrapping = "Bootstrapping"
+export const Created = "Created"
+
 export function Settings() {
 
     const router = useRouter()
@@ -53,7 +57,10 @@ export function Settings() {
     async function bootstrap() {
         setLoading(true)
         try {
-            await filingEntityManager.bootstrapFilingEntity(filingEntity.cik)
+            const cik = filingEntity.cik
+            await filingEntityManager.bootstrapFilingEntity(cik)
+            const resp = await filingEntityManagerUnsecured.getFilingEntity(cik)
+            setFilingEntity(resp.data)
         } catch (e) {
             console.error(e);
         }
@@ -70,6 +77,8 @@ export function Settings() {
         setLoading(false)
     }
 
+    const statusMessage = filingEntity?.statusMessage
+
     return (
         <main className="flex-grow flex flex-col space-y-12 min-h-screen p-3 xl:p-10 lg:p-8 pb-20">
             <Title>Model Control Panel</Title>
@@ -79,15 +88,22 @@ export function Settings() {
             </section>
             <section className="flex flex-col space-y-4">
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-6">
-                    <PrimaryButton onClick={runStockAnalysis} disabled={loading} className="py-2">
-                        {loading ? 'Loading ...' : 'Run Analysis'}
-                    </PrimaryButton>
+                    {
+                        statusMessage !== Completed
+                            ? null
+                            :
+                            <>
+                                <PrimaryButton onClick={runStockAnalysis} disabled={loading} className="py-2">
+                                    {loading ? 'Loading ...' : 'Run Analysis'}
+                                </PrimaryButton>
+                                <SecondaryButton onClick={saveStockAnalysis} className="py-2">
+                                    {loading ? '-' : 'Save'}
+                                </SecondaryButton>
+                            </>
+                    }
                     <DeleteButton onClick={bootstrap} disabled={loading} className="py-2">
-                        {loading ? '-' : 'Rebootstrap'}
+                        {loading ? '-' : statusMessage !== Completed ? 'Bootstrap Facts' : 'Reboostrap Facts'}
                     </DeleteButton>
-                    <SecondaryButton onClick={saveStockAnalysis} className="py-2">
-                        {loading ? '-' : 'Save'}
-                    </SecondaryButton>
                 </div>
                 <Editor filingEntity={filingEntity} stockAnalysis={stockAnalysis} onFilingEntityUpdate={setFilingEntity} />
             </section>
