@@ -51,6 +51,15 @@ export function schemaOf(item: Item): Schema[] {
           description: "Percent of Total Asset",
         },
       ];
+    case ItemTypeEnum.Discrete:
+      return [
+        {
+          label: "Formula",
+          name: "formula",
+          type: "textarea",
+          description: "N/A",
+        },
+      ];
     default:
       return null;
   }
@@ -66,6 +75,8 @@ export function bodyOf(item: Item): any {
       return item.fixedCost;
     case ItemTypeEnum.PercentOfTotalAsset:
       return item.percentOfTotalAsset;
+    case ItemTypeEnum.Discrete:
+      return item.discrete;
     default:
       return {};
   }
@@ -81,6 +92,8 @@ export function merge(item: Item, property: any): Item {
       return { ...item, fixedCost: { ...property } };
     case ItemTypeEnum.PercentOfTotalAsset:
       return { ...item, percentOfTotalAsset: { ...property } };
+    case ItemTypeEnum.Discrete:
+      return { ...item, discrete: { ...property } };
     default:
       return {};
   }

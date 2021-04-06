@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import NumberFormat from "react-number-format"
 import { Item, Model } from "../../../../client"
 import { ItemEditor } from "."
-import { Attention, Check } from "./Svgs"
+import { Attention as Manual, Check } from "./Svgs"
 
 interface ItemComponentProps {
     overriden?: boolean
@@ -50,6 +50,10 @@ export class ItemDisplayComponent extends Component<ItemComponentProps, State> {
         this.setState({ editorOpen: false })
     }
 
+    handleDismiss = () => {
+        this.setState({ editorOpen: false })
+    }
+
     render() {
         const { item, overriden } = this.props
         const { editorOpen } = this.state
@@ -74,11 +78,16 @@ export class ItemDisplayComponent extends Component<ItemComponentProps, State> {
                         displayType='text'
                         value={item.historicalValue?.value}
                     />
-                    {!overriden ? <Check /> : <Attention />}
+                    {!overriden ? <Check /> : <Manual />}
                 </span>
                 {
                     editorOpen
-                        ? <ItemEditor item={item} onChange={this.handleChange} onClear={this.handleClear} />
+                        ? <ItemEditor
+                            item={item}
+                            onChange={this.handleChange}
+                            onClear={this.handleClear}
+                            onDismiss={this.handleDismiss}
+                        />
                         : null
                 }
             </div>

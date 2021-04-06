@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Item, ItemTypeEnum } from "../../../../client";
 import { AutoForm } from "../../../AutoForms/AutoForm";
 import { bodyOf, merge, schemaOf } from "../../../AutoForms/Schemas";
+import { DeleteButton } from "../../../Common/DeleteButton";
 import { SecondaryButton } from "../../../Common/SecondaryButton";
 import { Select } from "../../../Common/Select";
 import { FormulaEditor } from "./FormulaEditor";
@@ -12,6 +13,7 @@ interface ItemEditorProps {
     item: Item
     onChange: (newItem: Item) => void
     onClear: (item: Item) => void
+    onDismiss: () => void
 }
 
 /**
@@ -65,6 +67,7 @@ export class ItemEditor extends Component<ItemEditorProps> {
                         <option value={ItemTypeEnum.PercentOfTotalAsset}>Percent of Total Asset</option>
                         <option value={ItemTypeEnum.PercentOfRevenue}>Percent of Revenue</option>
                         <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
+                        <option value={ItemTypeEnum.Discrete}>Discrete</option>
                     </Select>
                     {
                         item.type === ItemTypeEnum.Custom
@@ -80,9 +83,14 @@ export class ItemEditor extends Component<ItemEditorProps> {
                                 onSubmit={this.updateProperty.bind(this)}
                             />
                     }
-                    <SecondaryButton className="w-24" onClick={() => onClear(item)}>
-                        Clear
-                    </SecondaryButton>
+                    <div className="space-x-2">
+                        <DeleteButton className="w-24" onClick={() => onClear(item)}>
+                            Clear
+                        </DeleteButton>
+                        <SecondaryButton className="w-24" onClick={this.props.onDismiss}>
+                            Dismiss
+                        </SecondaryButton>
+                    </div>
                 </div>
             </div>
         )
