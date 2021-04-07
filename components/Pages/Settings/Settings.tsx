@@ -32,7 +32,7 @@ export function Settings() {
         try {
             const resp = await filingEntityManagerUnsecured.getFilingEntity(cik as string)
             setFilingEntity(resp.data)
-            const { data: stockAnalyses } = await stockAnalysisCrud.find()
+            const { data: stockAnalyses } = await stockAnalysisCrud.find(undefined, cik as string,)
             if (stockAnalyses.length === 0) {
                 setLoading(true)
                 const { data } = await stockAnalysisWorkflow.create(cik as string)
