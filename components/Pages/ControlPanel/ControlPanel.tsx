@@ -8,6 +8,7 @@ import { SubTitle, Title } from '../../Common/Title'
 import { FilingEntityCard } from './FilingEntityCard'
 import StockAnalysisSummary from './StockAnalysisSummary'
 import Editor from './Editor'
+import { useAuth0 } from '@auth0/auth0-react'
 
 export const Completed = "Completed"
 export const Bootstrapping = "Bootstrapping"
@@ -15,6 +16,7 @@ export const Created = "Created"
 
 export function ControlPanel() {
 
+    const { getIdTokenClaims } = useAuth0()
     const router = useRouter()
     const [filingEntity, setFilingEntity] = useState<FilingEntity>()
     const [loading, setLoading] = useState(false)
@@ -85,14 +87,17 @@ export function ControlPanel() {
     }
 
     async function downloadModel() {
+        const { __raw } = await getIdTokenClaims()
         setLoading(true)
-        const url = `${basePath}/public/stock-analysis-excel-downloader/${id}`
-        fetch(url, {
-            headers: {
-                'content-type': 'application/vnd.ms-excel;charset=UTF-8',
-            },
-            method: 'GET'
-        })
+        const url = `${basePath}/api/stock-analyzer/workflow/${stockAnalysis['_id']}/download`
+        fetch(url,
+            {
+                headers: {
+                    'content-type': 'application/vnd.ms-excel;charset=UTF-8',
+                    'authorization': `Bearer ${__raw}`
+                },
+                method: 'GET'
+            })
             .then(res => res.blob()
                 .then(blob => {
                     const filename = `${id}.xlsx`
