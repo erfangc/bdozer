@@ -104,7 +104,11 @@ export function Settings() {
                         {loading ? '-' : statusMessage !== Completed ? 'Bootstrap Facts' : 'Reboostrap Facts'}
                     </DeleteButton>
                 </div>
-                <Editor filingEntity={filingEntity} stockAnalysis={stockAnalysis} onFilingEntityUpdate={setFilingEntity} />
+                <Editor
+                    filingEntity={filingEntity}
+                    stockAnalysis={stockAnalysis}
+                    onFilingEntityUpdate={setFilingEntity}
+                />
             </section>
         </main >
     )

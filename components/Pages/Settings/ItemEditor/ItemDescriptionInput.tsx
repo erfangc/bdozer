@@ -9,7 +9,7 @@ export function ItemDescriptionInput(props: { item: Item, onChange: (newValue) =
         <TextInput
             label="Description"
             value={value}
-            className="w-96"
+            className="min-w-full"
             onChange={({ currentTarget: { value } }) => setValue(value)}
             onBlur={() => onChange(value)}
             placeholder="ex: Commercial Aircraft"

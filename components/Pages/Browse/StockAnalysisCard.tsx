@@ -16,7 +16,7 @@ export function StockAnalysisCard(props: { stockAnalysis: StockAnalysis }) {
     return (
         <div
             key={cik}
-            className="bg-blueGray-700 px-6 py-6 rounded-md shadow-md flex-col flex space-y-4 cursor-pointer hover:bg-blueGray-600 transition ease-linear"
+            className="bg-blueGray-700 px-6 py-6 shadow-md flex-col flex space-y-4 cursor-pointer hover:bg-blueGray-600 transition ease-linear"
             onClick={() => navigate(stockAnalysis['_id'])}
         >
             <div className="flex flex-col space-y-4">

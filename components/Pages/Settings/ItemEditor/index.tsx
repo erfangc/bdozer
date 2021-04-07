@@ -56,7 +56,7 @@ export class ItemEditor extends Component<ItemEditorProps> {
             // outer layer is the overlay
             <div className="w-screen h-screen bg-blueGray-900 fixed inset-0 z-10">
                 {/* this inner layer is the actual modal / input */}
-                <div className="fixed top-4 left-0 right-0 lg:top-32 lg:left-96 lg:right-96 z-10 ml-4 bg-blueGray-700 px-2 lg:px-12 py-3 lg:py-8 rounded-lg shadow-md flex-col space-y-8">
+                <div className="fixed top-4 left-0 right-0 lg:top-32 lg:left-96 lg:right-96 z-10 bg-blueGray-700 px-2 lg:px-12 py-3 lg:py-8 rounded-lg shadow-md flex-col space-y-8">
                     <div className="flex-col space-y-4">
                         <ItemDescriptionInput item={item} onChange={this.updateDescription.bind(this)} />
                         <ItemFY0Input item={item} onChange={this.updateHistoricalValue.bind(this)} />
