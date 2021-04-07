@@ -16,7 +16,7 @@ interface Props {
 
 export default function Editor(props: Props) {
 
-    const { filingEntity, stockAnalysis, onFilingEntityUpdate } = props
+    const { filingEntity, stockAnalysis, onFilingEntityUpdate, onStockAnalysisUpdate } = props
     const filingEntityManager = useFilingEntityManager()
 
     async function changeModelTemplate(template: string) {
@@ -31,12 +31,15 @@ export default function Editor(props: Props) {
     }
 
     async function updateBeta(event: React.ChangeEvent<HTMLInputElement>) {
-        const updatedFilingEntity: FilingEntity = {
-            ...filingEntity,
-            beta: parseFloat(event.currentTarget.value)
+        const beta = parseFloat(event.currentTarget.value)
+        const updatedFilingEntity: StockAnalysis2 = {
+            ...stockAnalysis,
+            model: {
+                ...stockAnalysis.model,
+                beta
+            }
         }
-        await filingEntityManager.saveFilingEntity(updatedFilingEntity)
-        onFilingEntityUpdate(updatedFilingEntity)
+        onStockAnalysisUpdate(updatedFilingEntity)
     }
 
     async function handleChange(newItem: Item) {
@@ -86,7 +89,7 @@ export default function Editor(props: Props) {
                 {
                     filingEntity?.statusMessage === Completed
                         ?
-                        <TextInput value={filingEntity.beta} type="number" onChange={updateBeta} label="Beta" className="w-24" />
+                        <TextInput value={stockAnalysis?.model?.beta} type="number" onChange={updateBeta} label="Beta" className="w-24" />
                         : null
                 }
             </div>

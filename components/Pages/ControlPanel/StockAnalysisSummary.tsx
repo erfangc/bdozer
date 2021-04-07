@@ -1,7 +1,6 @@
-import { useRouter } from 'next/router'
 import React from 'react'
 import { StockAnalysis2 } from '../../../client'
-import { Money, CardPercent, Number } from '../../Common/Card'
+import { CardPercent, Money, Number } from '../../Common/Card'
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -11,7 +10,6 @@ interface Props {
 export default function AnalysisSummary(props: Props) {
 
     const { stockAnalysis, loading } = props
-    const router = useRouter()
 
     return stockAnalysis !== undefined
         ?
@@ -21,6 +19,7 @@ export default function AnalysisSummary(props: Props) {
                 <Money value={stockAnalysis?.derivedStockAnalytics?.targetPrice} label={"Target Price"} running={loading} />
                 <Money value={stockAnalysis?.derivedStockAnalytics?.zeroGrowthPrice} label={"Zero Growth Price"} running={loading} />
                 <Number value={stockAnalysis?.model?.beta} label={"Beta"} running={loading} />
+                <CardPercent value={stockAnalysis?.model?.terminalGrowthRate} label={"Terminal Growth Rate"} running={loading} />
                 <CardPercent value={stockAnalysis?.derivedStockAnalytics?.discountRate} label={"Discount Rate"} running={loading} />
                 <CardPercent value={stockAnalysis?.derivedStockAnalytics?.revenueCAGR} label={"Revenue CAGR"} running={loading} />
             </div>
