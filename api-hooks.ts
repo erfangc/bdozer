@@ -7,8 +7,9 @@ import {
   FilingEntityManagerUnsecuredControllerApi,
   MarketingControllerApi,
   MxParserControllerApi,
+  StockAnalysisCrudControllerApi,
+  StockAnalysisWorkflowControllerApi,
   StockAnalyzerFactoryControllerApi,
-  ModelOverrideControllerApi,
 } from "./client";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
@@ -67,6 +68,16 @@ export function useMxParser() {
   return new MxParserControllerApi(null, basePath, axiosInstance);
 }
 
+export function useStockAnalysisWorkflow() {
+  const axiosInstance = useAxios();
+  return new StockAnalysisWorkflowControllerApi(null, basePath, axiosInstance);
+}
+
+export function useStockAnalysisCrud() {
+  const axiosInstance = useAxios();
+  return new StockAnalysisCrudControllerApi(null, basePath, axiosInstance);
+}
+
 export function useStockAnalyzerFactory() {
   const axiosInstance = useAxios();
   return new StockAnalyzerFactoryControllerApi(null, basePath, axiosInstance);
@@ -90,9 +101,4 @@ export function useFilingEntityManagerUnsecured() {
 export function useComments() {
   const axiosInstance = useAxios();
   return new CommentsControllerApi(null, basePath, axiosInstance)
-}
-
-export function useModelOverrides() {
-  const axiosInstance = useAxios();
-  return new ModelOverrideControllerApi(null, basePath, axiosInstance)
 }

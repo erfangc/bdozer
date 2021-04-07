@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { useFilingEntityManager, useModelOverrides } from '../../../api-hooks'
-import { FilingEntity, Item, ModelOverride, StockAnalysis } from '../../../client'
+import React from 'react'
+import { useFilingEntityManager } from '../../../api-hooks'
+import { FilingEntity, StockAnalysis2 } from '../../../client'
 import { Select } from '../../Common/Select'
 import Tab from '../../Common/Tab'
 import { TextInput } from '../../Common/TextInput'
@@ -9,7 +9,7 @@ import { Bootstrapping, Completed } from './Settings'
 
 interface Props {
     filingEntity: FilingEntity
-    stockAnalysis: StockAnalysis
+    stockAnalysis: StockAnalysis2
     onFilingEntityUpdate: (entity: FilingEntity) => void
 }
 
@@ -17,18 +17,12 @@ export default function Editor(props: Props) {
 
     const { filingEntity, stockAnalysis, onFilingEntityUpdate } = props
     const filingEntityManager = useFilingEntityManager()
-    const modelOverrides = useModelOverrides()
-    const [modelOverride, setModelOverride] = useState<ModelOverride>()
-
-    async function init() {
-        const resp = await modelOverrides.getOverrides(stockAnalysis.cik)
-        setModelOverride(resp.data)
-    }
 
     async function changeModelTemplate(template: string) {
         const updatedFilingEntity: FilingEntity = {
             ...filingEntity, modelTemplate: {
-                name: template, template
+                name: template,
+                template
             }
         };
         await filingEntityManager.saveFilingEntity(updatedFilingEntity)
@@ -42,41 +36,6 @@ export default function Editor(props: Props) {
         }
         await filingEntityManager.saveFilingEntity(updatedFilingEntity)
         onFilingEntityUpdate(updatedFilingEntity)
-    }
-
-    useEffect(() => {
-        if (stockAnalysis?.cik) {
-            init()
-        }
-    }, [stockAnalysis?.cik])
-
-    async function handleItemOverride(updatedItem: Item) {
-        const updatedItems = [
-            ...modelOverride
-                .items
-                .filter(item => updatedItem.name !== item.name),
-            updatedItem
-        ]
-        const updatedModelOverride: ModelOverride = {
-            ...modelOverride,
-            items: updatedItems
-        }
-        setModelOverride(updatedModelOverride)
-        await modelOverrides.saveOverrides(updatedModelOverride)
-    }
-
-    async function handleClear(itemToRemove: Item) {
-        const updatedItems = [
-            ...modelOverride
-                .items
-                .filter(item => itemToRemove.name !== item.name),
-        ]
-        const updatedModelOverride: ModelOverride = {
-            ...modelOverride,
-            items: updatedItems
-        }
-        setModelOverride(updatedModelOverride)
-        await modelOverrides.saveOverrides(updatedModelOverride)
     }
 
     return (
@@ -97,7 +56,12 @@ export default function Editor(props: Props) {
                         </Select>
                         : null
                 }
-                {filingEntity?.statusMessage === Completed ? <TextInput value={filingEntity.beta} type="number" onChange={updateBeta} label="Beta" className="w-24" /> : null}
+                {
+                    filingEntity?.statusMessage === Completed
+                        ?
+                        <TextInput value={filingEntity.beta} type="number" onChange={updateBeta} label="Beta" className="w-24" />
+                        : null
+                }
             </div>
             {
                 filingEntity?.statusMessage !== Completed
@@ -119,13 +83,12 @@ export default function Editor(props: Props) {
                                         ?.incomeStatementItems
                                         ?.filter(item => item.formula !== '0.0')
                                         ?.map(item => {
-                                            const overrideItem = modelOverride?.items?.find(it => it.name === item.name)
                                             return (
                                                 <ItemDisplay
-                                                    overriden={overrideItem !== undefined}
-                                                    item={overrideItem ?? item}
-                                                    onChange={handleItemOverride}
-                                                    onClear={handleClear}
+                                                    overriden={false}
+                                                    item={item}
+                                                    onChange={null}
+                                                    onClear={null}
                                                 />
                                             )
                                         })

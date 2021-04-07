@@ -240,6 +240,61 @@ export interface Commentary {
 /**
  * 
  * @export
+ * @interface DerivedStockAnalytics
+ */
+export interface DerivedStockAnalytics {
+    /**
+     * 
+     * @type {number}
+     * @memberof DerivedStockAnalytics
+     */
+    zeroGrowthPrice?: number;
+    /**
+     * 
+     * @type {{ [key: string]: Waterfall; }}
+     * @memberof DerivedStockAnalytics
+     */
+    businessWaterfall?: { [key: string]: Waterfall; };
+    /**
+     * 
+     * @type {Item}
+     * @memberof DerivedStockAnalytics
+     */
+    shareOutstanding?: Item;
+    /**
+     * 
+     * @type {Item}
+     * @memberof DerivedStockAnalytics
+     */
+    profitPerShare?: Item;
+    /**
+     * 
+     * @type {number}
+     * @memberof DerivedStockAnalytics
+     */
+    targetPrice?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DerivedStockAnalytics
+     */
+    discountRate?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DerivedStockAnalytics
+     */
+    revenueCAGR?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DerivedStockAnalytics
+     */
+    currentPrice?: number;
+}
+/**
+ * 
+ * @export
  * @interface Discrete
  */
 export interface Discrete {
@@ -1102,12 +1157,6 @@ export interface Model {
      * @type {string}
      * @memberof Model
      */
-    get_id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Model
-     */
     name?: string;
     /**
      * 
@@ -1126,13 +1175,55 @@ export interface Model {
      * @type {string}
      * @memberof Model
      */
+    adsh?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
     description?: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<Item>}
      * @memberof Model
      */
-    tags?: Array<string>;
+    itemOverrides?: Array<Item>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
+    totalRevenueConceptName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
+    epsConceptName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
+    netIncomeConceptName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
+    ebitConceptName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
+    operatingCostConceptName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
+    sharesOutstandingConceptName?: string;
     /**
      * 
      * @type {Array<Item>}
@@ -1168,30 +1259,6 @@ export interface Model {
      * @type {number}
      * @memberof Model
      */
-    sharesOutstanding?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Model
-     */
-    dilutedSharesOutstanding?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Model
-     */
-    corporateTaxRate?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Model
-     */
-    costOfDebt?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Model
-     */
     riskFreeRate?: number;
     /**
      * 
@@ -1199,12 +1266,6 @@ export interface Model {
      * @memberof Model
      */
     equityRiskPremium?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Model
-     */
-    terminalFcfMultiple?: number;
     /**
      * 
      * @type {number}
@@ -1229,43 +1290,6 @@ export interface Model {
      * @memberof Model
      */
     excelRowOffset?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Model
-     */
-    updatedAt?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Model
-     */
-    updatedBy?: string;
-}
-/**
- * 
- * @export
- * @interface ModelOverride
- */
-export interface ModelOverride {
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOverride
-     */
-    get_id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelOverride
-     */
-    cik?: string;
-    /**
-     * 
-     * @type {Array<Item>}
-     * @memberof ModelOverride
-     */
-    items?: Array<Item>;
 }
 /**
  * 
@@ -1362,6 +1386,18 @@ export interface StockAnalysis {
      * @memberof StockAnalysis
      */
     cik?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis
+     */
+    adsh?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis
+     */
+    userId?: string;
     /**
      * 
      * @type {string}
@@ -1470,6 +1506,79 @@ export interface StockAnalysis {
      * @memberof StockAnalysis
      */
     sharesOutstandingConceptName?: string;
+}
+/**
+ * 
+ * @export
+ * @interface StockAnalysis2
+ */
+export interface StockAnalysis2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis2
+     */
+    get_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis2
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis2
+     */
+    description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis2
+     */
+    cik?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis2
+     */
+    ticker?: string;
+    /**
+     * 
+     * @type {Model}
+     * @memberof StockAnalysis2
+     */
+    model?: Model;
+    /**
+     * 
+     * @type {Array<Cell>}
+     * @memberof StockAnalysis2
+     */
+    cells?: Array<Cell>;
+    /**
+     * 
+     * @type {DerivedStockAnalytics}
+     * @memberof StockAnalysis2
+     */
+    derivedStockAnalytics?: DerivedStockAnalytics;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis2
+     */
+    userId?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StockAnalysis2
+     */
+    tags?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis2
+     */
+    lastUpdated?: string;
 }
 /**
  * 
@@ -3011,172 +3120,6 @@ export class MarketingControllerApi extends BaseAPI {
 
 
 /**
- * ModelOverrideControllerApi - axios parameter creator
- * @export
- */
-export const ModelOverrideControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOverrides: async (cik: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('getOverrides', 'cik', cik)
-            const localVarPath = `/api/model-overrides/{cik}`
-                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {ModelOverride} modelOverride 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        saveOverrides: async (modelOverride: ModelOverride, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'modelOverride' is not null or undefined
-            assertParamExists('saveOverrides', 'modelOverride', modelOverride)
-            const localVarPath = `/api/model-overrides`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(modelOverride, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * ModelOverrideControllerApi - functional programming interface
- * @export
- */
-export const ModelOverrideControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ModelOverrideControllerApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getOverrides(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelOverride>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getOverrides(cik, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {ModelOverride} modelOverride 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async saveOverrides(modelOverride: ModelOverride, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.saveOverrides(modelOverride, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * ModelOverrideControllerApi - factory interface
- * @export
- */
-export const ModelOverrideControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ModelOverrideControllerApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOverrides(cik: string, options?: any): AxiosPromise<ModelOverride> {
-            return localVarFp.getOverrides(cik, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ModelOverride} modelOverride 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        saveOverrides(modelOverride: ModelOverride, options?: any): AxiosPromise<void> {
-            return localVarFp.saveOverrides(modelOverride, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * ModelOverrideControllerApi - object-oriented interface
- * @export
- * @class ModelOverrideControllerApi
- * @extends {BaseAPI}
- */
-export class ModelOverrideControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} cik 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ModelOverrideControllerApi
-     */
-    public getOverrides(cik: string, options?: any) {
-        return ModelOverrideControllerApiFp(this.configuration).getOverrides(cik, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ModelOverride} modelOverride 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ModelOverrideControllerApi
-     */
-    public saveOverrides(modelOverride: ModelOverride, options?: any) {
-        return ModelOverrideControllerApiFp(this.configuration).saveOverrides(modelOverride, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
  * MxParserControllerApi - axios parameter creator
  * @export
  */
@@ -3275,6 +3218,252 @@ export class MxParserControllerApi extends BaseAPI {
      */
     public evaluate(mxParserEvaluateRequest: MxParserEvaluateRequest, options?: any) {
         return MxParserControllerApiFp(this.configuration).evaluate(mxParserEvaluateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * StockAnalysisCrudControllerApi - axios parameter creator
+ * @export
+ */
+export const StockAnalysisCrudControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        _delete: async (id: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('_delete', 'id', id)
+            const localVarPath = `/api/stock-analyzer/stock-analyses/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {string} [cik] 
+         * @param {string} [ticker] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        find: async (userId?: string, cik?: string, ticker?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/stock-analyzer/stock-analyses`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
+            if (cik !== undefined) {
+                localVarQueryParameter['cik'] = cik;
+            }
+
+            if (ticker !== undefined) {
+                localVarQueryParameter['ticker'] = ticker;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        save: async (stockAnalysis2: StockAnalysis2, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'stockAnalysis2' is not null or undefined
+            assertParamExists('save', 'stockAnalysis2', stockAnalysis2)
+            const localVarPath = `/api/stock-analyzer/stock-analyses`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(stockAnalysis2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * StockAnalysisCrudControllerApi - functional programming interface
+ * @export
+ */
+export const StockAnalysisCrudControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = StockAnalysisCrudControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async _delete(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator._delete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {string} [cik] 
+         * @param {string} [ticker] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async find(userId?: string, cik?: string, ticker?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<StockAnalysis2>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.find(userId, cik, ticker, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async save(stockAnalysis2: StockAnalysis2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.save(stockAnalysis2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * StockAnalysisCrudControllerApi - factory interface
+ * @export
+ */
+export const StockAnalysisCrudControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = StockAnalysisCrudControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        _delete(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp._delete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {string} [cik] 
+         * @param {string} [ticker] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        find(userId?: string, cik?: string, ticker?: string, options?: any): AxiosPromise<Array<StockAnalysis2>> {
+            return localVarFp.find(userId, cik, ticker, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        save(stockAnalysis2: StockAnalysis2, options?: any): AxiosPromise<void> {
+            return localVarFp.save(stockAnalysis2, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * StockAnalysisCrudControllerApi - object-oriented interface
+ * @export
+ * @class StockAnalysisCrudControllerApi
+ * @extends {BaseAPI}
+ */
+export class StockAnalysisCrudControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StockAnalysisCrudControllerApi
+     */
+    public _delete(id: string, options?: any) {
+        return StockAnalysisCrudControllerApiFp(this.configuration)._delete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} [userId] 
+     * @param {string} [cik] 
+     * @param {string} [ticker] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StockAnalysisCrudControllerApi
+     */
+    public find(userId?: string, cik?: string, ticker?: string, options?: any) {
+        return StockAnalysisCrudControllerApiFp(this.configuration).find(userId, cik, ticker, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {StockAnalysis2} stockAnalysis2 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StockAnalysisCrudControllerApi
+     */
+    public save(stockAnalysis2: StockAnalysis2, options?: any) {
+        return StockAnalysisCrudControllerApiFp(this.configuration).save(stockAnalysis2, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3381,10 +3570,10 @@ export class StockAnalysisExcelDownloaderApi extends BaseAPI {
 
 
 /**
- * StockAnalyzerFactoryControllerApi - axios parameter creator
+ * StockAnalysisWorkflowControllerApi - axios parameter creator
  * @export
  */
-export const StockAnalyzerFactoryControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const StockAnalysisWorkflowControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -3392,10 +3581,10 @@ export const StockAnalyzerFactoryControllerApiAxiosParamCreator = function (conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        analyze: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+        create: async (cik: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'cik' is not null or undefined
-            assertParamExists('analyze', 'cik', cik)
-            const localVarPath = `/public/model-builder-factory/{cik}`
+            assertParamExists('create', 'cik', cik)
+            const localVarPath = `/api/stock-analyzer/workflow/{cik}`
                 .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3419,6 +3608,139 @@ export const StockAnalyzerFactoryControllerApiAxiosParamCreator = function (conf
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        refresh: async (stockAnalysis2: StockAnalysis2, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'stockAnalysis2' is not null or undefined
+            assertParamExists('refresh', 'stockAnalysis2', stockAnalysis2)
+            const localVarPath = `/api/stock-analyzer/workflow/refresh`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(stockAnalysis2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * StockAnalysisWorkflowControllerApi - functional programming interface
+ * @export
+ */
+export const StockAnalysisWorkflowControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = StockAnalysisWorkflowControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async create(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.create(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async refresh(stockAnalysis2: StockAnalysis2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.refresh(stockAnalysis2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * StockAnalysisWorkflowControllerApi - factory interface
+ * @export
+ */
+export const StockAnalysisWorkflowControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = StockAnalysisWorkflowControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        create(cik: string, options?: any): AxiosPromise<StockAnalysis2> {
+            return localVarFp.create(cik, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        refresh(stockAnalysis2: StockAnalysis2, options?: any): AxiosPromise<StockAnalysis2> {
+            return localVarFp.refresh(stockAnalysis2, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * StockAnalysisWorkflowControllerApi - object-oriented interface
+ * @export
+ * @class StockAnalysisWorkflowControllerApi
+ * @extends {BaseAPI}
+ */
+export class StockAnalysisWorkflowControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StockAnalysisWorkflowControllerApi
+     */
+    public create(cik: string, options?: any) {
+        return StockAnalysisWorkflowControllerApiFp(this.configuration).create(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {StockAnalysis2} stockAnalysis2 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StockAnalysisWorkflowControllerApi
+     */
+    public refresh(stockAnalysis2: StockAnalysis2, options?: any) {
+        return StockAnalysisWorkflowControllerApiFp(this.configuration).refresh(stockAnalysis2, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * StockAnalyzerFactoryControllerApi - axios parameter creator
+ * @export
+ */
+export const StockAnalyzerFactoryControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
         /**
          * 
          * @param {*} [options] Override http request option.
@@ -3528,16 +3850,6 @@ export const StockAnalyzerFactoryControllerApiFp = function(configuration?: Conf
     return {
         /**
          * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async analyze(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.analyze(cik, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3577,15 +3889,6 @@ export const StockAnalyzerFactoryControllerApiFactory = function (configuration?
     return {
         /**
          * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        analyze(cik: string, options?: any): AxiosPromise<StockAnalysis> {
-            return localVarFp.analyze(cik, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3620,17 +3923,6 @@ export const StockAnalyzerFactoryControllerApiFactory = function (configuration?
  * @extends {BaseAPI}
  */
 export class StockAnalyzerFactoryControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} cik 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StockAnalyzerFactoryControllerApi
-     */
-    public analyze(cik: string, options?: any) {
-        return StockAnalyzerFactoryControllerApiFp(this.configuration).analyze(cik, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @param {*} [options] Override http request option.

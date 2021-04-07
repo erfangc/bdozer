@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { useFilingEntityManager, useFilingEntityManagerUnsecured, useStockAnalyzerFactory } from '../../../api-hooks'
-import { FilingEntity, StockAnalysis } from '../../../client'
+import { useFilingEntityManager, useFilingEntityManagerUnsecured, useStockAnalysisCrud, useStockAnalysisWorkflow } from '../../../api-hooks'
+import { FilingEntity, StockAnalysis2 } from '../../../client'
 import { DeleteButton } from '../../Common/DeleteButton'
 import { PrimaryButton } from '../../Common/PrimaryButton'
 import { SecondaryButton } from '../../Common/SecondaryButton'
@@ -21,8 +21,11 @@ export function Settings() {
     const [loading, setLoading] = useState(false)
     const filingEntityManagerUnsecured = useFilingEntityManagerUnsecured()
     const filingEntityManager = useFilingEntityManager()
-    const stockAnalysisFactory = useStockAnalyzerFactory()
-    const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis>()
+
+    const stockAnalysisCrud = useStockAnalysisCrud()
+    const stockAnalysisWorkflow = useStockAnalysisWorkflow()
+
+    const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
 
     const { cik } = router.query
 
@@ -30,8 +33,14 @@ export function Settings() {
         try {
             const resp = await filingEntityManagerUnsecured.getFilingEntity(cik as string)
             setFilingEntity(resp.data)
-            const resp2 = await stockAnalysisFactory.getAnalysis(cik as string)
-            setStockAnalysis(resp2.data)
+            const { data: stockAnalyses } = await stockAnalysisCrud.find()
+            if (stockAnalyses.length === 0) {
+                const { data } = await stockAnalysisWorkflow.create(cik as string)
+                await stockAnalysisCrud.save(data)
+                setStockAnalysis(data)
+            } else {
+                setStockAnalysis(stockAnalyses[0])
+            }
         } catch (e) {
             console.error(e);
         }
@@ -46,8 +55,6 @@ export function Settings() {
     async function runStockAnalysis() {
         setLoading(true)
         try {
-            const { data } = await stockAnalysisFactory.analyze(filingEntity.cik, true)
-            setStockAnalysis(data)
         } catch (e) {
             console.error(e);
         }
@@ -69,7 +76,7 @@ export function Settings() {
     async function saveStockAnalysis() {
         setLoading(true)
         try {
-            await stockAnalysisFactory.saveAnalysis(stockAnalysis)
+            await stockAnalysisCrud.save(stockAnalysis)
         } catch (e) {
             console.error(e);
         }
