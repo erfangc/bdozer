@@ -4,7 +4,7 @@ import { FilingEntity, Item, ModelOverride, StockAnalysis } from '../../../clien
 import { Select } from '../../Common/Select'
 import Tab from '../../Common/Tab'
 import { TextInput } from '../../Common/TextInput'
-import { ItemDisplayComponent } from './ItemEditor/ItemDisplay'
+import { ItemDisplay } from './ItemEditor/ItemDisplay'
 import { Bootstrapping, Completed } from './Settings'
 
 interface Props {
@@ -121,7 +121,7 @@ export default function Editor(props: Props) {
                                         ?.map(item => {
                                             const overrideItem = modelOverride?.items?.find(it => it.name === item.name)
                                             return (
-                                                <ItemDisplayComponent
+                                                <ItemDisplay
                                                     overriden={overrideItem !== undefined}
                                                     item={overrideItem ?? item}
                                                     onChange={handleItemOverride}

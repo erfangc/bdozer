@@ -19,7 +19,7 @@ interface Props {
 export function Narrative2(props: Props) {
     const { result } = props;
     return (
-        <main className="pt-12">
+        <main className="pt-12 bg-blueGray-900">
             <Toolbar />
             <div className="flex flex-col space-y-20 pb-20 min-h-screen px-3 md:px-0 md:container md:mx-auto lg:pt-20 lg:max-w-prose overflow-x-scroll">
                 <Overview result={result} />

@@ -1,10 +1,10 @@
 import React, { Component } from "react"
 import NumberFormat from "react-number-format"
-import { Item, Model } from "../../../../client"
 import { ItemEditor } from "."
+import { Item } from "../../../../client"
 import { Attention as Manual, Check } from "./Svgs"
 
-interface ItemComponentProps {
+interface Props {
     overriden?: boolean
     item: Item
     onChange: (newItem: Item) => void
@@ -15,7 +15,7 @@ interface State {
     editorOpen: boolean
 }
 
-export class ItemDisplayComponent extends Component<ItemComponentProps, State> {
+export class ItemDisplay extends Component<Props, State> {
 
     clickOutsideHandler = null
     node = null
