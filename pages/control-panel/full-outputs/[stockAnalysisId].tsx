@@ -1,29 +1,31 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { useStockAnalyzerFactory } from '../../../api-hooks'
-import { StockAnalysis } from '../../../client'
+import { StockAnalysis2 } from '../../../client'
 import { App } from '../../../components/App'
-import { FullModelDisplay as StockAnalysisDisplay } from '../../../components/Pages/Settings/FullModelDisplay'
+import { FullModelDisplay } from '../../../components/Pages/ControlPanel/FullModelDisplay'
 import { Title } from '../../../components/Common/Title'
+import { useStockAnalysisCrud } from '../../../api-hooks'
 
 function FullModelComponent() {
     const router = useRouter()
-    const api = useStockAnalyzerFactory()
-    const { cik } = router.query
+    const api = useStockAnalysisCrud()
+    const { stockAnalysisId } = router.query
 
-    const [result, setResult] = useState<StockAnalysis>()
+    const [result, setResult] = useState<StockAnalysis2>()
     const [loading, setLoading] = useState(false)
 
-    async function refreshModel(cik: string) {
+    async function refreshModel() {
         setLoading(true)
-        const { data } = await api.getAnalysis(cik)
-        setResult(data)
+        const resp = await api.get(stockAnalysisId as string)
+        setResult(resp.data)
         setLoading(false)
     }
 
     useEffect(() => {
-        refreshModel(cik as string)
-    }, [cik])
+        if (stockAnalysisId) {
+            refreshModel()
+        }
+    }, [stockAnalysisId])
 
     return (
         <main className="flex flex-grow flex-col items-center justify-center">
@@ -31,7 +33,7 @@ function FullModelComponent() {
             {
                 loading || result === undefined
                     ? null
-                    : <StockAnalysisDisplay result={result} />
+                    : <FullModelDisplay stockAnalysis={result} />
             }
         </main>
     )

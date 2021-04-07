@@ -5,12 +5,12 @@ import { App } from "../../components/App";
 import { FilingEntitySearch } from "../../components/Pages/FilingEntitySearch";
 import { Title } from "../../components/Common/Title";
 
-function SettingsComponent() {
+function ControlPanelComponent() {
 
     const router = useRouter()
 
     async function switchFilingEntity(filingEntity: FilingEntity) {
-        router.push(`/settings/${filingEntity.cik}`)
+        router.push(`/control-panel/${filingEntity.cik}`)
     }
 
     return (
@@ -21,10 +21,10 @@ function SettingsComponent() {
     )
 }
 
-export default function SettingsPage() {
+export default function ControlPanelPage() {
     return (
         <App>
-            <SettingsComponent />
+            <ControlPanelComponent />
         </App>
     )
 }

@@ -20,8 +20,8 @@ export function Hamburger() {
                 <Link href="/browse">
                     <li className="text-center py-4">Browse</li>
                 </Link>
-                <Link href="/settings">
-                    <li className="text-center py-4">Settings</li>
+                <Link href="/control-panel">
+                    <li className="text-center py-4">Control Panel</li>
                 </Link>
             </ul>
         </div>

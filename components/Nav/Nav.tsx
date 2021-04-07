@@ -26,7 +26,7 @@ export function Nav(props: NavProps) {
                 <div className="flex-col space-y-6">
                     <NavButton active={router.pathname.endsWith('/browse')} linkTo="/browse" />
                     <NavButton active={router.pathname.endsWith("/narrative2")} icon={<ModelIcon />} linkTo="/browse" />
-                    <NavButton active={router.pathname === '/settings'} icon={<Settings />} linkTo="/settings" />
+                    <NavButton active={router.pathname === '/control-panel'} icon={<Settings />} linkTo="/control-panel" />
                 </div>
             </div>
             <div className="text-blueGray-50 pb-6 flex-col space-y-2 flex items-center">

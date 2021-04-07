@@ -2,19 +2,19 @@ import React, { useState } from "react"
 import { ReactNode } from "react"
 import NumberFormat from "react-number-format"
 import { useFactBase } from "../../../api-hooks"
-import { StockAnalysis } from "../../../client"
+import { StockAnalysis2 } from "../../../client"
 import { year } from "../../../year"
 
 interface Props {
-    result: StockAnalysis
+    stockAnalysis: StockAnalysis2
 }
 
 export function FullModelDisplay(props: Props) {
 
     const factBase = useFactBase()
 
-    const model = props.result.model
-    const cells = props.result.cells
+    const model = props.stockAnalysis.model
+    const cells = props.stockAnalysis.cells
     const periods = []
 
     for (let i = 0; i <= model.periods; i++) {

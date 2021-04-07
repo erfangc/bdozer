@@ -5,7 +5,7 @@ import { Select } from '../../Common/Select'
 import Tab from '../../Common/Tab'
 import { TextInput } from '../../Common/TextInput'
 import { ItemDisplay } from './ItemEditor/ItemDisplay'
-import { Bootstrapping, Completed } from './Settings'
+import { Bootstrapping, Completed } from './ControlPanel'
 
 interface Props {
     filingEntity: FilingEntity

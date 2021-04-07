@@ -4,7 +4,7 @@ import { useFilingEntityManager, useFilingEntityManagerUnsecured, useStockAnalys
 import { FilingEntity, StockAnalysis2 } from '../../../client'
 import { DeleteButton } from '../../Common/DeleteButton'
 import { PrimaryButton } from '../../Common/PrimaryButton'
-import { Title } from '../../Common/Title'
+import { SubTitle, Title } from '../../Common/Title'
 import Editor from './Editor'
 import { FilingEntityCard } from './FilingEntityCard'
 import StockAnalysisSummary from './StockAnalysisSummary'
@@ -13,7 +13,7 @@ export const Completed = "Completed"
 export const Bootstrapping = "Bootstrapping"
 export const Created = "Created"
 
-export function Settings() {
+export function ControlPanel() {
 
     const router = useRouter()
     const [filingEntity, setFilingEntity] = useState<FilingEntity>()
@@ -63,6 +63,11 @@ export function Settings() {
         setLoading(false)
     }
 
+
+    async function navigateToFullOutput() {
+        router.push(`/control-panel/full-outputs/${stockAnalysis['_id']}`)
+    }
+
     async function bootstrapSECData() {
         setLoading(true)
         try {
@@ -96,14 +101,20 @@ export function Settings() {
                 <StockAnalysisSummary stockAnalysis={stockAnalysis} loading={loading} />
             </section>
             <section className="flex flex-col space-y-4">
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-6">
+                <SubTitle>Actions</SubTitle>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-8">
                     {
                         statusMessage !== Completed
                             ? null
                             :
-                            <PrimaryButton onClick={refresh} disabled={loading} className="py-2">
-                                {loading ? 'Running ...' : 'Run'}
-                            </PrimaryButton>
+                            <>
+                                <PrimaryButton onClick={refresh} disabled={loading} className="py-2">
+                                    {loading ? 'Running ...' : 'Run'}
+                                </PrimaryButton>
+                                <PrimaryButton onClick={navigateToFullOutput} disabled={loading} className="py-2">
+                                    Full Output
+                                </PrimaryButton>
+                            </>
                     }
                     <DeleteButton onClick={bootstrapSECData} disabled={loading} className="py-2">
                         {loading ? '-' : statusMessage !== Completed ? 'Bootstrap SEC Data' : 'Reboostrap SEC Data'}
