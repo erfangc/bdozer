@@ -34,8 +34,10 @@ export function Settings() {
             setFilingEntity(resp.data)
             const { data: stockAnalyses } = await stockAnalysisCrud.find()
             if (stockAnalyses.length === 0) {
+                setLoading(true)
                 const { data } = await stockAnalysisWorkflow.create(cik as string)
                 updateStockAnalysis(data)
+                setLoading(false)
             } else {
                 setStockAnalysis(stockAnalyses[0])
             }
