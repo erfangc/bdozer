@@ -4,7 +4,6 @@ import { useFilingEntityManager, useFilingEntityManagerUnsecured, useStockAnalys
 import { FilingEntity, StockAnalysis2 } from '../../../client'
 import { DeleteButton } from '../../Common/DeleteButton'
 import { PrimaryButton } from '../../Common/PrimaryButton'
-import { SecondaryButton } from '../../Common/SecondaryButton'
 import { Title } from '../../Common/Title'
 import Editor from './Editor'
 import { FilingEntityCard } from './FilingEntityCard'
@@ -36,8 +35,7 @@ export function Settings() {
             const { data: stockAnalyses } = await stockAnalysisCrud.find()
             if (stockAnalyses.length === 0) {
                 const { data } = await stockAnalysisWorkflow.create(cik as string)
-                await stockAnalysisCrud.save(data)
-                setStockAnalysis(data)
+                updateStockAnalysis(data)
             } else {
                 setStockAnalysis(stockAnalyses[0])
             }
@@ -52,16 +50,18 @@ export function Settings() {
         }
     }, [cik])
 
-    async function runStockAnalysis() {
+    async function refresh() {
         setLoading(true)
         try {
+            const resp = await stockAnalysisWorkflow.refresh(stockAnalysis)
+            updateStockAnalysis(resp.data)
         } catch (e) {
             console.error(e);
         }
         setLoading(false)
     }
 
-    async function bootstrap() {
+    async function bootstrapSECData() {
         setLoading(true)
         try {
             await filingEntityManager.bootstrapFilingEntity(cik as string)
@@ -73,10 +73,11 @@ export function Settings() {
         setLoading(false)
     }
 
-    async function saveStockAnalysis() {
+    async function updateStockAnalysis(stockAnalysis: StockAnalysis2) {
         setLoading(true)
         try {
             await stockAnalysisCrud.save(stockAnalysis)
+            setStockAnalysis(stockAnalysis)
         } catch (e) {
             console.error(e);
         }
@@ -98,23 +99,19 @@ export function Settings() {
                         statusMessage !== Completed
                             ? null
                             :
-                            <>
-                                <PrimaryButton onClick={runStockAnalysis} disabled={loading} className="py-2">
-                                    {loading ? 'Loading ...' : 'Run Analysis'}
-                                </PrimaryButton>
-                                <SecondaryButton onClick={saveStockAnalysis} className="py-2">
-                                    {loading ? '-' : 'Save'}
-                                </SecondaryButton>
-                            </>
+                            <PrimaryButton onClick={refresh} disabled={loading} className="py-2">
+                                {loading ? 'Running ...' : 'Run'}
+                            </PrimaryButton>
                     }
-                    <DeleteButton onClick={bootstrap} disabled={loading} className="py-2">
-                        {loading ? '-' : statusMessage !== Completed ? 'Bootstrap Facts' : 'Reboostrap Facts'}
+                    <DeleteButton onClick={bootstrapSECData} disabled={loading} className="py-2">
+                        {loading ? '-' : statusMessage !== Completed ? 'Bootstrap SEC Data' : 'Reboostrap SEC Data'}
                     </DeleteButton>
                 </div>
                 <Editor
                     filingEntity={filingEntity}
                     stockAnalysis={stockAnalysis}
                     onFilingEntityUpdate={setFilingEntity}
+                    onStockAnalysisUpdate={updateStockAnalysis}
                 />
             </section>
         </main >

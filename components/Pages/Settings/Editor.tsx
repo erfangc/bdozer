@@ -1,6 +1,6 @@
 import React from 'react'
 import { useFilingEntityManager } from '../../../api-hooks'
-import { FilingEntity, StockAnalysis2 } from '../../../client'
+import { FilingEntity, Item, StockAnalysis2 } from '../../../client'
 import { Select } from '../../Common/Select'
 import Tab from '../../Common/Tab'
 import { TextInput } from '../../Common/TextInput'
@@ -11,6 +11,7 @@ interface Props {
     filingEntity: FilingEntity
     stockAnalysis: StockAnalysis2
     onFilingEntityUpdate: (entity: FilingEntity) => void
+    onStockAnalysisUpdate: (newStockAnalysis: StockAnalysis2) => void
 }
 
 export default function Editor(props: Props) {
@@ -36,6 +37,32 @@ export default function Editor(props: Props) {
         }
         await filingEntityManager.saveFilingEntity(updatedFilingEntity)
         onFilingEntityUpdate(updatedFilingEntity)
+    }
+
+    async function handleChange(newItem: Item) {
+        const itemOverrides = stockAnalysis.model?.itemOverrides
+        const updatedItemOverrides = [...itemOverrides.filter(it => it.name !== newItem.name), newItem]
+        const updatedStockAnalysis: StockAnalysis2 = {
+            ...stockAnalysis,
+            model: {
+                ...stockAnalysis.model,
+                itemOverrides: updatedItemOverrides
+            }
+        }
+        props.onStockAnalysisUpdate(updatedStockAnalysis)
+    }
+
+    async function handleClear(item: Item) {
+        const itemOverrides = stockAnalysis.model?.itemOverrides
+        const updatedItemOverrides = [...itemOverrides.filter(it => it.name !== item.name)]
+        const updatedStockAnalysis: StockAnalysis2 = {
+            ...stockAnalysis,
+            model: {
+                ...stockAnalysis.model,
+                itemOverrides: updatedItemOverrides
+            }
+        }
+        props.onStockAnalysisUpdate(updatedStockAnalysis)
     }
 
     return (
@@ -83,12 +110,13 @@ export default function Editor(props: Props) {
                                         ?.incomeStatementItems
                                         ?.filter(item => item.formula !== '0.0')
                                         ?.map(item => {
+                                            const overrideItem = stockAnalysis?.model?.itemOverrides?.find(it => it.name === item.name)
                                             return (
                                                 <ItemDisplay
-                                                    overriden={false}
-                                                    item={item}
-                                                    onChange={null}
-                                                    onClear={null}
+                                                    overriden={overrideItem !== undefined}
+                                                    item={overrideItem ?? item}
+                                                    onChange={handleChange}
+                                                    onClear={handleClear}
                                                 />
                                             )
                                         })
@@ -97,7 +125,7 @@ export default function Editor(props: Props) {
                         </div>
                         :
                         <blockquote className="text-lg pl-8 py-4 border-l-4 border-blueGray-500">
-                            No model exists yet for this company. Please use "Run Analysis"
+                            No model exists yet for this company. Please use <code>Run Analysis</code>
                         </blockquote>
             }
         </div>
