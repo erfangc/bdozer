@@ -5,9 +5,9 @@ import { FilingEntity, StockAnalysis2 } from '../../../client'
 import { DeleteButton } from '../../Common/DeleteButton'
 import { PrimaryButton } from '../../Common/PrimaryButton'
 import { SubTitle, Title } from '../../Common/Title'
-import Editor from './Editor'
 import { FilingEntityCard } from './FilingEntityCard'
 import StockAnalysisSummary from './StockAnalysisSummary'
+import Editor from './Editor'
 
 export const Completed = "Completed"
 export const Bootstrapping = "Bootstrapping"
@@ -115,15 +115,15 @@ export function ControlPanel() {
     const statusMessage = filingEntity?.statusMessage
 
     return (
-        <main className="flex-grow flex flex-col space-y-12 min-h-screen p-3 xl:p-10 lg:p-8 pb-20">
-            <Title>Model Control Panel</Title>
+        <main className="container mx-auto px-4 py-20">
             <section className="flex flex-col space-y-6">
+                <Title>Summary</Title>
                 <FilingEntityCard filingEntity={filingEntity} />
                 <StockAnalysisSummary stockAnalysis={stockAnalysis} loading={loading} />
             </section>
             <section className="flex flex-col space-y-4">
-                <SubTitle>Actions</SubTitle>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-8">
+                <SubTitle>Inputs</SubTitle>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-6">
                     {
                         statusMessage !== Completed
                             ? null
