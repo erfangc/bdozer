@@ -26,31 +26,24 @@ export function ControlPanel() {
 
     const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
 
-    const { cik } = router.query
+    const { id } = router.query
 
     async function init() {
         try {
-            const resp = await filingEntityManagerUnsecured.getFilingEntity(cik as string)
-            setFilingEntity(resp.data)
-            const { data: stockAnalyses } = await stockAnalysisCrud.find(undefined, cik as string,)
-            if (stockAnalyses.length === 0) {
-                setLoading(true)
-                const { data } = await stockAnalysisWorkflow.create(cik as string)
-                updateStockAnalysis(data)
-                setLoading(false)
-            } else {
-                setStockAnalysis(stockAnalyses[0])
-            }
+            const { data: stockAnalysis } = await stockAnalysisCrud.get(id as string)
+            const { data: filingEntity } = await filingEntityManagerUnsecured.getFilingEntity(stockAnalysis.cik)
+            setFilingEntity(filingEntity)
+            setStockAnalysis(stockAnalysis)
         } catch (e) {
             console.error(e);
         }
     }
 
     useEffect(() => {
-        if (cik) {
+        if (id) {
             init()
         }
-    }, [cik])
+    }, [id])
 
     async function refresh() {
         setLoading(true)
@@ -65,14 +58,14 @@ export function ControlPanel() {
 
 
     async function navigateToFullOutput() {
-        router.push(`/control-panel/full-outputs/${stockAnalysis['_id']}`)
+        router.push(`/control-panel/stock-analyses/${stockAnalysis['_id']}/full-output`)
     }
 
     async function bootstrapSECData() {
         setLoading(true)
         try {
-            await filingEntityManager.bootstrapFilingEntity(cik as string)
-            const resp = await filingEntityManagerUnsecured.getFilingEntity(cik as string)
+            await filingEntityManager.bootstrapFilingEntity(id as string)
+            const resp = await filingEntityManagerUnsecured.getFilingEntity(id as string)
             setFilingEntity(resp.data)
         } catch (e) {
             console.error(e);
@@ -93,7 +86,7 @@ export function ControlPanel() {
 
     async function downloadModel() {
         setLoading(true)
-        const url = `${basePath}/public/stock-analysis-excel-downloader/${cik}`
+        const url = `${basePath}/public/stock-analysis-excel-downloader/${id}`
         fetch(url, {
             headers: {
                 'content-type': 'application/vnd.ms-excel;charset=UTF-8',
@@ -102,7 +95,7 @@ export function ControlPanel() {
         })
             .then(res => res.blob()
                 .then(blob => {
-                    const filename = `${cik}.xlsx`
+                    const filename = `${id}.xlsx`
                     if (window.navigator.msSaveOrOpenBlob) {
                         navigator.msSaveBlob(blob, filename)
                     } else {

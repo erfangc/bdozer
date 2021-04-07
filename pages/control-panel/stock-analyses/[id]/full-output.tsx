@@ -1,31 +1,31 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { StockAnalysis2 } from '../../../client'
-import { App } from '../../../components/App'
-import { FullModelDisplay } from '../../../components/Pages/ControlPanel/FullModelDisplay'
-import { Title } from '../../../components/Common/Title'
-import { useStockAnalysisCrud } from '../../../api-hooks'
+import { StockAnalysis2 } from '../../../../client'
+import { App } from '../../../../components/App'
+import { FullOutputDisplay } from '../../../../components/Pages/ControlPanel/FullModelDisplay'
+import { Title } from '../../../../components/Common/Title'
+import { useStockAnalysisCrud } from '../../../../api-hooks'
 
 function FullModelComponent() {
     const router = useRouter()
-    const api = useStockAnalysisCrud()
-    const { stockAnalysisId } = router.query
+    const stockAnalysisCrud = useStockAnalysisCrud()
+    const { id } = router.query
 
     const [result, setResult] = useState<StockAnalysis2>()
     const [loading, setLoading] = useState(false)
 
     async function refreshModel() {
         setLoading(true)
-        const resp = await api.get(stockAnalysisId as string)
+        const resp = await stockAnalysisCrud.get(id as string)
         setResult(resp.data)
         setLoading(false)
     }
 
     useEffect(() => {
-        if (stockAnalysisId) {
+        if (id) {
             refreshModel()
         }
-    }, [stockAnalysisId])
+    }, [id])
 
     return (
         <main className="flex flex-grow flex-col items-center justify-center">
@@ -33,7 +33,7 @@ function FullModelComponent() {
             {
                 loading || result === undefined
                     ? null
-                    : <FullModelDisplay stockAnalysis={result} />
+                    : <FullOutputDisplay stockAnalysis={result} />
             }
         </main>
     )

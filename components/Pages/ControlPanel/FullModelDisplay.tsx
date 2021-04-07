@@ -9,7 +9,7 @@ interface Props {
     stockAnalysis: StockAnalysis2
 }
 
-export function FullModelDisplay(props: Props) {
+export function FullOutputDisplay(props: Props) {
 
     const factBase = useFactBase()
 

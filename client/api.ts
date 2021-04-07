@@ -965,12 +965,6 @@ export interface FilingEntity {
      * @memberof FilingEntity
      */
     modelTemplate?: ModelTemplate;
-    /**
-     * 
-     * @type {number}
-     * @memberof FilingEntity
-     */
-    beta?: number;
 }
 /**
  * 
