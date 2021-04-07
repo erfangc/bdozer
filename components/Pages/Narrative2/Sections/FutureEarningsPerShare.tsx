@@ -1,18 +1,26 @@
 import HighchartsReact from "highcharts-react-official";
-import React from "react";
-import { useEffect, useState } from "react";
-import { StockAnalysis } from "../../../../client";
+import React, { useEffect, useState } from "react";
+import { StockAnalysis2 } from "../../../../client";
 import { green500, highcharts, rose500 } from "../../../../highcharts";
 import { simpleNumber } from "../../../../simple-number";
 import { year } from "../../../../year";
 import { SubTitle } from "../../../Common/Title";
 
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
 
 export function FutureEarningsPerShare(props: Props) {
-    const { result: { cells, epsConceptName, sharesOutstandingConceptName, netIncomeConceptName } } = props;
+    const {
+        result: {
+            model: {
+                epsConceptName,
+                sharesOutstandingConceptName,
+                netIncomeConceptName,
+            },
+            cells,
+        }
+    } = props;
     const [options, setOptions] = useState<Highcharts.Options>()
 
     useEffect(() => {

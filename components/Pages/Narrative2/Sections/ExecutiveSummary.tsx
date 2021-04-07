@@ -1,25 +1,26 @@
 import React from "react";
-import { StockAnalysis } from "../../../../client";
+import { StockAnalysis, StockAnalysis2 } from "../../../../client";
 import { simpleNumber } from "../../../../simple-number";
 import { Popover } from "../../../Popover";
 import { SubTitle } from "../../../Common/Title";
 import { RevenueTimeSeries } from "./RevenueTimeSeries";
 
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
 export function ExecutiveSummary(props: Props) {
     const {
         result,
         result: {
-            epsConceptName,
             cells,
-            model: { name, periods, },
-            businessWaterfall,
-            zeroGrowthPrice,
-            targetPrice,
-            currentPrice,
-            revenueCAGR,
+            model: { name, periods, epsConceptName, },
+            derivedStockAnalytics: {
+                businessWaterfall,
+                zeroGrowthPrice,
+                targetPrice,
+                currentPrice,
+                revenueCAGR,
+            }
         }
     } = props;
 

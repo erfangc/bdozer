@@ -1,13 +1,24 @@
 import React from 'react'
-import { StockAnalysis } from '../../../../client'
+import { StockAnalysis, StockAnalysis2 } from '../../../../client'
 import { year } from '../../../../year'
 import { Popover } from '../../../Popover'
 import { SubTitle } from '../../../Common/Title'
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
 export function TerminalValueDerivation(props: Props) {
-    const { result: { cells, model, discountRate, epsConceptName } } = props
+    const {
+        result: {
+            cells,
+            model,
+            model: {
+                epsConceptName,
+            },
+            derivedStockAnalytics: {
+                discountRate,
+            }
+        }
+    } = props
     const { terminalGrowthRate, periods, name, } = model
 
     const finalEps = cells.find(cell => cell.item?.name === epsConceptName && cell.period == model.periods)?.value

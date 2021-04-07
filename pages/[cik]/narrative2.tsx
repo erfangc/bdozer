@@ -11,7 +11,7 @@ interface Props {
 function NarativePage(props: Props) {
     return (
         <UnsecuredApp>
-            <Narrative2 result={props.stockAnalysis} />
+            <Narrative2 stockAnalysis={props.stockAnalysis} />
         </UnsecuredApp>
     )
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import HighchartsReact from "highcharts-react-official";
-import { StockAnalysis, Item } from "../../../../client";
+import { StockAnalysis, Item, StockAnalysis2 } from "../../../../client";
 import { lime700, rose500, blueGray900, highcharts } from "../../../../highcharts";
 import { simpleNumber } from "../../../../simple-number";
 import { year } from "../../../../year";
@@ -9,11 +9,11 @@ import { SubTitle } from "../../../Common/Title";
 import { Pill } from "../Pill";
 
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
 
 export function BusinessBreakdown(props: Props) {
-    const { result: { businessWaterfall } } = props;
+    const { result: { derivedStockAnalytics: { businessWaterfall } } } = props;
 
     const [options, setOptions] = useState<Highcharts.Options>()
     const [period, setPeriod] = useState<number>(0)

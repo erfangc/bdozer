@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import NumberFormat from "react-number-format";
 import { basePath } from "../../../../api-hooks";
-import { StockAnalysis } from "../../../../client";
+import { StockAnalysis2 } from "../../../../client";
 import { Title } from "../../../Common/Title";
 
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
 
 export function Overview(props: Props) {
@@ -13,8 +13,10 @@ export function Overview(props: Props) {
         result: {
             cik,
             model: { symbol, name },
-            currentPrice,
-            targetPrice,
+            derivedStockAnalytics: {
+                currentPrice,
+                targetPrice,
+            }
         }
     } = props;
 

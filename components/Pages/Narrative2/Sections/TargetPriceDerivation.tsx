@@ -1,6 +1,6 @@
 import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
-import { StockAnalysis } from "../../../../client";
+import { StockAnalysis2 } from "../../../../client";
 import { blueGray200, indigo600, indigo400, amber600, amber400, highcharts } from "../../../../highcharts";
 import { year } from "../../../../year";
 import { Popover } from "../../../Popover";
@@ -8,11 +8,23 @@ import { SubTitle } from "../../../Common/Title";
 import { DiscountFactorDerivation } from "./DiscountFactorDerivation";
 
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
+
 export function TargetPriceDerivation(props: Props) {
+
     const {
-        result: { model, cells, discountRate, targetPrice, epsConceptName }
+        result: {
+            model,
+            model: {
+                epsConceptName,
+            },
+            derivedStockAnalytics: {
+                discountRate,
+                targetPrice,
+            },
+            cells,
+        }
     } = props
 
     const to = `Target Price $${targetPrice.toFixed(1)} / share`

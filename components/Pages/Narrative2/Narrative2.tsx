@@ -1,36 +1,36 @@
 import React from "react";
-import { StockAnalysis } from "../../../client";
+import { StockAnalysis2 } from "../../../client";
 import { LegalDisclaimer } from "../../LegalDisclaimer";
+import { BusinessBreakdown } from "./Sections/BusinessBreakdown";
 import { Comments } from "./Sections/Comments";
+import { ExecutiveSummary } from "./Sections/ExecutiveSummary";
 import { Feedback } from "./Sections/Feedback";
 import { FutureEarningsPerShare } from "./Sections/FutureEarningsPerShare";
-import { BusinessBreakdown } from "./Sections/BusinessBreakdown";
-import { ExecutiveSummary } from "./Sections/ExecutiveSummary";
 import { Overview } from "./Sections/Overview";
 import { TargetPriceBreakdown } from "./Sections/TargetPriceBreakdown";
+import { TargetPriceDerivation } from "./Sections/TargetPriceDerivation";
 import { TerminalValueDerivation } from "./Sections/TerminalValueDerivation";
 import { Toolbar } from "./Toolbar";
-import { TargetPriceDerivation } from "./Sections/TargetPriceDerivation";
 
 interface Props {
-    result: StockAnalysis
+    stockAnalysis: StockAnalysis2
 }
 
 export function Narrative2(props: Props) {
-    const { result } = props;
+    const { stockAnalysis } = props;
     return (
-        <main className="pt-12 bg-blueGray-900">
+        <main className="px-4 py-20 container mx-auto max-w-prose overflow-x-scroll">
             <Toolbar />
-            <div className="flex flex-col space-y-20 pb-20 min-h-screen px-3 md:px-0 md:container md:mx-auto lg:pt-20 lg:max-w-prose overflow-x-scroll">
-                <Overview result={result} />
-                <ExecutiveSummary result={result} />
-                <BusinessBreakdown result={result} />
-                <FutureEarningsPerShare result={result} />
-                <TerminalValueDerivation result={result} />
-                <TargetPriceDerivation result={result} />
-                <TargetPriceBreakdown result={result} />
-                <Feedback result={result} />
-                <Comments result={result} />
+            <div className="flex flex-col space-y-20 py-0 lg:py-20">
+                <Overview result={stockAnalysis} />
+                <ExecutiveSummary result={stockAnalysis} />
+                <BusinessBreakdown result={stockAnalysis} />
+                <FutureEarningsPerShare result={stockAnalysis} />
+                <TerminalValueDerivation result={stockAnalysis} />
+                <TargetPriceDerivation result={stockAnalysis} />
+                <TargetPriceBreakdown result={stockAnalysis} />
+                <Feedback result={stockAnalysis} />
+                <Comments result={stockAnalysis} />
                 <LegalDisclaimer />
             </div>
         </main>
