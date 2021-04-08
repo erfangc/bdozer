@@ -126,13 +126,13 @@ export function ControlPanel() {
     const statusMessage = filingEntity?.statusMessage
 
     return (
-        <main className="container mx-auto px-4 py-20">
+        <main className="container mx-auto px-4 py-20 space-y-12">
             <section className="flex flex-col space-y-6">
                 <Title>Summary</Title>
                 <FilingEntityCard filingEntity={filingEntity} />
                 <StockAnalysisSummary stockAnalysis={stockAnalysis} loading={loading} />
             </section>
-            <section className="flex flex-col space-y-4">
+            <section className="flex flex-col space-y-6">
                 <SubTitle>Inputs</SubTitle>
                 {
                     statusMessage !== Completed
