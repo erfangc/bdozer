@@ -97,6 +97,7 @@ export default function Editor(props: Props) {
                                 const overrideItem = stockAnalysis?.model?.itemOverrides?.find(it => it.name === item.name)
                                 return (
                                     <ItemDisplay
+                                        stockAnalysis={stockAnalysis}
                                         overriden={overrideItem !== undefined}
                                         item={overrideItem ?? item}
                                         onChange={handleItemChanged}
