@@ -15,7 +15,7 @@ import {
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { useEffect } from "react";
-import { serverErrorStore } from "./ServerErrorStore";
+import { serverErrorStore } from "./components/ServerErrors/ServerErrorStore";
 import { v4 as uuid } from 'uuid'
 
 export const basePath = process.env.NEXT_PUBLIC_BASE_PATH;

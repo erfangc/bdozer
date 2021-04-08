@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { ApiError, serverErrorStore } from "../../ServerErrorStore"
+import { ApiError, serverErrorStore } from "./ServerErrorStore"
 import { ErrorMessage } from "./ErrorMessage"
 
 interface State {
