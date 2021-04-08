@@ -3,6 +3,7 @@ import Head from "next/head";
 import React from "react";
 import { Hamburger } from "./Nav/Hamburger";
 import { Nav } from "./Nav/Nav";
+import { Notifications } from "./Notifications/Notifications";
 import { ServerErrors } from "./ServerErrors/ServerErrors";
 
 export function App({ children }) {
@@ -24,6 +25,7 @@ export function App({ children }) {
                     <Nav />
                     <Hamburger />
                     <ServerErrors />
+                    <Notifications />
                     <div className="lg:ml-20 flex text-blueGray-50 bg-blueGray-900">
                         {children}
                     </div>
@@ -45,6 +47,7 @@ export function UnsecuredApp({ children }) {
                 <Nav />
                 <Hamburger />
                 <ServerErrors />
+                <Notifications />
                 <div className="lg:ml-20">
                     {children}
                 </div>

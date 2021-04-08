@@ -26,7 +26,7 @@ axiosInstance.interceptors.response.use(null, (error) => {
     id: uuid(),
     ...error?.response?.data
   };
-  serverErrorStore.addNotification(apiError);
+  serverErrorStore.addError(apiError);
   return Promise.reject(error);
 });
 

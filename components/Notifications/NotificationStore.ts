@@ -3,7 +3,7 @@ import { Store } from "../../Store";
 export interface Notification {
   id: string;
   message: string;
-  timestamp: string;
+  timestamp: Date;
   delay: number
 }
 

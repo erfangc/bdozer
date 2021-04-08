@@ -26,7 +26,7 @@ export class ServerErrors extends Component<{}, State> {
     }
 
     dismissError = (id: string) => {
-        serverErrorStore.dismissNotification(id)
+        serverErrorStore.dismissError(id)
     }
 
     render() {

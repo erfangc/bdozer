@@ -2,13 +2,14 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { basePath, useFilingEntityManager, useFilingEntityManagerUnsecured, useStockAnalysisCrud, useStockAnalysisPublication, useStockAnalysisWorkflow } from '../../../api-hooks'
 import { FilingEntity, StockAnalysis2 } from '../../../client'
-import { DeleteButton } from '../../Common/DeleteButton'
 import { PrimaryButton } from '../../Common/PrimaryButton'
+import { v4 as uuid } from 'uuid'
 import { SubTitle, Title } from '../../Common/Title'
 import { FilingEntityCard } from './FilingEntityCard'
 import StockAnalysisSummary from './StockAnalysisSummary'
 import Editor from './Editor'
 import { useAuth0 } from '@auth0/auth0-react'
+import { notificationStore } from '../../Notifications/NotificationStore'
 
 export const Completed = "Completed"
 export const Bootstrapping = "Bootstrapping"
@@ -70,6 +71,9 @@ export function ControlPanel() {
 
     async function unpublish() {
         await stockAnalysisPublication.unpublishStockAnalysis(stockAnalysis['_id'])
+        notificationStore.addNotification(
+            { delay: 100, id: uuid(), message: 'Unpublish successful', timestamp: new Date() }
+        )
     }
 
     async function navigateToPreview() {
