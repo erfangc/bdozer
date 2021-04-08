@@ -1,15 +1,16 @@
+import { useAuth0 } from '@auth0/auth0-react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { basePath, useFilingEntityManager, useFilingEntityManagerUnsecured, useStockAnalysisCrud, useStockAnalysisPublication, useStockAnalysisWorkflow } from '../../../api-hooks'
+import { v4 as uuid } from 'uuid'
+import { basePath, useFilingEntityManagerUnsecured, useStockAnalysisCrud, useStockAnalysisPublication, useStockAnalysisWorkflow } from '../../../api-hooks'
 import { FilingEntity, StockAnalysis2 } from '../../../client'
 import { PrimaryButton } from '../../Common/PrimaryButton'
-import { v4 as uuid } from 'uuid'
 import { SubTitle, Title } from '../../Common/Title'
+import { notificationStore } from '../../Notifications/NotificationStore'
+import { DownloadToExcel, ExcelDownloading, ExcelIcon } from './DownloadToExcel'
+import Editor from './Editor'
 import { FilingEntityCard } from './FilingEntityCard'
 import StockAnalysisSummary from './StockAnalysisSummary'
-import Editor from './Editor'
-import { useAuth0 } from '@auth0/auth0-react'
-import { notificationStore } from '../../Notifications/NotificationStore'
 
 export const Completed = "Completed"
 export const Bootstrapping = "Bootstrapping"
@@ -21,8 +22,8 @@ export function ControlPanel() {
     const router = useRouter()
     const [filingEntity, setFilingEntity] = useState<FilingEntity>()
     const [loading, setLoading] = useState(false)
+    const [downloading, setDownloading] = useState(false)
     const filingEntityManagerUnsecured = useFilingEntityManagerUnsecured()
-    const filingEntityManager = useFilingEntityManager()
 
     const stockAnalysisCrud = useStockAnalysisCrud()
     const stockAnalysisWorkflow = useStockAnalysisWorkflow()
@@ -93,7 +94,7 @@ export function ControlPanel() {
 
     async function downloadModel() {
         const { __raw } = await getIdTokenClaims()
-        setLoading(true)
+        setDownloading(true)
         const url = `${basePath}/api/stock-analyzer/workflow/${stockAnalysis['_id']}/download`
         fetch(url,
             {
@@ -118,7 +119,7 @@ export function ControlPanel() {
                         a.remove()
                         window.URL.revokeObjectURL(url)
                     }
-                    setLoading(false)
+                    setDownloading(false)
                 }))
     }
 
@@ -133,31 +134,31 @@ export function ControlPanel() {
             </section>
             <section className="flex flex-col space-y-4">
                 <SubTitle>Inputs</SubTitle>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-6">
-                    {
-                        statusMessage !== Completed
-                            ? null
-                            :
-                            <>
-                                <PrimaryButton onClick={refresh} disabled={loading} className="py-2">
-                                    {loading ? 'Running ...' : 'Run'}
-                                </PrimaryButton>
-                                <PrimaryButton onClick={navigateToFullOutput} disabled={loading} className="py-2">
-                                    Full Output
-                                </PrimaryButton>
-                                <PrimaryButton onClick={navigateToPreview} disabled={loading} className="py-2">
-                                    Preview
-                                </PrimaryButton>
-                                <PrimaryButton onClick={publish} disabled={loading} className="py-2">
-                                    Publish
-                                </PrimaryButton>
-                                <PrimaryButton onClick={unpublish} disabled={loading} className="py-2">
-                                    Unpublish
-                                </PrimaryButton>
-                                <DownloadToExcel onClick={downloadModel} loading={loading} />
-                            </>
-                    }
-                </div>
+                {
+                    statusMessage !== Completed
+                        ? null
+                        :
+                        <div className="grid grid-cols-4 gap-2 md:grid-cols-8 lg:grid-cols-12 p-3 bg-blueGray-800 rounded">
+                            <ToolButton onClick={refresh} loading={loading} label="Rerun">
+                                {loading ? <Loading /> : <Play />}
+                            </ToolButton>
+                            <ToolButton onClick={navigateToFullOutput} loading={loading} label="Table">
+                                <Table />
+                            </ToolButton>
+                            <ToolButton onClick={navigateToPreview} loading={loading} label="Preview">
+                                <Preview />
+                            </ToolButton>
+                            <ToolButton onClick={publish} loading={loading} label="Publish">
+                                <Publish />
+                            </ToolButton>
+                            <ToolButton onClick={unpublish} loading={loading} label="Unpublish">
+                                <Unpublish />
+                            </ToolButton>
+                            <ToolButton onClick={downloadModel} loading={downloading} label="Download">
+                                {downloading ? <ExcelDownloading /> : <ExcelIcon />}
+                            </ToolButton>
+                        </div>
+                }
                 <Editor
                     filingEntity={filingEntity}
                     stockAnalysis={stockAnalysis}
@@ -169,46 +170,66 @@ export function ControlPanel() {
     )
 }
 
-
-interface DownloadToExcelProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+interface ToolButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+    label: string
     loading?: boolean
 }
 
-function DownloadToExcel({ loading, className, ...props }: DownloadToExcelProps) {
+function ToolButton({ label, loading, children, className, ...props }: ToolButtonProps) {
     return (
-        <button
-            className={`focus:outline-none hidden md:flex items-center text-sm px-2 py-1.5 rounded border border-emerald-700 text-emerald-500 transition ease-linear hover:bg-emerald-500 hover:text-emerald-50 w-full ${className}`}
-            disabled={loading}
-            {...props}
-        >
-            {loading ? <Loader /> : <ExcelIcon />}
-            <span className="ml-4">Download Model</span>
-        </button>
+        <div className="flex flex-col space-y-1 justify-center items-center">
+            <button className={`bg-blueGray-600 rounded-md shadow-md px-4 py-2 focus:outline-none hover:bg-blueGray-700 transition ease-linear ${className}`} disabled={loading} {...props}>
+                {children}
+            </button>
+            <span className="text-sm tracking-wider">{label}</span>
+        </div>
     )
 }
 
-function Loader() {
+function Play() {
     return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-spin">
-            <path d="M15.55 5.55L11 1V4.07C7.06 4.56 4 7.92 4 12C4 16.08 7.05 19.44 11 19.93V17.91C8.16 17.43 6 14.97 6 12C6 9.03 8.16 6.57 11 6.09V10L15.55 5.55ZM19.93 11C19.76 9.61 19.21 8.27 18.31 7.11L16.89 8.53C17.43 9.28 17.77 10.13 17.91 11H19.93ZM13 17.9V19.92C14.39 19.75 15.74 19.21 16.9 18.31L15.46 16.87C14.71 17.41 13.87 17.76 13 17.9ZM16.89 15.48L18.31 16.89C19.21 15.73 19.76 14.39 19.93 13H17.91C17.77 13.87 17.43 14.72 16.89 15.48V15.48Z" fill="#059669" />
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 16.5V7.5L16 12L10 16.5Z" fill="#F8FAFC" />
         </svg>
     )
 }
 
-function ExcelIcon() {
+function Table() {
     return (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M23.25 20.2505H12.75C12.336 20.2505 12 19.9145 12 19.5005C12 19.0865 12 4.91455 12 4.50055C12 4.08655 12.336 3.75055 12.75 3.75055H23.25C23.664 3.75055 24 4.08655 24 4.50055V19.5005C24 19.9145 23.664 20.2505 23.25 20.2505Z" fill="#E2E8F0" />
-            <path d="M15.75 8.25055H12.75C12.336 8.25055 12 7.91455 12 7.50055C12 7.08655 12.336 6.75055 12.75 6.75055H15.75C16.164 6.75055 16.5 7.08655 16.5 7.50055C16.5 7.91455 16.164 8.25055 15.75 8.25055Z" fill="#059669" />
-            <path d="M15.75 11.2505H12.75C12.336 11.2505 12 10.9145 12 10.5005C12 10.0865 12.336 9.75055 12.75 9.75055H15.75C16.164 9.75055 16.5 10.0865 16.5 10.5005C16.5 10.9145 16.164 11.2505 15.75 11.2505Z" fill="#059669" />
-            <path d="M15.75 14.2505H12.75C12.336 14.2505 12 13.9145 12 13.5005C12 13.0865 12.336 12.7505 12.75 12.7505H15.75C16.164 12.7505 16.5 13.0865 16.5 13.5005C16.5 13.9145 16.164 14.2505 15.75 14.2505Z" fill="#059669" />
-            <path d="M15.75 17.2506H12.75C12.336 17.2506 12 16.9146 12 16.5006C12 16.0866 12.336 15.7505 12.75 15.7505H15.75C16.164 15.7505 16.5 16.0866 16.5 16.5006C16.5 16.9146 16.164 17.2506 15.75 17.2506Z" fill="#059669" />
-            <path d="M20.25 8.25055H18.75C18.336 8.25055 18 7.91455 18 7.50055C18 7.08655 18.336 6.75055 18.75 6.75055H20.25C20.664 6.75055 21 7.08655 21 7.50055C21 7.91455 20.664 8.25055 20.25 8.25055Z" fill="#059669" />
-            <path d="M20.25 11.2505H18.75C18.336 11.2505 18 10.9145 18 10.5005C18 10.0865 18.336 9.75055 18.75 9.75055H20.25C20.664 9.75055 21 10.0865 21 10.5005C21 10.9145 20.664 11.2505 20.25 11.2505Z" fill="#059669" />
-            <path d="M20.25 14.2505H18.75C18.336 14.2505 18 13.9145 18 13.5005C18 13.0865 18.336 12.7505 18.75 12.7505H20.25C20.664 12.7505 21 13.0865 21 13.5005C21 13.9145 20.664 14.2505 20.25 14.2505Z" fill="#059669" />
-            <path d="M20.25 17.2506H18.75C18.336 17.2506 18 16.9146 18 16.5006C18 16.0866 18.336 15.7505 18.75 15.7505H20.25C20.664 15.7505 21 16.0866 21 16.5006C21 16.9146 20.664 17.2506 20.25 17.2506Z" fill="#059669" />
-            <path d="M13.2285 0.923022C13.0575 0.780522 12.828 0.719022 12.612 0.764022L0.612 3.01402C0.2565 3.08002 0 3.38902 0 3.75052V20.2505C0 20.6105 0.2565 20.921 0.612 20.987L12.612 23.237C12.657 23.246 12.7035 23.2505 12.75 23.2505C12.924 23.2505 13.0935 23.1905 13.2285 23.078C13.401 22.9355 13.5 22.7225 13.5 22.5005V1.50052C13.5 1.27702 13.401 1.06552 13.2285 0.923022Z" fill="#047857" />
-            <path d="M10.314 14.507L7.94254 11.7965L10.341 8.71255C10.596 8.38555 10.536 7.91455 10.2105 7.65955C9.88504 7.40455 9.41404 7.46455 9.15754 7.79005L6.93604 10.6461L5.06404 8.50705C4.78954 8.19205 4.31554 8.16355 4.00654 8.43655C3.69454 8.70955 3.66304 9.18355 3.93604 9.49405L5.99854 11.8521L3.90754 14.54C3.65254 14.867 3.71254 15.338 4.03804 15.593C4.17604 15.6995 4.33954 15.7505 4.50004 15.7505C4.72354 15.7505 4.94404 15.6515 5.09254 15.461L7.00504 13.001L9.18604 15.4925C9.33454 15.6635 9.54154 15.7505 9.75004 15.7505C9.92554 15.7505 10.101 15.689 10.2435 15.5645C10.5555 15.2915 10.587 14.8175 10.314 14.507Z" fill="#FAFAFA" />
+            <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 5V8H5V5H19ZM19 10V14H5V10H19ZM5 19V16H19V19H5Z" fill="#F8FAFC" />
+        </svg>
+    )
+}
+
+function Preview() {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.11 3 19 3ZM19 19H5V7H19V19ZM12 10.5C13.84 10.5 15.48 11.46 16.34 13C15.48 14.54 13.84 15.5 12 15.5C10.16 15.5 8.52 14.54 7.66 13C8.52 11.46 10.16 10.5 12 10.5ZM12 9C9.27 9 6.94 10.66 6 13C6.94 15.34 9.27 17 12 17C14.73 17 17.06 15.34 18 13C17.06 10.66 14.73 9 12 9ZM12 14.5C11.17 14.5 10.5 13.83 10.5 13C10.5 12.17 11.17 11.5 12 11.5C12.83 11.5 13.5 12.17 13.5 13C13.5 13.83 12.83 14.5 12 14.5Z" fill="#F8FAFC" />
+        </svg>
+    )
+}
+
+function Publish() {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 4H19V6H5V4ZM5 14H9V20H15V14H19L12 7L5 14ZM13 12V18H11V12H9.83L12 9.83L14.17 12H13Z" fill="#F8FAFC" />
+        </svg>
+    )
+}
+
+function Unpublish() {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.94014 5.12L6.49014 3.66C8.07014 2.61 9.96014 2 12.0001 2C17.5201 2 22.0001 6.48 22.0001 12C22.0001 14.04 21.3901 15.93 20.3401 17.51L18.8801 16.05C19.5901 14.86 20.0001 13.48 20.0001 12C20.0001 7.59 16.4101 4 12.0001 4C10.5201 4 9.14014 4.41 7.94014 5.12ZM17.6601 9.53L16.2501 8.12L13.6001 10.77L15.0101 12.18L17.6601 9.53ZM19.7801 22.61L17.5101 20.34C15.9301 21.39 14.0401 22 12.0001 22C6.48014 22 2.00014 17.52 2.00014 12C2.00014 9.96 2.61014 8.07 3.66014 6.49L1.39014 4.22L2.80014 2.81L21.1801 21.19L19.7801 22.61ZM16.0601 18.88L12.1801 15L10.5901 16.59L6.35014 12.35L7.76014 10.94L10.5901 13.77L10.7701 13.59L5.12014 7.94C4.41014 9.14 4.00014 10.52 4.00014 12C4.00014 16.41 7.59014 20 12.0001 20C13.4801 20 14.8601 19.59 16.0601 18.88Z" fill="#F8FAFC" />
+        </svg>
+    )
+}
+
+function Loading() {
+    return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-spin">
+            <path d="M12 6V9L16 5L12 1V4C7.58 4 4 7.58 4 12C4 13.57 4.46 15.03 5.24 16.26L6.7 14.8C6.25 13.97 6 13.01 6 12C6 8.69 8.69 6 12 6ZM18.76 7.74L17.3 9.2C17.74 10.04 18 10.99 18 12C18 15.31 15.31 18 12 18V15L8 19L12 23V20C16.42 20 20 16.42 20 12C20 10.43 19.54 8.97 18.76 7.74V7.74Z" fill="#F8FAFC" />
         </svg>
     )
 }
