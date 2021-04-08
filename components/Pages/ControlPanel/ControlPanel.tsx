@@ -138,7 +138,7 @@ export function ControlPanel() {
                     statusMessage !== Completed
                         ? null
                         :
-                        <div className="grid grid-cols-4 gap-2 md:grid-cols-8 lg:grid-cols-12 p-3 bg-blueGray-800 rounded">
+                        <div className="flex space-x-6 p-4 bg-blueGray-800 rounded">
                             <ToolButton onClick={refresh} loading={loading} label="Rerun">
                                 {loading ? <Loading /> : <Play />}
                             </ToolButton>
