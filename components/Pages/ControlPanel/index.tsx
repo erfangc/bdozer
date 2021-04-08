@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useStockAnalysisCrud, useStockAnalysisWorkflow } from "../../../api-hooks";
+import { useFilingEntityManager, useStockAnalysisCrud, useStockAnalysisWorkflow } from "../../../api-hooks";
 import { StockAnalysis2, FilingEntity } from "../../../client";
 import { DeleteButton } from "../../Common/DeleteButton";
 import { PrimaryButton } from "../../Common/PrimaryButton";
@@ -11,6 +11,7 @@ export function ControlPanel() {
 
     const router = useRouter()
     const stockAnalysisCrud = useStockAnalysisCrud()
+    const filingEntityManager = useFilingEntityManager()
     const stockAnalysisWorkflow = useStockAnalysisWorkflow()
     const [stockAnalyses, setStockAnalyses] = useState<StockAnalysis2[]>([])
     const [loading, setLoading] = useState(false)
@@ -24,7 +25,7 @@ export function ControlPanel() {
         //
         // Bootstrap facts and take the user to the entity page instead of the analysis page
         //
-        if (filingEntity.statusMessage !== 'Completed') {
+        if (filingEntity?.statusMessage !== 'Completed') {
             navigateToEntity(filingEntity.cik)
         } else {
             //

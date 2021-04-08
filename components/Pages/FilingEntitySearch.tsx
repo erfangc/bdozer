@@ -10,19 +10,13 @@ interface Props {
 }
 
 export function FilingEntitySearch(props: Props) {
-
+    const { loading, onSubmit, className } = props
     const edgarExplorerApi = useEdgarExplorer()
-    const filingEntityManagerApi = useFilingEntityManagerUnsecured()
-    const ref = useRef<HTMLInputElement>()
+    const filingEntityManagerUnsecured = useFilingEntityManagerUnsecured()
+    const filingEntityManager = useFilingEntityManager()
 
     const [term, setTerm] = useState<string>()
     const [found, setFound] = useState<EdgarEntity[]>([])
-
-    useEffect(() => {
-        if (ref.current) {
-            ref.current.select()
-        }
-    }, [])
 
     async function search(newTerm) {
         if (newTerm) {
@@ -35,9 +29,16 @@ export function FilingEntitySearch(props: Props) {
 
     async function submit(edgarEntity: EdgarEntity) {
         setFound([])
-        const { data } = await filingEntityManagerApi.getFilingEntity(edgarEntity['_id'])
+        const cik = edgarEntity['_id']
+        const { data: filingEntity } = await filingEntityManagerUnsecured.getFilingEntity(cik)
         try {
-            props.onSubmit(data)
+            if (!filingEntity) {
+                const resp = await filingEntityManager.createFilingEntity(cik)
+                onSubmit(resp.data)
+            } else {
+                onSubmit(filingEntity)
+            }
+
         } catch (e) {
             console.error(e);
         }
@@ -85,8 +86,8 @@ export function FilingEntitySearch(props: Props) {
                             </svg>
                     }
                     <input
+                        autoFocus
                         value={term}
-                        ref={ref}
                         placeholder="Search for a company"
                         onChange={e => changeTerm(e.currentTarget.value)}
                         className="relative text-blueGray-50 pl-4 py-4 focus:outline-none bg-blueGray-700 placeholder-blueGray-400 text-lg"

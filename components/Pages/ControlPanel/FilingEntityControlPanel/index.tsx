@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useFilingEntityManager, useFilingEntityManagerUnsecured } from '../../../../api-hooks'
 import { FilingEntity } from '../../../../client'
+import { DeleteButton } from '../../../Common/DeleteButton'
 import { PrimaryButton } from '../../../Common/PrimaryButton'
 import { SecondaryButton } from '../../../Common/SecondaryButton'
 import { Title } from '../../../Common/Title'
@@ -40,7 +41,15 @@ export default function FilingEntityControlPanel() {
 
     const status = filingEntity?.statusMessage
 
-    let message = null
+    let message = (
+        <Message>
+            Facts about this company has been parsed and stored, you are now free to create stock analyses for it. 
+            <br />
+            If you feel like something has gone wrong and want to re-parse SEC's website, please click <code>Bootstrap Again</code>
+            <br />
+            <DeleteButton className="mt-4 w-42" onClick={bootstrap}>{loading ? <Loading></Loading> : 'Bootstrap Aagain'}</DeleteButton>
+        </Message>
+    )
     if (status === "Bootstrapping") {
         message = (
             <Message>
