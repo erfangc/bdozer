@@ -138,7 +138,7 @@ export function ControlPanel() {
                     statusMessage !== Completed
                         ? null
                         :
-                        <div className="flex space-x-6 p-4 bg-blueGray-800 rounded">
+                        <div className="grid grid-cols-4 gap-2 md:flex md:space-x-5 p-4 bg-blueGray-800 rounded">
                             <ToolButton onClick={refresh} loading={loading} label="Rerun">
                                 {loading ? <Loading /> : <Play />}
                             </ToolButton>
@@ -178,10 +178,10 @@ interface ToolButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttrib
 function ToolButton({ label, loading, children, className, ...props }: ToolButtonProps) {
     return (
         <div className="flex flex-col space-y-1 justify-center items-center">
-            <button className={`bg-blueGray-600 rounded-md shadow-md px-4 py-2 focus:outline-none hover:bg-blueGray-700 transition ease-linear ${className}`} disabled={loading} {...props}>
+            <button className={`bg-blueGray-600 rounded-md shadow-lg px-4 py-2 focus:outline-none hover:shadow-none transition ease-linear ${className}`} disabled={loading} {...props}>
                 {children}
             </button>
-            <span className="text-sm tracking-wider">{label}</span>
+            <span className="text-sm text-blueGray-200">{label}</span>
         </div>
     )
 }
