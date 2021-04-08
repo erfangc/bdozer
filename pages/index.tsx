@@ -11,7 +11,7 @@ function Home() {
   const router = useRouter()
 
   function seeSampleReport() {
-    router.push(`/0000006201/narrative2`)
+    router.push(`/published-stock-analyses/0c04b9cb-ddec-4c6e-9445-099bde6c86ca/narrative2`)
   }
 
   function browse() {
