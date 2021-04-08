@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Item, ItemTypeEnum } from "../../../../client";
-import { AutoForm } from "../../../AutoForms/AutoForm";
-import { bodyOf, merge, schemaOf } from "../../../AutoForms/Schemas";
-import { DeleteButton } from "../../../Common/DeleteButton";
-import { SecondaryButton } from "../../../Common/SecondaryButton";
-import { Select } from "../../../Common/Select";
+import { Item, ItemTypeEnum } from "../../../../../client";
+import { AutoForm } from "../../../../AutoForms/AutoForm";
+import { bodyOf, merge, schemaOf } from "../../../../AutoForms/Schemas";
+import { DeleteButton } from "../../../../Common/DeleteButton";
+import { SecondaryButton } from "../../../../Common/SecondaryButton";
+import { Select } from "../../../../Common/Select";
 import { FormulaEditor } from "./FormulaEditor";
 import { ItemDescriptionInput } from "./ItemDescriptionInput";
 import { ItemFY0Input } from "./ItemFY0Input";

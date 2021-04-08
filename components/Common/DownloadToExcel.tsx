@@ -1,22 +1,5 @@
 import React from 'react'
 
-interface DownloadToExcelProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
-    loading?: boolean
-}
-
-export function DownloadToExcel({ loading, className, ...props }: DownloadToExcelProps) {
-    return (
-        <button
-            className={`focus:outline-none hidden md:flex items-center text-sm px-2 py-1.5 rounded border border-emerald-700 text-emerald-500 transition ease-linear hover:bg-emerald-500 hover:text-emerald-50 ${className}`}
-            disabled={loading}
-            {...props}
-        >
-            {loading ? <ExcelDownloading /> : <ExcelIcon />}
-            <span className="ml-4">Download Model</span>
-        </button>
-    )
-}
-
 export function ExcelDownloading() {
     return (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-spin">

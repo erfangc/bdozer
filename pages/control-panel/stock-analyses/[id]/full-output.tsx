@@ -2,11 +2,11 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { StockAnalysis2 } from '../../../../client'
 import { App } from '../../../../components/App'
-import { FullOutputDisplay } from '../../../../components/Pages/ControlPanel/FullModelDisplay'
+import { TableOutput } from '../../../../components/Pages/ControlPanel/StockAnalysisControlPanel/TableOutput'
 import { Title } from '../../../../components/Common/Title'
 import { useStockAnalysisCrud } from '../../../../api-hooks'
 
-function FullModelComponent() {
+function TableOutputComponent() {
     const router = useRouter()
     const stockAnalysisCrud = useStockAnalysisCrud()
     const { id } = router.query
@@ -33,7 +33,7 @@ function FullModelComponent() {
             {
                 loading || result === undefined
                     ? null
-                    : <FullOutputDisplay stockAnalysis={result} />
+                    : <TableOutput stockAnalysis={result} />
             }
         </main>
     )
@@ -42,7 +42,7 @@ function FullModelComponent() {
 export default function FullModelPage() {
     return (
         <App>
-            <FullModelComponent />
+            <TableOutputComponent />
         </App>
     )
 }

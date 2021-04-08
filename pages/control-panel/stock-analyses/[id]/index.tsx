@@ -1,11 +1,11 @@
 import { App } from "../../../../components/App"
-import { ControlPanel } from "../../../../components/Pages/ControlPanel/ControlPanel"
+import { StockAnalysisControlPanel } from "../../../../components/Pages/ControlPanel/StockAnalysisControlPanel"
 import React from 'react'
 
 export default function SettingsPage() {
     return (
         <App>
-            <ControlPanel />
+            <StockAnalysisControlPanel />
         </App>
     )
 }

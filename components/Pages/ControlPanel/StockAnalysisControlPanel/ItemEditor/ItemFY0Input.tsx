@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import NumberFormat from "react-number-format";
-import { useMxParser } from "../../../../api-hooks";
-import { Item } from "../../../../client";
+import { useMxParser } from "../../../../../api-hooks";
+import { Item } from "../../../../../client";
 
 interface ItemFY0InputProps {
     item: Item

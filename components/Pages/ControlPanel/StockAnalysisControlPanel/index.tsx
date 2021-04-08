@@ -1,18 +1,14 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { useFilingEntityManagerUnsecured, useStockAnalysisCrud } from '../../../api-hooks'
-import { FilingEntity, StockAnalysis2 } from '../../../client'
-import { SubTitle, Title } from '../../Common/Title'
-import Editor from './Editor'
-import { FilingEntityCard } from './FilingEntityCard'
+import { useFilingEntityManagerUnsecured, useStockAnalysisCrud } from '../../../../api-hooks'
+import { FilingEntity, StockAnalysis2 } from '../../../../client'
+import { SubTitle, Title } from '../../../Common/Title'
+import { FilingEntityCard } from '../FilingEntityCard'
 import StockAnalysisSummary from './StockAnalysisSummary'
 import Toolbar from './Toolbar/Toolbar'
+import Editor from './Editor'
 
-export const Completed = "Completed"
-export const Bootstrapping = "Bootstrapping"
-export const Created = "Created"
-
-export function ControlPanel() {
+export function StockAnalysisControlPanel() {
 
     const router = useRouter()
     const [filingEntity, setFilingEntity] = useState<FilingEntity>()
@@ -34,12 +30,8 @@ export function ControlPanel() {
     }
 
     useEffect(() => {
-        if (id) {
-            init()
-        }
+        if (id) { init() }
     }, [id])
-
-    const statusMessage = filingEntity?.statusMessage
 
     return (
         <main className="container mx-auto px-4 py-20 space-y-12">

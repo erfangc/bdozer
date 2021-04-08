@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import NumberFormat from "react-number-format"
-import { ItemEditor } from "."
+import { ItemEditor } from "./ItemEditor"
 import { Item } from "../../../../client"
-import { Attention as Manual, Check } from "./Svgs"
+import { Attention as Manual, Check } from "./ItemEditor/Svgs"
 
 interface Props {
     overriden?: boolean

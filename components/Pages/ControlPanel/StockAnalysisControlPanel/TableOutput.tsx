@@ -1,17 +1,14 @@
 import React, { useState } from "react"
 import { ReactNode } from "react"
 import NumberFormat from "react-number-format"
-import { useFactBase } from "../../../api-hooks"
-import { StockAnalysis2 } from "../../../client"
-import { year } from "../../../year"
+import { StockAnalysis2 } from "../../../../client"
+import { year } from "../../../../year"
 
 interface Props {
     stockAnalysis: StockAnalysis2
 }
 
-export function FullOutputDisplay(props: Props) {
-
-    const factBase = useFactBase()
+export function TableOutput(props: Props) {
 
     const model = props.stockAnalysis.model
     const cells = props.stockAnalysis.cells
