@@ -13,7 +13,7 @@ export function Overview(props: Props) {
         result: {
             cik,
             ticker,
-            model: { name },
+            name,
             derivedStockAnalytics: {
                 currentPrice,
                 targetPrice,
