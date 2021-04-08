@@ -6,7 +6,7 @@ export function StockAnalysisCard(props: { stockAnalysis: StockAnalysis2 }) {
     const router = useRouter()
 
     const { stockAnalysis } = props
-    const { derivedStockAnalytics: { currentPrice, targetPrice }, model: { symbol, name, cik } } = stockAnalysis
+    const { derivedStockAnalytics: { currentPrice, targetPrice }, name, model: { symbol, cik } } = stockAnalysis
     const percentUpside = (targetPrice / currentPrice - 1) * 100
 
     function navigate(id: string) {
