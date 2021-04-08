@@ -1,17 +1,16 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useFilingEntityManager, useStockAnalysisCrud, useStockAnalysisWorkflow } from "../../../api-hooks";
-import { StockAnalysis2, FilingEntity } from "../../../client";
+import { useStockAnalysisCrud, useStockAnalysisWorkflow } from "../../../api-hooks";
+import { FilingEntity, StockAnalysis2 } from "../../../client";
 import { DeleteButton } from "../../Common/DeleteButton";
 import { PrimaryButton } from "../../Common/PrimaryButton";
-import { Title, SubTitle } from "../../Common/Title";
+import { SubTitle, Title } from "../../Common/Title";
 import { FilingEntitySearch } from "../FilingEntitySearch";
 
 export function ControlPanel() {
 
     const router = useRouter()
     const stockAnalysisCrud = useStockAnalysisCrud()
-    const filingEntityManager = useFilingEntityManager()
     const stockAnalysisWorkflow = useStockAnalysisWorkflow()
     const [stockAnalyses, setStockAnalyses] = useState<StockAnalysis2[]>([])
     const [loading, setLoading] = useState(false)
@@ -21,12 +20,12 @@ export function ControlPanel() {
         setStockAnalyses(resp.data)
     }
 
-    async function createNewStockAnalysis(filingEntity: FilingEntity) {
+    async function handleFilingEntitySelect(filingEntity: FilingEntity) {
         //
         // Bootstrap facts and take the user to the entity page instead of the analysis page
         //
         if (filingEntity?.statusMessage !== 'Completed') {
-            navigateToEntity(filingEntity.cik)
+            navigateToFilingEntity(filingEntity.cik)
         } else {
             //
             // Otherwise create a new stock analysis and navigate to it
@@ -43,7 +42,7 @@ export function ControlPanel() {
         router.push(`/control-panel/stock-analyses/${id}`)
     }
 
-    function navigateToEntity(cik: string) {
+    function navigateToFilingEntity(cik: string) {
         router.push(`/control-panel/filing-entities/${cik}`)
     }
 
@@ -58,7 +57,7 @@ export function ControlPanel() {
         <main className="text-blueGray-50 container mx-auto space-y-20 py-20 px-4">
             <div className="space-y-8">
                 <Title>Create New</Title>
-                <FilingEntitySearch onSubmit={createNewStockAnalysis} className="w-80 lg:w-full" loading={loading} />
+                <FilingEntitySearch onSubmit={handleFilingEntitySelect} className="w-80 lg:w-full" loading={loading} />
             </div>
             <div className="space-y-8">
                 <SubTitle>Existing Analyses</SubTitle>

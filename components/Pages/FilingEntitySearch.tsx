@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { useState } from 'react'
 import { useEdgarExplorer, useFilingEntityManager, useFilingEntityManagerUnsecured } from '../../api-hooks'
 import { EdgarEntity, EdgarEntitySource, FilingEntity } from '../../client'

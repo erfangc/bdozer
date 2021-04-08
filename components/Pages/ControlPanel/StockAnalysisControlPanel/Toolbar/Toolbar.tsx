@@ -1,13 +1,13 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { useStockAnalysisWorkflow, useStockAnalysisPublication, basePath, useStockAnalysisCrud } from '../../../../../api-hooks'
-import { StockAnalysis2 } from '../../../../../client'
-import { notificationStore } from '../../../../Notifications/NotificationStore'
-import { ExcelDownloading, ExcelIcon } from '../../../../Common/DownloadToExcel'
-import { Loading, Play, Table, Preview, Publish, Unpublish } from './Svgs'
-import { ToolButton } from './ToolButton'
 import { v4 as uuid } from 'uuid'
+import { basePath, useStockAnalysisCrud, useStockAnalysisPublication, useStockAnalysisWorkflow } from '../../../../../api-hooks'
+import { StockAnalysis2 } from '../../../../../client'
+import { ExcelDownloading, ExcelIcon } from '../../../../Common/DownloadToExcel'
+import { notificationStore } from '../../../../Notifications/NotificationStore'
+import { Loading, Play, Preview, Publish, Settings, Table, Unpublish } from './Svgs'
+import { ToolButton } from './ToolButton'
 
 interface Props {
     loading: boolean
@@ -55,6 +55,10 @@ export default function Toolbar({ loading, setLoading, stockAnalysis, setStockAn
 
     async function navigateToPreview() {
         router.push(`/control-panel/stock-analyses/${stockAnalysis['_id']}/preview`)
+    }
+
+    async function navigateToModelSettings() {
+        router.push(`/control-panel/stock-analyses/${stockAnalysis['_id']}/model-settings`)
     }
 
     async function updateStockAnalysis(stockAnalysis: StockAnalysis2) {
@@ -113,6 +117,9 @@ export default function Toolbar({ loading, setLoading, stockAnalysis, setStockAn
             </ToolButton>
             <ToolButton onClick={unpublish} loading={loading} label="Unpublish">
                 <Unpublish />
+            </ToolButton>
+            <ToolButton onClick={navigateToModelSettings} loading={loading} label="Settings">
+                <Settings />
             </ToolButton>
             <ToolButton onClick={downloadModel} loading={downloading} label="Download">
                 {downloading ? <ExcelDownloading /> : <ExcelIcon />}

@@ -1,112 +1,81 @@
-import React, { useState } from "react";
-import Modal from 'react-modal';
-import { Model } from "../../../client";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { useStockAnalysisCrud } from "../../../api-hooks";
+import { Model, StockAnalysis2 } from "../../../client";
 import { AutoForm, Schema } from "../../AutoForms/AutoForm";
-import { DeleteButton } from "../../Common/DeleteButton";
-import { PrimaryButton } from "../../Common/PrimaryButton";
-import { Cogs } from "../../ButtonSvgs/Cogs";
+import { SecondaryButton } from "../../Common/SecondaryButton";
 
-Modal.setAppElement('#__next');
+export function ModelSettings() {
+    const router = useRouter()
+    const { id } = router.query
+    const stockAnalysisCrud = useStockAnalysisCrud()
+    const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
 
-interface ModelSettingsProps {
-    model: Model
-    onChange: (newModel: Model) => void
-}
-
-export function ModelSettings({ model, onChange }: ModelSettingsProps) {
-    const [open, setOpen] = useState(false)
-
-    function openModal() {
-        setOpen(true)
+    async function init() {
+        const { data: stockAnalysis } = await stockAnalysisCrud.getStockAnalysis(id as string)
+        setStockAnalysis(stockAnalysis)
     }
 
-    function closeModal() {
-        setOpen(false)
-    }
+    useEffect(() => {
+        if (id) {
+            init()
+        }
+    }, [id])
 
-    function handleSubmit(newModel: Model) {
-        onChange(newModel)
-        closeModal()
+    async function handleSubmit(model: Model) {
+        const updatedStockAnalysis: StockAnalysis2 = {
+            ...stockAnalysis,
+            model: { ...stockAnalysis.model, ...model }
+        }
+        await stockAnalysisCrud.saveStockAnalysis(updatedStockAnalysis)
+        setStockAnalysis(updatedStockAnalysis)
     }
 
     return (
-        <div>
-            <PrimaryButton onClick={openModal}>
-                <Cogs />
-                <span>Model Settings</span>
-            </PrimaryButton>
-            <Modal
-                overlayClassName="z-10"
-                shouldCloseOnOverlayClick
-                className="z-10 top-8 left-1/4 right-1/4 absolute p-10 overflow-auto rounded-lg outline-none bg-blueGray-700 text-blueGray-50"
-                isOpen={open}
-                onRequestClose={closeModal}
-            >
-                <h1 className="text-2xl font-bold">Model Settings</h1>
-                <p className="text-sm mt-2 mb-12 font-light">
-                    Configure settings for discount rates, beta, corporate tax rate and other common inputs into an equity valuation model
-                </p>
-                <AutoForm body={model} schema={schema} onSubmit={handleSubmit} useGrid />
-                <DeleteButton onClick={closeModal} className="mt-2">
-                    Close
-                </DeleteButton>
-            </Modal>
-        </div>
+        <main className="container mx-auto py-20">
+            <h1 className="text-2xl font-bold">Model Settings</h1>
+            <p className="text-sm mt-2 mb-12 font-light">
+                Configure settings for discount rates, beta, corporate tax rate and other common inputs into an equity valuation model
+            </p>
+            {stockAnalysis ? <AutoForm body={stockAnalysis.model} schema={schema} onSubmit={handleSubmit} useGrid /> : null}
+            <Link href={`/control-panel/stock-analyses/${id}`}>
+                <SecondaryButton className="mt-2">Back</SecondaryButton>
+            </Link>
+        </main>
     )
 }
 
 const schema: Schema[] = [
     {
-        name: 'name',
-        type: 'string',
-        label: 'Model Name',
-        fullLength: true
+        name: "totalRevenueConceptName",
+        label: "Total Revenue Concept Name",
+        type: "string"
     },
     {
-        name: 'description',
-        type: 'textarea',
-        label: 'Description',
-        fullLength: true
+        name: "epsConceptName",
+        label: "EPS Concept Name",
+        type: "string"
     },
     {
-        name: 'symbol',
-        type: 'string',
-        label: 'Symbol'
+        name: "netIncomeConceptName",
+        label: "Net Income Concept Name",
+        type: "string"
     },
     {
-        name: 'cik',
-        type: 'string',
-        label: 'CIK'
+        name: "ebitConceptName",
+        label: "EBIT Concept Name",
+        type: "string"
     },
     {
-        name: "currentPrice",
-        type: "number",
-        label: "Current Price"
+        name: "operatingCostConceptName",
+        label: "Operating Cost ConceptName",
+        type: "string"
     },
     {
-        name: "beta",
-        type: "number",
-        label: "Beta"
-    },
-    {
-        name: "sharesOutstanding",
-        type: "number",
-        label: "Shares Outstanding"
-    },
-    {
-        name: "dilutedSharesOutstanding",
-        type: "number",
-        label: "Diluted Shares Outstanding"
-    },
-    {
-        name: "corporateTaxRate",
-        type: "percent",
-        label: "Corporate Tax Rate %"
-    },
-    {
-        name: "costOfDebt",
-        type: "percent",
-        label: "Cost Of Debt %"
+        name: "sharesOutstandingConceptName",
+        label: "Shares Outstanding Concept Name",
+        type: "string"
     },
     {
         name: "riskFreeRate",
@@ -119,14 +88,9 @@ const schema: Schema[] = [
         label: "Equity Risk Premium %"
     },
     {
-        name: "terminalFcfMultiple",
-        type: "number",
-        label: "Terminal FCF Multiple"
-    },
-    {
-        name: "terminalFcfGrowthRate",
+        name: "terminalGrowthRate",
         type: "percent",
-        label: "Terminal FCF Growth Rate %"
+        label: "Terminal Growth Rate %"
     },
     {
         name: "periods",
