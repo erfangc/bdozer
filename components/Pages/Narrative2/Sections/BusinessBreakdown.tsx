@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-
 import HighchartsReact from "highcharts-react-official";
-import { StockAnalysis, Item, StockAnalysis2 } from "../../../../client";
-import { lime700, rose500, blueGray900, highcharts } from "../../../../highcharts";
+import React, { useEffect, useState } from "react";
+import { Item, StockAnalysis2 } from "../../../../client";
+import { blueGray900, highcharts, lime700, rose500 } from "../../../../highcharts";
 import { simpleNumber } from "../../../../simple-number";
 import { year } from "../../../../year";
 import { SubTitle } from "../../../Common/Title";
 import { Pill } from "../Pill";
+
 
 interface Props {
     result: StockAnalysis2

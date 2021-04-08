@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useFactBaseUnsecured } from '../../../../api-hooks';
-import { StockAnalysis } from '../../../../client';
+import { StockAnalysis2 } from '../../../../client';
 import { blueGray50, highcharts } from '../../../../highcharts';
 import { simpleNumber } from '../../../../simple-number';
 import { year } from '../../../../year';
@@ -12,7 +12,7 @@ import { PageTitle } from '../PageTitle';
 import { PageWrapper } from '../PageWrapper';
 
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
 
 export function Page4({ result }: Props) {
@@ -22,7 +22,7 @@ export function Page4({ result }: Props) {
     const factBase = useFactBaseUnsecured()
     const [options, setOptions] = useState<Highcharts.Options>()
     const { cells, model } = result
-    const revenue = result.businessWaterfall[0]?.revenue
+    const revenue = result?.derivedStockAnalytics?.businessWaterfall[0]?.revenue
     const factId = revenue?.item?.historicalValue?.factId
 
     const revenueFy0 = cells.find(cell => cell.period === 0 && cell.item.name === revenue.item.name)?.value?.toFixed(0)

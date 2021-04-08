@@ -7,6 +7,7 @@ import { AutoForm, Schema } from "../../AutoForms/AutoForm";
 import { SecondaryButton } from "../../Common/SecondaryButton";
 
 export function ModelSettings() {
+
     const router = useRouter()
     const { id } = router.query
     const stockAnalysisCrud = useStockAnalysisCrud()
@@ -18,15 +19,16 @@ export function ModelSettings() {
     }
 
     useEffect(() => {
-        if (id) {
-            init()
-        }
+        if (id) { init() }
     }, [id])
 
     async function handleSubmit(model: Model) {
         const updatedStockAnalysis: StockAnalysis2 = {
             ...stockAnalysis,
-            model: { ...stockAnalysis.model, ...model }
+            model: {
+                ...stockAnalysis.model,
+                ...model
+            }
         }
         await stockAnalysisCrud.saveStockAnalysis(updatedStockAnalysis)
         setStockAnalysis(updatedStockAnalysis)
@@ -96,5 +98,5 @@ const schema: Schema[] = [
         name: "periods",
         type: "integer",
         label: "Projection Periods"
-    }
+    },
 ]

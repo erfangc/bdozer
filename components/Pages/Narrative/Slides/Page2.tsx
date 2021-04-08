@@ -1,5 +1,5 @@
 import React from 'react'
-import { StockAnalysis } from '../../../../client/api';
+import { StockAnalysis2 } from '../../../../client/api';
 import { year } from '../../../../year';
 import { Navigation } from '../Navigation';
 import { PageTitle } from '../PageTitle';
@@ -7,16 +7,17 @@ import { PageWrapper } from '../PageWrapper';
 import { Statistic } from '../Statistic';
 
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
 
 export function Page2(props: Props) {
     const {
         model,
-        model: { name, terminalGrowthRate },
+        model: { name, terminalGrowthRate, epsConceptName, },
         cells,
-        discountRate,
-        epsConceptName,
+        derivedStockAnalytics: {
+            discountRate,
+        },
     } = props.result;
 
     const terminalPe = (1 / (discountRate - terminalGrowthRate)).toFixed(1)

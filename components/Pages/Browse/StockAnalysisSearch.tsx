@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
-import React, { useEffect, useRef, useState } from 'react'
-import { useEdgarExplorer, useFilingEntityManagerUnsecured, useStockAnalyzerFactory } from '../../../api-hooks'
-import { EdgarEntity, EdgarEntitySource, FilingEntity, StockAnalysis } from '../../../client'
+import React, { useEffect, useState } from 'react'
+import { useEdgarExplorer, useFilingEntityManagerUnsecured, useStockAnalysisPublication } from '../../../api-hooks'
+import { EdgarEntity, EdgarEntitySource, FilingEntity, StockAnalysis2 } from '../../../client'
 import { PrimaryButton } from '../../Common/PrimaryButton'
 
 interface Props {
@@ -12,18 +12,21 @@ interface Props {
 export function StockAnalysisSearch(props: Props) {
     const router = useRouter()
 
-    const stockAnalyzer = useStockAnalyzerFactory()
+    const stockAnalysisPublication = useStockAnalysisPublication()
     const edgarExplorer = useEdgarExplorer()
     const publicFilingEntityManager = useFilingEntityManagerUnsecured()
 
     const [term, setTerm] = useState<string>()
     const [found, setFound] = useState<EdgarEntity[]>([])
-    const [stockAnalyses, setStockAnalyses] = useState<StockAnalysis[]>([])
+    const [stockAnalyses, setStockAnalyses] = useState<StockAnalysis2[]>([])
+
+    async function init() {
+        const { data: stockAnalyses } = await stockAnalysisPublication.findPublishedStockAnalyses()
+        setStockAnalyses(stockAnalyses)
+    }
 
     useEffect(() => {
-        stockAnalyzer
-            .getAnalyses()
-            .then(resp => setStockAnalyses(resp.data))
+        init()
     }, [])
 
     async function search(newTerm) {

@@ -10,7 +10,6 @@ import {
   StockAnalysisCrudControllerApi,
   StockAnalysisPublicationControllerApi,
   StockAnalysisWorkflowControllerApi,
-  StockAnalyzerFactoryControllerApi,
 } from "./client";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
@@ -82,11 +81,6 @@ export function useStockAnalysisPublication() {
 export function useStockAnalysisCrud() {
   const axiosInstance = useAxios();
   return new StockAnalysisCrudControllerApi(null, basePath, axiosInstance);
-}
-
-export function useStockAnalyzerFactory() {
-  const axiosInstance = useAxios();
-  return new StockAnalyzerFactoryControllerApi(null, basePath, axiosInstance);
 }
 
 export function useEdgarExplorer() {

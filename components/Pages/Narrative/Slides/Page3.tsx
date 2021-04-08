@@ -1,6 +1,6 @@
 import HighchartsReact from 'highcharts-react-official';
 import React from 'react';
-import { StockAnalysis } from '../../../../client';
+import { StockAnalysis2 } from '../../../../client';
 import { highcharts } from '../../../../highcharts';
 import { simpleNumber } from '../../../../simple-number';
 import { year } from '../../../../year';
@@ -10,17 +10,17 @@ import { PageWrapper } from '../PageWrapper';
 import { baseOptions, waterfallSeries } from '../waterfall-series';
 
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
 
 export function Page3(props: Props) {
     const {
-        epsConceptName,
-        sharesOutstandingConceptName,
         model,
-        model: { symbol, },
+        model: { symbol, epsConceptName, sharesOutstandingConceptName, },
         cells,
-        businessWaterfall,
+        derivedStockAnalytics: {
+            businessWaterfall,
+        },
     } = props.result
 
     const finalEps = cells.find(cell => cell.item?.name === epsConceptName && cell.period == model.periods)?.value

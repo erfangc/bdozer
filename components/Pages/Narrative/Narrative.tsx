@@ -1,12 +1,12 @@
 import React from 'react';
-import { StockAnalysis } from '../../../client';
+import { StockAnalysis2 } from '../../../client';
 import { Page1 } from './Slides/Page1';
 import { Page2 } from './Slides/Page2';
 import { Page3 } from './Slides/Page3';
 import { Page4 } from './Slides/Page4';
 
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
 
 export function Narrative(props: Props) {

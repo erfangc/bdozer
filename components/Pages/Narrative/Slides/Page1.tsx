@@ -1,18 +1,20 @@
 import React from 'react'
-import { StockAnalysis } from '../../../../client';
+import { StockAnalysis2 } from '../../../../client';
 import { Navigation } from '../Navigation';
 import { PageTitle } from '../PageTitle';
 import { PageWrapper } from '../PageWrapper';
 import { Statistic } from '../Statistic';
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
 export function Page1(props: Props) {
     const {
         model,
         model: { name },
         cells,
-        currentPrice
+        derivedStockAnalytics: {
+            currentPrice
+        }
     } = props.result;
 
     const finalTvps = cells.find(cell => cell.item?.name === "TerminalValuePerShare" && cell.period == model.periods)?.value
