@@ -1,18 +1,18 @@
 import HighchartsReact from "highcharts-react-official";
 import React, { useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
-import { StockAnalysis } from "../../../../client";
+import { StockAnalysis2 } from "../../../../client";
 import { blue700, green800, highcharts } from "../../../../highcharts";
 import { Popover } from "../../../Popover";
 import { SubTitle } from "../../../Common/Title";
 
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
 
 export function TargetPriceBreakdown(props: Props) {
     const {
-        result: { zeroGrowthPrice, targetPrice, }
+        result: { derivedStockAnalytics: { zeroGrowthPrice, targetPrice, } }
     } = props;
     const impliedPriceFromGrowth = targetPrice - zeroGrowthPrice
     const text = zeroGrowthPrice <= 0
@@ -56,7 +56,7 @@ export function TargetPriceBreakdown(props: Props) {
 }
 
 function ValueBreakdownPieChart(props: Props) {
-    const { result: { zeroGrowthPrice, targetPrice, } } = props;
+    const { result: { derivedStockAnalytics: { zeroGrowthPrice, targetPrice, } } } = props;
 
     const impliedPriceFromGrowth = targetPrice - zeroGrowthPrice
 

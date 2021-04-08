@@ -1,11 +1,11 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import React, { useEffect, useState } from 'react'
 import { useComments } from '../../../../api-hooks'
-import { StockAnalysis, Comment } from '../../../../client'
+import { Comment, StockAnalysis2 } from '../../../../client'
 import { TextInput } from '../../../Common/TextInput'
 
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
 
 export function Comments({ result }: Props) {

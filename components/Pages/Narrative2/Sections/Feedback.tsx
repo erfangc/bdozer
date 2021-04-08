@@ -1,11 +1,11 @@
 import { Field, Form, Formik } from "formik";
 import { useState } from "react";
 import { useMarketing } from "../../../../api-hooks";
-import { StockAnalysis } from "../../../../client";
+import { StockAnalysis2 } from "../../../../client";
 import { Label, SubTitle } from "../../../Common/Title";
 
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
 
 export function Feedback(props: Props) {

@@ -1,5 +1,5 @@
 import React from "react";
-import { StockAnalysis, StockAnalysis2 } from "../../../../client";
+import { StockAnalysis2 } from "../../../../client";
 import { simpleNumber } from "../../../../simple-number";
 import { Popover } from "../../../Popover";
 import { SubTitle } from "../../../Common/Title";

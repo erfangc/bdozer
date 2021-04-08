@@ -1,11 +1,11 @@
 import React from 'react'
 import { basePath } from '../../../api-hooks'
-import { StockAnalysis, StockAnalyzerFactoryControllerApi } from '../../../client'
+import { StockAnalysis2, StockAnalysisCrudControllerApi } from '../../../client'
 import { UnsecuredApp } from '../../../components/App'
 import { Narrative } from '../../../components/Pages/Narrative/Narrative'
 
 interface Props {
-    stockAnalysis: StockAnalysis
+    stockAnalysis: StockAnalysis2
 }
 
 export default function NarrativePage(props: Props) {
@@ -17,7 +17,7 @@ export default function NarrativePage(props: Props) {
 }
 
 NarrativePage.getInitialProps = async (ctx) => {
-    const stockAnalyzer = new StockAnalyzerFactoryControllerApi(null, basePath);
-    const { data } = await stockAnalyzer.getAnalysis(ctx.query.cik)
+    const stockAnalyzer = new StockAnalysisCrudControllerApi(null, basePath);
+    const { data } = await stockAnalyzer.getStockAnalysis(ctx.query.id)
     return { stockAnalysis: data }
 }
