@@ -8,6 +8,7 @@ import {
   MarketingControllerApi,
   MxParserControllerApi,
   StockAnalysisCrudControllerApi,
+  StockAnalysisPublicationControllerApi,
   StockAnalysisWorkflowControllerApi,
   StockAnalyzerFactoryControllerApi,
 } from "./client";
@@ -25,7 +26,7 @@ axiosInstance.interceptors.response.use(null, (error) => {
     id: uuid(),
     ...error?.response?.data
   };
-  serverErrorStore.addError(apiError);
+  serverErrorStore.addNotification(apiError);
   return Promise.reject(error);
 });
 
@@ -71,6 +72,11 @@ export function useMxParser() {
 export function useStockAnalysisWorkflow() {
   const axiosInstance = useAxios();
   return new StockAnalysisWorkflowControllerApi(null, basePath, axiosInstance);
+}
+
+export function useStockAnalysisPublication() {
+  const axiosInstance = useAxios();
+  return new StockAnalysisPublicationControllerApi(null, basePath, axiosInstance);
 }
 
 export function useStockAnalysisCrud() {

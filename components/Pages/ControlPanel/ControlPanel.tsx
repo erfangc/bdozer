@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { basePath, useFilingEntityManager, useFilingEntityManagerUnsecured, useStockAnalysisCrud, useStockAnalysisWorkflow } from '../../../api-hooks'
+import { basePath, useFilingEntityManager, useFilingEntityManagerUnsecured, useStockAnalysisCrud, useStockAnalysisPublication, useStockAnalysisWorkflow } from '../../../api-hooks'
 import { FilingEntity, StockAnalysis2 } from '../../../client'
 import { DeleteButton } from '../../Common/DeleteButton'
 import { PrimaryButton } from '../../Common/PrimaryButton'
@@ -25,6 +25,7 @@ export function ControlPanel() {
 
     const stockAnalysisCrud = useStockAnalysisCrud()
     const stockAnalysisWorkflow = useStockAnalysisWorkflow()
+    const stockAnalysisPublication = useStockAnalysisPublication()
 
     const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
 
@@ -32,7 +33,7 @@ export function ControlPanel() {
 
     async function init() {
         try {
-            const { data: stockAnalysis } = await stockAnalysisCrud.get(id as string)
+            const { data: stockAnalysis } = await stockAnalysisCrud.getStockAnalysis(id as string)
             const { data: filingEntity } = await filingEntityManagerUnsecured.getFilingEntity(stockAnalysis.cik)
             setFilingEntity(filingEntity)
             setStockAnalysis(stockAnalysis)
@@ -62,26 +63,23 @@ export function ControlPanel() {
         router.push(`/control-panel/stock-analyses/${stockAnalysis['_id']}/full-output`)
     }
 
-    async function navigateToPreview() {
-        router.push(`/control-panel/stock-analyses/${stockAnalysis['_id']}/preview`)
+    async function publish() {
+        await stockAnalysisPublication.publishStockAnalysis(stockAnalysis)
+        router.push(`/published-stock-analyses/${stockAnalysis['_id']}/narrative2`)
     }
 
-    async function bootstrapSECData() {
-        setLoading(true)
-        try {
-            await filingEntityManager.bootstrapFilingEntity(id as string)
-            const resp = await filingEntityManagerUnsecured.getFilingEntity(id as string)
-            setFilingEntity(resp.data)
-        } catch (e) {
-            console.error(e);
-        }
-        setLoading(false)
+    async function unpublish() {
+        await stockAnalysisPublication.unpublishStockAnalysis(stockAnalysis['_id'])
+    }
+
+    async function navigateToPreview() {
+        router.push(`/control-panel/stock-analyses/${stockAnalysis['_id']}/preview`)
     }
 
     async function updateStockAnalysis(stockAnalysis: StockAnalysis2) {
         setLoading(true)
         try {
-            await stockAnalysisCrud.save(stockAnalysis)
+            await stockAnalysisCrud.saveStockAnalysis(stockAnalysis)
             setStockAnalysis(stockAnalysis)
         } catch (e) {
             console.error(e);
@@ -146,12 +144,15 @@ export function ControlPanel() {
                                 <PrimaryButton onClick={navigateToPreview} disabled={loading} className="py-2">
                                     Preview
                                 </PrimaryButton>
+                                <PrimaryButton onClick={publish} disabled={loading} className="py-2">
+                                    Publish
+                                </PrimaryButton>
+                                <PrimaryButton onClick={unpublish} disabled={loading} className="py-2">
+                                    Unpublish
+                                </PrimaryButton>
                                 <DownloadToExcel onClick={downloadModel} loading={loading} />
                             </>
                     }
-                    <DeleteButton onClick={bootstrapSECData} disabled={loading} className="py-2">
-                        {loading ? '-' : statusMessage !== Completed ? 'Bootstrap SEC Data' : 'Reboostrap SEC Data'}
-                    </DeleteButton>
                 </div>
                 <Editor
                     filingEntity={filingEntity}

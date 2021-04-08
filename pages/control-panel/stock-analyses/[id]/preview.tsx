@@ -11,7 +11,7 @@ function PreviewComponent() {
     const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
 
     async function init() {
-        const { data: stockAnalysis } = await stockAnalysisCrud.get(id as string)
+        const { data: stockAnalysis } = await stockAnalysisCrud.getStockAnalysis(id as string)
         setStockAnalysis(stockAnalysis)
     }
 

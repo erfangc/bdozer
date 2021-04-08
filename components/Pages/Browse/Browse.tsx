@@ -1,15 +1,17 @@
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
-import { StockAnalysis } from '../../../client'
+import React from 'react'
+import { StockAnalysis2 } from '../../../client'
 import { LegalDisclaimer } from '../../LegalDisclaimer'
 import { StockAnalysisCard } from './StockAnalysisCard'
 import { StockAnalysisSearch } from './StockAnalysisSearch'
+
 interface Props {
-    stockAnalyses: StockAnalysis[]
+    stockAnalyses: StockAnalysis2[]
 }
+
 export function Browse(props: Props) {
+
     const router = useRouter()
-    const [stockAnalyses, setStockAnalyses] = useState<StockAnalysis[]>(props.stockAnalyses)
 
     function navigate(cik: string) {
         router.push(`/${cik}/narrative2`)
@@ -30,7 +32,14 @@ export function Browse(props: Props) {
                 </blockquote>
                 <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
                     {
-                        stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis} />)
+                        props
+                            .stockAnalyses
+                            .map(stockAnalysis => (
+                                <StockAnalysisCard
+                                    key={stockAnalysis['_id']}
+                                    stockAnalysis={stockAnalysis}
+                                />
+                            ))
                     }
                 </div>
             </section>

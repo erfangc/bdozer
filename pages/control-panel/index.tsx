@@ -17,14 +17,14 @@ function ControlPanelComponent() {
     const [loading, setLoading] = useState(false)
 
     async function init() {
-        const resp = await stockAnalysisCrud.find()
+        const resp = await stockAnalysisCrud.findStockAnalyses()
         setStockAnalyses(resp.data)
     }
 
     async function createNewStockAnalysis(filingEntity: FilingEntity) {
         setLoading(true)
         const { data: stockAnalysis } = await stockAnalysisWorkflow.create(filingEntity.cik)
-        await stockAnalysisCrud.save(stockAnalysis)
+        await stockAnalysisCrud.saveStockAnalysis(stockAnalysis)
         setLoading(false)
         navigate(stockAnalysis['_id'])
     }
@@ -34,7 +34,7 @@ function ControlPanelComponent() {
     }
 
     async function deleteStockAnalysis(id: string) {
-        await stockAnalysisCrud._delete(id)
+        await stockAnalysisCrud.deleteStockAnalysis(id)
         await init()
     }
 

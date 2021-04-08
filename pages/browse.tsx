@@ -1,15 +1,14 @@
 import React from 'react'
 import { basePath } from '../api-hooks'
-import { StockAnalysis, StockAnalyzerFactoryControllerApi } from '../client'
+import { StockAnalysis2, StockAnalysisPublicationControllerApi } from '../client'
 import { UnsecuredApp } from '../components/App'
 import { Browse } from '../components/Pages/Browse/Browse'
 
 interface Props {
-    stockAnalyses: StockAnalysis[]
+    stockAnalyses: StockAnalysis2[]
 }
 
 function BrowsePage(props: Props) {
-
 
     const { stockAnalyses } = props
 
@@ -21,8 +20,8 @@ function BrowsePage(props: Props) {
 }
 
 BrowsePage.getInitialProps = async () => {
-    const stockAnalyzer = new StockAnalyzerFactoryControllerApi(null, basePath);
-    const { data } = await stockAnalyzer.getAnalyses()
+    const stockAnalyzer = new StockAnalysisPublicationControllerApi(null, basePath);
+    const { data } = await stockAnalyzer.findPublishedStockAnalyses()
     return { stockAnalyses: data }
 }
 

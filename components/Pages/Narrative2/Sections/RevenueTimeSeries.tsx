@@ -1,13 +1,13 @@
 import HighchartsReact from 'highcharts-react-official'
 import React, { useEffect, useState } from 'react'
-import { useFactBase, useFactBaseUnsecured } from '../../../../api-hooks'
-import { StockAnalysis } from '../../../../client'
+import { useFactBaseUnsecured } from '../../../../api-hooks'
+import { StockAnalysis2 } from '../../../../client'
 import { highcharts } from '../../../../highcharts'
 import { simpleNumber } from '../../../../simple-number'
 import { year } from '../../../../year'
 
 interface Props {
-    result: StockAnalysis
+    result: StockAnalysis2
 }
 
 export function RevenueTimeSeries({ result }: Props) {
@@ -15,7 +15,7 @@ export function RevenueTimeSeries({ result }: Props) {
     const [options, setOptions] = useState<Highcharts.Options>()
     const factBase = useFactBaseUnsecured()
     const { cells } = result
-    const revenue = result.businessWaterfall[0]?.revenue
+    const revenue = result.derivedStockAnalytics.businessWaterfall[0]?.revenue
     const factId = revenue?.item?.historicalValue?.factId
 
     async function refresh() {

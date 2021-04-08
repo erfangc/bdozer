@@ -12,7 +12,8 @@ export function Overview(props: Props) {
     const {
         result: {
             cik,
-            model: { symbol, name },
+            ticker,
+            model: { name },
             derivedStockAnalytics: {
                 currentPrice,
                 targetPrice,
@@ -57,7 +58,7 @@ export function Overview(props: Props) {
             <div className="flex-col flex space-y-2">
                 <span className="text-blueGray-300">{name}</span>
                 <div className="flex items-baseline">
-                    <Title>{symbol}</Title>
+                    <Title>{ticker}</Title>
                     <span className="ml-4">
                         <span className="text-blueGray-300">Latest Price</span> <span className={currentPrice < targetPrice ? `text-rose-500` : null}>${currentPrice.toFixed(2)}</span>
                     </span>

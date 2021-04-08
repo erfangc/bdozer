@@ -16,7 +16,7 @@ function FullModelComponent() {
 
     async function refreshModel() {
         setLoading(true)
-        const resp = await stockAnalysisCrud.get(id as string)
+        const resp = await stockAnalysisCrud.getStockAnalysis(id as string)
         setResult(resp.data)
         setLoading(false)
     }
