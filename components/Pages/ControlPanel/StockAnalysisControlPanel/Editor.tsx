@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react'
+import React from 'react';
 import { useFilingEntityManager } from '../../../../api-hooks';
-import { FilingEntity, StockAnalysis2, Item } from '../../../../client';
+import { FilingEntity, StockAnalysis2 } from '../../../../client';
 import { Select } from '../../../Common/Select';
 import Tab from '../../../Common/Tab';
 import { TextInput } from '../../../Common/TextInput';
@@ -54,7 +54,13 @@ export default function Editor(props: Props) {
                     <option value="Recovery">Recovery</option>
                     <option value="Normal">Normal</option>
                 </Select>
-                <TextInput value={stockAnalysis?.model?.beta} type="number" onChange={updateBeta} label="Beta" className="w-24" />
+                <TextInput
+                    value={stockAnalysis?.model?.beta ?? ''}
+                    type="number"
+                    onChange={updateBeta}
+                    label="Beta"
+                    className="w-24"
+                />
             </div>
             <div className="pt-6">
                 <div className="flex space-x-4 mb-4">
@@ -71,6 +77,7 @@ export default function Editor(props: Props) {
                                 const overrideItem = stockAnalysis?.model?.itemOverrides?.find(it => it.name === item.name)
                                 return (
                                     <ItemDisplay
+                                        key={item.name}
                                         stockAnalysis={stockAnalysis}
                                         overriden={overrideItem !== undefined}
                                         item={overrideItem ?? item}
