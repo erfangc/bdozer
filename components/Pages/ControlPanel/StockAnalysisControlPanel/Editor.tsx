@@ -18,11 +18,12 @@ export default function Editor(props: Props) {
     const { filingEntity, stockAnalysis, setFilingEntity, setStockAnalysis } = props
     const filingEntityManager = useFilingEntityManager()
 
-    async function changeModelTemplate(template: string) {
+    async function changeModelTemplate(event: React.ChangeEvent<HTMLSelectElement>) {
+        const { currentTarget: { value } } = event
         const updatedFilingEntity: FilingEntity = {
             ...filingEntity, modelTemplate: {
-                name: template,
-                template
+                name: value,
+                template: value
             }
         };
         await filingEntityManager.saveFilingEntity(updatedFilingEntity)
@@ -31,21 +32,21 @@ export default function Editor(props: Props) {
 
     async function updateBeta(event: React.ChangeEvent<HTMLInputElement>) {
         const beta = parseFloat(event.currentTarget.value)
-        const updatedFilingEntity: StockAnalysis2 = {
+        const updatedStockAnalysis: StockAnalysis2 = {
             ...stockAnalysis,
             model: {
                 ...stockAnalysis.model,
                 beta
             }
         }
-        setStockAnalysis(updatedFilingEntity)
+        setStockAnalysis(updatedStockAnalysis)
     }
 
     return (
         <div className="rounded md:p-4 md:border md:border-blueGray-500 space-y-8">
             <div className="space-y-4">
                 <Select
-                    onChange={({ currentTarget: { value } }) => changeModelTemplate(value)}
+                    onChange={changeModelTemplate}
                     value={filingEntity?.modelTemplate?.template}
                     label="Choose Model Template"
                     className="lg:w-80"
