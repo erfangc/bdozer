@@ -56,11 +56,12 @@ export function ItemEditor() {
     async function handleSubmit(newValue: any) {
         const newItem = merge(item, newValue)
         await updateItem(newItem)
+        back()
     }
 
-    function updateFormula(newFormula: string) {
+    async function updateFormula(newFormula: string) {
         const newItem = { ...item, formula: newFormula }
-        updateItem(newItem)
+        await updateItem(newItem)
         back()
     }
 
