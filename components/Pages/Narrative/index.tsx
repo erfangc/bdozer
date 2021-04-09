@@ -19,5 +19,3 @@ export function Narrative(props: Props) {
         </main>
     )
 }
-
-

@@ -2,7 +2,7 @@ import React from 'react'
 import { basePath } from '../../../api-hooks'
 import { StockAnalysis2, StockAnalysisCrudControllerApi } from '../../../client'
 import { UnsecuredApp } from '../../../components/App'
-import { Narrative } from '../../../components/Pages/Narrative/Narrative'
+import { Narrative } from '../../../components/Pages/Narrative'
 
 interface Props {
     stockAnalysis: StockAnalysis2

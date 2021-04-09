@@ -1,5 +1,7 @@
-import React, { Component } from "react";
-import { Item, ItemTypeEnum } from "../../../../../client";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { useStockAnalysisCrud } from "../../../../../api-hooks";
+import { Item, ItemTypeEnum, Model, StockAnalysis2 } from "../../../../../client";
 import { AutoForm } from "../../../../AutoForms/AutoForm";
 import { bodyOf, merge, schemaOf } from "../../../../AutoForms/Schemas";
 import { DeleteButton } from "../../../../Common/DeleteButton";
@@ -9,90 +11,134 @@ import { FormulaEditor } from "./FormulaEditor";
 import { ItemDescriptionInput } from "./ItemDescriptionInput";
 import { ItemFY0Input } from "./ItemFY0Input";
 
-interface ItemEditorProps {
-    item: Item
-    onChange: (newItem: Item) => void
-    onClear: (item: Item) => void
-    onDismiss: () => void
-}
+export function ItemEditor() {
 
-/**
- * Shows an editor for the Item but also 
- * can be swapped to edit the Drivers that belong to the Item
- */
-export class ItemEditor extends Component<ItemEditorProps> {
+    const router = useRouter()
+    const { id, itemName } = router.query
+    const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
+    const stockAnalysisCrud = useStockAnalysisCrud()
 
-    updateDescription(newDescription) {
-        const { item, onChange } = this.props;
-        onChange({ ...item, description: newDescription })
+    async function init() {
+        const { data: stockAnalysis } = await stockAnalysisCrud.getStockAnalysis(id as string)
+        setStockAnalysis(stockAnalysis)
     }
 
-    updateHistoricalValue(newHistoricalValue) {
-        const { item, onChange } = this.props;
-        onChange({ ...item, historicalValue: newHistoricalValue })
+    useEffect(() => { if (id) init() }, [id])
+
+    async function updateItem(newItem: Item) {
+        // delete it item from overrides
+        const model = stockAnalysis.model
+        const updatedModel: Model = {
+            ...model,
+            itemOverrides: [
+                ...model.itemOverrides.filter(item => item.name !== newItem.name),
+                newItem
+            ]
+        }
+        const updatedStockAnalysis: StockAnalysis2 = {
+            ...stockAnalysis,
+            model: updatedModel
+        }
+        setStockAnalysis(updatedStockAnalysis)
+        await stockAnalysisCrud.saveStockAnalysis(updatedStockAnalysis)
     }
 
-    updateProperty(newValue: any) {
-        const { item, onChange } = this.props;
+    function updateDescription(newDescription) {
+        const newItem = { ...item, description: newDescription }
+        updateItem(newItem)
+    }
+
+    function updateHistoricalValue(newHistoricalValue) {
+        const newItem = { ...item, historicalValue: newHistoricalValue }
+        updateItem(newItem)
+    }
+
+    function updateProperty(newValue: any) {
         const newItem = merge(item, newValue)
-        onChange(newItem)
+        updateItem(newItem)
     }
-
-    updateFormula(newFormula: string) {
-        const { item, onChange } = this.props;
+    function updateFormula(newFormula: string) {
         const newItem = { ...item, formula: newFormula }
-        onChange(newItem)
+        updateItem(newItem)
     }
-
-    updateType(newType: ItemTypeEnum) {
-        const { item, onChange } = this.props;
+    function updateType(newType: ItemTypeEnum) {
         const newItem: Item = { ...item, type: newType }
-        onChange(newItem)
+        updateItem(newItem)
     }
 
-    render() {
-        const { item, onClear } = this.props;
-        return (
-            // outer layer is the overlay
-            <div className="w-screen h-screen bg-blueGray-900 fixed inset-0 z-10">
-                {/* this inner layer is the actual modal / input */}
-                <div className="fixed top-4 left-0 right-0 lg:top-32 lg:left-96 lg:right-96 z-10 bg-blueGray-700 px-2 lg:px-12 py-3 lg:py-8 rounded-lg shadow-md flex-col space-y-8">
-                    <div className="flex-col space-y-4">
-                        <ItemDescriptionInput item={item} onChange={this.updateDescription.bind(this)} />
-                        <ItemFY0Input item={item} onChange={this.updateHistoricalValue.bind(this)} />
-                    </div>
-                    <Select label="Item Type" value={item.type} onChange={({ currentTarget: { value } }) => this.updateType(value as any)}>
-                        <option value={ItemTypeEnum.Custom}>Custom</option>
-                        <option value={ItemTypeEnum.SubscriptionRevenue}>Subscription Revenue</option>
-                        <option value={ItemTypeEnum.PercentOfTotalAsset}>Percent of Total Asset</option>
-                        <option value={ItemTypeEnum.PercentOfRevenue}>Percent of Revenue</option>
-                        <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
-                        <option value={ItemTypeEnum.Discrete}>Discrete</option>
-                    </Select>
-                    {
-                        item.type === ItemTypeEnum.Custom
-                            ?
-                            <FormulaEditor
-                                item={item}
-                                onSubmit={this.updateFormula.bind(this)}
-                            />
-                            :
-                            <AutoForm
-                                schema={schemaOf(item)}
-                                body={bodyOf(item)}
-                                onSubmit={this.updateProperty.bind(this)}
-                            />
-                    }
-                    <div className="space-x-2">
-                        <DeleteButton className="w-24" onClick={() => onClear(item)}>
-                            Clear
-                        </DeleteButton>
-                        <SecondaryButton className="w-24" onClick={this.props.onDismiss}>
-                            Dismiss
-                        </SecondaryButton>
-                    </div>
+    async function clearItem() {
+        // delete it item from overrides
+        const model = stockAnalysis.model
+        const updatedModel: Model = {
+            ...model,
+            itemOverrides: [
+                ...model.itemOverrides.filter(i => i.name !== item.name),
+            ]
+        }
+        const updatedStockAnalysis: StockAnalysis2 = {
+            ...stockAnalysis,
+            model: updatedModel
+        }
+        setStockAnalysis(updatedStockAnalysis)
+        await stockAnalysisCrud.saveStockAnalysis(updatedStockAnalysis)
+        back()
+    }
+
+    function back() {
+        router.push(`/control-panel/stock-analyses/${id}`)
+    }
+
+    const model = stockAnalysis?.model
+
+    const original = (
+        [
+            ...(model?.incomeStatementItems ?? []),
+            ...(model?.cashFlowStatementItems ?? []),
+            ...(model?.balanceSheetItems ?? []),
+            ...(model?.otherItems ?? []),
+        ]
+    ).find(it => it.name === itemName)
+
+    const override = model?.itemOverrides.find(item => item.name === itemName)
+
+    const item = override ?? original
+
+    if (!item)
+        return null
+
+    return (
+        // outer layer is the overlay
+        <div className="container mx-auto max-w-prose py-20">
+            {/* this inner layer is the actual modal / input */}
+            <div className="bg-blueGray-700 px-2 lg:px-12 py-3 lg:py-8 rounded-lg shadow-md flex-col space-y-8">
+                <div className="flex-col space-y-4">
+                    <ItemDescriptionInput item={item} onChange={updateDescription} />
+                    <ItemFY0Input item={item} onChange={updateHistoricalValue} />
+                </div>
+                <Select label="Item Type" value={item.type} onChange={({ currentTarget: { value } }) => updateType(value as any)}>
+                    <option value={ItemTypeEnum.Custom}>Custom</option>
+                    <option value={ItemTypeEnum.SubscriptionRevenue}>Subscription Revenue</option>
+                    <option value={ItemTypeEnum.PercentOfTotalAsset}>Percent of Total Asset</option>
+                    <option value={ItemTypeEnum.PercentOfRevenue}>Percent of Revenue</option>
+                    <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
+                    <option value={ItemTypeEnum.Discrete}>Discrete</option>
+                </Select>
+                {
+                    item.type === ItemTypeEnum.Custom
+                        ?
+                        <FormulaEditor item={item} onSubmit={updateFormula} />
+                        :
+                        <AutoForm
+                            schema={schemaOf(item)}
+                            body={bodyOf(item)}
+                            onSubmit={updateProperty}
+                        />
+                }
+                <div className="space-x-2">
+                    {item === override ? <DeleteButton className="w-24" onClick={clearItem}>Clear</DeleteButton> : null}
+                    <SecondaryButton className="w-24" onClick={back}>Back</SecondaryButton>
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
 }

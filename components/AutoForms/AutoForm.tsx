@@ -31,7 +31,6 @@ export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
 
     // TODO finish validation of errors
     const [formState, setFormState] = useState<any>(defensiveCopy)
-    const [formErrors, setFormErrors] = useState<any>({})
 
     function handleSubmit(e) {
         e?.preventDefault()
