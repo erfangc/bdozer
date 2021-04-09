@@ -53,14 +53,17 @@ export function ItemEditor() {
         updateItem(newItem)
     }
 
-    function updateProperty(newValue: any) {
+    async function updateProperty(newValue: any) {
         const newItem = merge(item, newValue)
-        updateItem(newItem)
+        await updateItem(newItem)
+        back()
     }
+
     function updateFormula(newFormula: string) {
         const newItem = { ...item, formula: newFormula }
         updateItem(newItem)
     }
+
     function updateType(newType: ItemTypeEnum) {
         const newItem: Item = { ...item, type: newType }
         updateItem(newItem)
@@ -109,7 +112,6 @@ export function ItemEditor() {
     return (
         // outer layer is the overlay
         <div className="container mx-auto max-w-prose py-20">
-            {/* this inner layer is the actual modal / input */}
             <div className="bg-blueGray-700 px-2 lg:px-12 py-3 lg:py-8 rounded-lg shadow-md flex-col space-y-8">
                 <div className="flex-col space-y-4">
                     <ItemDescriptionInput item={item} onChange={updateDescription} />
