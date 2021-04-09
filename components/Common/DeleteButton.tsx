@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 export function DeleteButton({ className, children, ...props }: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) {
     return (

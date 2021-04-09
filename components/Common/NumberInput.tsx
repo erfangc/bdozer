@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import NumberFormat, { NumberFormatProps } from "react-number-format";
 
 interface NumberInputProps extends NumberFormatProps {
