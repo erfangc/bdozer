@@ -100,8 +100,6 @@ export default function Editor(props: Props) {
                                         stockAnalysis={stockAnalysis}
                                         overriden={overrideItem !== undefined}
                                         item={overrideItem ?? item}
-                                        onChange={handleItemChanged}
-                                        onClear={handleClear}
                                     />
                                 )
                             })
