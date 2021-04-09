@@ -53,10 +53,9 @@ export function ItemEditor() {
         updateItem(newItem)
     }
 
-    async function updateProperty(newValue: any) {
+    async function handleSubmit(newValue: any) {
         const newItem = merge(item, newValue)
         await updateItem(newItem)
-        back()
     }
 
     function updateFormula(newFormula: string) {
@@ -134,7 +133,7 @@ export function ItemEditor() {
                         <AutoForm
                             schema={schemaOf(item)}
                             body={bodyOf(item)}
-                            onSubmit={updateProperty}
+                            onSubmit={handleSubmit}
                         />
                 }
                 <div className="space-x-2">
