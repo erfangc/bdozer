@@ -62,6 +62,7 @@ export function ItemEditor() {
     function updateFormula(newFormula: string) {
         const newItem = { ...item, formula: newFormula }
         updateItem(newItem)
+        back()
     }
 
     function updateType(newType: ItemTypeEnum) {

@@ -9,13 +9,13 @@ import { ItemDisplay } from './ItemDisplay';
 interface Props {
     filingEntity: FilingEntity
     stockAnalysis: StockAnalysis2
-    onFilingEntityUpdate: (entity: FilingEntity) => void
-    onStockAnalysisUpdate: (newStockAnalysis: StockAnalysis2) => void
+    setFilingEntity: (entity: FilingEntity) => void
+    setStockAnalysis: (newStockAnalysis: StockAnalysis2) => void
 }
 
 export default function Editor(props: Props) {
 
-    const { filingEntity, stockAnalysis, onFilingEntityUpdate, onStockAnalysisUpdate } = props
+    const { filingEntity, stockAnalysis, setFilingEntity, setStockAnalysis } = props
     const filingEntityManager = useFilingEntityManager()
 
     async function changeModelTemplate(template: string) {
@@ -26,7 +26,7 @@ export default function Editor(props: Props) {
             }
         };
         await filingEntityManager.saveFilingEntity(updatedFilingEntity)
-        onFilingEntityUpdate(updatedFilingEntity)
+        setFilingEntity(updatedFilingEntity)
     }
 
     async function updateBeta(event: React.ChangeEvent<HTMLInputElement>) {
@@ -38,33 +38,7 @@ export default function Editor(props: Props) {
                 beta
             }
         }
-        onStockAnalysisUpdate(updatedFilingEntity)
-    }
-
-    async function handleItemChanged(newItem: Item) {
-        const itemOverrides = stockAnalysis.model?.itemOverrides
-        const updatedItemOverrides = [...itemOverrides.filter(it => it.name !== newItem.name), newItem]
-        const updatedStockAnalysis: StockAnalysis2 = {
-            ...stockAnalysis,
-            model: {
-                ...stockAnalysis.model,
-                itemOverrides: updatedItemOverrides
-            }
-        }
-        onStockAnalysisUpdate(updatedStockAnalysis)
-    }
-
-    async function handleClear(item: Item) {
-        const itemOverrides = stockAnalysis.model?.itemOverrides
-        const updatedItemOverrides = [...itemOverrides.filter(it => it.name !== item.name)]
-        const updatedStockAnalysis: StockAnalysis2 = {
-            ...stockAnalysis,
-            model: {
-                ...stockAnalysis.model,
-                itemOverrides: updatedItemOverrides
-            }
-        }
-        props.onStockAnalysisUpdate(updatedStockAnalysis)
+        setStockAnalysis(updatedFilingEntity)
     }
 
     return (

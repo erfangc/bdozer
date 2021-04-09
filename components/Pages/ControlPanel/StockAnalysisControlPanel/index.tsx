@@ -51,8 +51,8 @@ export function StockAnalysisControlPanel() {
                 <Editor
                     filingEntity={filingEntity}
                     stockAnalysis={stockAnalysis}
-                    onFilingEntityUpdate={setFilingEntity}
-                    onStockAnalysisUpdate={setStockAnalysis}
+                    setFilingEntity={setFilingEntity}
+                    setStockAnalysis={setStockAnalysis}
                 />
             </section>
         </main >
