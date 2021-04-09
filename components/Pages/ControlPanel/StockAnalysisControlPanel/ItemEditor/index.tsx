@@ -107,41 +107,42 @@ export function ItemEditor() {
 
     const item = override ?? original
 
-    if (!item)
+    if (!item) {
         return null
-
-    return (
-        // outer layer is the overlay
-        <div className="container mx-auto max-w-prose py-20">
-            <div className="bg-blueGray-700 px-2 lg:px-12 py-3 lg:py-8 rounded-lg shadow-md flex-col space-y-8">
-                <div className="flex-col space-y-4">
-                    <ItemDescriptionInput item={item} onChange={updateDescription} />
-                    <ItemFY0Input item={item} onChange={updateHistoricalValue} />
-                </div>
-                <Select label="Item Type" value={item.type} onChange={({ currentTarget: { value } }) => updateType(value as any)}>
-                    <option value={ItemTypeEnum.Custom}>Custom</option>
-                    <option value={ItemTypeEnum.SubscriptionRevenue}>Subscription Revenue</option>
-                    <option value={ItemTypeEnum.PercentOfTotalAsset}>Percent of Total Asset</option>
-                    <option value={ItemTypeEnum.PercentOfRevenue}>Percent of Revenue</option>
-                    <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
-                    <option value={ItemTypeEnum.Discrete}>Discrete</option>
-                </Select>
-                {
-                    item.type === ItemTypeEnum.Custom
-                        ?
-                        <FormulaEditor item={item} onSubmit={updateFormula} />
-                        :
-                        <AutoForm
-                            schema={schemaOf(item)}
-                            body={bodyOf(item)}
-                            onSubmit={handleSubmit}
-                        />
-                }
-                <div className="space-x-2">
-                    {item === override ? <DeleteButton className="w-24" onClick={clearItem}>Clear</DeleteButton> : null}
-                    <SecondaryButton className="w-24" onClick={back}>Back</SecondaryButton>
+    } else {
+        return (
+            // outer layer is the overlay
+            <div className="container mx-auto max-w-prose py-20">
+                <div className="bg-blueGray-700 px-2 lg:px-12 py-3 lg:py-8 rounded-lg shadow-md flex-col space-y-8">
+                    <div className="flex-col space-y-4">
+                        <ItemDescriptionInput item={item} onChange={updateDescription} />
+                        <ItemFY0Input item={item} onChange={updateHistoricalValue} />
+                    </div>
+                    <Select label="Item Type" value={item.type} onChange={({ currentTarget: { value } }) => updateType(value as any)}>
+                        <option value={ItemTypeEnum.Custom}>Custom</option>
+                        <option value={ItemTypeEnum.SubscriptionRevenue}>Subscription Revenue</option>
+                        <option value={ItemTypeEnum.PercentOfTotalAsset}>Percent of Total Asset</option>
+                        <option value={ItemTypeEnum.PercentOfRevenue}>Percent of Revenue</option>
+                        <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
+                        <option value={ItemTypeEnum.Discrete}>Discrete</option>
+                    </Select>
+                    {
+                        item.type === ItemTypeEnum.Custom
+                            ?
+                            <FormulaEditor item={item} onSubmit={updateFormula} />
+                            :
+                            <AutoForm
+                                schema={schemaOf(item)}
+                                body={bodyOf(item)}
+                                onSubmit={handleSubmit}
+                            />
+                    }
+                    <div className="space-x-2">
+                        {item === override ? <DeleteButton className="w-24" onClick={clearItem}>Clear</DeleteButton> : null}
+                        <SecondaryButton className="w-24" onClick={back}>Back</SecondaryButton>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
