@@ -1,6 +1,7 @@
 import React, {MouseEvent, useState} from 'react'
 import {ItemTimeSeries} from "../ItemTimeSeries";
 import {Item, StockAnalysis2} from "../../../../client";
+import {SecondaryButton} from "../../../Common/SecondaryButton";
 
 interface Props {
     overriden?: boolean
@@ -11,24 +12,16 @@ interface Props {
 export function History({stockAnalysis, item}: Props) {
 
     const [visible, setVisible] = useState(false)
-    const [coord, setCoord] = useState([0, 0])
 
-    function show(event: MouseEvent<HTMLAnchorElement>) {
-        console.log(
-            `screen[${event.screenX}, ${event.screenY}]`,
-            `client[${event.clientX},${event.clientY}]`,
-            `page[${event.pageX}, ${event.pageY}]`,
-        )
-        setVisible(true)
-    }
-
-    function hide() {
-        setVisible(false)
+    function toggle(event: MouseEvent<any>) {
+        event.preventDefault()
+        event.stopPropagation()
+        setVisible(!visible)
     }
 
     return (
-        <>
-            <a className="focus:outline-none flex flex-col items-center" onMouseEnter={show} onMouseLeave={hide}>
+        <div className="relative">
+            <a className="focus:outline-none flex flex-col items-center" onClick={toggle}>
                 <svg
                     width="32"
                     height="32"
@@ -47,12 +40,18 @@ export function History({stockAnalysis, item}: Props) {
                 visible
                     ?
                     <div
-                        className="fixed top-1/2 left-1/2 text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded-md z-100 w-screen lg:w-screen lg:max-w-md">
-                        <ItemTimeSeries result={stockAnalysis} item={item}/>
+                        className="fixed inset-0 w-screen h-screen bg-blueGray-900 z-10"
+                    >
+                        <div className="container mx-auto max-w-xl pt-20">
+                            <ItemTimeSeries result={stockAnalysis} item={item}/>
+                            <SecondaryButton onClick={toggle} className="mt-4">
+                                Dismiss
+                            </SecondaryButton>
+                        </div>
                     </div>
                     :
                     null
             }
-        </>
+        </div>
     )
 }
