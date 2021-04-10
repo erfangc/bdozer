@@ -240,6 +240,49 @@ export interface Commentary {
 /**
  * 
  * @export
+ * @interface ConceptNames
+ */
+export interface ConceptNames {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConceptNames
+     */
+    totalRevenue?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConceptNames
+     */
+    eps?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConceptNames
+     */
+    netIncome?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConceptNames
+     */
+    ebit?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConceptNames
+     */
+    operatingCost?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConceptNames
+     */
+    sharesOutstanding?: string;
+}
+/**
+ * 
+ * @export
  * @interface DerivedStockAnalytics
  */
 export interface DerivedStockAnalytics {
@@ -790,6 +833,12 @@ export interface FilingCalculations {
     balanceSheet?: Array<Arc>;
     /**
      * 
+     * @type {ConceptNames}
+     * @memberof FilingCalculations
+     */
+    conceptNames?: ConceptNames;
+    /**
+     * 
      * @type {string}
      * @memberof FilingCalculations
      */
@@ -1151,31 +1200,7 @@ export interface Model {
      * @type {string}
      * @memberof Model
      */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Model
-     */
-    symbol?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Model
-     */
-    cik?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Model
-     */
     adsh?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Model
-     */
-    description?: string;
     /**
      * 
      * @type {Array<Item>}

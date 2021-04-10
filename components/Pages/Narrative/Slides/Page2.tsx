@@ -13,7 +13,8 @@ interface Props {
 export function Page2(props: Props) {
     const {
         model,
-        model: { name, terminalGrowthRate, epsConceptName, },
+        name,
+        model: { terminalGrowthRate, epsConceptName, },
         cells,
         derivedStockAnalytics: {
             discountRate,

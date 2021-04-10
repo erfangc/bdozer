@@ -9,8 +9,8 @@ interface Props {
 }
 export function Page1(props: Props) {
     const {
+        name,
         model,
-        model: { name },
         cells,
         derivedStockAnalytics: {
             currentPrice

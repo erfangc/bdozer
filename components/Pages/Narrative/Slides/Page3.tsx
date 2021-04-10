@@ -16,7 +16,8 @@ interface Props {
 export function Page3(props: Props) {
     const {
         model,
-        model: { symbol, epsConceptName, sharesOutstandingConceptName, },
+        ticker,
+        model: { epsConceptName, sharesOutstandingConceptName, },
         cells,
         derivedStockAnalytics: {
             businessWaterfall,
@@ -40,7 +41,7 @@ export function Page3(props: Props) {
                 <PageTitle>In {finalYear}, why would earnings be ${finalEps.toFixed(1)} per share?</PageTitle>
                 <div className="w-full">
                     <p>
-                        <span>{symbol}'s profit is projected to be </span>
+                        <span>{ticker}'s profit is projected to be </span>
                         <span className={`${profit > 0 ? 'text-lime-500' : 'text-rose-500'} font-extrabold text-lg`}>
                             ${simpleNumber(profit?.toFixed(0))}
                         </span>

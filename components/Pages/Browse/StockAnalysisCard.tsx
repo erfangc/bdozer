@@ -6,7 +6,7 @@ export function StockAnalysisCard(props: { stockAnalysis: StockAnalysis2 }) {
     const router = useRouter()
 
     const { stockAnalysis } = props
-    const { derivedStockAnalytics: { currentPrice, targetPrice }, name, model: { symbol, cik } } = stockAnalysis
+    const { derivedStockAnalytics: { currentPrice, targetPrice }, name, ticker, cik } = stockAnalysis
     const percentUpside = (targetPrice / currentPrice - 1) * 100
 
     function navigate(id: string) {
@@ -22,7 +22,7 @@ export function StockAnalysisCard(props: { stockAnalysis: StockAnalysis2 }) {
             <div className="flex flex-col space-y-4">
                 <div className="flex justify-between">
                     <span className="text-lg underline text-blue-400">{name}</span>
-                    <span className="text-4xl text-blueGray-200 font-bold tracking-tight">{symbol}</span>
+                    <span className="text-4xl text-blueGray-200 font-bold tracking-tight">{ticker}</span>
                 </div>
                 <span className="flex space-x-4">
                     <div>

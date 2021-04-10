@@ -13,7 +13,8 @@ export function ExecutiveSummary(props: Props) {
         result,
         result: {
             cells,
-            model: { name, periods, epsConceptName, },
+            name,
+            model: { periods, epsConceptName, },
             derivedStockAnalytics: {
                 businessWaterfall,
                 zeroGrowthPrice,

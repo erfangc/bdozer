@@ -10,6 +10,7 @@ export function TerminalValueDerivation(props: Props) {
     const {
         result: {
             cells,
+            name,
             model,
             model: {
                 epsConceptName,
@@ -19,7 +20,7 @@ export function TerminalValueDerivation(props: Props) {
             }
         }
     } = props
-    const { terminalGrowthRate, periods, name, } = model
+    const { terminalGrowthRate, periods, } = model
 
     const finalEps = cells.find(cell => cell.item?.name === epsConceptName && cell.period == model.periods)?.value
     const finalTvps = cells.find(cell => cell.item?.name === "TerminalValuePerShare" && cell.period == model.periods)?.value

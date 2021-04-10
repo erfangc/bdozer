@@ -28,7 +28,7 @@ export default function FilingEntityControlPanel() {
 
     async function bootstrap() {
         setLoading(true)
-        await filingEntityManager.bootstrapFilingEntity(filingEntity?.cik)
+        await filingEntityManager.bootstrapFilingEntity(cik as string)
         await init()
         setLoading(false)
     }
