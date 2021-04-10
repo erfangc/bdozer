@@ -43,7 +43,7 @@ export default function Editor(props: Props) {
     }
 
     return (
-        <div className="rounded md:p-4 md:border md:border-blueGray-500 space-y-8">
+        <div className="rounded md:p-4 space-y-8">
             <div className="space-y-4">
                 <Select
                     onChange={changeModelTemplate}
