@@ -46,6 +46,7 @@ export function StockAnalysisControlPanel() {
                     setLoading={setLoading}
                 />
                 <Editor
+                    loading={loading}
                     filingEntity={filingEntity}
                     stockAnalysis={stockAnalysis}
                     setFilingEntity={setFilingEntity}

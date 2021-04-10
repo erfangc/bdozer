@@ -12,11 +12,12 @@ interface Props {
     stockAnalysis: StockAnalysis2
     setFilingEntity: (entity: FilingEntity) => void
     setStockAnalysis: (newStockAnalysis: StockAnalysis2) => void
+    loading: boolean
 }
 
 export default function Editor(props: Props) {
 
-    const { filingEntity, stockAnalysis, setFilingEntity, setStockAnalysis } = props
+    const { filingEntity, stockAnalysis, setFilingEntity, setStockAnalysis, loading } = props
     const filingEntityManager = useFilingEntityManager()
 
     async function changeModelTemplate(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -55,15 +56,15 @@ export default function Editor(props: Props) {
                         <option value="Normal">Normal</option>
                     </Select>
                     <TextInput
+                        onChange={updateBeta}
                         value={stockAnalysis?.model?.beta ?? ''}
                         type="number"
-                        onChange={updateBeta}
                         label="Beta"
                         className="w-24"
                     />
                 </div>
                 <div className="col-span-2">
-                    <StockAnalysisSummary stockAnalysis={stockAnalysis} loading={false} />
+                    <StockAnalysisSummary stockAnalysis={stockAnalysis} loading={loading} />
                 </div>
             </div>
             <div className="pt-6">
