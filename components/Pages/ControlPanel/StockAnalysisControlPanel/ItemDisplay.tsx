@@ -19,7 +19,7 @@ export function ItemDisplay(props: Props) {
 
     return (
         <div
-            className={`cursor-pointer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 rounded-md py-2  bg-blueGray-800 shadow-lg px-4 hover:bg-blueGray-700 transition ease-linear`}
+            className="cursor-pointer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 rounded-md py-2  bg-blueGray-800 shadow-lg px-4 hover:bg-blueGray-700 transition ease-linear"
             onClick={() => router.push(`/control-panel/stock-analyses/${id}/items/${item.name}`)}
         >
             <div className="flex items-center">
@@ -33,7 +33,7 @@ export function ItemDisplay(props: Props) {
                     value={item.historicalValue?.value}
                 />
             </div>
-            <div className="flex justify-start md:justify-end items-center space-x-4">
+            <div className="flex justify-start lg:justify-end items-center space-x-4">
                 <History {...props}/>
                 {!overriden ? <Check/> : <Manual/>}
             </div>

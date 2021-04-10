@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useFilingEntityManager, useFilingEntityManagerUnsecured } from '../../../../api-hooks'
@@ -47,7 +46,7 @@ export default function FilingEntityControlPanel() {
             <br />
             If you feel like something has gone wrong and want to re-parse SEC's website, please click <code>Bootstrap Again</code>
             <br />
-            <DeleteButton className="mt-4 w-42" onClick={bootstrap}>{loading ? <Loading></Loading> : 'Bootstrap Aagain'}</DeleteButton>
+            <DeleteButton className="mt-4 w-44" onClick={bootstrap}>{loading ? <Loading></Loading> : 'Bootstrap Aagain'}</DeleteButton>
         </Message>
     )
     if (status === "Bootstrapping") {
@@ -76,9 +75,7 @@ export default function FilingEntityControlPanel() {
                 <FilingEntityCard filingEntity={filingEntity} />
             </div>
             {message}
-            <Link href="/control-panel">
-                <SecondaryButton>Back</SecondaryButton>
-            </Link>
+            <SecondaryButton onClick={router.back}>Back</SecondaryButton>
         </main>
     )
 }
