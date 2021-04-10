@@ -4,6 +4,9 @@ import NumberFormat from "react-number-format"
 import {Item, StockAnalysis2} from "../../../../client"
 import {Attention as Manual, Check} from "./ItemEditor/Svgs"
 import {History} from "./History";
+import {useFactBaseUnsecured} from "../../../../api-hooks";
+import {SecondaryButton, SmallSecondaryButton} from "../../../Common/SecondaryButton";
+import {SmallGhostButton} from "../../../Common/GhostButton";
 
 interface Props {
     overriden?: boolean
@@ -16,6 +19,15 @@ export function ItemDisplay(props: Props) {
     const {item, overriden} = props
     const router = useRouter()
     const {id} = router.query
+    const factBase = useFactBaseUnsecured()
+
+    async function openSourceDocument(event: React.MouseEvent<HTMLButtonElement>) {
+        event.preventDefault()
+        event.stopPropagation()
+        const factId = item.historicalValue?.factId
+        const {data: fact} = await factBase.getFact(factId)
+        window.open(fact.sourceDocument)
+    }
 
     return (
         <div
@@ -34,6 +46,7 @@ export function ItemDisplay(props: Props) {
                 />
             </div>
             <div className="flex justify-start lg:justify-end items-center space-x-4">
+                <SmallGhostButton onClick={openSourceDocument}>Source</SmallGhostButton>
                 <History {...props}/>
                 {!overriden ? <Check/> : <Manual/>}
             </div>
