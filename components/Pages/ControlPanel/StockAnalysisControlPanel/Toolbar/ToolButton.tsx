@@ -12,7 +12,7 @@ export function ToolButton({ label, loading, children, className, ...props }: To
             <button className={`bg-blueGray-600 rounded-md shadow-lg px-4 py-2 focus:outline-none hover:shadow-none transition ease-linear ${className}`} disabled={loading} {...props}>
                 {children}
             </button>
-            <span className="text-sm text-blueGray-200">{label}</span>
+            <span className="text-sm text-blueGray-400">{label}</span>
         </div>
     )
 }

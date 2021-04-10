@@ -102,7 +102,7 @@ export default function Toolbar({ loading, setLoading, stockAnalysis, setStockAn
     }
 
     return (
-        <div className="grid grid-cols-4 gap-2 md:flex md:space-x-5 p-4 bg-blueGray-800 rounded">
+        <div className="grid grid-cols-4 gap-1 md:flex md:space-x-5 px-4 pt-4 pb-2 bg-blueGray-800 rounded">
             <ToolButton onClick={refresh} loading={loading} label="Rerun">
                 {loading ? <Loading /> : <Play />}
             </ToolButton>
