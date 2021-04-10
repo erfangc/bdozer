@@ -167,11 +167,7 @@ function str2Number(formulas: { [p: string]: string }) {
 
 function DiscreteEditor({item, onSubmit}: DiscreteEditorProps) {
 
-    const {discrete} = item
-
-    if (!discrete) {
-        return null
-    }
+    const discrete = item.discrete ?? {formulas:{}}
 
     const [formulas, setFormulas] = useState(str2Number(discrete.formulas))
     const keys = Object.keys(formulas).sort()
@@ -187,8 +183,9 @@ function DiscreteEditor({item, onSubmit}: DiscreteEditorProps) {
     function add() {
         const lastKey = keys[keys.length - 1]
         const lastValue = formulas[lastKey]
+        const key = keys.length === 0 ? 1 : parseInt(lastKey) + 1;
         const updatedFormula = {
-            ...formulas, [parseInt(lastKey) + 1]: lastValue
+            ...formulas, [key]: lastValue
         }
         const newItem = {
             ...item,
