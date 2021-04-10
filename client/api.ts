@@ -1173,6 +1173,12 @@ export interface Item {
      * @memberof Item
      */
     commentaries?: Commentary;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Item
+     */
+    subtotal?: boolean;
 }
 
 /**
