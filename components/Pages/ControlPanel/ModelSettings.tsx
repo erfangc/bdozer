@@ -50,36 +50,6 @@ export function ModelSettings() {
 
 const schema: Schema[] = [
     {
-        name: "totalRevenueConceptName",
-        label: "Total Revenue Concept Name",
-        type: "string"
-    },
-    {
-        name: "epsConceptName",
-        label: "EPS Concept Name",
-        type: "string"
-    },
-    {
-        name: "netIncomeConceptName",
-        label: "Net Income Concept Name",
-        type: "string"
-    },
-    {
-        name: "ebitConceptName",
-        label: "EBIT Concept Name",
-        type: "string"
-    },
-    {
-        name: "operatingCostConceptName",
-        label: "Operating Cost ConceptName",
-        type: "string"
-    },
-    {
-        name: "sharesOutstandingConceptName",
-        label: "Shares Outstanding Concept Name",
-        type: "string"
-    },
-    {
         name: "riskFreeRate",
         type: "percent",
         label: "Risk Free Rate %"
