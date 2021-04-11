@@ -106,7 +106,7 @@ export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
         <div className="flex-col space-y-6">
             <form
                 onSubmit={handleSubmit}
-                className="grid grid-cols-3 gap-4"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
             >
                 {components}
             </form>

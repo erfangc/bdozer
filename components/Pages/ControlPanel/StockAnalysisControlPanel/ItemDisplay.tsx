@@ -1,12 +1,11 @@
 import { useRouter } from "next/router"
 import React from "react"
 import NumberFormat from "react-number-format"
+import { useFactBaseUnsecured } from "../../../../api-hooks"
 import { Item, StockAnalysis2 } from "../../../../client"
+import { SmallGhostButton } from "../../../Common/GhostButton"
+import { History } from "./History"
 import { Attention as Manual, Check, Nothing } from "./ItemEditor/Svgs"
-import { History } from "./History";
-import { useFactBaseUnsecured } from "../../../../api-hooks";
-import { SecondaryButton, SmallSecondaryButton } from "../../../Common/SecondaryButton";
-import { SmallGhostButton } from "../../../Common/GhostButton";
 
 interface Props {
     overriden?: boolean

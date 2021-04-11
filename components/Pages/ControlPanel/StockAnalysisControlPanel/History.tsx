@@ -40,7 +40,7 @@ export function History({stockAnalysis, item}: Props) {
                 visible
                     ?
                     <div className="fixed inset-0 w-screen h-screen bg-blueGray-900 z-10">
-                        <div className="container mx-auto max-w-xl pt-20">
+                        <div className="container mx-auto px-2 max-w-xl pt-20">
                             <ItemTimeSeries result={stockAnalysis} item={item}/>
                             <SecondaryButton onClick={toggle} className="mt-4">
                                 Dismiss

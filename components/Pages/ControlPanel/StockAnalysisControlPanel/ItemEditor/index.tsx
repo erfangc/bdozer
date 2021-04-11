@@ -115,7 +115,7 @@ export function ItemEditor() {
     } else {
         return (
             // outer layer is the overlay
-            <div className="container mx-auto max-w-prose py-20">
+            <div className="container mx-auto px-2 max-w-prose py-20">
                 <div className="bg-blueGray-700 px-2 lg:px-12 py-3 lg:py-8 rounded-lg shadow-md flex-col space-y-8">
                     <div className="flex-col space-y-4">
                         <ItemDescriptionInput item={item} onChange={updateDescription}/>

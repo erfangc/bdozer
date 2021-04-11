@@ -35,7 +35,7 @@ export function ModelSettings() {
     }
 
     return (
-        <main className="container mx-auto py-20">
+        <main className="container px-2 mx-auto py-20">
             <h1 className="text-2xl font-bold">Model Settings</h1>
             <p className="text-sm mt-2 mb-12 font-light">
                 Configure settings for discount rates, beta, corporate tax rate and other common inputs into an equity valuation model
