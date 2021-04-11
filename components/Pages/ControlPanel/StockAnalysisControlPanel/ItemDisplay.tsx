@@ -39,6 +39,7 @@ export function ItemDisplay(props: Props) {
             </div>
             <div className="flex justify-start md:justify-end items-center">
                 <NumberFormat
+                    className={item.subtotal ? 'font-extrabold' : ''}
                     thousandSeparator
                     decimalScale={0}
                     displayType='text'
