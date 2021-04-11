@@ -240,6 +240,19 @@ export interface Commentary {
 /**
  * 
  * @export
+ * @interface CompoundedGrowth
+ */
+export interface CompoundedGrowth {
+    /**
+     * 
+     * @type {number}
+     * @memberof CompoundedGrowth
+     */
+    growthRate?: number;
+}
+/**
+ * 
+ * @export
  * @interface ConceptNames
  */
 export interface ConceptNames {
@@ -1151,6 +1164,12 @@ export interface Item {
     percentOfRevenue?: PercentOfRevenue;
     /**
      * 
+     * @type {CompoundedGrowth}
+     * @memberof Item
+     */
+    compoundedGrowth?: CompoundedGrowth;
+    /**
+     * 
      * @type {FixedCost}
      * @memberof Item
      */
@@ -1188,6 +1207,7 @@ export interface Item {
 export enum ItemTypeEnum {
     Discrete = 'Discrete',
     SubscriptionRevenue = 'SubscriptionRevenue',
+    CompoundedGrowth = 'CompoundedGrowth',
     UnitSalesRevenue = 'UnitSalesRevenue',
     Custom = 'Custom',
     PercentOfRevenue = 'PercentOfRevenue',

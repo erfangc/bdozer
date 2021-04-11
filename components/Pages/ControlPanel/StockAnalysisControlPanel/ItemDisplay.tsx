@@ -31,11 +31,13 @@ export function ItemDisplay(props: Props) {
 
     return (
         <div
-            className={`cursor-pointer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 rounded-md py-2   ${item.subtotal ? '' : 'bg-blueGray-800'} shadow-lg px-4 hover:bg-blueGray-700 transition ease-linear`}
+            className={`cursor-pointer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 rounded-md py-2 ${item.subtotal ? '' : 'bg-blueGray-800'} shadow-lg px-4 hover:bg-blueGray-700 transition ease-linear`}
             onClick={() => router.push(`/control-panel/stock-analyses/${id}/items/${item.name}`)}
         >
             <div className="flex items-center">
-                <span className={item.subtotal ? 'font-extrabold' : ''}>{item.description ?? item.name}</span>
+                <span className={item.subtotal ? 'font-extrabold' : ''}>
+                    {item.description ?? item.name}
+                </span>
             </div>
             <div className="flex justify-start md:justify-end items-center">
                 <NumberFormat
