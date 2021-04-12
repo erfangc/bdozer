@@ -52,20 +52,9 @@ export function ItemEditor() {
         back()
     }
 
-    function updateDescription(newDescription) {
-        const newItem = {...item, description: newDescription}
-        handleItemChange(newItem)
-    }
-
-    function updateHistoricalValue(newHistoricalValue) {
-        const newItem = {...item, historicalValue: newHistoricalValue}
-        handleItemChange(newItem)
-    }
-
     async function handleAutoFormChange(newValue: any) {
         const newItem = merge(item, newValue)
         await handleItemChange(newItem)
-        back()
     }
 
     function updateType(newType: ItemTypeEnum) {
@@ -96,8 +85,7 @@ export function ItemEditor() {
     }
 
     const model = stockAnalysis?.model
-
-    const original = (
+    const originalItem = (
         [
             ...(model?.incomeStatementItems ?? []),
             ...(model?.cashFlowStatementItems ?? []),
@@ -106,13 +94,12 @@ export function ItemEditor() {
         ]
     ).find(it => it.name === itemName)
 
-    const override = model?.itemOverrides.find(item => item.name === itemName)
-    const item = override ?? original
+    const overriddenItem = model?.itemOverrides.find(item => item.name === itemName)
+    const item = overriddenItem ?? originalItem
 
     if (!item) {
-
+        // probably still loading
         return null
-
     } else {
 
         let editor: ReactNode
@@ -126,7 +113,7 @@ export function ItemEditor() {
             editor = <AutoForm schema={schemaOf(item)} body={bodyOf(item)} onSubmit={handleAutoFormChange} />
         }
 
-        const isOverridden = item === override
+        const isOverridden = item === overriddenItem
 
         return (
             // outer layer is the overlay
@@ -137,8 +124,8 @@ export function ItemEditor() {
                             <label className="text-sm">Name</label>
                             <p className="mt-2 cursor-not-allowed border rounded border-blueGray-400 text-blueGray-300 px-3 py-2">{item.name}</p>
                         </div>
-                        <ItemDescriptionInput item={item} onChange={updateDescription}/>
-                        <ItemFY0Input item={item} onChange={updateHistoricalValue}/>
+                        <ItemDescriptionInput item={item} onSubmit={handleItemChange}/>
+                        <ItemFY0Input item={item} onSubmit={handleItemChange}/>
                     </div>
                     <Select
                         label="Item Type"

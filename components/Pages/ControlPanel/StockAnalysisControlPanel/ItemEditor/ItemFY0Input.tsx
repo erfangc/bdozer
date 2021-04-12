@@ -3,15 +3,15 @@ import NumberFormat from "react-number-format";
 import { useMxParser } from "../../../../../api-hooks";
 import { Item } from "../../../../../client";
 
-interface ItemFY0InputProps {
+interface Props {
     item: Item
-    onChange: (newValue: any) => void
+    onSubmit: (Item) => void
 }
 
 /**
  * This component should be able to accept and perform arthmetics
  */
-export function ItemFY0Input({ item, onChange }: ItemFY0InputProps) {
+export function ItemFY0Input({ item, onSubmit }: Props) {
 
     const [value, setValue] = useState(item.historicalValue?.value)
     const [editing, setEditing] = useState(false)
@@ -50,7 +50,14 @@ export function ItemFY0Input({ item, onChange }: ItemFY0InputProps) {
     function attemptSubmit() {
         if (evalResult !== undefined && typeof evalResult === 'number') {
             setValue(evalResult)
-            onChange(evalResult)
+            const newItem: Item = {
+                ...item,
+                historicalValue: {
+                    ...item.historicalValue,
+                    value: evalResult
+                }
+            }
+            onSubmit(newItem)
             setEvalResult(undefined)
             setEditing(false)
         }

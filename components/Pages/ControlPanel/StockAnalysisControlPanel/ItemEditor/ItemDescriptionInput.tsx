@@ -1,17 +1,29 @@
-import {useState} from "react";
+import {ChangeEvent} from "react";
 import {Item} from "../../../../../client";
 import {TextArea} from "../../../../Common/Textarea";
 
-export function ItemDescriptionInput(props: { item: Item, onChange: (newValue) => void }) {
-    const {item, onChange} = props;
-    const [value, setValue] = useState(item.description)
+interface Props {
+    item: Item
+    onSubmit: (Item) => void
+}
+
+export function ItemDescriptionInput(props: Props) {
+    const {item, onSubmit} = props;
+
+    function handleSubmit({currentTarget}: ChangeEvent<HTMLTextAreaElement>) {
+        const newItem: Item = {
+            ...item,
+            description: currentTarget.value
+        }
+        onSubmit(newItem)
+    }
+
     return (
         <TextArea
             label="Description"
-            value={value}
+            value={item.description}
             className="min-w-full"
-            onChange={({currentTarget: {value}}) => setValue(value)}
-            onBlur={() => onChange(value)}
+            onChange={handleSubmit}
             placeholder="ex: Commercial Aircraft"
         />
     )
