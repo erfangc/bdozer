@@ -41,7 +41,7 @@ export function ModelSettings() {
             <p className="text-sm mt-2 mb-12 font-light">
                 Configure settings for discount rates, beta, corporate tax rate and other common inputs into an equity valuation model
             </p>
-            {stockAnalysis ? <AutoForm body={stockAnalysis.model} schema={schema} onSubmit={handleSubmit} useGrid /> : null}
+            {stockAnalysis ? <AutoForm body={stockAnalysis.model} schema={schema} onSubmit={handleSubmit} /> : null}
             <Link href={`/control-panel/stock-analyses/${id}`}>
                 <SecondaryButton className="mt-2">Back</SecondaryButton>
             </Link>
