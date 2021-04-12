@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import NumberFormat from "react-number-format";
 import { StockAnalysis2 } from "../../../../client";
 import { blue700, green800, highcharts } from "../../../../highcharts";
-import { Popover } from "../../../Popover";
+import { AnchorPopover } from "../../../Popover";
 import { SubTitle } from "../../../Common/Title";
 
 interface Props {
@@ -28,7 +28,7 @@ export function TargetPriceBreakdown(props: Props) {
              the target stock price must be earned through growing (or recovering) earnings than
             keeping existing level of earning
             <br />
-            <Popover trigger="How is this computed?">
+            <AnchorPopover trigger="How is this computed?">
                 <h2 className="font-bold">Step 1</h2>
                 Share value <em>assuming no growth</em> is computed by assuming
                 <ul className="mt-2 list-disc px-8">
@@ -39,7 +39,7 @@ export function TargetPriceBreakdown(props: Props) {
                 <h2 className="font-bold mt-12">Step 2</h2>
                 Implied value from future growth is computed as the difference between the current exchange
                 price of the stock minus the share value assuming no growth
-            </Popover>
+            </AnchorPopover>
         </p>
     return (
         <div id="target-price-breakdown">

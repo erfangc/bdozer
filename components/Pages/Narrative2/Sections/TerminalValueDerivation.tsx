@@ -1,7 +1,7 @@
 import React from 'react'
 import { StockAnalysis2 } from '../../../../client'
 import { year } from '../../../../year'
-import { Popover } from '../../../Popover'
+import { AnchorPopover } from '../../../Popover'
 import { SubTitle } from '../../../Common/Title'
 interface Props {
     result: StockAnalysis2
@@ -33,7 +33,7 @@ export function TerminalValueDerivation(props: Props) {
                 After {year(periods)}, we assumed {name} earnings will grow at {(terminalGrowthRate * 100).toFixed(1)}%, the average US GDP growth rate.
                 If you held the stock until {year(periods)}, we expect you can sell it for <b>${finalTvps.toFixed(1)} / share</b><br />
                 <br />
-                <Popover trigger={`How did we compute $${finalTvps.toFixed(1)}?`}>
+                <AnchorPopover trigger={`How did we compute $${finalTvps.toFixed(1)}?`}>
                     <div className="flex flex-col text-blueGray-300">
                         <div className="flex justify-between">
                             <b>Discount Rate</b>
@@ -56,7 +56,7 @@ export function TerminalValueDerivation(props: Props) {
                             <span className="border-t pt-2 font-bold ">${finalTvps.toFixed(1)}</span>
                         </div>
                     </div>
-                </Popover>
+                </AnchorPopover>
             </p>
         </div >
     )

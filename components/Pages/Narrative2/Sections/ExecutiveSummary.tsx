@@ -1,7 +1,7 @@
 import React from "react";
 import { StockAnalysis2 } from "../../../../client";
 import { simpleNumber } from "../../../../simple-number";
-import { Popover } from "../../../Popover";
+import { AnchorPopover } from "../../../Popover";
 import { SubTitle } from "../../../Common/Title";
 import { RevenueTimeSeries } from "./RevenueTimeSeries";
 
@@ -32,9 +32,9 @@ export function ExecutiveSummary(props: Props) {
     const eps = cells.find(cell => cell.item.name === epsConceptName && cell.period === 0)?.value
 
     const growthRatePopover = (
-        <Popover trigger={`${(revenueCAGR * 100).toFixed(1)}%`}>
+        <AnchorPopover trigger={`${(revenueCAGR * 100).toFixed(1)}%`}>
             <RevenueTimeSeries result={result} />
-        </Popover>
+        </AnchorPopover>
     )
     return (
         <div>

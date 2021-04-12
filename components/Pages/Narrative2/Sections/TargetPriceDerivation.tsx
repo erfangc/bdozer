@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { StockAnalysis2 } from "../../../../client";
 import { blueGray200, indigo600, indigo400, amber600, amber400, highcharts } from "../../../../highcharts";
 import { year } from "../../../../year";
-import { Popover } from "../../../Popover";
+import { AnchorPopover } from "../../../Popover";
 import { SubTitle } from "../../../Common/Title";
 import { DiscountFactorDerivation } from "./DiscountFactorDerivation";
 
@@ -130,9 +130,9 @@ export function TargetPriceDerivation(props: Props) {
             <SubTitle className="mb-6">Target Price Derivation</SubTitle>
             <p>
                 To derive the target price of ${targetPrice.toFixed(1)}, we will discount future earnings into
-                the present at a discount rate of <Popover trigger={`${(discountRate * 100).toFixed(1)}%`}>
+                the present at a discount rate of <AnchorPopover trigger={`${(discountRate * 100).toFixed(1)}%`}>
                     <DiscountFactorDerivation {...props} />
-                </Popover>
+                </AnchorPopover>
             </p>
             <HighchartsReact highcharts={highcharts} options={sankeyOptions} />
         </div>

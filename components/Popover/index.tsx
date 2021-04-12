@@ -1,25 +1,31 @@
-import React, { ReactNode, useState } from 'react'
+import React, {ReactNode, useState} from 'react'
 
 interface PopoverProps {
     trigger: ReactNode
     children: ReactNode
+    position?: 'left' | 'right'
 }
 
-export function Popover(props: PopoverProps) {
+export function AnchorPopover(props: PopoverProps) {
     const [visible, setVisible] = useState(false)
+
     function show() {
         setVisible(true)
     }
+
     function hide() {
         setVisible(false)
     }
+
     return (
-        <a className="relative text-blue-300 mt-4 cursor-pointer underline" onClick={show} onMouseEnter={show} onMouseLeave={hide}>
+        <a className="relative text-blue-300 cursor-pointer underline" onClick={show} onMouseEnter={show}
+           onMouseLeave={hide}>
             {props.trigger}
             {
                 visible
                     ?
-                    <div className="absolute top-full text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded-md z-10 w-screen lg:w-screen lg:max-w-md">
+                    <div
+                        className="absolute top-full text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded-md z-10 w-screen lg:w-screen lg:max-w-md">
                         {props.children}
                     </div>
                     : null
@@ -28,23 +34,27 @@ export function Popover(props: PopoverProps) {
     )
 }
 
-export function BetterPopover(props: PopoverProps) {
+export function Popover(props: PopoverProps) {
 
+    const {position} = props;
     const [visible, setVisible] = useState(false)
 
     function show() {
         setVisible(true)
     }
+
     function hide() {
         setVisible(false)
     }
+
     return (
-        <div className="relative inline" onClick={show} onMouseEnter={show} onMouseLeave={hide}>
+        <div className="relative inline" onMouseEnter={show} onMouseLeave={hide}>
             {props.trigger}
             {
                 visible
                     ?
-                    <div className="absolute top-full text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded-md z-10 w-screen lg:w-screen lg:max-w-md">
+                    <div
+                        className={`absolute top-full ${position === 'left' ? 'left-0' : 'right-0'} text-blueGray-50 p-4 bg-blueGray-900 rounded-md z-10 w-screen lg:w-screen lg:max-w-md`}>
                         {props.children}
                     </div>
                     : null
