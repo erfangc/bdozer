@@ -70,7 +70,7 @@ export function ItemTimeSeries({ result, item }: Props) {
     }, [])
 
     return (
-        <div>
+        <div className="">
             <p className="mb-8">
                 History and Projection for {item.description ?? item.name}
             </p>

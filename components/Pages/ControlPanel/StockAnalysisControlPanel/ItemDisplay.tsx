@@ -4,7 +4,7 @@ import NumberFormat from "react-number-format"
 import { useFactBaseUnsecured } from "../../../../api-hooks"
 import { Item, StockAnalysis2 } from "../../../../client"
 import { SmallGhostButton } from "../../../Common/GhostButton"
-import { History } from "./History"
+import { ItemDisplayDetail } from "./ItemDisplayDetail"
 import { Attention as Manual, Check, Nothing } from "./ItemEditor/Svgs"
 
 interface Props {
@@ -49,7 +49,7 @@ export function ItemDisplay(props: Props) {
             </div>
             <div className="flex justify-start lg:justify-end items-center space-x-4">
                 <SmallGhostButton onClick={openSourceDocument}>Source</SmallGhostButton>
-                <History {...props} />
+                <ItemDisplayDetail {...props} />
                 {item.subtotal ? <Nothing /> : !overriden ? <Check /> : <Manual />}
             </div>
         </div>
