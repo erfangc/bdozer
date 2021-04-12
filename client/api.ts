@@ -1403,6 +1403,25 @@ export interface PercentOfRevenue {
 /**
  * 
  * @export
+ * @interface PercentOfRevenueAutoFill
+ */
+export interface PercentOfRevenueAutoFill {
+    /**
+     * 
+     * @type {string}
+     * @memberof PercentOfRevenueAutoFill
+     */
+    label?: string;
+    /**
+     * 
+     * @type {PercentOfRevenue}
+     * @memberof PercentOfRevenueAutoFill
+     */
+    percentOfRevenue?: PercentOfRevenue;
+}
+/**
+ * 
+ * @export
  * @interface PercentOfTotalAsset
  */
 export interface PercentOfTotalAsset {
@@ -1975,6 +1994,116 @@ export class EdgarExplorerControllerApi extends BaseAPI {
      */
     public searchFilings(cik: string, options?: any) {
         return EdgarExplorerControllerApiFp(this.configuration).searchFilings(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * FactAutoFillerControllerApi - axios parameter creator
+ * @export
+ */
+export const FactAutoFillerControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} factId 
+         * @param {Model} model 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPercentOfRevenueAutoFills: async (factId: string, model: Model, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'factId' is not null or undefined
+            assertParamExists('getPercentOfRevenueAutoFills', 'factId', factId)
+            // verify required parameter 'model' is not null or undefined
+            assertParamExists('getPercentOfRevenueAutoFills', 'model', model)
+            const localVarPath = `/api/fact-auto-filler/{factId}`
+                .replace(`{${"factId"}}`, encodeURIComponent(String(factId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(model, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * FactAutoFillerControllerApi - functional programming interface
+ * @export
+ */
+export const FactAutoFillerControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = FactAutoFillerControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} factId 
+         * @param {Model} model 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPercentOfRevenueAutoFills(factId: string, model: Model, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PercentOfRevenueAutoFill>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPercentOfRevenueAutoFills(factId, model, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * FactAutoFillerControllerApi - factory interface
+ * @export
+ */
+export const FactAutoFillerControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = FactAutoFillerControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} factId 
+         * @param {Model} model 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPercentOfRevenueAutoFills(factId: string, model: Model, options?: any): AxiosPromise<Array<PercentOfRevenueAutoFill>> {
+            return localVarFp.getPercentOfRevenueAutoFills(factId, model, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * FactAutoFillerControllerApi - object-oriented interface
+ * @export
+ * @class FactAutoFillerControllerApi
+ * @extends {BaseAPI}
+ */
+export class FactAutoFillerControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} factId 
+     * @param {Model} model 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FactAutoFillerControllerApi
+     */
+    public getPercentOfRevenueAutoFills(factId: string, model: Model, options?: any) {
+        return FactAutoFillerControllerApiFp(this.configuration).getPercentOfRevenueAutoFills(factId, model, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2568,6 +2697,39 @@ export const FilingEntityManagerControllerApiAxiosParamCreator = function (confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        bootstrapFilingEntitySync: async (cik: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('bootstrapFilingEntitySync', 'cik', cik)
+            const localVarPath = `/api/filing-entity-manager/{cik}/sync`
+                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         createFilingEntity: async (cik: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'cik' is not null or undefined
             assertParamExists('createFilingEntity', 'cik', cik)
@@ -2656,6 +2818,16 @@ export const FilingEntityManagerControllerApiFp = function(configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async bootstrapFilingEntitySync(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingEntity>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bootstrapFilingEntitySync(cik, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async createFilingEntity(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingEntity>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createFilingEntity(cik, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -2695,6 +2867,15 @@ export const FilingEntityManagerControllerApiFactory = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        bootstrapFilingEntitySync(cik: string, options?: any): AxiosPromise<FilingEntity> {
+            return localVarFp.bootstrapFilingEntitySync(cik, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         createFilingEntity(cik: string, options?: any): AxiosPromise<FilingEntity> {
             return localVarFp.createFilingEntity(cik, options).then((request) => request(axios, basePath));
         },
@@ -2726,6 +2907,17 @@ export class FilingEntityManagerControllerApi extends BaseAPI {
      */
     public bootstrapFilingEntity(cik: string, options?: any) {
         return FilingEntityManagerControllerApiFp(this.configuration).bootstrapFilingEntity(cik, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} cik 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FilingEntityManagerControllerApi
+     */
+    public bootstrapFilingEntitySync(cik: string, options?: any) {
+        return FilingEntityManagerControllerApiFp(this.configuration).bootstrapFilingEntitySync(cik, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

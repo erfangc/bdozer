@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {FormEvent, useState} from "react";
 import { NumberInput } from "../Common/NumberInput";
 import { PrimaryButton } from "../Common/PrimaryButton";
 import { TextArea } from "../Common/Textarea";
@@ -17,10 +17,9 @@ interface AutoFormProps {
     body: any
     schema: Schema[]
     onSubmit: (body: any) => void
-    useGrid?: boolean
 }
 
-export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
+export function AutoForm({ body, schema, onSubmit }: AutoFormProps) {
 
     const defensiveCopy = { ...body }
     schema.map(el => {
@@ -32,8 +31,13 @@ export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
     // TODO finish validation of errors
     const [formState, setFormState] = useState<any>(defensiveCopy)
 
-    function handleSubmit(e) {
-        e?.preventDefault()
+    function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+        event.stopPropagation()
+        handleSubmit()
+    }
+
+    function handleSubmit() {
         const newState = { ...formState }
         schema.map(el => {
             if (el.type == 'percent') {
@@ -48,7 +52,9 @@ export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
         const value = formState[name]
 
         function updatePropertyValue(newValue: any) {
+            // TODO if valid then call callback
             setFormState({ ...formState, [name]: newValue })
+            handleSubmit()
         }
 
         let component = null
@@ -105,14 +111,11 @@ export function AutoForm({ body, schema, onSubmit, useGrid }: AutoFormProps) {
     return (
         <div className="flex-col space-y-6">
             <form
-                onSubmit={handleSubmit}
+                onSubmit={handleFormSubmit}
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
             >
                 {components}
             </form>
-            <PrimaryButton onClick={handleSubmit}>
-                Confirm
-            </PrimaryButton>
         </div>
     )
 }

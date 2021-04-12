@@ -1,17 +1,15 @@
-import React, { useState, ChangeEvent } from "react"
-import { Item } from "../../../../../client"
-import { PrimaryButton } from "../../../../Common/PrimaryButton"
+import React, {ChangeEvent} from "react"
+import {Item, ItemTypeEnum} from "../../../../../client"
 
-export function FormulaEditor({ item, onSubmit }: { item: Item, onSubmit: (string) => void }) {
+interface Props {
+    item: Item
+    onSubmit: (item: Item) => void
+}
 
-    const [value, setValue] = useState(item.formula)
+export function FormulaEditor({item, onSubmit}: Props) {
 
-    function handleChange({ currentTarget: { value } }: ChangeEvent<HTMLTextAreaElement>) {
-        setValue(value)
-    }
-
-    function handleSubmit() {
-        onSubmit(value)
+    function handleChange({currentTarget: {value}}: ChangeEvent<HTMLTextAreaElement>) {
+        onSubmit({...item, type: ItemTypeEnum.Custom, formula: value})
     }
 
     return (
@@ -20,16 +18,15 @@ export function FormulaEditor({ item, onSubmit }: { item: Item, onSubmit: (strin
                 Formula
             </p>
             <textarea
-                name="expression"
-                value={value}
-                onFocus={focus}
                 autoFocus
+                name="expression"
+                value={item.formula}
+                onFocus={focus}
                 onChange={handleChange}
                 className="cursor-pointer w-full rounded-sm bg-blueGray-900 border-blueGray-500 px-4 py-4"
                 placeholder="Enter formula"
             >
             </textarea>
-            <PrimaryButton onClick={handleSubmit}>Confirm</PrimaryButton>
         </div>
     )
 }

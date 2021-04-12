@@ -18,6 +18,6 @@ export default function NarrativePage(props: Props) {
 
 NarrativePage.getInitialProps = async (ctx) => {
     const stockAnalyzer = new StockAnalysisPublicationControllerApi(null, basePath);
-    const { data } = await stockAnalyzer.getPublishedStockAnalysis(ctx.query.id)
-    return { stockAnalysis: data }
+    const { data: stockAnalysis } = await stockAnalyzer.getPublishedStockAnalysis(ctx.query.id)
+    return { stockAnalysis: stockAnalysis }
 }

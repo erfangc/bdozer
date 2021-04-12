@@ -1,5 +1,5 @@
 import {useRouter} from "next/router";
-import React, {useEffect, useState} from "react";
+import React, {ReactNode, useEffect, useState} from "react";
 import {useStockAnalysisCrud} from "../../../../../api-hooks";
 import {Item, ItemTypeEnum, Model, StockAnalysis2} from "../../../../../client";
 import {AutoForm} from "../../../../AutoForms/AutoForm";
@@ -11,6 +11,8 @@ import {FormulaEditor} from "./FormulaEditor";
 import {ItemDescriptionInput} from "./ItemDescriptionInput";
 import {ItemFY0Input} from "./ItemFY0Input";
 import {DiscreteEditor} from "./DiscreteEditor";
+import {PercentOfRevenueEditor} from "./PercentOfRevenueEditor";
+import {PrimaryButton} from "../../../../Common/PrimaryButton";
 
 export function ItemEditor() {
 
@@ -28,7 +30,7 @@ export function ItemEditor() {
         if (id) init()
     }, [id])
 
-    async function updateItem(newItem: Item) {
+    async function handleItemChange(newItem: Item) {
         // delete it item from overrides
         const model = stockAnalysis.model
         const updatedModel: Model = {
@@ -43,34 +45,32 @@ export function ItemEditor() {
             model: updatedModel
         }
         setStockAnalysis(updatedStockAnalysis)
-        await stockAnalysisCrud.saveStockAnalysis(updatedStockAnalysis)
+    }
+
+    async function handleSubmit() {
+        await stockAnalysisCrud.saveStockAnalysis(stockAnalysis)
+        back()
     }
 
     function updateDescription(newDescription) {
         const newItem = {...item, description: newDescription}
-        updateItem(newItem)
+        handleItemChange(newItem)
     }
 
     function updateHistoricalValue(newHistoricalValue) {
         const newItem = {...item, historicalValue: newHistoricalValue}
-        updateItem(newItem)
+        handleItemChange(newItem)
     }
 
-    async function handleSubmit(newValue: any) {
+    async function handleAutoFormChange(newValue: any) {
         const newItem = merge(item, newValue)
-        await updateItem(newItem)
-        back()
-    }
-
-    async function updateFormula(newFormula: string) {
-        const newItem = {...item, formula: newFormula}
-        await updateItem(newItem)
+        await handleItemChange(newItem)
         back()
     }
 
     function updateType(newType: ItemTypeEnum) {
         const newItem: Item = {...item, type: newType}
-        updateItem(newItem)
+        handleItemChange(newItem)
     }
 
     async function clearItem() {
@@ -107,12 +107,29 @@ export function ItemEditor() {
     ).find(it => it.name === itemName)
 
     const override = model?.itemOverrides.find(item => item.name === itemName)
-
     const item = override ?? original
 
     if (!item) {
         return null
     } else {
+
+        let editor: ReactNode
+        if (item.type === ItemTypeEnum.Discrete) {
+            editor = <DiscreteEditor item={item} onSubmit={handleItemChange}/>
+        } else if (item.type === ItemTypeEnum.PercentOfRevenue) {
+            editor = <PercentOfRevenueEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange}/>
+        } else if (item.type === ItemTypeEnum.Custom) {
+            editor = <FormulaEditor item={item} onSubmit={handleItemChange}/>
+        } else {
+            editor = (
+                <AutoForm
+                    schema={schemaOf(item)}
+                    body={bodyOf(item)}
+                    onSubmit={handleAutoFormChange}
+                />
+            )
+        }
+
         return (
             // outer layer is the overlay
             <div className="container mx-auto px-2 max-w-prose py-12">
@@ -137,29 +154,15 @@ export function ItemEditor() {
                         <option value={ItemTypeEnum.Discrete}>Discrete</option>
                         <option value={ItemTypeEnum.CompoundedGrowth}>Compounded Growth</option>
                     </Select>
-                    {
-                        item.type === ItemTypeEnum.Discrete
-                            ?
-                            <DiscreteEditor item={item} onSubmit={updateItem}/>
-                            :
-                            item.type === ItemTypeEnum.Custom
-                                ?
-                                <FormulaEditor item={item} onSubmit={updateFormula}/>
-                                :
-                                <AutoForm
-                                    schema={schemaOf(item)}
-                                    body={bodyOf(item)}
-                                    onSubmit={handleSubmit}
-                                />
-                    }
-                    <div className="space-x-2">
+                    {editor}
+                    <div className="flex space-x-2">
+                        <PrimaryButton onClick={handleSubmit}>Confirm</PrimaryButton>
+                        <SecondaryButton className="w-24" onClick={back}>Back</SecondaryButton>
                         {
                             item === override
-                                ?
-                                <DeleteButton className="w-24" onClick={clearItem}>Clear</DeleteButton>
+                                ? <DeleteButton className="w-24" onClick={clearItem}>Clear</DeleteButton>
                                 : null
                         }
-                        <SecondaryButton className="w-24" onClick={back}>Back</SecondaryButton>
                     </div>
                 </div>
             </div>

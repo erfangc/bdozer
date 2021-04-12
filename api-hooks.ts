@@ -1,104 +1,110 @@
 import {
-  CommentsControllerApi,
-  EdgarExplorerControllerApi,
-  FactBaseControllerApi,
-  FactBaseUnsecuredControllerApi,
-  FilingEntityManagerControllerApi,
-  FilingEntityManagerUnsecuredControllerApi,
-  MarketingControllerApi,
-  MxParserControllerApi,
-  StockAnalysisCrudControllerApi,
-  StockAnalysisPublicationControllerApi,
-  StockAnalysisWorkflowControllerApi,
+    CommentsControllerApi,
+    EdgarExplorerControllerApi,
+    FactAutoFillerControllerApi,
+    FactBaseControllerApi,
+    FactBaseUnsecuredControllerApi,
+    FilingEntityManagerControllerApi,
+    FilingEntityManagerUnsecuredControllerApi,
+    MarketingControllerApi,
+    MxParserControllerApi,
+    StockAnalysisCrudControllerApi,
+    StockAnalysisPublicationControllerApi,
+    StockAnalysisWorkflowControllerApi,
 } from "./client";
-import { useAuth0 } from "@auth0/auth0-react";
+import {useAuth0} from "@auth0/auth0-react";
 import axios from "axios";
-import { useEffect } from "react";
-import { serverErrorStore } from "./components/ServerErrors/ServerErrorStore";
-import { v4 as uuid } from 'uuid'
+import {useEffect} from "react";
+import {serverErrorStore} from "./components/ServerErrors/ServerErrorStore";
+import {v4 as uuid} from 'uuid'
 
 export const basePath = process.env.NEXT_PUBLIC_BASE_PATH;
 const axiosInstance = axios.create();
 
 axiosInstance.interceptors.response.use(null, (error) => {
-  const apiError = {
-    id: uuid(),
-    ...error?.response?.data
-  };
-  serverErrorStore.addError(apiError);
-  return Promise.reject(error);
+    const apiError = {
+        id: uuid(),
+        ...error?.response?.data
+    };
+    serverErrorStore.addError(apiError);
+    return Promise.reject(error);
 });
 
 function useAxios() {
-  const { getIdTokenClaims } = useAuth0();
+    const {getIdTokenClaims} = useAuth0();
 
-  useEffect(() => {
-    axiosInstance.interceptors.request.use(async (cfg) => {
-      // TODO are we accidentally attaching a gazillion of these?
-      const idToken = await getIdTokenClaims();
-      return {
-        ...cfg,
-        headers: {
-          ...cfg.headers,
-          Authorization: `Bearer ${idToken?.__raw ?? "-"}`,
-        },
-      };
-    });
-  }, []);
-  return axiosInstance;
+    useEffect(() => {
+        axiosInstance.interceptors.request.use(async (cfg) => {
+            // TODO are we accidentally attaching a gazillion of these?
+            const idToken = await getIdTokenClaims();
+            return {
+                ...cfg,
+                headers: {
+                    ...cfg.headers,
+                    Authorization: `Bearer ${idToken?.__raw ?? "-"}`,
+                },
+            };
+        });
+    }, []);
+    return axiosInstance;
 }
 
 export function useMarketing() {
-  const axiosInstance = useAxios();
-  return new MarketingControllerApi(null, basePath, axiosInstance);
+    const axiosInstance = useAxios();
+    return new MarketingControllerApi(null, basePath, axiosInstance);
+}
+
+export function useFactAutoFiller() {
+    const axiosInstance = useAxios();
+    return new FactAutoFillerControllerApi(null, basePath, axiosInstance)
 }
 
 export function useFactBase() {
-  const axiosInstance = useAxios();
-  return new FactBaseControllerApi(null, basePath, axiosInstance);
+    const axiosInstance = useAxios();
+    return new FactBaseControllerApi(null, basePath, axiosInstance);
 }
 
 export function useFactBaseUnsecured() {
-  const axiosInstance = useAxios();
-  return new FactBaseUnsecuredControllerApi(null, basePath, axiosInstance);
+    const axiosInstance = useAxios();
+    return new FactBaseUnsecuredControllerApi(null, basePath, axiosInstance);
 }
 
 export function useMxParser() {
-  const axiosInstance = useAxios();
-  return new MxParserControllerApi(null, basePath, axiosInstance);
+    const axiosInstance = useAxios();
+    return new MxParserControllerApi(null, basePath, axiosInstance);
 }
 
 export function useStockAnalysisWorkflow() {
-  const axiosInstance = useAxios();
-  return new StockAnalysisWorkflowControllerApi(null, basePath, axiosInstance);
+    const axiosInstance = useAxios();
+    return new StockAnalysisWorkflowControllerApi(null, basePath, axiosInstance);
 }
 
 export function useStockAnalysisPublication() {
-  const axiosInstance = useAxios();
-  return new StockAnalysisPublicationControllerApi(null, basePath, axiosInstance);
+    const axiosInstance = useAxios();
+    return new StockAnalysisPublicationControllerApi(null, basePath, axiosInstance);
 }
 
 export function useStockAnalysisCrud() {
-  const axiosInstance = useAxios();
-  return new StockAnalysisCrudControllerApi(null, basePath, axiosInstance);
+    const axiosInstance = useAxios();
+    return new StockAnalysisCrudControllerApi(null, basePath, axiosInstance);
 }
 
 export function useEdgarExplorer() {
-  const axiosInstance = useAxios();
-  return new EdgarExplorerControllerApi(null, basePath, axiosInstance)
+    const axiosInstance = useAxios();
+    return new EdgarExplorerControllerApi(null, basePath, axiosInstance)
 }
 
 export function useFilingEntityManager() {
-  const axiosInstance = useAxios();
-  return new FilingEntityManagerControllerApi(null, basePath, axiosInstance)
+    const axiosInstance = useAxios();
+    return new FilingEntityManagerControllerApi(null, basePath, axiosInstance)
 }
 
 export function useFilingEntityManagerUnsecured() {
-  const axiosInstance = useAxios();
-  return new FilingEntityManagerUnsecuredControllerApi(null, basePath, axiosInstance)
+    const axiosInstance = useAxios();
+    return new FilingEntityManagerUnsecuredControllerApi(null, basePath, axiosInstance)
 }
 
 export function useComments() {
-  const axiosInstance = useAxios();
-  return new CommentsControllerApi(null, basePath, axiosInstance)
+    const axiosInstance = useAxios();
+    return new CommentsControllerApi(null, basePath, axiosInstance)
 }

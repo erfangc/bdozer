@@ -48,3 +48,7 @@ export function simpleMoney(costOfIt, short?: boolean) {
     }
 
 }
+
+export function simplePercent(number: number, decimals: number = 1) {
+    return `${(number * 100).toFixed(decimals)}%`
+}
