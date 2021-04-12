@@ -38,7 +38,7 @@ export function ItemEditor() {
             itemOverrides: [
                 ...model.itemOverrides.filter(item => item.name !== newItem.name),
                 newItem
-            ]
+            ],
         }
         const updatedStockAnalysis: StockAnalysis2 = {
             ...stockAnalysis,
@@ -110,7 +110,9 @@ export function ItemEditor() {
     const item = override ?? original
 
     if (!item) {
+
         return null
+
     } else {
 
         let editor: ReactNode
@@ -121,14 +123,10 @@ export function ItemEditor() {
         } else if (item.type === ItemTypeEnum.Custom) {
             editor = <FormulaEditor item={item} onSubmit={handleItemChange}/>
         } else {
-            editor = (
-                <AutoForm
-                    schema={schemaOf(item)}
-                    body={bodyOf(item)}
-                    onSubmit={handleAutoFormChange}
-                />
-            )
+            editor = <AutoForm schema={schemaOf(item)} body={bodyOf(item)} onSubmit={handleAutoFormChange} />
         }
+
+        const isOverridden = item === override
 
         return (
             // outer layer is the overlay
@@ -156,11 +154,15 @@ export function ItemEditor() {
                     </Select>
                     {editor}
                     <div className="flex space-x-2">
-                        <PrimaryButton onClick={handleSubmit}>Confirm</PrimaryButton>
-                        <SecondaryButton className="w-24" onClick={back}>Back</SecondaryButton>
+                        <PrimaryButton onClick={handleSubmit}>
+                            {isOverridden ? 'Confirm' : 'Override'}
+                        </PrimaryButton>
+                        <SecondaryButton className="w-24" onClick={back}>
+                            Back
+                        </SecondaryButton>
                         {
-                            item === override
-                                ? <DeleteButton className="w-24" onClick={clearItem}>Clear</DeleteButton>
+                            isOverridden
+                                ? <DeleteButton className="w-40" onClick={clearItem}>Clear Override</DeleteButton>
                                 : null
                         }
                     </div>

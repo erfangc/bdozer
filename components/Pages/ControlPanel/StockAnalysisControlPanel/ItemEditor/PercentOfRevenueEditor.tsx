@@ -61,11 +61,14 @@ export function PercentOfRevenueEditor({item, model, onSubmit}: Props) {
                 <label className="text-sm">Quick Autofill Options:</label>
                 <div className="space-x-2">
                     {
-                        percentOfRevenueAutoFills.map(autoFillOption => (
-                            <GhostButton key={autoFillOption.label} onClick={() => autoFill(autoFillOption)}>
-                                {autoFillOption.label} {simplePercent(autoFillOption.percentOfRevenue.percentOfRevenue)}
-                            </GhostButton>
-                        ))
+                        percentOfRevenueAutoFills.map(autoFillOption => {
+                            const percentOfRevenue = autoFillOption.percentOfRevenue.percentOfRevenue;
+                            return (
+                                <GhostButton key={autoFillOption.label} onClick={() => autoFill(autoFillOption)}>
+                                    {autoFillOption.label} {simplePercent(percentOfRevenue)}
+                                </GhostButton>
+                            );
+                        })
                     }
                 </div>
             </div>
