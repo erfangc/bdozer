@@ -21,6 +21,9 @@ export function StockAnalysisControlPanel() {
         try {
             const {data: stockAnalysis} = await stockAnalysisCrud.getStockAnalysis(id as string)
             const {data: filingEntity} = await filingEntityManagerUnsecured.getFilingEntity(stockAnalysis.cik)
+            if (filingEntity.statusMessage !== 'Completed') {
+                router.push(`/control-panel/filing-entities/${filingEntity.cik}`)
+            }
             setFilingEntity(filingEntity)
             setStockAnalysis(stockAnalysis)
         } catch (e) {
