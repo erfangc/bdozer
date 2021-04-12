@@ -1,6 +1,6 @@
 import React from "react";
 import { StockAnalysis2 } from "../../../../client";
-import { simpleNumber } from "../../../../simple-number";
+import {simpleMoney, simpleNumber} from "../../../../simple-number";
 import { AnchorPopover } from "../../../Popover";
 import { SubTitle } from "../../../Common/Title";
 import { RevenueTimeSeries } from "./RevenueTimeSeries";
@@ -42,13 +42,13 @@ export function ExecutiveSummary(props: Props) {
             <div className="font-bold mt-8 mb-4">Current Business Situation</div>
             <ul className="list-disc pl-4 space-y-2">
                 <li>
-                    Last year, {name} made ${simpleNumber(revenue.value)} revenue.
+                    Last year, {name} made {simpleMoney(revenue.value)} revenue.
                 </li>
                 <li>
-                    They spend more than ${simpleNumber(totalExpense)} with a {profit.value > 0 ? 'profit' : 'loss'} of ${simpleNumber(profit.value)}.
+                    They spend more than {simpleMoney(totalExpense)} with a {profit.value > 0 ? 'profit' : 'loss'} of {simpleMoney(profit.value)}.
                 </li>
                 <li>
-                    Investors {eps > 0 ? 'made' : 'lost'} ${eps.toFixed(1)} per share.
+                    Investors {eps > 0 ? 'made' : 'lost'} {eps.toFixed(1)} per share.
                 </li>
             </ul>
             <div className="font-bold mt-8 mb-4">Future Projections</div>

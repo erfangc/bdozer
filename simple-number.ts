@@ -38,3 +38,13 @@ export function simpleNumber(costOfIt, short?: boolean) {
 
     return visualOfIt;
 }
+
+export function simpleMoney(costOfIt, short?: boolean) {
+    const number = simpleNumber(costOfIt, short)
+    if (parseFloat(costOfIt) < 0) {
+        return `-$${number.substr(1, number.length)}`;
+    } else {
+        return `$${number}`;
+    }
+
+}
