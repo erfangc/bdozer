@@ -55,14 +55,36 @@ function Home() {
               </div>
             </div>
             {/* end tag line */}
-            <div className="hidden xl:w-2/3 lg:w-1/2 lg:flex lg:justify-center mt-16">
-              <img src="stocks.svg" alt="" />
+            <div className="hidden xl:w-2/3 lg:w-1/2 lg:flex lg:justify-center">
+              <Diamond />
             </div>
           </div>
         </div>
         <LegalDisclaimer className="px-4 lg:px-0 mt-32" />
       </div>
     </main >
+  )
+}
+
+function Diamond() {
+  return (
+    <svg width="636" height="636" viewBox="0 0 636 636" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition ease-linear transform hover:-rotate-3">
+      <g clipPath="url(#clip0)">
+        <path d="M441.38 266.492L257.706 525.701L587.23 308.832L441.38 266.492Z" fill="#FBBF24" />
+        <path d="M234.175 68.4617L95.5287 166.094L241.379 208.433L234.175 68.4617Z" fill="#FBBF24" />
+        <path d="M441.38 266.492L587.23 308.832L522.414 152.135L441.38 266.492Z" fill="#FEF08A" />
+        <path d="M441.38 266.492L378.294 110.299L241.379 208.433L441.38 266.492Z" fill="#FBBF24" />
+        <path d="M378.294 110.299L234.175 68.4617L241.379 208.433L378.294 110.299Z" fill="#F59E0B" />
+        <path d="M522.414 152.135L378.294 110.298L441.38 266.492L522.414 152.135Z" fill="#FBBF24" />
+        <path d="M241.379 208.433L257.706 525.701L441.38 266.492L241.379 208.433Z" fill="#F59E0B" />
+        <path d="M95.5287 166.094L257.706 525.701L241.379 208.433L95.5287 166.094Z" fill="#D97706" />
+      </g>
+      <defs>
+        <clipPath id="clip0">
+          <rect width="512" height="512" fill="white" transform="translate(143.518 0.780701) rotate(16.1876)" />
+        </clipPath>
+      </defs>
+    </svg>
   )
 }
 
