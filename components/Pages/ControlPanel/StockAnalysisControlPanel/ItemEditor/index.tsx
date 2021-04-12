@@ -153,8 +153,12 @@ export function ItemEditor() {
                                 />
                     }
                     <div className="space-x-2">
-                        {item === override ?
-                            <DeleteButton className="w-24" onClick={clearItem}>Clear</DeleteButton> : null}
+                        {
+                            item === override
+                                ?
+                                <DeleteButton className="w-24" onClick={clearItem}>Clear</DeleteButton>
+                                : null
+                        }
                         <SecondaryButton className="w-24" onClick={back}>Back</SecondaryButton>
                     </div>
                 </div>
