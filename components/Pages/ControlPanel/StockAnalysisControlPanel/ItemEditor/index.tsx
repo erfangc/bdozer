@@ -115,9 +115,13 @@ export function ItemEditor() {
     } else {
         return (
             // outer layer is the overlay
-            <div className="container mx-auto px-2 max-w-prose py-20">
+            <div className="container mx-auto px-2 max-w-prose py-12">
                 <div className="bg-blueGray-700 px-2 lg:px-12 py-3 lg:py-8 rounded-lg shadow-md flex-col space-y-8">
                     <div className="flex-col space-y-4">
+                        <div>
+                            <label className="text-sm">Name</label>
+                            <p className="mt-2 border rounded border-blueGray-400 text-blueGray-300 px-3 py-2">{item.name}</p>
+                        </div>
                         <ItemDescriptionInput item={item} onChange={updateDescription}/>
                         <ItemFY0Input item={item} onChange={updateHistoricalValue}/>
                     </div>
