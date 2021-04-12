@@ -125,11 +125,13 @@ export function ItemEditor() {
                         <ItemDescriptionInput item={item} onChange={updateDescription}/>
                         <ItemFY0Input item={item} onChange={updateHistoricalValue}/>
                     </div>
-                    <Select label="Item Type" value={item.type}
-                            onChange={({currentTarget: {value}}) => updateType(value as any)}>
+                    <Select
+                        label="Item Type"
+                        value={item.type}
+                        onChange={({currentTarget: {value}}) => updateType(value as any)}
+                    >
                         <option value={ItemTypeEnum.Custom}>Custom</option>
                         <option value={ItemTypeEnum.SubscriptionRevenue}>Subscription Revenue</option>
-                        <option value={ItemTypeEnum.PercentOfTotalAsset}>Percent of Total Asset</option>
                         <option value={ItemTypeEnum.PercentOfRevenue}>Percent of Revenue</option>
                         <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
                         <option value={ItemTypeEnum.Discrete}>Discrete</option>
