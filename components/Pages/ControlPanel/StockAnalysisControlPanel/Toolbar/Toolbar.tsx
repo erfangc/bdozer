@@ -1,13 +1,18 @@
-import { useAuth0 } from '@auth0/auth0-react'
-import { useRouter } from 'next/router'
-import React, { useState } from 'react'
-import { v4 as uuid } from 'uuid'
-import { basePath, useStockAnalysisCrud, useStockAnalysisPublication, useStockAnalysisWorkflow } from '../../../../../api-hooks'
-import { StockAnalysis2 } from '../../../../../client'
-import { ExcelDownloading, ExcelIcon } from '../../../../Common/DownloadToExcel'
-import { notificationStore } from '../../../../Notifications/NotificationStore'
-import { Loading, Play, Preview, Publish, Settings, Table, Unpublish } from './Svgs'
-import { ToolButton } from './ToolButton'
+import {useAuth0} from '@auth0/auth0-react'
+import {useRouter} from 'next/router'
+import React, {useState} from 'react'
+import {v4 as uuid} from 'uuid'
+import {
+    basePath,
+    useStockAnalysisCrud,
+    useStockAnalysisPublication,
+    useStockAnalysisWorkflow
+} from '../../../../../api-hooks'
+import {StockAnalysis2} from '../../../../../client'
+import {ExcelDownloading, ExcelIcon} from '../../../../Common/DownloadToExcel'
+import {Notification, notificationStore} from '../../../../Notifications/NotificationStore'
+import {Loading, Play, Preview, Publish, Settings, Table, Unpublish} from './Svgs'
+import {ToolButton} from './ToolButton'
 
 interface Props {
     loading: boolean
@@ -16,11 +21,11 @@ interface Props {
     setStockAnalysis: (stockAnalysis: StockAnalysis2) => void
 }
 
-export default function Toolbar({ loading, setLoading, stockAnalysis, setStockAnalysis }: Props) {
+export default function Toolbar({loading, setLoading, stockAnalysis, setStockAnalysis}: Props) {
 
-    const { getIdTokenClaims } = useAuth0()
+    const {getIdTokenClaims} = useAuth0()
     const router = useRouter()
-    const { id } = router.query
+    const {id} = router.query
     const stockAnalysisWorkflow = useStockAnalysisWorkflow()
     const stockAnalysisCrud = useStockAnalysisCrud()
     const stockAnalysisPublication = useStockAnalysisPublication()
@@ -48,9 +53,13 @@ export default function Toolbar({ loading, setLoading, stockAnalysis, setStockAn
 
     async function unpublish() {
         await stockAnalysisPublication.unpublishStockAnalysis(stockAnalysis['_id'])
-        notificationStore.addNotification(
-            { delay: 100, id: uuid(), message: 'Unpublish successful', timestamp: new Date() }
-        )
+        const notification: Notification = {
+            id: uuid(),
+            delay: 100,
+            message: 'Unpublish successful',
+            timestamp: new Date(),
+        };
+        notificationStore.addNotification(notification)
     }
 
     async function navigateToPreview() {
@@ -71,7 +80,7 @@ export default function Toolbar({ loading, setLoading, stockAnalysis, setStockAn
     }
 
     async function downloadModel() {
-        const { __raw } = await getIdTokenClaims()
+        const {__raw} = await getIdTokenClaims()
         setDownloading(true)
         const url = `${basePath}/api/stock-analyzer/workflow/${stockAnalysis['_id']}/download`
         fetch(url,
@@ -104,25 +113,25 @@ export default function Toolbar({ loading, setLoading, stockAnalysis, setStockAn
     return (
         <div className="grid grid-cols-4 gap-1 md:flex md:space-x-5 px-4 pt-4 pb-2 bg-blueGray-800 rounded">
             <ToolButton onClick={refresh} loading={loading} label="Rerun">
-                {loading ? <Loading /> : <Play />}
+                {loading ? <Loading/> : <Play/>}
             </ToolButton>
             <ToolButton onClick={navigateToFullOutput} loading={loading} label="Table">
-                <Table />
+                <Table/>
             </ToolButton>
             <ToolButton onClick={navigateToPreview} loading={loading} label="Preview">
-                <Preview />
+                <Preview/>
             </ToolButton>
             <ToolButton onClick={publish} loading={loading} label="Publish">
-                <Publish />
+                <Publish/>
             </ToolButton>
             <ToolButton onClick={unpublish} loading={loading} label="Unpublish">
-                <Unpublish />
+                <Unpublish/>
             </ToolButton>
             <ToolButton onClick={navigateToModelSettings} loading={loading} label="Settings">
-                <Settings />
+                <Settings/>
             </ToolButton>
             <ToolButton onClick={downloadModel} loading={downloading} label="Download">
-                {downloading ? <ExcelDownloading /> : <ExcelIcon />}
+                {downloading ? <ExcelDownloading/> : <ExcelIcon/>}
             </ToolButton>
         </div>
     )

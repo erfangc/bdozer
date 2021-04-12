@@ -5,10 +5,12 @@ import { LegalDisclaimer } from '../components/LegalDisclaimer'
 import { Logo } from '../components/Nav/Logo'
 import { PrimaryButton } from '../components/Common/PrimaryButton'
 import { SecondaryButton } from '../components/Common/SecondaryButton'
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Home() {
 
   const router = useRouter()
+  const auth0 = useAuth0()
 
   function seeSampleReport() {
     router.push(`/published-stock-analyses/0c04b9cb-ddec-4c6e-9445-099bde6c86ca/narrative2`)
@@ -16,6 +18,12 @@ function Home() {
 
   function browse() {
     router.push(`/browse`)
+  }
+
+  if (auth0.isAuthenticated && localStorage.getItem('redirectUri')) {
+    router.push(localStorage.getItem('redirectUri'))
+    localStorage.removeItem('redirectUri')
+    return null
   }
 
   return (
