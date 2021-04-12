@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState, ChangeEvent } from "react"
 import { Item } from "../../../../../client"
 import { PrimaryButton } from "../../../../Common/PrimaryButton"
 
@@ -6,8 +6,12 @@ export function FormulaEditor({ item, onSubmit }: { item: Item, onSubmit: (strin
 
     const [value, setValue] = useState(item.formula)
 
-    function handleChange({ currentTarget: { value } }: React.ChangeEvent<HTMLTextAreaElement>) {
+    function handleChange({ currentTarget: { value } }: ChangeEvent<HTMLTextAreaElement>) {
         setValue(value)
+    }
+
+    function handleSubmit() {
+        onSubmit(value)
     }
 
     return (
@@ -25,7 +29,7 @@ export function FormulaEditor({ item, onSubmit }: { item: Item, onSubmit: (strin
                 placeholder="Enter formula"
             >
             </textarea>
-            <PrimaryButton onClick={() => onSubmit(value)}>Confirm</PrimaryButton>
+            <PrimaryButton onClick={handleSubmit}>Confirm</PrimaryButton>
         </div>
     )
 }
