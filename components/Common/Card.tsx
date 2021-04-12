@@ -6,10 +6,11 @@ interface CardProps {
     label: any
     value: number
     running?: boolean
+    state?: 'danger' | 'good'
 }
 
 export function Money(props: CardProps) {
-    const { running } = props;
+    const { running, state } = props;
     return (
         <div className="py-4 px-8 rounded-lg shadow-md bg-blueGray-700 flex-col flex space-y-2">
             <span className="text-xs">{props.label}</span>
@@ -22,7 +23,7 @@ export function Money(props: CardProps) {
                     </div>
                     : <NumberFormat
                         displayType='text'
-                        className="text-2xl"
+                        className={`text-2xl ${state === 'danger' ? 'text-rose-500' : state === 'good' ? 'text-lime-500' : null}`}
                         value={props.value}
                         decimalScale={1}
                         prefix="$"
