@@ -1044,6 +1044,25 @@ export interface FixedCost {
 /**
  * 
  * @export
+ * @interface FixedCostAutoFill
+ */
+export interface FixedCostAutoFill {
+    /**
+     * 
+     * @type {string}
+     * @memberof FixedCostAutoFill
+     */
+    label?: string;
+    /**
+     * 
+     * @type {FixedCost}
+     * @memberof FixedCostAutoFill
+     */
+    fixedCost?: FixedCost;
+}
+/**
+ * 
+ * @export
  * @interface HistoricalValue
  */
 export interface HistoricalValue {
@@ -2011,12 +2030,51 @@ export const FactAutoFillerControllerApiAxiosParamCreator = function (configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getFixedCostAutoFills: async (factId: string, model: Model, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'factId' is not null or undefined
+            assertParamExists('getFixedCostAutoFills', 'factId', factId)
+            // verify required parameter 'model' is not null or undefined
+            assertParamExists('getFixedCostAutoFills', 'model', model)
+            const localVarPath = `/api/fact-auto-filler/{factId}/fixed-cost`
+                .replace(`{${"factId"}}`, encodeURIComponent(String(factId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(model, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} factId 
+         * @param {Model} model 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getPercentOfRevenueAutoFills: async (factId: string, model: Model, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'factId' is not null or undefined
             assertParamExists('getPercentOfRevenueAutoFills', 'factId', factId)
             // verify required parameter 'model' is not null or undefined
             assertParamExists('getPercentOfRevenueAutoFills', 'model', model)
-            const localVarPath = `/api/fact-auto-filler/{factId}`
+            const localVarPath = `/api/fact-auto-filler/{factId}/percent-of-revenue`
                 .replace(`{${"factId"}}`, encodeURIComponent(String(factId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2060,6 +2118,17 @@ export const FactAutoFillerControllerApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async getFixedCostAutoFills(factId: string, model: Model, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FixedCostAutoFill>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFixedCostAutoFills(factId, model, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} factId 
+         * @param {Model} model 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async getPercentOfRevenueAutoFills(factId: string, model: Model, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PercentOfRevenueAutoFill>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPercentOfRevenueAutoFills(factId, model, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -2081,6 +2150,16 @@ export const FactAutoFillerControllerApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getFixedCostAutoFills(factId: string, model: Model, options?: any): AxiosPromise<Array<FixedCostAutoFill>> {
+            return localVarFp.getFixedCostAutoFills(factId, model, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} factId 
+         * @param {Model} model 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getPercentOfRevenueAutoFills(factId: string, model: Model, options?: any): AxiosPromise<Array<PercentOfRevenueAutoFill>> {
             return localVarFp.getPercentOfRevenueAutoFills(factId, model, options).then((request) => request(axios, basePath));
         },
@@ -2094,6 +2173,18 @@ export const FactAutoFillerControllerApiFactory = function (configuration?: Conf
  * @extends {BaseAPI}
  */
 export class FactAutoFillerControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} factId 
+     * @param {Model} model 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FactAutoFillerControllerApi
+     */
+    public getFixedCostAutoFills(factId: string, model: Model, options?: any) {
+        return FactAutoFillerControllerApiFp(this.configuration).getFixedCostAutoFills(factId, model, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {string} factId 

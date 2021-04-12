@@ -13,6 +13,7 @@ import {ItemFY0Input} from "./ItemFY0Input";
 import {DiscreteEditor} from "./DiscreteEditor";
 import {PercentOfRevenueEditor} from "./PercentOfRevenueEditor";
 import {PrimaryButton} from "../../../../Common/PrimaryButton";
+import {FixedCostEditor} from "./FixedCostEditor";
 
 export function ItemEditor() {
 
@@ -105,12 +106,14 @@ export function ItemEditor() {
         let editor: ReactNode
         if (item.type === ItemTypeEnum.Discrete) {
             editor = <DiscreteEditor item={item} onSubmit={handleItemChange}/>
+        } else if (item.type === ItemTypeEnum.FixedCost) {
+            editor = <FixedCostEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange}/>
         } else if (item.type === ItemTypeEnum.PercentOfRevenue) {
             editor = <PercentOfRevenueEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange}/>
         } else if (item.type === ItemTypeEnum.Custom) {
             editor = <FormulaEditor item={item} onSubmit={handleItemChange}/>
         } else {
-            editor = <AutoForm schema={schemaOf(item)} body={bodyOf(item)} onSubmit={handleAutoFormChange} />
+            editor = <AutoForm schema={schemaOf(item)} body={bodyOf(item)} onSubmit={handleAutoFormChange}/>
         }
 
         const isOverridden = item === overriddenItem
