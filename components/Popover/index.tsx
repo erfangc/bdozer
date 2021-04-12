@@ -54,7 +54,7 @@ export function Popover(props: PopoverProps) {
                 visible
                     ?
                     <div
-                        className={`absolute top-full ${position === 'left' ? 'left-0' : 'right-0'} text-blueGray-50 p-4 bg-blueGray-900 rounded-md z-10 w-screen lg:w-screen lg:max-w-md`}>
+                        className={`absolute top-full ${position === 'left' ? 'left-0' : 'right-0'} text-blueGray-50 p-4 bg-blueGray-800 rounded-md z-10 w-screen shadow-md lg:w-screen lg:max-w-md`}>
                         {props.children}
                     </div>
                     : null
