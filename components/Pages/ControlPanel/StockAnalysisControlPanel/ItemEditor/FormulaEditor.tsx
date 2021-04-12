@@ -6,7 +6,7 @@ export function FormulaEditor({ item, onSubmit }: { item: Item, onSubmit: (strin
 
     const [value, setValue] = useState(item.formula)
 
-    function handleChange({ currentTarget: { value } }: React.ChangeEvent<HTMLInputElement>) {
+    function handleChange({ currentTarget: { value } }: React.ChangeEvent<HTMLTextAreaElement>) {
         setValue(value)
     }
 
@@ -15,8 +15,7 @@ export function FormulaEditor({ item, onSubmit }: { item: Item, onSubmit: (strin
             <p className="text-sm">
                 Formula
             </p>
-            <input
-                type="text"
+            <textarea
                 name="expression"
                 value={value}
                 onFocus={focus}
@@ -25,7 +24,7 @@ export function FormulaEditor({ item, onSubmit }: { item: Item, onSubmit: (strin
                 className="cursor-pointer w-full rounded-sm bg-blueGray-900 border-blueGray-500 px-4 py-4"
                 placeholder="Enter formula"
             >
-            </input>
+            </textarea>
             <PrimaryButton onClick={() => onSubmit(value)}>Confirm</PrimaryButton>
         </div>
     )
