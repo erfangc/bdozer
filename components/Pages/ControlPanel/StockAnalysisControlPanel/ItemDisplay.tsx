@@ -8,17 +8,19 @@ import { ItemDisplayDetail } from "./ItemDisplayDetail"
 import { Attention as Manual, Check, Nothing } from "./ItemEditor/Svgs"
 
 interface Props {
-    overriden?: boolean
     item: Item
     stockAnalysis: StockAnalysis2
 }
 
 export function ItemDisplay(props: Props) {
 
-    const { item, overriden } = props
+    const { item: originalItem, stockAnalysis } = props
     const router = useRouter()
     const { id } = router.query
     const factBase = useFactBaseUnsecured()
+    const overriddenItem = stockAnalysis.model.itemOverrides.find(i => i.name === item.name)
+    const overridden = overriddenItem !== undefined
+    const item = overriddenItem ?? originalItem
 
     async function openSourceDocument(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault()
@@ -50,7 +52,7 @@ export function ItemDisplay(props: Props) {
             <div className="flex justify-start lg:justify-end items-center space-x-4">
                 <SmallGhostButton onClick={openSourceDocument}>Source</SmallGhostButton>
                 <ItemDisplayDetail {...props} />
-                {item.subtotal ? <Nothing /> : !overriden ? <Check /> : <Manual />}
+                {item.subtotal ? <Nothing /> : !overridden ? <Check /> : <Manual />}
             </div>
         </div>
     )

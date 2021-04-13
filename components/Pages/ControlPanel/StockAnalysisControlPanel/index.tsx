@@ -17,6 +17,11 @@ export function StockAnalysisControlPanel() {
     const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
     const {id} = router.query
 
+    async function saveStockAnalysis(stockAnalysis: StockAnalysis2) {
+        await stockAnalysisCrud.saveStockAnalysis(stockAnalysis)
+        setStockAnalysis(stockAnalysis)
+    }
+
     async function init() {
         try {
             const {data: stockAnalysis} = await stockAnalysisCrud.getStockAnalysis(id as string)
@@ -41,10 +46,10 @@ export function StockAnalysisControlPanel() {
         <main className="container mx-auto px-4 py-20 space-y-12">
             <Title>Stock Analysis Editor</Title>
             <FilingEntityCard filingEntity={filingEntity}/>
-            <section className="flex flex-col space-y-6">
+            <section className="space-y-6">
                 <Toolbar
                     stockAnalysis={stockAnalysis}
-                    setStockAnalysis={setStockAnalysis}
+                    setStockAnalysis={saveStockAnalysis}
                     loading={loading}
                     setLoading={setLoading}
                 />
@@ -52,8 +57,8 @@ export function StockAnalysisControlPanel() {
                     loading={loading}
                     filingEntity={filingEntity}
                     stockAnalysis={stockAnalysis}
-                    setFilingEntity={setFilingEntity}
-                    setStockAnalysis={setStockAnalysis}
+                    saveFilingEntity={setFilingEntity}
+                    saveStockAnalysis={saveStockAnalysis}
                 />
             </section>
         </main>

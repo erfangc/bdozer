@@ -27,7 +27,6 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
     const router = useRouter()
     const {id} = router.query
     const stockAnalysisWorkflow = useStockAnalysisWorkflow()
-    const stockAnalysisCrud = useStockAnalysisCrud()
     const stockAnalysisPublication = useStockAnalysisPublication()
     const [downloading, setDownloading] = useState(false)
 
@@ -35,7 +34,7 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
         setLoading(true)
         try {
             const resp = await stockAnalysisWorkflow.refresh(stockAnalysis)
-            updateStockAnalysis(resp.data)
+            await updateStockAnalysis(resp.data)
         } catch (e) {
             console.error(e);
         }
@@ -72,7 +71,6 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
 
     async function updateStockAnalysis(stockAnalysis: StockAnalysis2) {
         try {
-            await stockAnalysisCrud.saveStockAnalysis(stockAnalysis)
             setStockAnalysis(stockAnalysis)
         } catch (e) {
             console.error(e);
@@ -111,7 +109,7 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
     }
 
     return (
-        <div className="grid grid-cols-4 gap-1 md:flex md:space-x-5 px-4 pt-4 pb-2 bg-blueGray-800 rounded">
+        <div className="grid grid-cols-4 gap-1 md:flex md:space-x-5 px-3 pt-2 pb-1 bg-blueGray-800 rounded">
             <ToolButton onClick={refresh} loading={loading} label="Rerun">
                 {loading ? <Loading/> : <Play/>}
             </ToolButton>

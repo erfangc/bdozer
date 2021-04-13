@@ -65,7 +65,7 @@ export function FixedCostEditor({item, model, onSubmit}: Props) {
                             const cost = autoFillOption.fixedCost.cost;
                             return (
                                 <GhostButton key={autoFillOption.label} onClick={() => autoFill(autoFillOption)}>
-                                    {autoFillOption.label} {simpleMoney(cost)}
+                                    {autoFillOption.label} {simpleMoney(cost.toFixed(0))}
                                 </GhostButton>
                             );
                         })

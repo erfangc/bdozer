@@ -7,7 +7,7 @@ interface Props {
 
 export function FilingEntityCard({ filingEntity }: Props) {
     return (
-        <div className='bg-blueGray-700 shadow-md rounded-md grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-6 px-4 gap-4'>
+        <div className='bg-blueGray-700 shadow-md rounded-md grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-4 px-5 gap-4'>
             <div className="flex flex-col">
                 <div className="font-light text-sm">Name</div>
                 <span className="font-semibold">{filingEntity?.name}</span>

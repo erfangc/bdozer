@@ -4,6 +4,8 @@ import {NumberFormatValues} from "react-number-format";
 import {NumberInput} from "../../../../Common/NumberInput";
 import {year} from "../../../../../year";
 import {PrimaryButton} from "../../../../Common/PrimaryButton";
+import {GhostButton} from "../../../../Common/GhostButton";
+import {Plus} from "../Toolbar/Svgs";
 
 interface DiscreteEditorProps {
     item: Item
@@ -82,7 +84,7 @@ export function DiscreteEditor({item, onSubmit}: DiscreteEditorProps) {
                     )
                 })}
             </div>
-            <PrimaryButton onClick={add}>Add</PrimaryButton>
+            <GhostButton onClick={add} className="font-semibold flex items-center"><Plus/>Year</GhostButton>
         </div>
     );
 }
