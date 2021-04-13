@@ -20,7 +20,7 @@ export function ItemDisplay(props: Props) {
     const router = useRouter()
     const { id } = router.query
     const factBase = useFactBaseUnsecured()
-    const overriddenItem = stockAnalysis.model.itemOverrides.find(i => i.name === item.name)
+    const overriddenItem = stockAnalysis.model.itemOverrides.find(i => i.name === props.item.name)
     const overridden = overriddenItem !== undefined
     const item = overriddenItem ?? originalItem
     const factId = item.historicalValue?.factId
