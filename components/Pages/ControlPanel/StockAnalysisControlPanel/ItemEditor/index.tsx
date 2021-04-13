@@ -1,5 +1,5 @@
 import {useRouter} from "next/router";
-import React, {ReactNode, useEffect, useState} from "react";
+import React, {ReactNode, useCallback, useEffect, useState} from "react";
 import {useFactBaseUnsecured, useStockAnalysisCrud} from "../../../../../api-hooks";
 import {Fact, Item, ItemTypeEnum, Model, StockAnalysis2} from "../../../../../client";
 import {AutoForm} from "../../../../AutoForms/AutoForm";
@@ -34,6 +34,19 @@ export function ItemEditor() {
     const {id, itemName} = router.query
     const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
     const stockAnalysisCrud = useStockAnalysisCrud()
+
+    const escFunction = useCallback((event) => {
+        if (event.keyCode === 27) {
+            back()
+        }
+    }, []);
+
+    useEffect(() => {
+        document.addEventListener("keydown", escFunction, false);
+        return () => {
+            document.removeEventListener("keydown", escFunction, false);
+        };
+    }, []);
 
     async function init() {
         const {data: stockAnalysis} = await stockAnalysisCrud.getStockAnalysis(id as string)
@@ -140,9 +153,18 @@ export function ItemEditor() {
                     <div className="flex-col space-y-4">
                         <div>
                             <label className="text-sm">Name</label>
-                            <p className="mt-2 cursor-not-allowed border rounded border-blueGray-400 text-blueGray-300 px-3 py-2">{item.name}</p>
+                            <p className="mt-2 cursor-not-allowed border rounded border-blueGray-400 text-blueGray-300 px-3 py-2">
+                                {item.name}
+                            </p>
                         </div>
-                        <p>{fact?.documentation}</p>
+                        {
+                            fact?.documentation
+                                ?
+                                <blockquote className="px-3 inline-block border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300 mb-1">
+                                    {fact.documentation}
+                                </blockquote>
+                                : null
+                        }
                         <ItemDescriptionInput item={item} onSubmit={handleItemChange}/>
                         <ItemFY0Input item={item} onSubmit={handleItemChange}/>
                     </div>
