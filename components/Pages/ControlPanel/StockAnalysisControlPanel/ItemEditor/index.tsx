@@ -1,7 +1,7 @@
 import {useRouter} from "next/router";
 import React, {ReactNode, useEffect, useState} from "react";
-import {useStockAnalysisCrud} from "../../../../../api-hooks";
-import {Item, ItemTypeEnum, Model, StockAnalysis2} from "../../../../../client";
+import {useFactBaseUnsecured, useStockAnalysisCrud} from "../../../../../api-hooks";
+import {Fact, Item, ItemTypeEnum, Model, StockAnalysis2} from "../../../../../client";
 import {AutoForm} from "../../../../AutoForms/AutoForm";
 import {bodyOf, merge, schemaOf} from "../../../../AutoForms/Schemas";
 import {DeleteButton} from "../../../../Common/DeleteButton";
@@ -15,16 +15,39 @@ import {PercentOfRevenueEditor} from "./PercentOfRevenueEditor";
 import {PrimaryButton} from "../../../../Common/PrimaryButton";
 import {FixedCostEditor} from "./FixedCostEditor";
 
+function getItem(model?: Model, itemName?: string | string[]) {
+    return (
+        [
+            ...(model?.incomeStatementItems ?? []),
+            ...(model?.cashFlowStatementItems ?? []),
+            ...(model?.balanceSheetItems ?? []),
+            ...(model?.otherItems ?? []),
+        ]
+    ).find(it => it.name === itemName);
+}
+
 export function ItemEditor() {
 
     const router = useRouter()
+    const factBase = useFactBaseUnsecured()
+    const [fact, setFact] = useState<Fact>()
     const {id, itemName} = router.query
     const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
     const stockAnalysisCrud = useStockAnalysisCrud()
 
     async function init() {
         const {data: stockAnalysis} = await stockAnalysisCrud.getStockAnalysis(id as string)
-        setStockAnalysis(stockAnalysis)
+        const item = getItem(stockAnalysis?.model, itemName);
+        /*
+        query the underlying fact that populated this item
+         */
+        const factId = item?.historicalValue?.factId;
+        if (factId) {
+            const {data: fact} = await factBase.getFact(factId)
+            setFact(fact)
+        }
+
+        setStockAnalysis(stockAnalysis);
     }
 
     useEffect(() => {
@@ -86,15 +109,7 @@ export function ItemEditor() {
     }
 
     const model = stockAnalysis?.model
-    const originalItem = (
-        [
-            ...(model?.incomeStatementItems ?? []),
-            ...(model?.cashFlowStatementItems ?? []),
-            ...(model?.balanceSheetItems ?? []),
-            ...(model?.otherItems ?? []),
-        ]
-    ).find(it => it.name === itemName)
-
+    const originalItem = getItem(model, itemName)
     const overriddenItem = model?.itemOverrides.find(item => item.name === itemName)
     const item = overriddenItem ?? originalItem
 
@@ -127,6 +142,7 @@ export function ItemEditor() {
                             <label className="text-sm">Name</label>
                             <p className="mt-2 cursor-not-allowed border rounded border-blueGray-400 text-blueGray-300 px-3 py-2">{item.name}</p>
                         </div>
+                        <p>{fact?.documentation}</p>
                         <ItemDescriptionInput item={item} onSubmit={handleItemChange}/>
                         <ItemFY0Input item={item} onSubmit={handleItemChange}/>
                     </div>

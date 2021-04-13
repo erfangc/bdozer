@@ -87,14 +87,14 @@ export default function Editor(props: Props) {
                 </div>
             </div>
             <div className="pt-6">
-                <div className="flex space-x-4 mb-4">
+                <div className="flex space-x-4 mb-8">
                     <Tab active>Income Statement</Tab>
                     <Tab disabled>Balance Sheet</Tab>
                 </div>
-                <blockquote className="my-4 pl-6 border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300">
-                    Click on items to edit
-                </blockquote>
                 <div className="space-y-2">
+                    <blockquote className="px-3 inline border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300">
+                        Click on items to edit
+                    </blockquote>
                     <div
                         className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 py-2 px-4 font-semibold text-blueGray-400">
                         <span>Name</span>

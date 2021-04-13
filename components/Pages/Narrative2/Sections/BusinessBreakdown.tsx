@@ -108,9 +108,11 @@ export function BusinessBreakdown(props: Props) {
             <p>How did {ticker} make and spend it's money in the most recent year. You can click different years to see analyst projections</p>
             <HighchartsReact highcharts={highcharts} options={options} />
             <div className="flex space-x-1 text-sm">
-                {Object.keys(businessWaterfall).map(currentPeriod => {
-                    const currPeriod = parseInt(currentPeriod)
-                    return <Pill active={currPeriod === period} label={year(currPeriod).toString()} onClick={() => updatePeriod(currPeriod)} />
+                {Object
+                    .keys(businessWaterfall)
+                    .map(currentPeriod => {
+                        const currPeriod = parseInt(currentPeriod)
+                        return <Pill active={currPeriod === period} label={year(currPeriod).toString()} onClick={() => updatePeriod(currPeriod)} />
                 })}
             </div>
         </div>

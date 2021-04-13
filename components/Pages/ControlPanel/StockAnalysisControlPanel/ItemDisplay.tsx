@@ -1,11 +1,13 @@
 import { useRouter } from "next/router"
-import React from "react"
+import React, {useState} from "react"
 import NumberFormat from "react-number-format"
 import { useFactBaseUnsecured } from "../../../../api-hooks"
-import { Item, StockAnalysis2 } from "../../../../client"
+import {Fact, Item, StockAnalysis2} from "../../../../client"
 import { SmallGhostButton } from "../../../Common/GhostButton"
 import { ItemDisplayDetail } from "./ItemDisplayDetail"
 import { Attention as Manual, Check, Nothing } from "./ItemEditor/Svgs"
+import {Info} from "./Toolbar/Svgs";
+import {Popover} from "../../../Popover";
 
 interface Props {
     item: Item
@@ -21,11 +23,11 @@ export function ItemDisplay(props: Props) {
     const overriddenItem = stockAnalysis.model.itemOverrides.find(i => i.name === item.name)
     const overridden = overriddenItem !== undefined
     const item = overriddenItem ?? originalItem
+    const factId = item.historicalValue?.factId
 
     async function openSourceDocument(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault()
         event.stopPropagation()
-        const factId = item.historicalValue?.factId
         const { data: fact } = await factBase.getFact(factId)
         window.open(fact.sourceDocument)
     }
