@@ -12,7 +12,7 @@ interface CardProps {
 export function Money(props: CardProps) {
     const { running, state } = props;
     return (
-        <div className="py-4 px-5 rounded-lg shadow-md bg-blueGray-700 flex-col flex space-y-2">
+        <div className="py-4 px-5 rounded shadow-md bg-blueGray-700 flex-col flex space-y-2">
             <span className="text-xs">{props.label}</span>
             {
                 running
@@ -36,7 +36,7 @@ export function Money(props: CardProps) {
 export function Number(props: CardProps) {
     const { running } = props;
     return (
-        <div className="py-4 px-5 rounded-lg shadow-md bg-blueGray-700 flex-col flex space-y-2">
+        <div className="py-4 px-5 rounded shadow-md bg-blueGray-700 flex-col flex space-y-2">
             <span className="text-xs">{props.label}</span>
             {
                 running
@@ -59,7 +59,7 @@ export function Number(props: CardProps) {
 export function CardPercent(props: CardProps) {
     const { running } = props;
     return (
-        <div className="py-4 px-5 rounded-lg shadow-md bg-blueGray-700 flex-col flex space-y-2">
+        <div className="py-4 px-5 rounded shadow-md bg-blueGray-700 flex-col flex space-y-2">
             <span className="text-xs">{props.label}</span>
             {
                 running

@@ -5,7 +5,7 @@ export function LoadingSkeletons() {
         {[1, 2, 3].map(i => (
             <div
                 key={i}
-                className="bg-blueGray-700 px-6 py-6 rounded-md shadow-md flex-col flex space-y-4 cursor-pointer hover:bg-blueGray-600 transition ease-linear"
+                className="bg-blueGray-700 px-6 py-6 shadow-md flex-col flex space-y-4 cursor-pointer hover:bg-blueGray-600 transition ease-linear"
             >
                 <div className="flex flex-col space-y-4">
                     <div className="flex justify-between">

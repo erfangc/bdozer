@@ -53,8 +53,8 @@ export default function Editor(props: Props) {
 
     return (
         <div className="md:p-4 space-y-8">
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 rounded-md">
-                <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 rounded">
+                <div className="space-y-2">
                     <Select
                         onChange={changeModelTemplate}
                         value={filingEntity?.modelTemplate?.template}
@@ -76,7 +76,7 @@ export default function Editor(props: Props) {
                         <ManagedTextInput
                             value={stockAnalysis?.model?.periods ?? ''}
                             type="number"
-                            label="Projection Periods (Yrs)"
+                            label="Projection Years"
                             className="w-24"
                             onInputSubmit={updatePeriods}
                         />
@@ -91,10 +91,10 @@ export default function Editor(props: Props) {
                     <Tab active>Income Statement</Tab>
                     <Tab disabled>Balance Sheet</Tab>
                 </div>
+                <blockquote className="px-3 inline-block border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300 mb-1">
+                    Click on items to edit
+                </blockquote>
                 <div className="space-y-2">
-                    <blockquote className="px-3 inline border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300">
-                        Click on items to edit
-                    </blockquote>
                     <div
                         className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 py-2 px-4 font-semibold text-blueGray-400">
                         <span>Name</span>
