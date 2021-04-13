@@ -21,7 +21,8 @@ export function Money(props: CardProps) {
                         className="h-8 animate-pulse bg-blueGray-500 rounded"
                     >
                     </div>
-                    : <NumberFormat
+                    :
+                    <NumberFormat
                         displayType='text'
                         className={`text-2xl ${state === 'danger' ? 'text-rose-500' : state === 'good' ? 'text-lime-500' : null}`}
                         value={props.value}
