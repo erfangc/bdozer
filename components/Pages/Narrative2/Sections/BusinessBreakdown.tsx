@@ -13,7 +13,7 @@ interface Props {
 }
 
 export function BusinessBreakdown(props: Props) {
-    const { result: { derivedStockAnalytics: { businessWaterfall } } } = props;
+    const { result: { ticker, derivedStockAnalytics: { businessWaterfall } } } = props;
 
     const [options, setOptions] = useState<Highcharts.Options>()
     const [period, setPeriod] = useState<number>(0)
@@ -105,7 +105,7 @@ export function BusinessBreakdown(props: Props) {
     return (
         <div id="business-breakdown">
             <SubTitle className="mb-6">Business Breakdown</SubTitle>
-            <p>How did AAL make and spend it's money in the most recent year. You can click different years to see analyst projections</p>
+            <p>How did {ticker} make and spend it's money in the most recent year. You can click different years to see analyst projections</p>
             <HighchartsReact highcharts={highcharts} options={options} />
             <div className="flex space-x-1 text-sm">
                 {Object.keys(businessWaterfall).map(currentPeriod => {
