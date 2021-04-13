@@ -76,7 +76,7 @@ export function StockAnalysisSearch(props: Props) {
                 {
                     hasAnalysis
                         ?
-                        <span className="overflow-hidden overflow-ellipsis bg-blue-600 rounded-lg p-2 text-blueGray-100 w-16 flex justify-center font-bold">
+                        <span className="overflow-hidden overflow-ellipsis bg-blue-600 rounded p-2 text-blueGray-100 w-16 flex justify-center font-bold">
                             {source.tickers}
                         </span>
                         :
@@ -91,7 +91,7 @@ export function StockAnalysisSearch(props: Props) {
     return (
         <div className={`w-full text-blueGray-50 ${props.className}`}>
             <div className="relative container max-w-lg">
-                <div className={`bg-blueGray-700 px-4 ${entities.length > 0 ? 'rounded-t-lg' : 'rounded-lg'}`}>
+                <div className={`bg-blueGray-700 px-4 ${entities.length > 0 ? 'rounded-t' : 'rounded'}`}>
                     <SearchIcon />
                     <input
                         value={term}
@@ -102,7 +102,7 @@ export function StockAnalysisSearch(props: Props) {
                     />
                 </div>
                 <div
-                    className={`absolute bg-blueGray-700 top-full shadow-md w-full rounded-b-lg border-t ease-in transition-all ${entities.length > 0 ? 'border-blueGray-600' : 'border-blueGray-900'} overflow-hidden`}
+                    className={`absolute bg-blueGray-700 top-full shadow-md w-full rounded-b border-t ease-in transition-all ${entities.length > 0 ? 'border-blueGray-600' : 'border-blueGray-900'} overflow-hidden`}
                     style={{
                         height: entities.length > 0 ? `${(entities.length + 1) * 52 + 24}px` : 0
                     }}

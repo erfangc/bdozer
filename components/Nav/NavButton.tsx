@@ -11,7 +11,7 @@ export function NavButton(props: NavButtonProps) {
     const node = props.icon ?? <HomeIcon />
     return (
         <Link href={props.linkTo}>
-            <a className={`transition ease-linear cursor-pointer w-10 h-10 rounded-lg flex items-center justify-center ${props.active ? 'bg-blueGray-600 hover:bg-blueGray-800' : 'hover:bg-blueGray-600'}`}>
+            <a className={`transition ease-linear cursor-pointer w-10 h-10 rounded flex items-center justify-center ${props.active ? 'bg-blueGray-600 hover:bg-blueGray-800' : 'hover:bg-blueGray-600'}`}>
                 {node}
 
             </a>

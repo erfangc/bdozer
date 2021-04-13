@@ -10,7 +10,7 @@ interface Props {
 }
 
 export function FilingEntitySearch(props: Props) {
-    const { loading, onSubmit, className } = props
+    const { onSubmit } = props
     const edgarExplorerApi = useEdgarExplorer()
     const filingEntityManagerUnsecured = useFilingEntityManagerUnsecured()
     const filingEntityManager = useFilingEntityManager()
@@ -63,7 +63,7 @@ export function FilingEntitySearch(props: Props) {
                 <span className="w-56 md:w-96 overflow-hidden overflow-ellipsis">
                     {source.entity}
                 </span>
-                <span className="overflow-hidden overflow-ellipsis bg-blue-600 rounded-lg p-2 text-blueGray-100 w-16 flex justify-center font-bold">
+                <span className="overflow-hidden overflow-ellipsis bg-blue-600 rounded p-2 text-blueGray-100 w-16 flex justify-center font-bold">
                     {source.tickers}
                 </span>
             </li>
@@ -73,7 +73,7 @@ export function FilingEntitySearch(props: Props) {
     return (
         <div className={`text-blueGray-50 ${props.className}`}>
             <div className="relative container max-w-lg">
-                <div className={`bg-blueGray-700 px-4 ${entities.length > 0 ? 'rounded-t-lg' : 'rounded-lg'}`}>
+                <div className={`bg-blueGray-700 px-4 ${entities.length > 0 ? 'rounded-t' : 'rounded'}`}>
                     {
                         props.loading
                             ?
@@ -96,7 +96,7 @@ export function FilingEntitySearch(props: Props) {
 
                 {/* Autocomplete options */}
                 <div
-                    className={`absolute bg-blueGray-700 top-full shadow-md w-full rounded-b-lg border-t ease-in transition-all ${entities.length > 0 ? 'border-blueGray-600' : 'border-blueGray-900'} overflow-hidden`}
+                    className={`absolute bg-blueGray-700 top-full shadow-md w-full rounded-b border-t ease-in transition-all ${entities.length > 0 ? 'border-blueGray-600' : 'border-blueGray-900'} overflow-hidden`}
                     style={{
                         height: entities.length > 0 ? `${(entities.length + 1) * 52 + 24}px` : 0
                     }}

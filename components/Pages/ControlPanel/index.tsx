@@ -67,7 +67,7 @@ export function ControlPanel() {
                             const { ticker, name, lastUpdated } = stockAnalysis
                             const id = stockAnalysis['_id']
                             return (
-                                <li key={id} className="px-4 py-6 bg-blueGray-700 flex justify-between rounded-md">
+                                <li key={id} className="px-4 py-6 bg-blueGray-700 flex justify-between">
                                     <div className="flex flex-col space-y-3">
                                         <span className="text-xl font-extrabold">{ticker}</span>
                                         <span className="text-blueGray-300">{name}</span>

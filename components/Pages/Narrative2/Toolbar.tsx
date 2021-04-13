@@ -46,7 +46,7 @@ export function Toolbar() {
 function ToolButton({ className, children, ...props }: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) {
     return (
         <button
-            className={`text-blueGray-50 px-4 py-2 text-sm font-light shadow-md rounded-md focus:outline-none flex flex-col hover:bg-blueGray-600 justify-center items-center ${className} transition ease-linear bg-blueGray-900`}
+            className={`text-blueGray-50 px-4 py-2 text-sm font-light shadow-md rounded focus:outline-none flex flex-col hover:bg-blueGray-600 justify-center items-center ${className} transition ease-linear bg-blueGray-900`}
             {...props}
         >
             {children}
