@@ -61,6 +61,57 @@ export interface Address {
 /**
  * 
  * @export
+ * @interface AggregatedFact
+ */
+export interface AggregatedFact {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AggregatedFact
+     */
+    factIds?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof AggregatedFact
+     */
+    value?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AggregatedFact
+     */
+    conceptName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AggregatedFact
+     */
+    documentFiscalPeriodFocus?: AggregatedFactDocumentFiscalPeriodFocusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof AggregatedFact
+     */
+    documentPeriodEndDate?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AggregatedFactDocumentFiscalPeriodFocusEnum {
+    Fy = 'FY',
+    Q1 = 'Q1',
+    Q2 = 'Q2',
+    Q3 = 'Q3',
+    Q4 = 'Q4',
+    Na = 'NA'
+}
+
+/**
+ * 
+ * @export
  * @interface Arc
  */
 export interface Arc {
@@ -725,31 +776,6 @@ export enum FactDocumentFiscalPeriodFocusEnum {
 /**
  * 
  * @export
- * @interface FactTimeSeries
- */
-export interface FactTimeSeries {
-    /**
-     * 
-     * @type {Array<Fact>}
-     * @memberof FactTimeSeries
-     */
-    fyFacts?: Array<Fact>;
-    /**
-     * 
-     * @type {Array<Fact>}
-     * @memberof FactTimeSeries
-     */
-    quarterlyFacts?: Array<Fact>;
-    /**
-     * 
-     * @type {Array<Fact>}
-     * @memberof FactTimeSeries
-     */
-    ltmFacts?: Array<Fact>;
-}
-/**
- * 
- * @export
  * @interface Feedback
  */
 export interface Feedback {
@@ -1072,6 +1098,18 @@ export interface HistoricalValue {
      * @memberof HistoricalValue
      */
     factId?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof HistoricalValue
+     */
+    factIds?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof HistoricalValue
+     */
+    conceptName?: string;
     /**
      * 
      * @type {string}
@@ -2494,15 +2532,15 @@ export const FactBaseUnsecuredControllerApiAxiosParamCreator = function (configu
         },
         /**
          * 
-         * @param {string} cik 
+         * @param {string} factId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        facts: async (cik: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('facts', 'cik', cik)
-            const localVarPath = `/public/fact-base/{cik}/facts`
-                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
+        getAnnualTimeSeries: async (factId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'factId' is not null or undefined
+            assertParamExists('getAnnualTimeSeries', 'factId', factId)
+            const localVarPath = `/public/fact-base/{factId}/time-series`
+                .replace(`{${"factId"}}`, encodeURIComponent(String(factId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2513,6 +2551,42 @@ export const FactBaseUnsecuredControllerApiAxiosParamCreator = function (configu
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Array<string>} factIds 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAnnualTimeSeries1: async (factIds: Array<string>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'factIds' is not null or undefined
+            assertParamExists('getAnnualTimeSeries1', 'factIds', factIds)
+            const localVarPath = `/public/fact-base/time-series`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (factIds) {
+                localVarQueryParameter['factIds'] = factIds;
+            }
 
 
     
@@ -2558,39 +2632,6 @@ export const FactBaseUnsecuredControllerApiAxiosParamCreator = function (configu
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {string} factId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getFactTimeSeries: async (factId: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'factId' is not null or undefined
-            assertParamExists('getFactTimeSeries', 'factId', factId)
-            const localVarPath = `/public/fact-base/{factId}/time-series`
-                .replace(`{${"factId"}}`, encodeURIComponent(String(factId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -2613,12 +2654,22 @@ export const FactBaseUnsecuredControllerApiFp = function(configuration?: Configu
         },
         /**
          * 
-         * @param {string} cik 
+         * @param {string} factId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async facts(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Fact>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.facts(cik, options);
+        async getAnnualTimeSeries(factId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Fact>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAnnualTimeSeries(factId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Array<string>} factIds 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAnnualTimeSeries1(factIds: Array<string>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AggregatedFact>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAnnualTimeSeries1(factIds, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2629,16 +2680,6 @@ export const FactBaseUnsecuredControllerApiFp = function(configuration?: Configu
          */
         async getFact(factId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Fact>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFact(factId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} factId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getFactTimeSeries(factId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FactTimeSeries>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getFactTimeSeries(factId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2662,12 +2703,21 @@ export const FactBaseUnsecuredControllerApiFactory = function (configuration?: C
         },
         /**
          * 
-         * @param {string} cik 
+         * @param {string} factId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        facts(cik: string, options?: any): AxiosPromise<Array<Fact>> {
-            return localVarFp.facts(cik, options).then((request) => request(axios, basePath));
+        getAnnualTimeSeries(factId: string, options?: any): AxiosPromise<Array<Fact>> {
+            return localVarFp.getAnnualTimeSeries(factId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Array<string>} factIds 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAnnualTimeSeries1(factIds: Array<string>, options?: any): AxiosPromise<Array<AggregatedFact>> {
+            return localVarFp.getAnnualTimeSeries1(factIds, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2677,15 +2727,6 @@ export const FactBaseUnsecuredControllerApiFactory = function (configuration?: C
          */
         getFact(factId: string, options?: any): AxiosPromise<Fact> {
             return localVarFp.getFact(factId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} factId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getFactTimeSeries(factId: string, options?: any): AxiosPromise<FactTimeSeries> {
-            return localVarFp.getFactTimeSeries(factId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2710,13 +2751,24 @@ export class FactBaseUnsecuredControllerApi extends BaseAPI {
 
     /**
      * 
-     * @param {string} cik 
+     * @param {string} factId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FactBaseUnsecuredControllerApi
      */
-    public facts(cik: string, options?: any) {
-        return FactBaseUnsecuredControllerApiFp(this.configuration).facts(cik, options).then((request) => request(this.axios, this.basePath));
+    public getAnnualTimeSeries(factId: string, options?: any) {
+        return FactBaseUnsecuredControllerApiFp(this.configuration).getAnnualTimeSeries(factId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Array<string>} factIds 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FactBaseUnsecuredControllerApi
+     */
+    public getAnnualTimeSeries1(factIds: Array<string>, options?: any) {
+        return FactBaseUnsecuredControllerApiFp(this.configuration).getAnnualTimeSeries1(factIds, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2728,17 +2780,6 @@ export class FactBaseUnsecuredControllerApi extends BaseAPI {
      */
     public getFact(factId: string, options?: any) {
         return FactBaseUnsecuredControllerApiFp(this.configuration).getFact(factId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} factId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FactBaseUnsecuredControllerApi
-     */
-    public getFactTimeSeries(factId: string, options?: any) {
-        return FactBaseUnsecuredControllerApiFp(this.configuration).getFactTimeSeries(factId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -29,7 +29,7 @@ export function Page4({ result }: Props) {
     const revenueFinal = cells.find(cell => cell.period === model.periods && cell.item.name === revenue.item.name)?.value?.toFixed(0)
 
     async function refresh() {
-        const { data: factTimeSeries } = await factBase.getFactTimeSeries(factId)
+        const { data: factTimeSeries } = await factBase.getAnnualTimeSeries(factId)
 
         const futureData = cells
             .filter(cell => cell.item.name === revenue?.item.name && cell.period !== 0)
@@ -40,7 +40,7 @@ export function Page4({ result }: Props) {
                 }
             })
 
-        const pastData = factTimeSeries.fyFacts.map(fact => {
+        const pastData = factTimeSeries.map(fact => {
             return {
                 x: new Date(fact.documentPeriodEndDate).getFullYear(),
                 y: fact.doubleValue,

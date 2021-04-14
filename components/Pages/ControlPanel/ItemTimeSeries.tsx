@@ -16,10 +16,11 @@ export function ItemTimeSeries({ result, item }: Props) {
     const [options, setOptions] = useState<Highcharts.Options>()
     const factBase = useFactBaseUnsecured()
     const { cells } = result
-    const factId = item?.historicalValue?.factId
+    const historicalValue = item?.historicalValue;
+    const factIds = (historicalValue?.factId ? [historicalValue.factId] : historicalValue?.factIds) ?? []
 
     async function refresh() {
-        const { data: factTimeSeries } = await factBase.getFactTimeSeries(factId)
+        const { data: factTimeSeries } = await factBase.getAnnualTimeSeries1(factIds)
 
         const futureData = cells
             .filter(cell => cell.item.name === item.name && cell.period !== 0)
@@ -30,10 +31,10 @@ export function ItemTimeSeries({ result, item }: Props) {
                 }
             })
 
-        const pastData = factTimeSeries.fyFacts.map(fact => {
+        const pastData = factTimeSeries.map(fact => {
             return {
                 x: new Date(fact.documentPeriodEndDate).getFullYear(),
-                y: fact.doubleValue,
+                y: fact.value,
             }
         })
 
