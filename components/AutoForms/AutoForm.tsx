@@ -1,6 +1,5 @@
-import {FormEvent, useState} from "react";
+import React, {FocusEvent, useState} from "react";
 import { NumberInput } from "../Common/NumberInput";
-import { PrimaryButton } from "../Common/PrimaryButton";
 import { TextArea } from "../Common/Textarea";
 import { TextInput } from "../Common/TextInput";
 
@@ -28,78 +27,75 @@ export function AutoForm({ body, schema, onSubmit }: AutoFormProps) {
         }
     })
 
-    // TODO finish validation of errors
     const [formState, setFormState] = useState<any>(defensiveCopy)
 
-    function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault()
-        event.stopPropagation()
-        handleSubmit()
-    }
-
-    function handleSubmit() {
-        const newState = { ...formState }
-        schema.map(el => {
-            if (el.type == 'percent') {
-                newState[el.name] = newState[el.name] / 100
+    function handleSubmit(event: FocusEvent<HTMLElement>) {
+        const newState = {...formState}
+        schema.map(property => {
+            if (property.type == 'percent') {
+                newState[property.name] = newState[property.name] / 100
             }
         })
+        console.log(newState)
         onSubmit(newState)
+    }
+
+    function updatePropertyValue(name: string, newValue: any) {
+        const newState = { ...formState, [name]: newValue };
+        setFormState(newState)
     }
 
     const components = schema.map(property => {
         const { type, label, fullLength, name } = property
         const value = formState[name]
 
-        function updatePropertyValue(newValue: any) {
-            // TODO if valid then call callback
-            setFormState({ ...formState, [name]: newValue })
-            handleSubmit()
-        }
-
         let component = null
         if (type === 'string') {
             component = (
-                <div className={fullLength ? 'col-span-full' : ''}>
+                <div key={name} className={fullLength ? 'col-span-full' : ''}>
                     <TextInput
                         key={name}
                         value={value}
                         label={label}
-                        onChange={({ currentTarget: { value } }) => updatePropertyValue(value)}
+                        onChange={({ currentTarget: { value } }) => updatePropertyValue(name, value)}
+                        onBlur={handleSubmit}
                     />
                 </div>
             )
         } else if (type === 'textarea') {
             component = (
-                <div className={fullLength ? 'col-span-full' : ''}>
+                <div key={name} className={fullLength ? 'col-span-full' : ''}>
                     <TextArea
                         key={name}
                         value={value}
                         label={label}
-                        onChange={({ currentTarget: { value } }) => updatePropertyValue(value)}
+                        onChange={({ currentTarget: { value } }) => updatePropertyValue(name, value)}
+                        onBlur={handleSubmit}
                     />
                 </div>
             )
         } else if (type === 'number' || type === 'percent') {
             component = (
-                <div className={fullLength ? 'col-span-full' : ''}>
+                <div key={name} className={fullLength ? 'col-span-full' : ''}>
                     <NumberInput
                         key={name}
                         value={value}
                         label={label}
-                        onValueChange={({ floatValue }) => updatePropertyValue(floatValue)}
+                        onValueChange={({ floatValue }) => updatePropertyValue(name, floatValue)}
+                        onBlur={handleSubmit}
                     />
                 </div>
             )
         } else if (type === 'integer') {
             component = (
-                <div className={fullLength ? 'col-span-full' : ''}>
+                <div key={name} className={fullLength ? 'col-span-full' : ''}>
                     <NumberInput
                         key={name}
                         value={value}
                         label={label}
-                        onValueChange={({ floatValue }) => updatePropertyValue(floatValue)}
+                        onValueChange={({ floatValue }) => updatePropertyValue(name, floatValue)}
                         decimalScale={0}
+                        onBlur={handleSubmit}
                     />
                 </div>
             )
@@ -110,10 +106,7 @@ export function AutoForm({ body, schema, onSubmit }: AutoFormProps) {
 
     return (
         <div className="flex-col space-y-6">
-            <form
-                onSubmit={handleFormSubmit}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-            >
+            <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" >
                 {components}
             </form>
         </div>

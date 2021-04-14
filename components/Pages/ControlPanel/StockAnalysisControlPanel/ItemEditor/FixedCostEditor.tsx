@@ -16,7 +16,7 @@ export function FixedCostEditor({item, model, onSubmit}: Props) {
 
     const factAutoFiller = useFactAutoFiller()
     const [fixedCostAutoFills, setFixedCostAutoFills] = useState<FixedCostAutoFill[]>([])
-    const [value, setValue] = useState((item?.fixedCost?.cost ?? 0) * 100)
+    const [value, setValue] = useState(item?.fixedCost?.cost ?? 0)
 
     async function init() {
         const {data: fixedCostAutoFills} = await factAutoFiller.getFixedCostAutoFills(item.name, model)
@@ -28,7 +28,7 @@ export function FixedCostEditor({item, model, onSubmit}: Props) {
     }, [])
 
     async function autoFill(option: FixedCostAutoFill) {
-        const newValue = option.fixedCost.cost * 100;
+        const newValue = option.fixedCost.cost;
         setValue(newValue)
         handleSubmit(newValue)
     }
@@ -43,7 +43,7 @@ export function FixedCostEditor({item, model, onSubmit}: Props) {
             type: ItemTypeEnum.FixedCost,
             fixedCost: {
                 ...item.fixedCost,
-                cost: value / 100.0
+                cost: value
             }
         }
         onSubmit(updatedItem)

@@ -32,7 +32,6 @@ export function ModelSettings() {
         }
         await stockAnalysisCrud.saveStockAnalysis(updatedStockAnalysis)
         setStockAnalysis(updatedStockAnalysis)
-        router.back()
     }
 
     return (
