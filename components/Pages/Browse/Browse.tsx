@@ -10,13 +10,13 @@ import {useStockAnalysisPublication} from "../../../api-hooks";
 export function Browse() {
     const stockAnalysisPublication = useStockAnalysisPublication()
     const [stockAnalyses, setStockAnalyses] = useState<StockAnalysis2[]>([])
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
 
     async function init() {
         setLoading(true)
         const {data: stockAnalyses} = await stockAnalysisPublication.findPublishedStockAnalyses()
         setStockAnalyses(stockAnalyses)
-        setLoading(true)
+        setLoading(false)
     }
 
     useEffect(() => {init()}, [])
