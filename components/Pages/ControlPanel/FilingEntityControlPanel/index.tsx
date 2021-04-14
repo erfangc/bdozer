@@ -46,7 +46,7 @@ export default function FilingEntityControlPanel() {
             <br />
             If you feel like something has gone wrong and want to re-parse SEC's website, please click <code>Bootstrap Again</code>
             <br />
-            <DeleteButton className="mt-4 w-44" onClick={bootstrap}>{loading ? <Loading></Loading> : 'Bootstrap Aagain'}</DeleteButton>
+            <DeleteButton className="mt-4 w-44" onClick={bootstrap}>{loading ? <Loading/> : 'Bootstrap Aagain'}</DeleteButton>
         </Message>
     )
     if (status === "Bootstrapping") {
@@ -63,7 +63,7 @@ export default function FilingEntityControlPanel() {
                 Facts about this entity has not been bootstrapped from SEC yet <code>Click "Bootstrap" to it do</code>
                 <br />
                 <span className="text-sm">You need to do this before building stock analyses for this company</span>
-                <PrimaryButton className="mt-4 w-32" onClick={bootstrap}>{loading ? <Loading></Loading> : 'Bootstrap'}</PrimaryButton>
+                <PrimaryButton className="mt-4 w-32" onClick={bootstrap}>{loading ? <Loading/> : 'Bootstrap'}</PrimaryButton>
             </Message>
         )
     }
