@@ -19,7 +19,7 @@ export function FixedCostEditor({item, model, onSubmit}: Props) {
     const [value, setValue] = useState((item?.fixedCost?.cost ?? 0) * 100)
 
     async function init() {
-        const {data: fixedCostAutoFills} = await factAutoFiller.getFixedCostAutoFills(item.historicalValue.factId, model)
+        const {data: fixedCostAutoFills} = await factAutoFiller.getFixedCostAutoFills(item.name, model)
         setFixedCostAutoFills(fixedCostAutoFills)
     }
 

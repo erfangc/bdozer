@@ -19,7 +19,7 @@ export function PercentOfRevenueEditor({item, model, onSubmit}: Props) {
     const [value, setValue] = useState((item?.percentOfRevenue?.percentOfRevenue ?? 0) * 100)
 
     async function init() {
-        const {data: percentOfRevenueOptions} = await factAutoFiller.getPercentOfRevenueAutoFills(item.historicalValue.factId, model)
+        const {data: percentOfRevenueOptions} = await factAutoFiller.getPercentOfRevenueAutoFills(item.name, model)
         setPercentOfRevenueOptions(percentOfRevenueOptions)
     }
 
