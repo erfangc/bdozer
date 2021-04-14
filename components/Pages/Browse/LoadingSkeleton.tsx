@@ -9,13 +9,13 @@ export function LoadingSkeletons() {
             >
                 <div className="flex flex-col space-y-4">
                     <div className="flex justify-between">
-                        <span className="w-48 h-8 bg-blueGray-500 rounded-md animate-pulse"></span>
-                        <span className="w-24 h-8 bg-blueGray-500 rounded-md animate-pulse"></span>
+                        <span className="w-48 h-8 bg-blueGray-500 animate-pulse"/>
+                        <span className="w-24 h-8 bg-blueGray-500 animate-pulse"/>
                     </div>
                     <span className="flex space-x-4">
-                        <div className="w-20 h-12 bg-blueGray-500 rounded-md animate-pulse">
+                        <div className="w-20 h-12 bg-blueGray-500 animate-pulse">
                         </div>
-                        <div className="w-20 h-12 bg-blueGray-500 rounded-md animate-pulse">
+                        <div className="w-20 h-12 bg-blueGray-500 animate-pulse">
                         </div>
                     </span>
                 </div>

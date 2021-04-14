@@ -1,15 +1,25 @@
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { StockAnalysis2 } from '../../../client'
 import { LegalDisclaimer } from '../../LegalDisclaimer'
 import { StockAnalysisCard } from './StockAnalysisCard'
 import { StockAnalysisSearch } from './StockAnalysisSearch'
+import {LoadingSkeletons} from "./LoadingSkeleton";
+import {useStockAnalysisPublication} from "../../../api-hooks";
 
-interface Props {
-    stockAnalyses: StockAnalysis2[]
-}
+export function Browse() {
+    const stockAnalysisPublication = useStockAnalysisPublication()
+    const [stockAnalyses, setStockAnalyses] = useState<StockAnalysis2[]>([])
+    const [loading, setLoading] = useState(true)
 
-export function Browse(props: Props) {
+    async function init() {
+        setLoading(true)
+        const {data: stockAnalyses} = await stockAnalysisPublication.findPublishedStockAnalyses()
+        setStockAnalyses(stockAnalyses)
+        setLoading(true)
+    }
+
+    useEffect(() => {init()}, [])
 
     const router = useRouter()
 
@@ -31,9 +41,9 @@ export function Browse(props: Props) {
                     Click on the Cards to View Analysis
                 </blockquote>
                 <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
+                    {loading ? <LoadingSkeletons/> : null}
                     {
-                        props
-                            .stockAnalyses
+                            stockAnalyses
                             .map(stockAnalysis => (
                                 <StockAnalysisCard
                                     key={stockAnalysis['_id']}
