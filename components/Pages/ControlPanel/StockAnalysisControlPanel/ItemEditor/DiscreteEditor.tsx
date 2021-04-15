@@ -87,7 +87,7 @@ export function DiscreteEditor({item, onSubmit}: DiscreteEditorProps) {
                     )
                 })}
             </div>
-            <GhostButton onClick={add} className="font-semibold flex items-center"><Plus/>Year</GhostButton>
+            <GhostButton onClick={add} className="font-semibold"><Plus/>Year</GhostButton>
         </div>
     );
 }

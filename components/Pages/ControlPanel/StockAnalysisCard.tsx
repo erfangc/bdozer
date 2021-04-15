@@ -10,6 +10,7 @@ interface Props {
 }
 
 export function StockAnalysisCard({stockAnalysis, onDelete}: Props) {
+
     const router = useRouter()
     const {ticker, name, lastUpdated} = stockAnalysis
     const id = stockAnalysis['_id']
@@ -19,9 +20,11 @@ export function StockAnalysisCard({stockAnalysis, onDelete}: Props) {
     }
 
     return (
-        <li key={id} className="px-4 py-6 bg-blueGray-700 flex justify-between">
+        <li key={id} className="px-4 py-6 bg-blueGray-700 flex justify-between relative">
             <div className="flex flex-col space-y-3">
-                <span className="text-xl font-extrabold">{ticker}</span>
+                <span className="flex items-center space-x-1">
+                    <span className="text-xl font-extrabold">{ticker}</span>
+                </span>
                 <span className="text-blueGray-300 font-extrabold">{name}</span>
                 <span className="text-xs text-blueGray-300">{new Date(lastUpdated).toLocaleString()}</span>
             </div>
@@ -30,6 +33,14 @@ export function StockAnalysisCard({stockAnalysis, onDelete}: Props) {
                 <DeleteButton onClick={() => onDelete(id)}>Delete</DeleteButton>
             </div>
         </li>
+    )
+}
+
+function Published() {
+    return (
+        <span className="text-xs py-0.5 px-1 rounded bg-lime-500 text-blueGray-800 absolute -top-2 -right-1 transform rotate-1">
+            Published
+        </span>
     )
 }
 
