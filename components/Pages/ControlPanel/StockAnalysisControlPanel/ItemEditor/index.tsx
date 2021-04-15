@@ -153,7 +153,7 @@ export function ItemEditor() {
                     <div className="flex-col space-y-4">
                         <div>
                             <label className="text-sm">Name</label>
-                            <p className="mt-2 cursor-not-allowed border rounded border-blueGray-400 text-blueGray-300 px-3 py-2">
+                            <p className="mt-2 cursor-not-allowed border rounded border-blueGray-400 text-blueGray-300 px-3 py-2 overflow-hidden overflow-ellipsis">
                                 {item.name}
                             </p>
                         </div>

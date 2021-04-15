@@ -7,11 +7,3 @@ export function SecondaryButton({ className, children, ...props }: React.Detaile
         </button>
     )
 }
-
-export function SmallSecondaryButton({ className, children, ...props }: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) {
-    return (
-        <button className={`text-blueGray-100 bg-blueGray-800 rounded px-1 py-1 transition ease-linear hover:bg-blueGray-700 focus:outline-none ${className}`} {...props}>
-            {children}
-        </button>
-    )
-}

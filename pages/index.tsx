@@ -52,7 +52,7 @@ function Home() {
                 <PrimaryButton onClick={seeSampleReport}>
                   See a Sample Report
                 </PrimaryButton>
-                <SecondaryButton onClick={browse} className="py-2 border border-blueGray-500 text-blueGray-300 text-left">
+                <SecondaryButton onClick={browse} className="py-2 border border-blueGray-500 text-blueGray-300">
                   Browse our Research
                 </SecondaryButton>
               </div>
