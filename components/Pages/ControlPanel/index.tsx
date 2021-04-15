@@ -5,7 +5,7 @@ import {PrimaryButton} from "../../Common/PrimaryButton";
 import {Title} from "../../Common/Title";
 import {LoadingSkeletons, StockAnalysisCard} from "./StockAnalysisCard";
 import {useRouter} from "next/router";
-import {ChevronLeft, ChevronRight, History, Plus, SearchIcon} from "../../Common/Svgs";
+import {ChevronLeft, ChevronRight, Plus, SearchIcon} from "../../Common/Svgs";
 import {SecondaryButton} from "../../Common/SecondaryButton";
 
 export function ControlPanel() {
@@ -13,7 +13,8 @@ export function ControlPanel() {
     const router = useRouter()
     const stockAnalysisCrud = useStockAnalysisCrud()
     const [findStockAnalysisResponse, setFindStockAnalysisResponse] = useState<FindStockAnalysisResponse>()
-    const [loading, setLoadingAnalyses] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [unpublishedOnly, setUnpublishedOnly] = useState<boolean | undefined>()
 
     const pageSize = 10
     const [page, setPage] = useState(0)
@@ -25,7 +26,7 @@ export function ControlPanel() {
             return
         }
         setPage(nextPage)
-        await refresh(nextPage, pageSize, term)
+        await refresh(nextPage, pageSize, term, unpublishedOnly)
     }
 
     async function previousPage() {
@@ -34,7 +35,7 @@ export function ControlPanel() {
         }
         const previousPage = page - 1;
         setPage(previousPage)
-        await refresh(previousPage, pageSize, term)
+        await refresh(previousPage, pageSize, term, unpublishedOnly)
     }
 
     async function handleTermChange(event: ChangeEvent<HTMLInputElement>) {
@@ -42,19 +43,21 @@ export function ControlPanel() {
         const {target} = event
         const nextTerm = target.value;
         setTerm(nextTerm)
-        await refresh(0, pageSize, nextTerm)
+        await refresh(0, pageSize, nextTerm, unpublishedOnly)
     }
 
     async function init() {
-        await refresh(page, pageSize, term)
+        await refresh(page, pageSize, term, unpublishedOnly)
     }
 
 
-    async function refresh(page, pageSize, term) {
-        setLoadingAnalyses(true)
+    async function refresh(page, pageSize, term, unpublishedOnly) {
+        setLoading(true)
         const skip = page * pageSize
         const limit = pageSize
+        const published = unpublishedOnly ? false : undefined
         const resp = await stockAnalysisCrud.findStockAnalyses(
+            published,
             undefined,
             undefined,
             undefined,
@@ -63,7 +66,7 @@ export function ControlPanel() {
             term === '' ? undefined : term,
         )
         setFindStockAnalysisResponse(resp.data)
-        setLoadingAnalyses(false)
+        setLoading(false)
     }
 
     async function deleteStockAnalysis(id: string) {
@@ -75,31 +78,26 @@ export function ControlPanel() {
         router.push('/control-panel/stock-analyses/new')
     }
 
+    async function toggleUnpublishedOnly() {
+        setUnpublishedOnly(unpublishedOnly ? undefined : true)
+        await refresh(page, pageSize, term, unpublishedOnly ? undefined : true)
+    }
+
     useEffect(() => {
         init()
     }, [])
 
-    /*
-
-     */
     const totalCount = findStockAnalysisResponse?.totalCount;
     const showingFrom = page * pageSize + 1;
     const showingTo = Math.min((page + 1) * pageSize, totalCount);
+
     return (
-        <main className="text-blueGray-50 container mx-auto space-y-12 py-16 px-4">
-            {/* Start of filter and pagination*/}
+        <main className="text-blueGray-50 container mx-auto space-y-16 py-16 px-4">
+            {/* Start of filter and pagination */}
             <div className="space-y-6">
-                <div className="space-y-6 lg:space-y-0 lg:flex lg:justify-between">
-                    <Title>In Progress Analyses</Title>
-                    <div className="space-x-4">
-                        <SecondaryButton>
-                            <History/>
-                            <span className="pl-1">Recently Updated</span>
-                        </SecondaryButton>
-                    </div>
-                </div>
+                <Title>In Progress Analyses</Title>
                 <div className="bg-blueGray-700 px-4 rounded">
-                    <SearchIcon />
+                    <SearchIcon/>
                     <input
                         value={term}
                         onChange={handleTermChange}
@@ -116,16 +114,23 @@ export function ControlPanel() {
             </div>
             {/* Pagination */}
             <div>
-                <div className="mb-4 text-blueGray-400 flex space-x-2 items-center">
-                    <SecondaryButton disabled={loading} onClick={previousPage}>
-                        <ChevronLeft/>
-                    </SecondaryButton>
-                    <span>
+                <div className="mb-6 flex justify-between">
+                    <div className="flex items-center space-x-2 text-blueGray-400">
+                        <SecondaryButton disabled={loading} onClick={previousPage}>
+                            <ChevronLeft/>
+                        </SecondaryButton>
+                        <span>
                         <b>Showing</b> {showingFrom} - {showingTo} out of {totalCount}
-                    </span>
-                    <SecondaryButton disabled={loading} onClick={nextPage}>
-                        <ChevronRight/>
-                    </SecondaryButton>
+                        </span>
+                        <SecondaryButton disabled={loading} onClick={nextPage}>
+                            <ChevronRight/>
+                        </SecondaryButton>
+                    </div>
+                    <button
+                        onClick={toggleUnpublishedOnly}
+                        className={`focus:outline-none border border-lime-700 transition ease-linear hover:bg-lime-500 hover:text-white px-2 py-1 rounded self-end ${unpublishedOnly ? 'bg-lime-500 text-white' : 'text-lime-600'}`}>
+                        Unpublished Only
+                    </button>
                 </div>
                 {/* Stop of filtering and pagination */}
                 <div className="space-y-8">

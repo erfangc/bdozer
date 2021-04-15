@@ -24,6 +24,7 @@ export function StockAnalysisCard({stockAnalysis, onDelete}: Props) {
             <div className="flex flex-col space-y-3">
                 <span className="flex items-center space-x-1">
                     <span className="text-xl font-extrabold">{ticker}</span>
+                    {stockAnalysis.published ? <Published/> : null}
                 </span>
                 <span className="text-blueGray-300 font-extrabold">{name}</span>
                 <span className="text-xs text-blueGray-300">{new Date(lastUpdated).toLocaleString()}</span>

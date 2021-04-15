@@ -2,11 +2,7 @@ import {useAuth0} from '@auth0/auth0-react'
 import {useRouter} from 'next/router'
 import React, {useState} from 'react'
 import {v4 as uuid} from 'uuid'
-import {
-    basePath,
-    useStockAnalysisPublication,
-    useStockAnalysisWorkflow
-} from '../../../../../api-hooks'
+import {basePath, useStockAnalysisCrud, useStockAnalysisWorkflow} from '../../../../../api-hooks'
 import {StockAnalysis2} from '../../../../../client'
 import {ExcelDownloading, ExcelIcon} from '../../../../Common/DownloadToExcel'
 import {Notification, notificationStore} from '../../../../Notifications/NotificationStore'
@@ -26,7 +22,7 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
     const router = useRouter()
     const {id} = router.query
     const stockAnalysisWorkflow = useStockAnalysisWorkflow()
-    const stockAnalysisPublication = useStockAnalysisPublication()
+    const stockAnalysisCrud = useStockAnalysisCrud()
     const [downloading, setDownloading] = useState(false)
 
     async function refresh() {
@@ -45,12 +41,14 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
     }
 
     async function publish() {
-        await stockAnalysisPublication.publishStockAnalysis(stockAnalysis)
-        router.push(`/published-stock-analyses/${stockAnalysis['_id']}/narrative2`)
+        const id = stockAnalysis['_id'];
+        await stockAnalysisCrud.publish(id)
+        router.push(`/published-stock-analyses/${id}/narrative2`)
     }
 
     async function unpublish() {
-        await stockAnalysisPublication.unpublishStockAnalysis(stockAnalysis['_id'])
+        const id = stockAnalysis['_id']
+        await stockAnalysisCrud.unpublish(id)
         const notification: Notification = {
             id: uuid(),
             delay: 100,
