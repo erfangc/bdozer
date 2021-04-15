@@ -114,7 +114,7 @@ export function ControlPanel() {
             </div>
             {/* Pagination */}
             <div>
-                <div className="mb-6 flex justify-between">
+                <div className="mb-6 flex flex-col space-y-2 md:flex-row md:space-y-0 md:justify-between">
                     <div className="flex items-center space-x-2 text-blueGray-400">
                         <SecondaryButton disabled={loading} onClick={previousPage}>
                             <ChevronLeft/>
@@ -128,7 +128,7 @@ export function ControlPanel() {
                     </div>
                     <button
                         onClick={toggleUnpublishedOnly}
-                        className={`focus:outline-none border border-lime-700 transition ease-linear hover:bg-lime-500 hover:text-white px-2 py-1 rounded self-end ${unpublishedOnly ? 'bg-lime-500 text-white' : 'text-lime-600'}`}>
+                        className={`focus:outline-none border border-lime-700 transition ease-linear hover:bg-lime-500 hover:text-white px-2 py-1 rounded self-start md:self-end ${unpublishedOnly ? 'bg-lime-500 text-white' : 'text-lime-600'}`}>
                         Unpublished Only
                     </button>
                 </div>

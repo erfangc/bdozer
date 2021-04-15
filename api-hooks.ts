@@ -7,9 +7,7 @@ import {
     FilingEntityManagerControllerApi,
     FilingEntityManagerUnsecuredControllerApi,
     MarketingControllerApi,
-    MxParserControllerApi,
-    StockAnalysisCrudControllerApi,
-    StockAnalysisPublicationControllerApi,
+    MxParserControllerApi, PublishedStockAnalysisControllerApi, StockAnalysisControllerApi,
     StockAnalysisWorkflowControllerApi,
 } from "./client";
 import {useAuth0} from "@auth0/auth0-react";
@@ -81,12 +79,12 @@ export function useStockAnalysisWorkflow() {
 
 export function useStockAnalysisPublication() {
     const axiosInstance = useAxios();
-    return new StockAnalysisPublicationControllerApi(null, basePath, axiosInstance);
+    return new PublishedStockAnalysisControllerApi(null, basePath, axiosInstance);
 }
 
 export function useStockAnalysisCrud() {
     const axiosInstance = useAxios();
-    return new StockAnalysisCrudControllerApi(null, basePath, axiosInstance);
+    return new StockAnalysisControllerApi(null, basePath, axiosInstance);
 }
 
 export function useEdgarExplorer() {

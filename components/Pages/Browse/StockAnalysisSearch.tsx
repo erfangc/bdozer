@@ -21,8 +21,8 @@ export function StockAnalysisSearch(props: Props) {
     const [stockAnalyses, setStockAnalyses] = useState<StockAnalysis2[]>([])
 
     async function init() {
-        const { data: stockAnalyses } = await stockAnalysisPublication.findPublishedStockAnalyses()
-        setStockAnalyses(stockAnalyses)
+        const { data: resp } = await stockAnalysisPublication.findPublishedStockAnalyses()
+        setStockAnalyses(resp.stockAnalyses)
     }
 
     useEffect(() => {

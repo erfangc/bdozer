@@ -15,8 +15,8 @@ export function Browse() {
 
     async function init() {
         setLoading(true)
-        const {data: stockAnalyses} = await stockAnalysisPublication.findPublishedStockAnalyses()
-        setStockAnalyses(stockAnalyses)
+        const {data: resp} = await stockAnalysisPublication.findPublishedStockAnalyses()
+        setStockAnalyses(resp.stockAnalyses)
         setLoading(false)
     }
 

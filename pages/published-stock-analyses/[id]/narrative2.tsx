@@ -1,6 +1,6 @@
 import React from "react";
 import { basePath } from "../../../api-hooks";
-import { StockAnalysis2, StockAnalysisPublicationControllerApi } from "../../../client";
+import {PublishedStockAnalysisControllerApi, StockAnalysis2} from "../../../client";
 import { UnsecuredApp } from "../../../components/App";
 import { Narrative2 } from "../../../components/Pages/Narrative2/Narrative2";
 
@@ -17,7 +17,7 @@ function NarativePage(props: Props) {
 }
 
 NarativePage.getInitialProps = async (ctx) => {
-    const stockAnalyzer = new StockAnalysisPublicationControllerApi(null, basePath);
+    const stockAnalyzer = new PublishedStockAnalysisControllerApi(null, basePath);
     const { data } = await stockAnalyzer.getPublishedStockAnalysis(ctx.query.id)
     return { stockAnalysis: data }
 }

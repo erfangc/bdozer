@@ -3604,10 +3604,215 @@ export class MxParserControllerApi extends BaseAPI {
 
 
 /**
- * StockAnalysisCrudControllerApi - axios parameter creator
+ * PublishedStockAnalysisControllerApi - axios parameter creator
  * @export
  */
-export const StockAnalysisCrudControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const PublishedStockAnalysisControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {string} [cik] 
+         * @param {string} [ticker] 
+         * @param {number} [skip] 
+         * @param {number} [limit] 
+         * @param {string} [term] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        findPublishedStockAnalyses: async (userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/public/published-stock-analyses`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
+            if (cik !== undefined) {
+                localVarQueryParameter['cik'] = cik;
+            }
+
+            if (ticker !== undefined) {
+                localVarQueryParameter['ticker'] = ticker;
+            }
+
+            if (skip !== undefined) {
+                localVarQueryParameter['skip'] = skip;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (term !== undefined) {
+                localVarQueryParameter['term'] = term;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPublishedStockAnalysis: async (id: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getPublishedStockAnalysis', 'id', id)
+            const localVarPath = `/public/published-stock-analyses/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PublishedStockAnalysisControllerApi - functional programming interface
+ * @export
+ */
+export const PublishedStockAnalysisControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PublishedStockAnalysisControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {string} [cik] 
+         * @param {string} [ticker] 
+         * @param {number} [skip] 
+         * @param {number} [limit] 
+         * @param {string} [term] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async findPublishedStockAnalyses(userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindStockAnalysisResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.findPublishedStockAnalyses(userId, cik, ticker, skip, limit, term, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPublishedStockAnalysis(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPublishedStockAnalysis(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * PublishedStockAnalysisControllerApi - factory interface
+ * @export
+ */
+export const PublishedStockAnalysisControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PublishedStockAnalysisControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} [userId] 
+         * @param {string} [cik] 
+         * @param {string} [ticker] 
+         * @param {number} [skip] 
+         * @param {number} [limit] 
+         * @param {string} [term] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        findPublishedStockAnalyses(userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, options?: any): AxiosPromise<FindStockAnalysisResponse> {
+            return localVarFp.findPublishedStockAnalyses(userId, cik, ticker, skip, limit, term, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPublishedStockAnalysis(id: string, options?: any): AxiosPromise<StockAnalysis2> {
+            return localVarFp.getPublishedStockAnalysis(id, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PublishedStockAnalysisControllerApi - object-oriented interface
+ * @export
+ * @class PublishedStockAnalysisControllerApi
+ * @extends {BaseAPI}
+ */
+export class PublishedStockAnalysisControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} [userId] 
+     * @param {string} [cik] 
+     * @param {string} [ticker] 
+     * @param {number} [skip] 
+     * @param {number} [limit] 
+     * @param {string} [term] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublishedStockAnalysisControllerApi
+     */
+    public findPublishedStockAnalyses(userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, options?: any) {
+        return PublishedStockAnalysisControllerApiFp(this.configuration).findPublishedStockAnalyses(userId, cik, ticker, skip, limit, term, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublishedStockAnalysisControllerApi
+     */
+    public getPublishedStockAnalysis(id: string, options?: any) {
+        return PublishedStockAnalysisControllerApiFp(this.configuration).getPublishedStockAnalysis(id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * StockAnalysisControllerApi - axios parameter creator
+ * @export
+ */
+export const StockAnalysisControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -3844,11 +4049,11 @@ export const StockAnalysisCrudControllerApiAxiosParamCreator = function (configu
 };
 
 /**
- * StockAnalysisCrudControllerApi - functional programming interface
+ * StockAnalysisControllerApi - functional programming interface
  * @export
  */
-export const StockAnalysisCrudControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = StockAnalysisCrudControllerApiAxiosParamCreator(configuration)
+export const StockAnalysisControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = StockAnalysisControllerApiAxiosParamCreator(configuration)
     return {
         /**
          * 
@@ -3920,11 +4125,11 @@ export const StockAnalysisCrudControllerApiFp = function(configuration?: Configu
 };
 
 /**
- * StockAnalysisCrudControllerApi - factory interface
+ * StockAnalysisControllerApi - factory interface
  * @export
  */
-export const StockAnalysisCrudControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = StockAnalysisCrudControllerApiFp(configuration)
+export const StockAnalysisControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = StockAnalysisControllerApiFp(configuration)
     return {
         /**
          * 
@@ -3990,21 +4195,21 @@ export const StockAnalysisCrudControllerApiFactory = function (configuration?: C
 };
 
 /**
- * StockAnalysisCrudControllerApi - object-oriented interface
+ * StockAnalysisControllerApi - object-oriented interface
  * @export
- * @class StockAnalysisCrudControllerApi
+ * @class StockAnalysisControllerApi
  * @extends {BaseAPI}
  */
-export class StockAnalysisCrudControllerApi extends BaseAPI {
+export class StockAnalysisControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StockAnalysisCrudControllerApi
+     * @memberof StockAnalysisControllerApi
      */
     public deleteStockAnalysis(id: string, options?: any) {
-        return StockAnalysisCrudControllerApiFp(this.configuration).deleteStockAnalysis(id, options).then((request) => request(this.axios, this.basePath));
+        return StockAnalysisControllerApiFp(this.configuration).deleteStockAnalysis(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4018,10 +4223,10 @@ export class StockAnalysisCrudControllerApi extends BaseAPI {
      * @param {string} [term] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StockAnalysisCrudControllerApi
+     * @memberof StockAnalysisControllerApi
      */
     public findStockAnalyses(published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, options?: any) {
-        return StockAnalysisCrudControllerApiFp(this.configuration).findStockAnalyses(published, userId, cik, ticker, skip, limit, term, options).then((request) => request(this.axios, this.basePath));
+        return StockAnalysisControllerApiFp(this.configuration).findStockAnalyses(published, userId, cik, ticker, skip, limit, term, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4029,10 +4234,10 @@ export class StockAnalysisCrudControllerApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StockAnalysisCrudControllerApi
+     * @memberof StockAnalysisControllerApi
      */
     public getStockAnalysis(id: string, options?: any) {
-        return StockAnalysisCrudControllerApiFp(this.configuration).getStockAnalysis(id, options).then((request) => request(this.axios, this.basePath));
+        return StockAnalysisControllerApiFp(this.configuration).getStockAnalysis(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4040,10 +4245,10 @@ export class StockAnalysisCrudControllerApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StockAnalysisCrudControllerApi
+     * @memberof StockAnalysisControllerApi
      */
     public publish(id: string, options?: any) {
-        return StockAnalysisCrudControllerApiFp(this.configuration).publish(id, options).then((request) => request(this.axios, this.basePath));
+        return StockAnalysisControllerApiFp(this.configuration).publish(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4051,10 +4256,10 @@ export class StockAnalysisCrudControllerApi extends BaseAPI {
      * @param {StockAnalysis2} stockAnalysis2 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StockAnalysisCrudControllerApi
+     * @memberof StockAnalysisControllerApi
      */
     public saveStockAnalysis(stockAnalysis2: StockAnalysis2, options?: any) {
-        return StockAnalysisCrudControllerApiFp(this.configuration).saveStockAnalysis(stockAnalysis2, options).then((request) => request(this.axios, this.basePath));
+        return StockAnalysisControllerApiFp(this.configuration).saveStockAnalysis(stockAnalysis2, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4062,311 +4267,10 @@ export class StockAnalysisCrudControllerApi extends BaseAPI {
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StockAnalysisCrudControllerApi
+     * @memberof StockAnalysisControllerApi
      */
     public unpublish(id: string, options?: any) {
-        return StockAnalysisCrudControllerApiFp(this.configuration).unpublish(id, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * StockAnalysisPublicationControllerApi - axios parameter creator
- * @export
- */
-export const StockAnalysisPublicationControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        findPublishedStockAnalyses: async (skip?: number, limit?: number, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/public/published-stock-analyses`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (skip !== undefined) {
-                localVarQueryParameter['skip'] = skip;
-            }
-
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPublishedStockAnalysis: async (id: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getPublishedStockAnalysis', 'id', id)
-            const localVarPath = `/public/published-stock-analyses/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {StockAnalysis2} stockAnalysis2 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        publishStockAnalysis: async (stockAnalysis2: StockAnalysis2, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'stockAnalysis2' is not null or undefined
-            assertParamExists('publishStockAnalysis', 'stockAnalysis2', stockAnalysis2)
-            const localVarPath = `/public/published-stock-analyses`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(stockAnalysis2, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        unpublishStockAnalysis: async (id: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('unpublishStockAnalysis', 'id', id)
-            const localVarPath = `/public/published-stock-analyses/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * StockAnalysisPublicationControllerApi - functional programming interface
- * @export
- */
-export const StockAnalysisPublicationControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = StockAnalysisPublicationControllerApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async findPublishedStockAnalyses(skip?: number, limit?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<StockAnalysis2>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.findPublishedStockAnalyses(skip, limit, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getPublishedStockAnalysis(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPublishedStockAnalysis(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {StockAnalysis2} stockAnalysis2 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async publishStockAnalysis(stockAnalysis2: StockAnalysis2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.publishStockAnalysis(stockAnalysis2, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async unpublishStockAnalysis(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.unpublishStockAnalysis(id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * StockAnalysisPublicationControllerApi - factory interface
- * @export
- */
-export const StockAnalysisPublicationControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = StockAnalysisPublicationControllerApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [skip] 
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        findPublishedStockAnalyses(skip?: number, limit?: number, options?: any): AxiosPromise<Array<StockAnalysis2>> {
-            return localVarFp.findPublishedStockAnalyses(skip, limit, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPublishedStockAnalysis(id: string, options?: any): AxiosPromise<StockAnalysis2> {
-            return localVarFp.getPublishedStockAnalysis(id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {StockAnalysis2} stockAnalysis2 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        publishStockAnalysis(stockAnalysis2: StockAnalysis2, options?: any): AxiosPromise<void> {
-            return localVarFp.publishStockAnalysis(stockAnalysis2, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        unpublishStockAnalysis(id: string, options?: any): AxiosPromise<void> {
-            return localVarFp.unpublishStockAnalysis(id, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * StockAnalysisPublicationControllerApi - object-oriented interface
- * @export
- * @class StockAnalysisPublicationControllerApi
- * @extends {BaseAPI}
- */
-export class StockAnalysisPublicationControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {number} [skip] 
-     * @param {number} [limit] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StockAnalysisPublicationControllerApi
-     */
-    public findPublishedStockAnalyses(skip?: number, limit?: number, options?: any) {
-        return StockAnalysisPublicationControllerApiFp(this.configuration).findPublishedStockAnalyses(skip, limit, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StockAnalysisPublicationControllerApi
-     */
-    public getPublishedStockAnalysis(id: string, options?: any) {
-        return StockAnalysisPublicationControllerApiFp(this.configuration).getPublishedStockAnalysis(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {StockAnalysis2} stockAnalysis2 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StockAnalysisPublicationControllerApi
-     */
-    public publishStockAnalysis(stockAnalysis2: StockAnalysis2, options?: any) {
-        return StockAnalysisPublicationControllerApiFp(this.configuration).publishStockAnalysis(stockAnalysis2, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StockAnalysisPublicationControllerApi
-     */
-    public unpublishStockAnalysis(id: string, options?: any) {
-        return StockAnalysisPublicationControllerApiFp(this.configuration).unpublishStockAnalysis(id, options).then((request) => request(this.axios, this.basePath));
+        return StockAnalysisControllerApiFp(this.configuration).unpublish(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -21,7 +21,7 @@ export function StockAnalysisCard(props: { stockAnalysis: StockAnalysis2 }) {
         >
             <div className="flex flex-col space-y-4">
                 <div className="flex justify-between">
-                    <span className="text-lg underline text-blue-400">{name}</span>
+                    <span className="text-lg text-blueGray-200">{name}</span>
                     <span className="text-4xl text-blueGray-200 font-bold tracking-tight">{ticker}</span>
                 </div>
                 <span className="flex space-x-4">
