@@ -65,7 +65,7 @@ export function Overview(props: Props) {
                 </div>
             </div>
             <div className="flex-col space-y-2 w-64">
-                <div className="flex flex-col justify-between shadow-lg space-y-1 px-6 py-3 bg-blueGray-700 rounded-md">
+                <div className="flex flex-col justify-between shadow-lg space-y-1 px-6 py-3 bg-blueGray-700 rounded">
                     <span className="font-semibold">Target Price</span>
                     <div>
                         <NumberFormat className="font-light" value={targetPrice} displayType="text" prefix="$" decimalScale={2} />

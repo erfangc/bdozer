@@ -87,7 +87,7 @@ function PopoverGeneric(props: PopoverProps) {
             {
                 visible
                     ?
-                    <div className="mt-1 absolute top-full text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded-md z-10">
+                    <div className="mt-1 absolute top-full text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded z-10">
                         {props.children}
                     </div>
                     : null

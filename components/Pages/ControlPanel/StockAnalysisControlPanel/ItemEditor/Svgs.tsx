@@ -10,7 +10,7 @@ export function Attention() {
                 <path d="M24.9468 10.72C25.4668 10.2 25.4668 9.35998 24.9468 8.83998L21.8268 5.71998C21.5602 5.45331 21.2268 5.33331 20.8802 5.33331C20.5468 5.33331 20.2002 5.46665 19.9468 5.71998L17.5068 8.15998L22.5068 13.16L24.9468 10.72Z" fill="#F59E0B" />
             </svg>
         }>
-            This item has been manually overridden
+            This item uses manually overridden assumptions <pre>(click to edit)</pre>
         </Popover>
     )
 }
@@ -25,7 +25,7 @@ export function Check() {
                 </svg>
             }
         >
-            This item is using machine generated assumptions
+            This item uses machine generated assumptions <pre>(click to override)</pre>
         </Popover>
     )
 }

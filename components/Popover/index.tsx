@@ -3,6 +3,7 @@ import React, {ReactNode, useState} from 'react'
 interface PopoverProps {
     trigger: ReactNode
     children: ReactNode
+    className?: string
     position?: 'left' | 'right'
 }
 
@@ -25,7 +26,7 @@ export function AnchorPopover(props: PopoverProps) {
                 visible
                     ?
                     <div
-                        className="absolute top-full text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded-md z-10 w-screen lg:w-screen lg:max-w-md">
+                        className="absolute top-full text-blueGray-50 p-4 border bg-blueGray-900 border-blueGray-500 rounded z-10 w-screen lg:w-screen lg:max-w-md">
                         {props.children}
                     </div>
                     : null
@@ -54,7 +55,7 @@ export function Popover(props: PopoverProps) {
                 visible
                     ?
                     <div
-                        className={`absolute top-full ${position === 'left' ? 'left-0' : 'right-0'} text-blueGray-50 p-4 bg-blueGray-800 rounded-md z-10 w-screen shadow-md lg:w-screen lg:max-w-md`}>
+                        className={`absolute top-full ${position === 'left' ? 'left-0' : 'right-0'} text-blueGray-50 p-4 bg-blueGray-600 rounded z-10 shadow-md ${props.className}`} style={{width: 'max-content'}}>
                         {props.children}
                     </div>
                     : null

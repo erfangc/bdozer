@@ -6,6 +6,7 @@ import { StockAnalysisCard } from './StockAnalysisCard'
 import { StockAnalysisSearch } from './StockAnalysisSearch'
 import {LoadingSkeletons} from "./LoadingSkeleton";
 import {useStockAnalysisPublication} from "../../../api-hooks";
+import {Popover} from "../../Popover";
 
 export function Browse() {
     const stockAnalysisPublication = useStockAnalysisPublication()
@@ -34,7 +35,9 @@ export function Browse() {
                 <div className="mb-8">
                     <div className="flex space-x-4">
                         <StockTab active>#featured stocks</StockTab>
-                        {/* <StockTab >#FAANG</StockTab> */}
+                        <Popover trigger={<StockTab >#FAANG</StockTab>} className="w-42">
+                            Coming soon
+                        </Popover>
                     </div>
                 </div>
                 <blockquote className="my-4 pl-6 border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300">
