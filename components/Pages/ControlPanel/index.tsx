@@ -78,9 +78,15 @@ export function ControlPanel() {
         router.push('/control-panel/stock-analyses/new')
     }
 
-    async function toggleUnpublishedOnly() {
-        setUnpublishedOnly(unpublishedOnly ? undefined : true)
-        await refresh(page, pageSize, term, unpublishedOnly ? undefined : true)
+    async function viewOnlyUnpublished() {
+        setUnpublishedOnly(true)
+        await refresh(page, pageSize, term, true)
+    }
+
+
+    async function viewAll() {
+        setUnpublishedOnly(undefined)
+        await refresh(page, pageSize, term, undefined)
     }
 
     useEffect(() => {
@@ -126,11 +132,18 @@ export function ControlPanel() {
                             <ChevronRight/>
                         </SecondaryButton>
                     </div>
-                    <button
-                        onClick={toggleUnpublishedOnly}
-                        className={`focus:outline-none border border-lime-700 transition ease-linear hover:bg-lime-500 hover:text-white px-2 py-1 rounded self-start md:self-end ${unpublishedOnly ? 'bg-lime-500 text-white' : 'text-lime-600'}`}>
-                        Unpublished Only
-                    </button>
+                    <div>
+                        <button
+                            onClick={viewAll}
+                            className={`focus:outline-none border-l border-t border-b border-lime-700 transition ease-linear hover:bg-lime-500 hover:text-blueGray-800 px-2 py-1 rounded-l self-start md:self-end ${!unpublishedOnly ? 'bg-lime-500 text-blueGray-800' : 'text-lime-600'}`}>
+                            All
+                        </button>
+                        <button
+                            onClick={viewOnlyUnpublished}
+                            className={`focus:outline-none border border-lime-700 transition ease-linear hover:bg-lime-500 hover:text-blueGray-800 px-2 py-1 rounded-r self-start md:self-end ${unpublishedOnly ? 'bg-lime-500 text-blueGray-800' : 'text-lime-600'}`}>
+                            Unpublished Only
+                        </button>
+                    </div>
                 </div>
                 {/* Stop of filtering and pagination */}
                 <div className="space-y-8">

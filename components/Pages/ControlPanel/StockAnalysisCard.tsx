@@ -3,6 +3,7 @@ import {useRouter} from "next/router";
 import {PrimaryButton} from "../../Common/PrimaryButton";
 import {DeleteButton} from "../../Common/DeleteButton";
 import React from "react";
+import {Delete, Edit} from "../../Common/Svgs";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -30,8 +31,12 @@ export function StockAnalysisCard({stockAnalysis, onDelete}: Props) {
                 <span className="text-xs text-blueGray-300">{new Date(lastUpdated).toLocaleString()}</span>
             </div>
             <div className="flex flex-col space-y-2">
-                <PrimaryButton onClick={() => navigateToStockAnalysis(id)}>View</PrimaryButton>
-                <DeleteButton onClick={() => onDelete(id)}>Delete</DeleteButton>
+                <PrimaryButton onClick={() => navigateToStockAnalysis(id)}>
+                    <Edit/><span className="pl-1">Edit</span>
+                </PrimaryButton>
+                <DeleteButton onClick={() => onDelete(id)}>
+                    <Delete/><span className="pl-1">Delete</span>
+                </DeleteButton>
             </div>
         </li>
     )
@@ -47,7 +52,7 @@ function Published() {
 
 export function LoadingSkeletons() {
     return <>
-        {[1, 2, 3].map(i => (
+        {[1, 2, 3, 4].map(i => (
             <li
                 key={i}
                 className="bg-blueGray-700 px-6 py-6 shadow-md flex-col flex space-y-4 cursor-pointer hover:bg-blueGray-600 transition ease-linear"
