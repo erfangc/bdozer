@@ -8,7 +8,7 @@ import { SecondaryButton } from '../../../Common/SecondaryButton'
 import { Title } from '../../../Common/Title'
 import { FilingEntityCard } from '../FilingEntityCard'
 import { Message } from '../Message'
-import { Loading } from '../StockAnalysisControlPanel/Toolbar/Svgs'
+import {Loading} from "../../../Common/Svgs";
 
 export default function FilingEntityControlPanel() {
     const router = useRouter()

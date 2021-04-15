@@ -1,13 +1,11 @@
-import { useRouter } from "next/router"
-import React, {useState} from "react"
+import {useRouter} from "next/router"
+import React from "react"
 import NumberFormat from "react-number-format"
-import { useFactBaseUnsecured } from "../../../../api-hooks"
-import {Fact, Item, StockAnalysis2} from "../../../../client"
-import { SmallGhostButton } from "../../../Common/GhostButton"
-import { ItemDisplayDetail } from "./ItemDisplayDetail"
-import { Attention as Manual, Check, Nothing } from "./ItemEditor/Svgs"
-import {Info} from "./Toolbar/Svgs";
-import {Popover} from "../../../Popover";
+import {useFactBaseUnsecured} from "../../../../api-hooks"
+import {Item, StockAnalysis2} from "../../../../client"
+import {SmallGhostButton} from "../../../Common/GhostButton"
+import {ItemDisplayDetail} from "./ItemDisplayDetail"
+import {Attention as Manual, Check, Nothing} from "./ItemEditor/Svgs"
 
 interface Props {
     item: Item
@@ -16,9 +14,9 @@ interface Props {
 
 export function ItemDisplay(props: Props) {
 
-    const { item: originalItem, stockAnalysis } = props
+    const {item: originalItem, stockAnalysis} = props
     const router = useRouter()
-    const { id } = router.query
+    const {id} = router.query
     const factBase = useFactBaseUnsecured()
     const overriddenItem = stockAnalysis.model.itemOverrides.find(i => i.name === props.item.name)
     const overridden = overriddenItem !== undefined
@@ -28,7 +26,7 @@ export function ItemDisplay(props: Props) {
     async function openSourceDocument(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault()
         event.stopPropagation()
-        const { data: fact } = await factBase.getFact(factId)
+        const {data: fact} = await factBase.getFact(factId)
         window.open(fact.sourceDocument)
     }
 
@@ -54,7 +52,7 @@ export function ItemDisplay(props: Props) {
             <div className="flex justify-start lg:justify-end items-center space-x-4">
                 <SmallGhostButton onClick={openSourceDocument}>Source</SmallGhostButton>
                 <ItemDisplayDetail {...props} />
-                {item.subtotal ? <Nothing /> : !overridden ? <Check /> : <Manual />}
+                {item.subtotal ? <Nothing/> : !overridden ? <Check/> : <Manual/>}
             </div>
         </div>
     )

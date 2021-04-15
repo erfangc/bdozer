@@ -3,9 +3,9 @@ import {useStockAnalysisCrud} from "../../../api-hooks";
 import {StockAnalysis2} from "../../../client";
 import {PrimaryButton} from "../../Common/PrimaryButton";
 import {Title} from "../../Common/Title";
-import {Plus} from "./StockAnalysisControlPanel/Toolbar/Svgs";
 import {LoadingSkeletons, StockAnalysisCard} from "./StockAnalysisCard";
 import {useRouter} from "next/router";
+import {Plus} from "../../Common/Svgs";
 
 export function ControlPanel() {
 

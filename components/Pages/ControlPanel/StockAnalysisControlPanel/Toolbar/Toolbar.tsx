@@ -4,15 +4,14 @@ import React, {useState} from 'react'
 import {v4 as uuid} from 'uuid'
 import {
     basePath,
-    useStockAnalysisCrud,
     useStockAnalysisPublication,
     useStockAnalysisWorkflow
 } from '../../../../../api-hooks'
 import {StockAnalysis2} from '../../../../../client'
 import {ExcelDownloading, ExcelIcon} from '../../../../Common/DownloadToExcel'
 import {Notification, notificationStore} from '../../../../Notifications/NotificationStore'
-import {Loading, Play, Preview, Publish, Settings, Table, Unpublish} from './Svgs'
 import {ToolButton} from './ToolButton'
+import {Loading, Play, Preview, Publish, Settings, Table, Unpublish} from "../../../../Common/Svgs";
 
 interface Props {
     loading: boolean
