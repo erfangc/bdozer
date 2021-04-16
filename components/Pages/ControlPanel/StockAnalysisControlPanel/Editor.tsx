@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useFilingEntityManager} from '../../../../api-hooks';
 import {FilingEntity, StockAnalysis2} from '../../../../client';
 import {Select} from '../../../Common/Select';
@@ -18,6 +18,7 @@ interface Props {
 export default function Editor(props: Props) {
 
     const {filingEntity, stockAnalysis, saveFilingEntity, saveStockAnalysis, loading} = props
+    const [tab, setTab] = useState<'income statement'| 'balance sheet'>('income statement')
 
     const filingEntityManager = useFilingEntityManager()
 
@@ -88,8 +89,8 @@ export default function Editor(props: Props) {
             </div>
             <div className="pt-6">
                 <div className="flex space-x-4 mb-8">
-                    <Tab active>Income Statement</Tab>
-                    <Tab disabled>Balance Sheet</Tab>
+                    <Tab active={tab === 'income statement'} onClick={() => setTab('income statement')}>Income Statement</Tab>
+                    <Tab active={tab === 'balance sheet'} onClick={() => setTab('balance sheet')}>Balance Sheet</Tab>
                 </div>
                 <blockquote className="px-3 inline-block border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300 mb-1">
                     Click on items to edit
@@ -101,12 +102,17 @@ export default function Editor(props: Props) {
                         <span className="flex justify-start md:justify-end items-center">Most Recently Reported</span>
                     </div>
                     {
-                        stockAnalysis
-                            ?.model
-                            ?.incomeStatementItems
-                            // TODO fix this line
-                            ?.filter(item => item.formula !== '0.0')
-                            ?.map(item => <ItemDisplay key={item.name} stockAnalysis={stockAnalysis} item={item}/>)
+                        tab === 'income statement'
+                        ?
+                            stockAnalysis
+                                ?.model
+                                ?.incomeStatementItems
+                                ?.map(item => <ItemDisplay key={item.name} stockAnalysis={stockAnalysis} item={item}/>)
+                        :
+                            stockAnalysis
+                                ?.model
+                                ?.balanceSheetItems
+                                ?.map(item => <ItemDisplay key={item.name} stockAnalysis={stockAnalysis} item={item}/>)
                     }
                 </div>
             </div>
