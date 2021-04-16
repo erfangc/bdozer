@@ -7,6 +7,7 @@ import {LoadingSkeletons, StockAnalysisCard} from "./StockAnalysisCard";
 import {useRouter} from "next/router";
 import {ChevronLeft, ChevronRight, Plus, SearchIcon} from "../../Common/Svgs";
 import {SecondaryButton} from "../../Common/SecondaryButton";
+import {PublishedToggle} from "./PublishedToggle";
 
 export function ControlPanel() {
 
@@ -14,7 +15,7 @@ export function ControlPanel() {
     const stockAnalysisCrud = useStockAnalysisCrud()
     const [findStockAnalysisResponse, setFindStockAnalysisResponse] = useState<FindStockAnalysisResponse>()
     const [loading, setLoading] = useState(false)
-    const [unpublishedOnly, setUnpublishedOnly] = useState<boolean | undefined>()
+    const [published, setPublished] = useState<boolean | undefined>()
 
     const pageSize = 10
     const [page, setPage] = useState(0)
@@ -26,7 +27,7 @@ export function ControlPanel() {
             return
         }
         setPage(nextPage)
-        await refresh(nextPage, pageSize, term, unpublishedOnly)
+        await refresh(nextPage, pageSize, term, published)
     }
 
     async function previousPage() {
@@ -35,7 +36,7 @@ export function ControlPanel() {
         }
         const previousPage = page - 1;
         setPage(previousPage)
-        await refresh(previousPage, pageSize, term, unpublishedOnly)
+        await refresh(previousPage, pageSize, term, published)
     }
 
     async function handleTermChange(event: ChangeEvent<HTMLInputElement>) {
@@ -43,19 +44,17 @@ export function ControlPanel() {
         const {target} = event
         const nextTerm = target.value;
         setTerm(nextTerm)
-        await refresh(0, pageSize, nextTerm, unpublishedOnly)
+        await refresh(0, pageSize, nextTerm, published)
     }
 
     async function init() {
-        await refresh(page, pageSize, term, unpublishedOnly)
+        await refresh(page, pageSize, term, published)
     }
 
-
-    async function refresh(page, pageSize, term, unpublishedOnly) {
+    async function refresh(page, pageSize, term, published) {
         setLoading(true)
         const skip = page * pageSize
         const limit = pageSize
-        const published = unpublishedOnly ? false : undefined
         const resp = await stockAnalysisCrud.findStockAnalyses(
             published,
             undefined,
@@ -78,15 +77,10 @@ export function ControlPanel() {
         router.push('/control-panel/stock-analyses/new')
     }
 
-    async function viewOnlyUnpublished() {
-        setUnpublishedOnly(true)
-        await refresh(page, pageSize, term, true)
-    }
-
-
-    async function viewAll() {
-        setUnpublishedOnly(undefined)
-        await refresh(page, pageSize, term, undefined)
+    async function handleSetPublished(value?:boolean) {
+        setPublished(value)
+        setPage(0)
+        await refresh(0, pageSize, term, value)
     }
 
     useEffect(() => {
@@ -118,6 +112,7 @@ export function ControlPanel() {
                     </PrimaryButton>
                 </div>
             </div>
+
             {/* Pagination */}
             <div>
                 <div className="mb-6 flex flex-col space-y-2 md:flex-row md:space-y-0 md:justify-between">
@@ -132,19 +127,9 @@ export function ControlPanel() {
                             <ChevronRight/>
                         </SecondaryButton>
                     </div>
-                    <div>
-                        <button
-                            onClick={viewAll}
-                            className={`focus:outline-none border-l border-t border-b border-lime-700 transition ease-linear hover:bg-lime-500 hover:text-blueGray-800 px-2 py-1 rounded-l self-start md:self-end ${!unpublishedOnly ? 'bg-lime-500 text-blueGray-800' : 'text-lime-600'}`}>
-                            All
-                        </button>
-                        <button
-                            onClick={viewOnlyUnpublished}
-                            className={`focus:outline-none border border-lime-700 transition ease-linear hover:bg-lime-500 hover:text-blueGray-800 px-2 py-1 rounded-r self-start md:self-end ${unpublishedOnly ? 'bg-lime-500 text-blueGray-800' : 'text-lime-600'}`}>
-                            Unpublished Only
-                        </button>
-                    </div>
+                    <PublishedToggle setPublished={handleSetPublished} published={published}/>
                 </div>
+
                 {/* Stop of filtering and pagination */}
                 <div className="space-y-8">
                     <ul className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
@@ -162,9 +147,9 @@ export function ControlPanel() {
                         }
                     </ul>
                 </div>
+
             </div>
 
         </main>
     )
 }
-
