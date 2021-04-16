@@ -22,10 +22,10 @@ export function StockAnalysisCard({stockAnalysis, onDelete}: Props) {
 
     return (
         <li key={id} className="px-4 py-6 bg-blueGray-700 flex justify-between relative">
+            {stockAnalysis.published ? <Published/> : null}
             <div className="flex flex-col space-y-3">
                 <span className="flex items-center space-x-1">
                     <span className="text-xl font-extrabold">{ticker}</span>
-                    {stockAnalysis.published ? <Published/> : null}
                 </span>
                 <span className="text-blueGray-300 font-extrabold">{name}</span>
                 <span className="text-xs text-blueGray-300">{new Date(lastUpdated).toLocaleString()}</span>
@@ -44,7 +44,7 @@ export function StockAnalysisCard({stockAnalysis, onDelete}: Props) {
 
 function Published() {
     return (
-        <span className="text-xs py-0.5 px-1 rounded bg-amber-500 text-blueGray-800 absolute -top-2 -right-1 transform rotate-1">
+        <span className="text-xs py-0.5 px-1 rounded bg-amber-500 text-blueGray-800 absolute -top-2 -left-2 transform -rotate-6">
             Published
         </span>
     )

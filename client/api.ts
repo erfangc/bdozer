@@ -291,6 +291,25 @@ export interface Commentary {
 /**
  * 
  * @export
+ * @interface Component
+ */
+export interface Component {
+    /**
+     * 
+     * @type {number}
+     * @memberof Component
+     */
+    weight?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Component
+     */
+    itemName?: string;
+}
+/**
+ * 
+ * @export
  * @interface CompoundedGrowth
  */
 export interface CompoundedGrowth {
@@ -1210,6 +1229,12 @@ export interface Item {
     formula?: string;
     /**
      * 
+     * @type {Sum}
+     * @memberof Item
+     */
+    sum?: Sum;
+    /**
+     * 
      * @type {SubscriptionRevenue}
      * @memberof Item
      */
@@ -1286,6 +1311,7 @@ export enum ItemTypeEnum {
     CompoundedGrowth = 'CompoundedGrowth',
     UnitSalesRevenue = 'UnitSalesRevenue',
     Custom = 'Custom',
+    Sum = 'Sum',
     PercentOfRevenue = 'PercentOfRevenue',
     PercentOfTotalAsset = 'PercentOfTotalAsset',
     FixedCost = 'FixedCost'
@@ -1673,6 +1699,19 @@ export interface SubscriptionRevenue {
      * @memberof SubscriptionRevenue
      */
     averageRevenuePerSubscription?: number;
+}
+/**
+ * 
+ * @export
+ * @interface Sum
+ */
+export interface Sum {
+    /**
+     * 
+     * @type {Array<Component>}
+     * @memberof Sum
+     */
+    components?: Array<Component>;
 }
 /**
  * 

@@ -77,7 +77,7 @@ export function ControlPanel() {
         router.push('/control-panel/stock-analyses/new')
     }
 
-    async function handleSetPublished(value?:boolean) {
+    async function handleSetPublished(value?: boolean) {
         setPublished(value)
         setPage(0)
         await refresh(0, pageSize, term, value)
