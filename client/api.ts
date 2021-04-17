@@ -323,49 +323,6 @@ export interface CompoundedGrowth {
 /**
  * 
  * @export
- * @interface ConceptNames
- */
-export interface ConceptNames {
-    /**
-     * 
-     * @type {string}
-     * @memberof ConceptNames
-     */
-    totalRevenue?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ConceptNames
-     */
-    eps?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ConceptNames
-     */
-    netIncome?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ConceptNames
-     */
-    ebit?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ConceptNames
-     */
-    operatingCost?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ConceptNames
-     */
-    sharesOutstanding?: string;
-}
-/**
- * 
- * @export
  * @interface DerivedStockAnalytics
  */
 export interface DerivedStockAnalytics {
@@ -891,12 +848,6 @@ export interface FilingCalculations {
     balanceSheet?: Array<Arc>;
     /**
      * 
-     * @type {ConceptNames}
-     * @memberof FilingCalculations
-     */
-    conceptNames?: ConceptNames;
-    /**
-     * 
      * @type {string}
      * @memberof FilingCalculations
      */
@@ -1229,10 +1180,10 @@ export interface Item {
     formula?: string;
     /**
      * 
-     * @type {Sum}
+     * @type {SumOfOtherItems}
      * @memberof Item
      */
-    sum?: Sum;
+    sumOfOtherItems?: SumOfOtherItems;
     /**
      * 
      * @type {SubscriptionRevenue}
@@ -1309,9 +1260,9 @@ export enum ItemTypeEnum {
     Discrete = 'Discrete',
     SubscriptionRevenue = 'SubscriptionRevenue',
     CompoundedGrowth = 'CompoundedGrowth',
+    SumOfOtherItems = 'SumOfOtherItems',
     UnitSalesRevenue = 'UnitSalesRevenue',
     Custom = 'Custom',
-    Sum = 'Sum',
     PercentOfRevenue = 'PercentOfRevenue',
     PercentOfTotalAsset = 'PercentOfTotalAsset',
     FixedCost = 'FixedCost'
@@ -1703,13 +1654,13 @@ export interface SubscriptionRevenue {
 /**
  * 
  * @export
- * @interface Sum
+ * @interface SumOfOtherItems
  */
-export interface Sum {
+export interface SumOfOtherItems {
     /**
      * 
      * @type {Array<Component>}
-     * @memberof Sum
+     * @memberof SumOfOtherItems
      */
     components?: Array<Component>;
 }

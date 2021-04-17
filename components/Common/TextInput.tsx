@@ -1,10 +1,11 @@
-import React, {ChangeEvent, useEffect, useState} from "react"
+import React, { ChangeEvent, useEffect, useState } from "react"
 
 interface TextInputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
     label?: string
 }
 
 interface ManagedTextInputProps extends TextInputProps {
+    wrapperClassName?: string
     onInputSubmit: (string) => void
 }
 
@@ -25,11 +26,11 @@ export const TextInput = function ({ label, className, ...props }: TextInputProp
     )
 }
 
-export const ManagedTextInput = function ({ label, className, value, onInputSubmit, ...props }: ManagedTextInputProps) {
+export const ManagedTextInput = function ({ label, className, wrapperClassName, value, onInputSubmit, ...props }: ManagedTextInputProps) {
 
     const [internalValue, setInternalValue] = useState(value)
 
-    function handleChange({currentTarget}: ChangeEvent<HTMLInputElement>) {
+    function handleChange({ currentTarget }: ChangeEvent<HTMLInputElement>) {
         setInternalValue(currentTarget.value)
     }
 
@@ -42,7 +43,7 @@ export const ManagedTextInput = function ({ label, className, value, onInputSubm
     }, [value])
 
     return (
-        <div className="flex-col flex">
+        <div className={`flex-col flex ${wrapperClassName}`}>
             {
                 label
                     ? <label className="mb-2 text-sm">{label}</label>

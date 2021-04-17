@@ -1,19 +1,20 @@
-import {useRouter} from "next/router";
-import React, {ReactNode, useCallback, useEffect, useState} from "react";
-import {useFactBaseUnsecured, useStockAnalysisCrud} from "../../../../../api-hooks";
-import {Fact, Item, ItemTypeEnum, Model, StockAnalysis2} from "../../../../../client";
-import {AutoForm} from "../../../../AutoForms/AutoForm";
-import {bodyOf, merge, schemaOf} from "../../../../AutoForms/Schemas";
-import {DeleteButton} from "../../../../Common/DeleteButton";
-import {SecondaryButton} from "../../../../Common/SecondaryButton";
-import {Select} from "../../../../Common/Select";
-import {FormulaEditor} from "./FormulaEditor";
-import {ItemDescriptionInput} from "./ItemDescriptionInput";
-import {ItemFY0Input} from "./ItemFY0Input";
-import {DiscreteEditor} from "./DiscreteEditor";
-import {PercentOfRevenueEditor} from "./PercentOfRevenueEditor";
-import {PrimaryButton} from "../../../../Common/PrimaryButton";
-import {FixedCostEditor} from "./FixedCostEditor";
+import { useRouter } from "next/router";
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import { useFactBaseUnsecured, useStockAnalysisCrud } from "../../../../../api-hooks";
+import { Fact, Item, ItemTypeEnum, Model, StockAnalysis2 } from "../../../../../client";
+import { AutoForm } from "../../../../AutoForms/AutoForm";
+import { bodyOf, merge, schemaOf } from "../../../../AutoForms/Schemas";
+import { DeleteButton } from "../../../../Common/DeleteButton";
+import { SecondaryButton } from "../../../../Common/SecondaryButton";
+import { Select } from "../../../../Common/Select";
+import { FormulaEditor } from "./FormulaEditor";
+import { ItemDescriptionInput } from "./ItemDescriptionInput";
+import { ItemFY0Input } from "./ItemFY0Input";
+import { DiscreteEditor } from "./DiscreteEditor";
+import { PercentOfRevenueEditor } from "./PercentOfRevenueEditor";
+import { PrimaryButton } from "../../../../Common/PrimaryButton";
+import { FixedCostEditor } from "./FixedCostEditor";
+import { SumOfOtherItemsEditor } from "./SumOfOtherItemsEditor";
 
 function getItem(model?: Model, itemName?: string | string[]) {
     return (
@@ -31,7 +32,7 @@ export function ItemEditor() {
     const router = useRouter()
     const factBase = useFactBaseUnsecured()
     const [fact, setFact] = useState<Fact>()
-    const {id, itemName} = router.query
+    const { id, itemName } = router.query
     const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
     const stockAnalysisCrud = useStockAnalysisCrud()
 
@@ -49,14 +50,14 @@ export function ItemEditor() {
     }, []);
 
     async function init() {
-        const {data: stockAnalysis} = await stockAnalysisCrud.getStockAnalysis(id as string)
+        const { data: stockAnalysis } = await stockAnalysisCrud.getStockAnalysis(id as string)
         const item = getItem(stockAnalysis?.model, itemName);
         /*
         query the underlying fact that populated this item
          */
         const factId = item?.historicalValue?.factId;
         if (factId) {
-            const {data: fact} = await factBase.getFact(factId)
+            const { data: fact } = await factBase.getFact(factId)
             setFact(fact)
         }
 
@@ -95,7 +96,7 @@ export function ItemEditor() {
     }
 
     function updateType(newType: ItemTypeEnum) {
-        const newItem: Item = {...item, type: newType}
+        const newItem: Item = { ...item, type: newType }
         handleItemChange(newItem)
     }
 
@@ -133,15 +134,17 @@ export function ItemEditor() {
 
         let editor: ReactNode
         if (item.type === ItemTypeEnum.Discrete) {
-            editor = <DiscreteEditor item={item} onSubmit={handleItemChange}/>
+            editor = <DiscreteEditor item={item} onSubmit={handleItemChange} />
         } else if (item.type === ItemTypeEnum.FixedCost) {
-            editor = <FixedCostEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange}/>
+            editor = <FixedCostEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange} />
         } else if (item.type === ItemTypeEnum.PercentOfRevenue) {
-            editor = <PercentOfRevenueEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange}/>
+            editor = <PercentOfRevenueEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange} />
         } else if (item.type === ItemTypeEnum.Custom) {
-            editor = <FormulaEditor item={item} onSubmit={handleItemChange}/>
+            editor = <FormulaEditor item={item} onSubmit={handleItemChange} />
+        } else if (item.type === ItemTypeEnum.SumOfOtherItems) {
+            editor = <SumOfOtherItemsEditor item={item} onSubmit={handleItemChange} />
         } else {
-            editor = <AutoForm schema={schemaOf(item)} body={bodyOf(item)} onSubmit={handleAutoFormChange}/>
+            editor = <AutoForm schema={schemaOf(item)} body={bodyOf(item)} onSubmit={handleAutoFormChange} />
         }
 
         const isOverridden = item === overriddenItem
@@ -165,19 +168,20 @@ export function ItemEditor() {
                                 </blockquote>
                                 : null
                         }
-                        <ItemDescriptionInput item={item} onSubmit={handleItemChange}/>
-                        <ItemFY0Input item={item} onSubmit={handleItemChange}/>
+                        <ItemDescriptionInput item={item} onSubmit={handleItemChange} />
+                        <ItemFY0Input item={item} onSubmit={handleItemChange} />
                     </div>
                     <Select
                         label="Item Type"
                         value={item.type}
-                        onChange={({currentTarget: {value}}) => updateType(value as any)}
+                        onChange={({ currentTarget: { value } }) => updateType(value as any)}
                     >
                         <option value={ItemTypeEnum.Custom}>Custom</option>
                         <option value={ItemTypeEnum.SubscriptionRevenue}>Subscription Revenue</option>
                         <option value={ItemTypeEnum.PercentOfRevenue}>Percent of Revenue</option>
                         <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
                         <option value={ItemTypeEnum.Discrete}>Discrete</option>
+                        <option value={ItemTypeEnum.SumOfOtherItems}>Sum of Other Items</option>
                         <option value={ItemTypeEnum.CompoundedGrowth}>Compounded Growth</option>
                     </Select>
                     {editor}
