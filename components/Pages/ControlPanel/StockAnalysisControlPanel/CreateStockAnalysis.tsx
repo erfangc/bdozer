@@ -13,30 +13,23 @@ export function CreateStockAnalysis() {
     const [loading, setLoading] = useState(false)
     const router = useRouter()
 
-    function navigateToFilingEntity(cik: string) {
-        router.push(`/control-panel/filing-entities/${cik}`)
-    }
-
     function navigateToStockAnalysis(id: string) {
         router.push(`/control-panel/stock-analyses/${id}`)
     }
 
     async function handleFilingEntitySelect(filingEntity: FilingEntity) {
         //
-        // Bootstrap facts and take the user to the entity page instead of the analysis page
+        // Otherwise create a new stock analysis and navigate to it
         //
-        if (filingEntity?.statusMessage !== 'Completed') {
-            navigateToFilingEntity(filingEntity.cik)
-        } else {
-            //
-            // Otherwise create a new stock analysis and navigate to it
-            //
-            setLoading(true)
+        setLoading(true)
+        try {
             const {data: stockAnalysis} = await stockAnalysisWorkflow.create(filingEntity.cik)
             await stockAnalysisCrud.saveStockAnalysis(stockAnalysis)
-            setLoading(false)
             navigateToStockAnalysis(stockAnalysis['_id'])
+        } catch (e) {
+            console.error(e)
         }
+        setLoading(false)
     }
 
     return (
