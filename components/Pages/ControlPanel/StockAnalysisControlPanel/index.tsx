@@ -55,9 +55,7 @@ export function StockAnalysisControlPanel() {
                 />
                 <Editor
                     loading={loading}
-                    filingEntity={filingEntity}
                     stockAnalysis={stockAnalysis}
-                    saveFilingEntity={setFilingEntity}
                     saveStockAnalysis={saveStockAnalysis}
                 />
             </section>
