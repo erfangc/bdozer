@@ -6,6 +6,7 @@ import {Title} from '../../../Common/Title'
 import {FilingEntityCard} from '../FilingEntityCard'
 import Toolbar from './Toolbar/Toolbar'
 import Editor from './Editor'
+import {Published} from "../Publish";
 
 export function StockAnalysisControlPanel() {
 
@@ -44,7 +45,9 @@ export function StockAnalysisControlPanel() {
 
     return (
         <main className="container mx-auto px-4 py-20 space-y-12">
-            <Title>Stock Analysis Editor</Title>
+            <Title>
+                Stock Analysis Editor
+            </Title>
             <FilingEntityCard filingEntity={filingEntity}/>
             <section className="space-y-6">
                 <Toolbar

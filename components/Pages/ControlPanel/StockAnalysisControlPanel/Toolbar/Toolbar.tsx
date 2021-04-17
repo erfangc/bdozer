@@ -8,6 +8,7 @@ import {ExcelDownloading, ExcelIcon} from '../../../../Common/DownloadToExcel'
 import {Notification, notificationStore} from '../../../../Notifications/NotificationStore'
 import {ToolButton} from './ToolButton'
 import {Loading, Play, Preview, Publish, Settings, Table, Unpublish} from "../../../../Common/Svgs";
+import {Published} from "../../Publish";
 
 interface Props {
     loading: boolean
@@ -106,28 +107,31 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
     }
 
     return (
-        <div className="grid grid-cols-4 gap-1 md:flex md:space-x-5 px-3 pt-2 pb-1 bg-blueGray-800 rounded">
-            <ToolButton onClick={refresh} loading={loading} label="Rerun">
-                {loading ? <Loading/> : <Play/>}
-            </ToolButton>
-            <ToolButton onClick={navigateToFullOutput} loading={loading} label="Table">
-                <Table/>
-            </ToolButton>
-            <ToolButton onClick={navigateToPreview} loading={loading} label="Preview">
-                <Preview/>
-            </ToolButton>
-            <ToolButton onClick={publish} loading={loading} label="Publish">
-                <Publish/>
-            </ToolButton>
-            <ToolButton onClick={unpublish} loading={loading} label="Unpublish">
-                <Unpublish/>
-            </ToolButton>
-            <ToolButton onClick={navigateToModelSettings} loading={loading} label="Settings">
-                <Settings/>
-            </ToolButton>
-            <ToolButton onClick={downloadModel} loading={downloading} label="Download">
-                {downloading ? <ExcelDownloading/> : <ExcelIcon/>}
-            </ToolButton>
+        <div className="relative">
+            {stockAnalysis?.published ? <Published/> : null}
+            <div className="grid grid-cols-4 gap-1 md:flex md:space-x-5 px-3 pt-2 pb-1 bg-blueGray-800 rounded">
+                <ToolButton onClick={refresh} loading={loading} label="Rerun">
+                    {loading ? <Loading/> : <Play/>}
+                </ToolButton>
+                <ToolButton onClick={navigateToFullOutput} loading={loading} label="Table">
+                    <Table/>
+                </ToolButton>
+                <ToolButton onClick={navigateToPreview} loading={loading} label="Preview">
+                    <Preview/>
+                </ToolButton>
+                <ToolButton onClick={publish} loading={loading} label="Publish">
+                    <Publish/>
+                </ToolButton>
+                <ToolButton onClick={unpublish} loading={loading} label="Unpublish">
+                    <Unpublish/>
+                </ToolButton>
+                <ToolButton onClick={navigateToModelSettings} loading={loading} label="Settings">
+                    <Settings/>
+                </ToolButton>
+                <ToolButton onClick={downloadModel} loading={downloading} label="Download">
+                    {downloading ? <ExcelDownloading/> : <ExcelIcon/>}
+                </ToolButton>
+            </div>
         </div>
     )
 }

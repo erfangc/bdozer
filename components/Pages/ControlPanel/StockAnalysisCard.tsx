@@ -4,6 +4,7 @@ import {PrimaryButton} from "../../Common/PrimaryButton";
 import {DeleteButton} from "../../Common/DeleteButton";
 import React from "react";
 import {Delete, Edit} from "../../Common/Svgs";
+import {Published} from "./Publish";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -39,14 +40,6 @@ export function StockAnalysisCard({stockAnalysis, onDelete}: Props) {
                 </DeleteButton>
             </div>
         </li>
-    )
-}
-
-function Published() {
-    return (
-        <span className="text-xs py-0.5 px-1 rounded bg-amber-500 text-blueGray-800 absolute -top-2 -left-2 transform -rotate-6">
-            Published
-        </span>
     )
 }
 

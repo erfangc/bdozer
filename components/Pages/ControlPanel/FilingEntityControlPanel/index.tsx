@@ -46,7 +46,6 @@ export default function FilingEntityControlPanel() {
             <br />
             If you feel like something has gone wrong and want to re-parse SEC's website, please click <code>Bootstrap Again</code>
             <br />
-            <DeleteButton className="mt-4 w-44" onClick={bootstrap}>{loading ? <Loading/> : 'Bootstrap Aagain'}</DeleteButton>
         </Message>
     )
     if (status === "Bootstrapping") {
@@ -63,7 +62,6 @@ export default function FilingEntityControlPanel() {
                 Facts about this entity has not been bootstrapped from SEC yet <code>Click "Bootstrap" to it do</code>
                 <br />
                 <span className="text-sm">You need to do this before building stock analyses for this company</span>
-                <PrimaryButton className="mt-4 w-32" onClick={bootstrap}>{loading ? <Loading/> : 'Bootstrap'}</PrimaryButton>
             </Message>
         )
     }
@@ -75,7 +73,12 @@ export default function FilingEntityControlPanel() {
                 <FilingEntityCard filingEntity={filingEntity} />
             </div>
             {message}
-            <SecondaryButton onClick={router.back}>Back</SecondaryButton>
+            <div className="flex space-x-2">
+                <SecondaryButton onClick={router.back}>Back</SecondaryButton>
+                { (status != 'Bootstrapping' && status != 'Completed') ? <PrimaryButton className="w-32" onClick={bootstrap}>{loading ? <Loading/> : 'Bootstrap'}</PrimaryButton> : null}
+                { status === 'Bootstrapping' ? <PrimaryButton className="w-32" disabled><Loading/></PrimaryButton> : null}
+                { status === 'Completed' ? <DeleteButton className="w-44" onClick={bootstrap}>{loading ? <Loading/> : 'Bootstrap Again'}</DeleteButton> : null}
+            </div>
         </main>
     )
 }
