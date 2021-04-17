@@ -1,6 +1,6 @@
 import React from "react";
 import { StockAnalysis2 } from "../../../../client";
-import {simpleMoney, simpleNumber} from "../../../../simple-number";
+import { simpleMoney } from "../../../../simple-number";
 import { AnchorPopover } from "../../../Popover";
 import { SubTitle } from "../../../Common/Title";
 import { RevenueTimeSeries } from "./RevenueTimeSeries";
@@ -48,7 +48,7 @@ export function ExecutiveSummary(props: Props) {
                     They spend more than {simpleMoney(totalExpense)} with a {profit.value > 0 ? 'profit' : 'loss'} of {simpleMoney(profit.value)}.
                 </li>
                 <li>
-                    Investors {eps > 0 ? 'made' : 'lost'} {eps.toFixed(1)} per share.
+                    Investors {eps > 0 ? 'made' : 'lost'} {eps?.toFixed(1)} per share.
                 </li>
             </ul>
             <div className="font-bold mt-8 mb-4">Future Projections</div>
