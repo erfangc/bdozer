@@ -47,7 +47,7 @@ export default function Demo2() {
                         <div className="mt-6">
                             <p className="text-sm text-blueGray-300">
                                 We imported all the data we can. There are <span
-                                className="font-bold p-1 rounded bg-blueGray-900">3</span> items that
+                                className="font-extrabold mx-0.5 p-1 rounded bg-blueGray-900">129</span> items that
                                 requires your attention
                             </p>
                         </div>
