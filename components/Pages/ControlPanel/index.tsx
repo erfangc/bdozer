@@ -88,8 +88,8 @@ export function ControlPanel() {
     }, [])
 
     const totalCount = findStockAnalysisResponse?.totalCount;
-    const showingFrom = page * pageSize + 1;
-    const showingTo = Math.min((page + 1) * pageSize, totalCount);
+    const showingFrom = isNaN(totalCount) ? 0 : page * pageSize + 1;
+    const showingTo = Math.min((page + 1) * pageSize, isNaN(totalCount) ? 0 : totalCount);
 
     return (
         <main className="text-blueGray-50 container mx-auto space-y-16 py-16 px-4">
@@ -121,7 +121,7 @@ export function ControlPanel() {
                             <ChevronLeft/>
                         </SecondaryButton>
                         <span>
-                        <b>Showing</b> {showingFrom} - {showingTo} out of {totalCount}
+                        <b>Showing</b> {showingFrom} - {showingTo} out of {isNaN(totalCount) ? 0 : totalCount}
                         </span>
                         <SecondaryButton disabled={loading} onClick={nextPage}>
                             <ChevronRight/>
