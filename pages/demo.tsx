@@ -14,7 +14,7 @@ const people = [
     {name: "Hellen Schmidt"},
 ];
 
-function Example() {
+function Select() {
 
     const [selected, setSelected] = useState(people[0]);
 
@@ -28,10 +28,7 @@ function Example() {
                                 className="relative w-full py-2 pl-3 pr-10 text-left bg-blueGray-700 rounded shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
                                 <span className="block truncate">{selected.name}</span>
                                 <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                  <SelectorIcon
-                                      className="w-5 h-5 text-gray-400"
-                                      aria-hidden="true"
-                                  />
+                                  <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true"/>
                                 </span>
                             </Listbox.Button>
                             <Transition
@@ -61,9 +58,7 @@ function Example() {
                                                   </span>
                                                     {selected
                                                         ? (
-                                                            <span
-                                                                className={`text-blueGray-50 absolute inset-y-0 left-0 flex items-center pl-3`}
-                                                            >
+                                                            <span className="text-blueGray-50 absolute inset-y-0 left-0 flex items-center pl-3">
                                                               <CheckIcon className="w-5 h-5" aria-hidden="true"/>
                                                             </span>
                                                         ) : null
@@ -95,7 +90,6 @@ export default function Demo() {
 
     return (
         <main className="flex items-center justify-center h-screen bg-blueGray-900">
-            {/*<Example/>*/}
             <Transition show={open} as={Fragment}>
                 <Dialog
                     static
@@ -116,20 +110,16 @@ export default function Demo() {
                         className="max-w-lg p-6 overflow-hidden text-left align-middle transition-all transform bg-blueGray-700 shadow rounded"
                     >
 
-                        <Dialog.Title
-                            as="h3"
-                            className="text-xl font-medium leading-6 text-blueGray-50"
-                        >
+                        <Dialog.Title as="h3" className="text-xl font-medium leading-6 text-blueGray-50">
                             Step 1 - Scaffold the Model
                         </Dialog.Title>
 
-                        <div className="mt-6">
-                            <p className="text-sm text-blueGray-300">
-                                We will automatically import <b>TSLA</b>'s financial
+                        <div className="my-6 text-blueGray-300">
+                            <p className="text-sm">
+                                We will automatically import <span className="font-extrabold">TSLA</span>'s financial
                                 statements and autofill as much of the
                                 valuation model as much as possible
                             </p>
-                            <p className="mt-2 text-blueGray-200 text-sm font-light">This may take several seconds to 1 minute</p>
                         </div>
 
                         <div className="mt-4">
