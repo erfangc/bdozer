@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { ReactNode, useCallback, useEffect, useState } from "react";
-import { useFactBaseUnsecured, useStockAnalysisCrud } from "../../../../../api-hooks";
+import { useFactBaseUnsecured, useStockAnalysis } from "../../../../../api-hooks";
 import { Fact, Item, ItemTypeEnum, Model, StockAnalysis2 } from "../../../../../client";
 import { AutoForm } from "../../../../AutoForms/AutoForm";
 import { bodyOf, merge, schemaOf } from "../../../../AutoForms/Schemas";
@@ -34,7 +34,7 @@ export function ItemEditor() {
     const [fact, setFact] = useState<Fact>()
     const { id, itemName } = router.query
     const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
-    const stockAnalysisCrud = useStockAnalysisCrud()
+    const stockAnalysisCrud = useStockAnalysis()
 
     const escFunction = useCallback((event) => {
         if (event.keyCode === 27) {

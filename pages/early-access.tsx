@@ -9,7 +9,7 @@ export default function EarlyAccessPage() {
     const [email, setEmail] = useState<string>()
 
     async function submit(email: string) {
-        await marketing.earlyAccessRequests({ email })
+        await marketing.earlyAccessRequests({ email } as any)
         setEmail(email)
     }
 

@@ -4,11 +4,11 @@ import { StockAnalysis2 } from '../../../../client'
 import { App } from '../../../../components/App'
 import { TableOutput } from '../../../../components/Pages/ControlPanel/StockAnalysisControlPanel/TableOutput'
 import { Title } from '../../../../components/Common/Title'
-import { useStockAnalysisCrud } from '../../../../api-hooks'
+import { useStockAnalysis } from '../../../../api-hooks'
 
 function TableOutputComponent() {
     const router = useRouter()
-    const stockAnalysisCrud = useStockAnalysisCrud()
+    const stockAnalysisCrud = useStockAnalysis()
     const { id } = router.query
 
     const [result, setResult] = useState<StockAnalysis2>()

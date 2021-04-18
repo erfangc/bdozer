@@ -13,7 +13,7 @@ export default function RequestStockPage() {
 
     async function handleSubmit(entities: FilingEntity[]) {
         const requests = entities.map(entity => ({ cik: entity.cik, ticker: entity.tradingSymbol }))
-        marketing.stockAnalysisRequest(requests)
+        marketing.stockAnalysisRequest(requests as any)
         setEntities(entities)
     }
 
@@ -21,8 +21,8 @@ export default function RequestStockPage() {
         const requests = entities.map(entity => ({ cik: entity.cik, ticker: entity.tradingSymbol }))
         marketing.stockAnalysisInterest({
             email,
-            requests
-        })
+            requests,
+        } as any)
     }
 
     return (

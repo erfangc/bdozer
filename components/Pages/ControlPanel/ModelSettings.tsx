@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useStockAnalysisCrud } from "../../../api-hooks";
+import { useStockAnalysis } from "../../../api-hooks";
 import { Model, StockAnalysis2 } from "../../../client";
 import { AutoForm, Schema } from "../../AutoForms/AutoForm";
 import { SecondaryButton } from "../../Common/SecondaryButton";
@@ -10,7 +10,7 @@ export function ModelSettings() {
 
     const router = useRouter()
     const { id } = router.query
-    const stockAnalysisCrud = useStockAnalysisCrud()
+    const stockAnalysisCrud = useStockAnalysis()
     const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
 
     async function init() {

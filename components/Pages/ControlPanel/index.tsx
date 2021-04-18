@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-import {useStockAnalysisCrud} from "../../../api-hooks";
+import {useStockAnalysis} from "../../../api-hooks";
 import {FindStockAnalysisResponse} from "../../../client";
 import {PrimaryButton} from "../../Common/PrimaryButton";
 import {Title} from "../../Common/Title";
@@ -12,7 +12,7 @@ import {PublishedToggle} from "./PublishedToggle";
 export function ControlPanel() {
 
     const router = useRouter()
-    const stockAnalysisCrud = useStockAnalysisCrud()
+    const stockAnalysisCrud = useStockAnalysis()
     const [findStockAnalysisResponse, setFindStockAnalysisResponse] = useState<FindStockAnalysisResponse>()
     const [loading, setLoading] = useState(false)
     const [published, setPublished] = useState<boolean | undefined>()

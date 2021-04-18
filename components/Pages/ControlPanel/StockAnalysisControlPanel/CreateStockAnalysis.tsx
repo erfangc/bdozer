@@ -2,20 +2,11 @@ import React, {useState} from 'react'
 import {Title} from "../../../Common/Title";
 import {FilingEntitySearch} from "../../FilingEntitySearch";
 import {FilingEntity} from "../../../../client";
-import {useStockAnalysisCrud, useStockAnalysisWorkflow} from "../../../../api-hooks";
-import {useRouter} from "next/router";
 import {BlockQuote} from "../../../Common/BlockQuote";
 
 export function CreateStockAnalysis() {
 
-    const stockAnalysisCrud = useStockAnalysisCrud()
-    const stockAnalysisWorkflow = useStockAnalysisWorkflow()
     const [loading, setLoading] = useState(false)
-    const router = useRouter()
-
-    function navigateToStockAnalysis(id: string) {
-        router.push(`/control-panel/stock-analyses/${id}`)
-    }
 
     async function handleFilingEntitySelect(filingEntity: FilingEntity) {
         //
@@ -23,9 +14,6 @@ export function CreateStockAnalysis() {
         //
         setLoading(true)
         try {
-            const {data: stockAnalysis} = await stockAnalysisWorkflow.create(filingEntity.cik)
-            await stockAnalysisCrud.saveStockAnalysis(stockAnalysis)
-            navigateToStockAnalysis(stockAnalysis['_id'])
         } catch (e) {
             console.error(e)
         }
@@ -35,7 +23,7 @@ export function CreateStockAnalysis() {
     return (
         <main className="container mx-auto min-h-screen px-2">
             <div className="space-y-8 flex justify-center flex-col h-full">
-                <Title>Create New Analysis</Title>
+                <Title>Create New Analysis (This feature has been disabled)</Title>
                 <FilingEntitySearch
                     className="w-80 lg:w-full"
                     onSubmit={handleFilingEntitySelect}

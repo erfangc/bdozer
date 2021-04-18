@@ -108,6 +108,6 @@ export function merge(item: Item, property: any): Item {
         case ItemTypeEnum.CompoundedGrowth:
             return {...item, compoundedGrowth: {...property}};
         default:
-            return {};
+            return {...item};
     }
 }

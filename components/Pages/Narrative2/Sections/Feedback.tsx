@@ -13,7 +13,7 @@ export function Feedback(props: Props) {
     const [submitted, setSubmitted] = useState(false)
 
     function submitForm(values: any) {
-        marketing.feedback20210329({ body: values })
+        marketing.feedback20210329({ body: values } as any)
         setSubmitted(true)
     }
 

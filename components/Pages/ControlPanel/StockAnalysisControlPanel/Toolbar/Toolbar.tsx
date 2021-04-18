@@ -2,7 +2,7 @@ import {useAuth0} from '@auth0/auth0-react'
 import {useRouter} from 'next/router'
 import React, {useState} from 'react'
 import {v4 as uuid} from 'uuid'
-import {basePath, useStockAnalysisCrud, useStockAnalysisWorkflow} from '../../../../../api-hooks'
+import {basePath, useStockAnalysis} from '../../../../../api-hooks'
 import {StockAnalysis2} from '../../../../../client'
 import {ExcelDownloading, ExcelIcon} from '../../../../Common/DownloadToExcel'
 import {Notification, notificationStore} from '../../../../Notifications/NotificationStore'
@@ -22,14 +22,13 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
     const {getIdTokenClaims} = useAuth0()
     const router = useRouter()
     const {id} = router.query
-    const stockAnalysisWorkflow = useStockAnalysisWorkflow()
-    const stockAnalysisCrud = useStockAnalysisCrud()
+    const stockAnalysisService = useStockAnalysis()
     const [downloading, setDownloading] = useState(false)
 
     async function refresh() {
         setLoading(true)
         try {
-            const resp = await stockAnalysisWorkflow.refresh(stockAnalysis)
+            const resp = await stockAnalysisService.refreshStockAnalysis(stockAnalysis)
             await updateStockAnalysis(resp.data)
         } catch (e) {
             console.error(e);
@@ -43,13 +42,13 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
 
     async function publish() {
         const id = stockAnalysis['_id'];
-        await stockAnalysisCrud.publish(id)
+        await stockAnalysisService.publish(id)
         router.push(`/published-stock-analyses/${id}/narrative2`)
     }
 
     async function unpublish() {
         const id = stockAnalysis['_id']
-        await stockAnalysisCrud.unpublish(id)
+        await stockAnalysisService.unpublish(id)
         const notification: Notification = {
             id: uuid(),
             delay: 100,

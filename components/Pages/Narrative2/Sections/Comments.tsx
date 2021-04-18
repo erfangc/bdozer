@@ -23,13 +23,13 @@ export function Comments({ result }: Props) {
     }
 
     async function postComment() {
-        const comment: Comment = {
+        const comment = {
             stockAnalysisId,
             text,
             userId: user?.sub,
             name: user?.name,
         }
-        await commentsApi.postComment(comment)
+        await commentsApi.postComment(comment as any)
         setText('')
         fetchComments()
     }

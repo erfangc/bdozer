@@ -32,31 +32,31 @@ export interface Address {
      * @type {number}
      * @memberof Address
      */
-    sheet?: number;
+    sheet: number;
     /**
      * 
      * @type {string}
      * @memberof Address
      */
-    sheetName?: string;
+    sheetName: string;
     /**
      * 
      * @type {number}
      * @memberof Address
      */
-    row?: number;
+    row: number;
     /**
      * 
      * @type {number}
      * @memberof Address
      */
-    column?: number;
+    column: number;
     /**
      * 
      * @type {string}
      * @memberof Address
      */
-    columnLetter?: string;
+    columnLetter: string;
 }
 /**
  * 
@@ -69,19 +69,19 @@ export interface AggregatedFact {
      * @type {Array<string>}
      * @memberof AggregatedFact
      */
-    factIds?: Array<string>;
+    factIds: Array<string>;
     /**
      * 
      * @type {number}
      * @memberof AggregatedFact
      */
-    value?: number;
+    value: number;
     /**
      * 
      * @type {string}
      * @memberof AggregatedFact
      */
-    conceptName?: string;
+    conceptName: string;
     /**
      * 
      * @type {string}
@@ -93,7 +93,7 @@ export interface AggregatedFact {
      * @type {string}
      * @memberof AggregatedFact
      */
-    documentPeriodEndDate?: string;
+    documentPeriodEndDate: string;
 }
 
 /**
@@ -112,68 +112,6 @@ export enum AggregatedFactDocumentFiscalPeriodFocusEnum {
 /**
  * 
  * @export
- * @interface Arc
- */
-export interface Arc {
-    /**
-     * 
-     * @type {string}
-     * @memberof Arc
-     */
-    parentHref?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Arc
-     */
-    conceptHref?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Arc
-     */
-    conceptName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Arc
-     */
-    preferredLabel?: string;
-    /**
-     * 
-     * @type {Array<Calculation>}
-     * @memberof Arc
-     */
-    calculations?: Array<Calculation>;
-}
-/**
- * 
- * @export
- * @interface Calculation
- */
-export interface Calculation {
-    /**
-     * 
-     * @type {string}
-     * @memberof Calculation
-     */
-    conceptHref?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Calculation
-     */
-    weight?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Calculation
-     */
-    conceptName?: string;
-}
-/**
- * 
- * @export
  * @interface Cell
  */
 export interface Cell {
@@ -182,19 +120,19 @@ export interface Cell {
      * @type {number}
      * @memberof Cell
      */
-    period?: number;
+    period: number;
     /**
      * 
      * @type {string}
      * @memberof Cell
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {Item}
      * @memberof Cell
      */
-    item?: Item;
+    item: Item;
     /**
      * 
      * @type {number}
@@ -224,7 +162,7 @@ export interface Cell {
      * @type {Array<string>}
      * @memberof Cell
      */
-    dependentCellNames?: Array<string>;
+    dependentCellNames: Array<string>;
 }
 /**
  * 
@@ -237,25 +175,25 @@ export interface Comment {
      * @type {string}
      * @memberof Comment
      */
-    get_id?: string;
+    get_id: string;
     /**
      * 
      * @type {string}
      * @memberof Comment
      */
-    stockAnalysisId?: string;
+    stockAnalysisId: string;
     /**
      * 
      * @type {string}
      * @memberof Comment
      */
-    text?: string;
+    text: string;
     /**
      * 
      * @type {string}
      * @memberof Comment
      */
-    lastUpdated?: string;
+    lastUpdated: string;
     /**
      * 
      * @type {string}
@@ -299,13 +237,13 @@ export interface Component {
      * @type {number}
      * @memberof Component
      */
-    weight?: number;
+    weight: number;
     /**
      * 
      * @type {string}
      * @memberof Component
      */
-    itemName?: string;
+    itemName: string;
 }
 /**
  * 
@@ -318,7 +256,7 @@ export interface CompoundedGrowth {
      * @type {number}
      * @memberof CompoundedGrowth
      */
-    growthRate?: number;
+    growthRate: number;
 }
 /**
  * 
@@ -331,49 +269,49 @@ export interface DerivedStockAnalytics {
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    zeroGrowthPrice?: number;
+    zeroGrowthPrice: number;
     /**
      * 
      * @type {{ [key: string]: Waterfall; }}
      * @memberof DerivedStockAnalytics
      */
-    businessWaterfall?: { [key: string]: Waterfall; };
+    businessWaterfall: { [key: string]: Waterfall; };
     /**
      * 
      * @type {Item}
      * @memberof DerivedStockAnalytics
      */
-    shareOutstanding?: Item;
+    shareOutstanding: Item;
     /**
      * 
      * @type {Item}
      * @memberof DerivedStockAnalytics
      */
-    profitPerShare?: Item;
+    profitPerShare: Item;
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    targetPrice?: number;
+    targetPrice: number;
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    discountRate?: number;
+    discountRate: number;
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    revenueCAGR?: number;
+    revenueCAGR: number;
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    currentPrice?: number;
+    currentPrice: number;
 }
 /**
  * 
@@ -386,7 +324,7 @@ export interface Discrete {
      * @type {{ [key: string]: string; }}
      * @memberof Discrete
      */
-    formulas?: { [key: string]: string; };
+    formulas: { [key: string]: string; };
 }
 /**
  * 
@@ -399,19 +337,19 @@ export interface EarlyAccessRequest {
      * @type {string}
      * @memberof EarlyAccessRequest
      */
-    get_id?: string;
+    get_id: string;
     /**
      * 
      * @type {string}
      * @memberof EarlyAccessRequest
      */
-    email?: string;
+    email: string;
     /**
      * 
      * @type {string}
      * @memberof EarlyAccessRequest
      */
-    lastUpdated?: string;
+    lastUpdated: string;
 }
 /**
  * 
@@ -442,7 +380,7 @@ export interface EdgarEntity {
      * @type {EdgarEntitySource}
      * @memberof EdgarEntity
      */
-    get_source?: EdgarEntitySource;
+    get_source: EdgarEntitySource;
 }
 /**
  * 
@@ -455,13 +393,13 @@ export interface EdgarEntitySource {
      * @type {string}
      * @memberof EdgarEntitySource
      */
-    entity?: string;
+    entity: string;
     /**
      * 
      * @type {string}
      * @memberof EdgarEntitySource
      */
-    entity_words?: string;
+    entity_words: string;
     /**
      * 
      * @type {string}
@@ -486,13 +424,13 @@ export interface EdgarFilingMetadata {
      * @type {Array<string>}
      * @memberof EdgarFilingMetadata
      */
-    ciks?: Array<string>;
+    ciks: Array<string>;
     /**
      * 
      * @type {string}
      * @memberof EdgarFilingMetadata
      */
-    period_ending?: string;
+    period_ending: string;
     /**
      * 
      * @type {string}
@@ -504,13 +442,13 @@ export interface EdgarFilingMetadata {
      * @type {Array<string>}
      * @memberof EdgarFilingMetadata
      */
-    file_num?: Array<string>;
+    file_num: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof EdgarFilingMetadata
      */
-    display_names?: Array<string>;
+    display_names: Array<string>;
     /**
      * 
      * @type {string}
@@ -522,37 +460,37 @@ export interface EdgarFilingMetadata {
      * @type {Array<string>}
      * @memberof EdgarFilingMetadata
      */
-    biz_states?: Array<string>;
+    biz_states: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof EdgarFilingMetadata
      */
-    sics?: Array<string>;
+    sics: Array<string>;
     /**
      * 
      * @type {string}
      * @memberof EdgarFilingMetadata
      */
-    form?: string;
+    form: string;
     /**
      * 
      * @type {string}
      * @memberof EdgarFilingMetadata
      */
-    adsh?: string;
+    adsh: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof EdgarFilingMetadata
      */
-    biz_locations?: Array<string>;
+    biz_locations: Array<string>;
     /**
      * 
      * @type {string}
      * @memberof EdgarFilingMetadata
      */
-    file_date?: string;
+    file_date: string;
     /**
      * 
      * @type {string}
@@ -570,7 +508,39 @@ export interface EdgarFilingMetadata {
      * @type {Array<string>}
      * @memberof EdgarFilingMetadata
      */
-    inc_states?: Array<string>;
+    inc_states: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface EvaluateModelRequest
+ */
+export interface EvaluateModelRequest {
+    /**
+     * 
+     * @type {Model}
+     * @memberof EvaluateModelRequest
+     */
+    model: Model;
+}
+/**
+ * 
+ * @export
+ * @interface EvaluateModelResponse
+ */
+export interface EvaluateModelResponse {
+    /**
+     * 
+     * @type {Array<Cell>}
+     * @memberof EvaluateModelResponse
+     */
+    cells: Array<Cell>;
+    /**
+     * 
+     * @type {DerivedStockAnalytics}
+     * @memberof EvaluateModelResponse
+     */
+    derivedStockAnalytics: DerivedStockAnalytics;
 }
 /**
  * 
@@ -583,67 +553,67 @@ export interface Fact {
      * @type {string}
      * @memberof Fact
      */
-    get_id?: string;
+    get_id: string;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    instanceDocumentElementId?: string;
+    instanceDocumentElementId: string;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    instanceDocumentElementName?: string;
+    instanceDocumentElementName: string;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    cik?: string;
+    cik: string;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    adsh?: string;
+    adsh: string;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    entityName?: string;
+    entityName: string;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    primarySymbol?: string;
+    primarySymbol: string;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    formType?: string;
+    formType: string;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    conceptName?: string;
+    conceptName: string;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    conceptHref?: string;
+    conceptHref: string;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    namespace?: string;
+    namespace: string;
     /**
      * 
      * @type {string}
@@ -667,31 +637,31 @@ export interface Fact {
      * @type {string}
      * @memberof Fact
      */
-    documentFiscalPeriodFocus?: FactDocumentFiscalPeriodFocusEnum;
+    documentFiscalPeriodFocus: FactDocumentFiscalPeriodFocusEnum;
     /**
      * 
      * @type {number}
      * @memberof Fact
      */
-    documentFiscalYearFocus?: number;
+    documentFiscalYearFocus: number;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    documentPeriodEndDate?: string;
+    documentPeriodEndDate: string;
     /**
      * 
      * @type {Array<XbrlExplicitMember>}
      * @memberof Fact
      */
-    explicitMembers?: Array<XbrlExplicitMember>;
+    explicitMembers: Array<XbrlExplicitMember>;
     /**
      * 
      * @type {string}
      * @memberof Fact
      */
-    sourceDocument?: string;
+    sourceDocument: string;
     /**
      * 
      * @type {string}
@@ -721,7 +691,7 @@ export interface Fact {
      * @type {string}
      * @memberof Fact
      */
-    stringValue?: string;
+    stringValue: string;
     /**
      * 
      * @type {number}
@@ -733,7 +703,7 @@ export interface Fact {
      * @type {string}
      * @memberof Fact
      */
-    lastUpdated?: string;
+    lastUpdated: string;
 }
 
 /**
@@ -760,113 +730,26 @@ export interface Feedback {
      * @type {string}
      * @memberof Feedback
      */
-    get_id?: string;
+    get_id: string;
     /**
      * 
      * @type {object}
      * @memberof Feedback
      */
-    body?: object;
+    body: object;
     /**
      * 
      * @type {string}
      * @memberof Feedback
      */
-    lastUpdated?: string;
+    lastUpdated: string;
     /**
      * 
      * @type {string}
      * @memberof Feedback
      */
-    version?: string;
+    version: string;
 }
-/**
- * 
- * @export
- * @interface FilingCalculations
- */
-export interface FilingCalculations {
-    /**
-     * 
-     * @type {string}
-     * @memberof FilingCalculations
-     */
-    get_id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FilingCalculations
-     */
-    cik?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FilingCalculations
-     */
-    adsh?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FilingCalculations
-     */
-    formType?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FilingCalculations
-     */
-    documentFiscalPeriodFocus?: FilingCalculationsDocumentFiscalPeriodFocusEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof FilingCalculations
-     */
-    documentFiscalYearFocus?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof FilingCalculations
-     */
-    documentPeriodEndDate?: string;
-    /**
-     * 
-     * @type {Array<Arc>}
-     * @memberof FilingCalculations
-     */
-    incomeStatement?: Array<Arc>;
-    /**
-     * 
-     * @type {Array<Arc>}
-     * @memberof FilingCalculations
-     */
-    cashFlowStatement?: Array<Arc>;
-    /**
-     * 
-     * @type {Array<Arc>}
-     * @memberof FilingCalculations
-     */
-    balanceSheet?: Array<Arc>;
-    /**
-     * 
-     * @type {string}
-     * @memberof FilingCalculations
-     */
-    lastUpdated?: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum FilingCalculationsDocumentFiscalPeriodFocusEnum {
-    Fy = 'FY',
-    Q1 = 'Q1',
-    Q2 = 'Q2',
-    Q3 = 'Q3',
-    Q4 = 'Q4',
-    Na = 'NA'
-}
-
 /**
  * 
  * @export
@@ -878,13 +761,13 @@ export interface FilingEntity {
      * @type {string}
      * @memberof FilingEntity
      */
-    get_id?: string;
+    get_id: string;
     /**
      * 
      * @type {string}
      * @memberof FilingEntity
      */
-    cik?: string;
+    cik: string;
     /**
      * 
      * @type {string}
@@ -896,7 +779,7 @@ export interface FilingEntity {
      * @type {string}
      * @memberof FilingEntity
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
@@ -932,13 +815,13 @@ export interface FilingEntity {
      * @type {Array<string>}
      * @memberof FilingEntity
      */
-    tickers?: Array<string>;
+    tickers: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof FilingEntity
      */
-    exchanges?: Array<string>;
+    exchanges: Array<string>;
     /**
      * 
      * @type {string}
@@ -1010,7 +893,7 @@ export interface FilingEntity {
      * @type {string}
      * @memberof FilingEntity
      */
-    lastUpdated?: string;
+    lastUpdated: string;
     /**
      * 
      * @type {string}
@@ -1035,13 +918,13 @@ export interface FindStockAnalysisResponse {
      * @type {number}
      * @memberof FindStockAnalysisResponse
      */
-    totalCount?: number;
+    totalCount: number;
     /**
      * 
      * @type {Array<StockAnalysis2>}
      * @memberof FindStockAnalysisResponse
      */
-    stockAnalyses?: Array<StockAnalysis2>;
+    stockAnalyses: Array<StockAnalysis2>;
 }
 /**
  * 
@@ -1054,7 +937,7 @@ export interface FixedCost {
      * @type {number}
      * @memberof FixedCost
      */
-    cost?: number;
+    cost: number;
 }
 /**
  * 
@@ -1067,13 +950,13 @@ export interface FixedCostAutoFill {
      * @type {string}
      * @memberof FixedCostAutoFill
      */
-    label?: string;
+    label: string;
     /**
      * 
      * @type {FixedCost}
      * @memberof FixedCostAutoFill
      */
-    fixedCost?: FixedCost;
+    fixedCost: FixedCost;
 }
 /**
  * 
@@ -1092,7 +975,7 @@ export interface HistoricalValue {
      * @type {Array<string>}
      * @memberof HistoricalValue
      */
-    factIds?: Array<string>;
+    factIds: Array<string>;
     /**
      * 
      * @type {string}
@@ -1153,7 +1036,7 @@ export interface Item {
      * @type {string}
      * @memberof Item
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
@@ -1165,7 +1048,7 @@ export interface Item {
      * @type {string}
      * @memberof Item
      */
-    type?: ItemTypeEnum;
+    type: ItemTypeEnum;
     /**
      * 
      * @type {HistoricalValue}
@@ -1177,7 +1060,7 @@ export interface Item {
      * @type {string}
      * @memberof Item
      */
-    formula?: string;
+    formula: string;
     /**
      * 
      * @type {SumOfOtherItems}
@@ -1249,7 +1132,7 @@ export interface Item {
      * @type {boolean}
      * @memberof Item
      */
-    subtotal?: boolean;
+    subtotal: boolean;
 }
 
 /**
@@ -1279,13 +1162,25 @@ export interface Model {
      * @type {string}
      * @memberof Model
      */
+    ticker?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
+    cik?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Model
+     */
     adsh?: string;
     /**
      * 
      * @type {Array<Item>}
      * @memberof Model
      */
-    itemOverrides?: Array<Item>;
+    itemOverrides: Array<Item>;
     /**
      * 
      * @type {string}
@@ -1309,85 +1204,73 @@ export interface Model {
      * @type {string}
      * @memberof Model
      */
-    ebitConceptName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Model
-     */
-    operatingCostConceptName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Model
-     */
     sharesOutstandingConceptName?: string;
     /**
      * 
      * @type {Array<Item>}
      * @memberof Model
      */
-    incomeStatementItems?: Array<Item>;
+    incomeStatementItems: Array<Item>;
     /**
      * 
      * @type {Array<Item>}
      * @memberof Model
      */
-    balanceSheetItems?: Array<Item>;
+    balanceSheetItems: Array<Item>;
     /**
      * 
      * @type {Array<Item>}
      * @memberof Model
      */
-    cashFlowStatementItems?: Array<Item>;
+    cashFlowStatementItems: Array<Item>;
     /**
      * 
      * @type {Array<Item>}
      * @memberof Model
      */
-    otherItems?: Array<Item>;
+    otherItems: Array<Item>;
     /**
      * 
      * @type {number}
      * @memberof Model
      */
-    beta?: number;
+    beta: number;
     /**
      * 
      * @type {number}
      * @memberof Model
      */
-    riskFreeRate?: number;
+    riskFreeRate: number;
     /**
      * 
      * @type {number}
      * @memberof Model
      */
-    equityRiskPremium?: number;
+    equityRiskPremium: number;
     /**
      * 
      * @type {number}
      * @memberof Model
      */
-    terminalGrowthRate?: number;
+    terminalGrowthRate: number;
     /**
      * 
      * @type {number}
      * @memberof Model
      */
-    periods?: number;
+    periods: number;
     /**
      * 
      * @type {number}
      * @memberof Model
      */
-    excelColumnOffset?: number;
+    excelColumnOffset: number;
     /**
      * 
      * @type {number}
      * @memberof Model
      */
-    excelRowOffset?: number;
+    excelRowOffset: number;
 }
 /**
  * 
@@ -1400,13 +1283,13 @@ export interface ModelTemplate {
      * @type {string}
      * @memberof ModelTemplate
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof ModelTemplate
      */
-    template?: string;
+    template: string;
 }
 /**
  * 
@@ -1419,7 +1302,7 @@ export interface MxParserEvaluateRequest {
      * @type {string}
      * @memberof MxParserEvaluateRequest
      */
-    formula?: string;
+    formula: string;
 }
 /**
  * 
@@ -1451,7 +1334,7 @@ export interface PercentOfRevenue {
      * @type {number}
      * @memberof PercentOfRevenue
      */
-    percentOfRevenue?: number;
+    percentOfRevenue: number;
 }
 /**
  * 
@@ -1464,13 +1347,13 @@ export interface PercentOfRevenueAutoFill {
      * @type {string}
      * @memberof PercentOfRevenueAutoFill
      */
-    label?: string;
+    label: string;
     /**
      * 
      * @type {PercentOfRevenue}
      * @memberof PercentOfRevenueAutoFill
      */
-    percentOfRevenue?: PercentOfRevenue;
+    percentOfRevenue: PercentOfRevenue;
 }
 /**
  * 
@@ -1483,7 +1366,7 @@ export interface PercentOfTotalAsset {
      * @type {number}
      * @memberof PercentOfTotalAsset
      */
-    percentOfTotalAsset?: number;
+    percentOfTotalAsset: number;
 }
 /**
  * 
@@ -1496,7 +1379,7 @@ export interface StockAnalysis2 {
      * @type {string}
      * @memberof StockAnalysis2
      */
-    get_id?: string;
+    get_id: string;
     /**
      * 
      * @type {string}
@@ -1526,13 +1409,13 @@ export interface StockAnalysis2 {
      * @type {Model}
      * @memberof StockAnalysis2
      */
-    model?: Model;
+    model: Model;
     /**
      * 
      * @type {Array<Cell>}
      * @memberof StockAnalysis2
      */
-    cells?: Array<Cell>;
+    cells: Array<Cell>;
     /**
      * 
      * @type {DerivedStockAnalytics}
@@ -1550,19 +1433,19 @@ export interface StockAnalysis2 {
      * @type {Array<string>}
      * @memberof StockAnalysis2
      */
-    tags?: Array<string>;
+    tags: Array<string>;
     /**
      * 
      * @type {boolean}
      * @memberof StockAnalysis2
      */
-    published?: boolean;
+    published: boolean;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysis2
      */
-    lastUpdated?: string;
+    lastUpdated: string;
 }
 /**
  * 
@@ -1575,25 +1458,25 @@ export interface StockAnalysisInterest {
      * @type {string}
      * @memberof StockAnalysisInterest
      */
-    get_id?: string;
+    get_id: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysisInterest
      */
-    email?: string;
+    email: string;
     /**
      * 
      * @type {Array<StockAnalysisRequest>}
      * @memberof StockAnalysisInterest
      */
-    requests?: Array<StockAnalysisRequest>;
+    requests: Array<StockAnalysisRequest>;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysisInterest
      */
-    lastUpdated?: string;
+    lastUpdated: string;
 }
 /**
  * 
@@ -1606,25 +1489,25 @@ export interface StockAnalysisRequest {
      * @type {string}
      * @memberof StockAnalysisRequest
      */
-    get_id?: string;
+    get_id: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysisRequest
      */
-    cik?: string;
+    cik: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysisRequest
      */
-    ticker?: string;
+    ticker: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysisRequest
      */
-    lastUpdated?: string;
+    lastUpdated: string;
 }
 /**
  * 
@@ -1637,19 +1520,19 @@ export interface SubscriptionRevenue {
      * @type {number}
      * @memberof SubscriptionRevenue
      */
-    totalSubscriptionAtTerminalYear?: number;
+    totalSubscriptionAtTerminalYear: number;
     /**
      * 
      * @type {number}
      * @memberof SubscriptionRevenue
      */
-    initialSubscriptions?: number;
+    initialSubscriptions: number;
     /**
      * 
      * @type {number}
      * @memberof SubscriptionRevenue
      */
-    averageRevenuePerSubscription?: number;
+    averageRevenuePerSubscription: number;
 }
 /**
  * 
@@ -1662,7 +1545,7 @@ export interface SumOfOtherItems {
      * @type {Array<Component>}
      * @memberof SumOfOtherItems
      */
-    components?: Array<Component>;
+    components: Array<Component>;
 }
 /**
  * 
@@ -1675,19 +1558,19 @@ export interface UnitSalesRevenue {
      * @type {number}
      * @memberof UnitSalesRevenue
      */
-    steadyStateUnitsSold?: number;
+    steadyStateUnitsSold: number;
     /**
      * 
      * @type {number}
      * @memberof UnitSalesRevenue
      */
-    averageSellingPrice?: number;
+    averageSellingPrice: number;
     /**
      * 
      * @type {number}
      * @memberof UnitSalesRevenue
      */
-    initialUnitsSold?: number;
+    initialUnitsSold: number;
 }
 /**
  * 
@@ -1700,19 +1583,19 @@ export interface Waterfall {
      * @type {Cell}
      * @memberof Waterfall
      */
-    revenue?: Cell;
+    revenue: Cell;
     /**
      * 
      * @type {Array<Cell>}
      * @memberof Waterfall
      */
-    expenses?: Array<Cell>;
+    expenses: Array<Cell>;
     /**
      * 
      * @type {Cell}
      * @memberof Waterfall
      */
-    profit?: Cell;
+    profit: Cell;
 }
 /**
  * 
@@ -1725,13 +1608,13 @@ export interface XbrlExplicitMember {
      * @type {string}
      * @memberof XbrlExplicitMember
      */
-    dimension?: string;
+    dimension: string;
     /**
      * 
      * @type {string}
      * @memberof XbrlExplicitMember
      */
-    value?: string;
+    value: string;
 }
 
 /**
@@ -2514,39 +2397,6 @@ export const FactBaseUnsecuredControllerApiAxiosParamCreator = function (configu
     return {
         /**
          * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        calculations: async (cik: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('calculations', 'cik', cik)
-            const localVarPath = `/public/fact-base/{cik}/calculations`
-                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {string} factId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2659,16 +2509,6 @@ export const FactBaseUnsecuredControllerApiFp = function(configuration?: Configu
     return {
         /**
          * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async calculations(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingCalculations>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.calculations(cik, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @param {string} factId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2709,15 +2549,6 @@ export const FactBaseUnsecuredControllerApiFactory = function (configuration?: C
     return {
         /**
          * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        calculations(cik: string, options?: any): AxiosPromise<FilingCalculations> {
-            return localVarFp.calculations(cik, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @param {string} factId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2753,17 +2584,6 @@ export const FactBaseUnsecuredControllerApiFactory = function (configuration?: C
  * @extends {BaseAPI}
  */
 export class FactBaseUnsecuredControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} cik 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FactBaseUnsecuredControllerApi
-     */
-    public calculations(cik: string, options?: any) {
-        return FactBaseUnsecuredControllerApiFp(this.configuration).calculations(cik, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @param {string} factId 
@@ -3838,6 +3658,41 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
             };
         },
         /**
+         *          This API evaluates a model you\'ve assembled and return a stock analysis object                   The passed in Model represents high level relationship between the various financial statement items of underlying a stock          Calling this method evaluates those relationships and turn them into real numbers                  This API does not persist (save) the stock analysis. Please call the stock analysis service API to save the analysis                  This is a stateless calculator         
+         * @param {EvaluateModelRequest} evaluateModelRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        evaluateStockAnalysis: async (evaluateModelRequest: EvaluateModelRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'evaluateModelRequest' is not null or undefined
+            assertParamExists('evaluateStockAnalysis', 'evaluateModelRequest', evaluateModelRequest)
+            const localVarPath = `/api/stock-analyzer/stock-analyses/evaluate`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(evaluateModelRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @param {boolean} [published] 
          * @param {string} [userId] 
@@ -3968,6 +3823,41 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
             };
         },
         /**
+         *          This API refreshes an existing stock analysis and re-evaluate         the model attached to it to produce renewed outputs. Call this API          when you are in possession of a previously run stock analysis                  The returned refreshed stock analysis preserve all the metadata, model overrides         of the original analysis                  This API does not persist (save) the new analysis. This API is a stateless calculator         
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        refreshStockAnalysis: async (stockAnalysis2: StockAnalysis2, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'stockAnalysis2' is not null or undefined
+            assertParamExists('refreshStockAnalysis', 'stockAnalysis2', stockAnalysis2)
+            const localVarPath = `/api/stock-analyzer/stock-analyses/refresh`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(stockAnalysis2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @param {StockAnalysis2} stockAnalysis2 
          * @param {*} [options] Override http request option.
@@ -4056,6 +3946,16 @@ export const StockAnalysisControllerApiFp = function(configuration?: Configurati
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         *          This API evaluates a model you\'ve assembled and return a stock analysis object                   The passed in Model represents high level relationship between the various financial statement items of underlying a stock          Calling this method evaluates those relationships and turn them into real numbers                  This API does not persist (save) the stock analysis. Please call the stock analysis service API to save the analysis                  This is a stateless calculator         
+         * @param {EvaluateModelRequest} evaluateModelRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async evaluateStockAnalysis(evaluateModelRequest: EvaluateModelRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvaluateModelResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.evaluateStockAnalysis(evaluateModelRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @param {boolean} [published] 
          * @param {string} [userId] 
@@ -4089,6 +3989,16 @@ export const StockAnalysisControllerApiFp = function(configuration?: Configurati
          */
         async publish(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.publish(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *          This API refreshes an existing stock analysis and re-evaluate         the model attached to it to produce renewed outputs. Call this API          when you are in possession of a previously run stock analysis                  The returned refreshed stock analysis preserve all the metadata, model overrides         of the original analysis                  This API does not persist (save) the new analysis. This API is a stateless calculator         
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async refreshStockAnalysis(stockAnalysis2: StockAnalysis2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.refreshStockAnalysis(stockAnalysis2, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4131,6 +4041,15 @@ export const StockAnalysisControllerApiFactory = function (configuration?: Confi
             return localVarFp.deleteStockAnalysis(id, options).then((request) => request(axios, basePath));
         },
         /**
+         *          This API evaluates a model you\'ve assembled and return a stock analysis object                   The passed in Model represents high level relationship between the various financial statement items of underlying a stock          Calling this method evaluates those relationships and turn them into real numbers                  This API does not persist (save) the stock analysis. Please call the stock analysis service API to save the analysis                  This is a stateless calculator         
+         * @param {EvaluateModelRequest} evaluateModelRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        evaluateStockAnalysis(evaluateModelRequest: EvaluateModelRequest, options?: any): AxiosPromise<EvaluateModelResponse> {
+            return localVarFp.evaluateStockAnalysis(evaluateModelRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @param {boolean} [published] 
          * @param {string} [userId] 
@@ -4162,6 +4081,15 @@ export const StockAnalysisControllerApiFactory = function (configuration?: Confi
          */
         publish(id: string, options?: any): AxiosPromise<StockAnalysis2> {
             return localVarFp.publish(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         *          This API refreshes an existing stock analysis and re-evaluate         the model attached to it to produce renewed outputs. Call this API          when you are in possession of a previously run stock analysis                  The returned refreshed stock analysis preserve all the metadata, model overrides         of the original analysis                  This API does not persist (save) the new analysis. This API is a stateless calculator         
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        refreshStockAnalysis(stockAnalysis2: StockAnalysis2, options?: any): AxiosPromise<StockAnalysis2> {
+            return localVarFp.refreshStockAnalysis(stockAnalysis2, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4200,6 +4128,17 @@ export class StockAnalysisControllerApi extends BaseAPI {
      */
     public deleteStockAnalysis(id: string, options?: any) {
         return StockAnalysisControllerApiFp(this.configuration).deleteStockAnalysis(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *          This API evaluates a model you\'ve assembled and return a stock analysis object                   The passed in Model represents high level relationship between the various financial statement items of underlying a stock          Calling this method evaluates those relationships and turn them into real numbers                  This API does not persist (save) the stock analysis. Please call the stock analysis service API to save the analysis                  This is a stateless calculator         
+     * @param {EvaluateModelRequest} evaluateModelRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StockAnalysisControllerApi
+     */
+    public evaluateStockAnalysis(evaluateModelRequest: EvaluateModelRequest, options?: any) {
+        return StockAnalysisControllerApiFp(this.configuration).evaluateStockAnalysis(evaluateModelRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4242,6 +4181,17 @@ export class StockAnalysisControllerApi extends BaseAPI {
     }
 
     /**
+     *          This API refreshes an existing stock analysis and re-evaluate         the model attached to it to produce renewed outputs. Call this API          when you are in possession of a previously run stock analysis                  The returned refreshed stock analysis preserve all the metadata, model overrides         of the original analysis                  This API does not persist (save) the new analysis. This API is a stateless calculator         
+     * @param {StockAnalysis2} stockAnalysis2 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StockAnalysisControllerApi
+     */
+    public refreshStockAnalysis(stockAnalysis2: StockAnalysis2, options?: any) {
+        return StockAnalysisControllerApiFp(this.configuration).refreshStockAnalysis(stockAnalysis2, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 
      * @param {StockAnalysis2} stockAnalysis2 
      * @param {*} [options] Override http request option.
@@ -4266,176 +4216,10 @@ export class StockAnalysisControllerApi extends BaseAPI {
 
 
 /**
- * StockAnalysisWorkflowControllerApi - axios parameter creator
+ * StockAnalysisExcelDownloaderControllerApi - axios parameter creator
  * @export
  */
-export const StockAnalysisWorkflowControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        create: async (cik: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('create', 'cik', cik)
-            const localVarPath = `/api/stock-analyzer/workflow/{cik}`
-                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {StockAnalysis2} stockAnalysis2 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        refresh: async (stockAnalysis2: StockAnalysis2, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'stockAnalysis2' is not null or undefined
-            assertParamExists('refresh', 'stockAnalysis2', stockAnalysis2)
-            const localVarPath = `/api/stock-analyzer/workflow/refresh`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(stockAnalysis2, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * StockAnalysisWorkflowControllerApi - functional programming interface
- * @export
- */
-export const StockAnalysisWorkflowControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = StockAnalysisWorkflowControllerApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async create(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.create(cik, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {StockAnalysis2} stockAnalysis2 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async refresh(stockAnalysis2: StockAnalysis2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.refresh(stockAnalysis2, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * StockAnalysisWorkflowControllerApi - factory interface
- * @export
- */
-export const StockAnalysisWorkflowControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = StockAnalysisWorkflowControllerApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        create(cik: string, options?: any): AxiosPromise<StockAnalysis2> {
-            return localVarFp.create(cik, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {StockAnalysis2} stockAnalysis2 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        refresh(stockAnalysis2: StockAnalysis2, options?: any): AxiosPromise<StockAnalysis2> {
-            return localVarFp.refresh(stockAnalysis2, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * StockAnalysisWorkflowControllerApi - object-oriented interface
- * @export
- * @class StockAnalysisWorkflowControllerApi
- * @extends {BaseAPI}
- */
-export class StockAnalysisWorkflowControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} cik 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StockAnalysisWorkflowControllerApi
-     */
-    public create(cik: string, options?: any) {
-        return StockAnalysisWorkflowControllerApiFp(this.configuration).create(cik, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {StockAnalysis2} stockAnalysis2 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StockAnalysisWorkflowControllerApi
-     */
-    public refresh(stockAnalysis2: StockAnalysis2, options?: any) {
-        return StockAnalysisWorkflowControllerApiFp(this.configuration).refresh(stockAnalysis2, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * StockAnalysisWorkflowDownloadControllerApi - axios parameter creator
- * @export
- */
-export const StockAnalysisWorkflowDownloadControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const StockAnalysisExcelDownloaderControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -4474,11 +4258,11 @@ export const StockAnalysisWorkflowDownloadControllerApiAxiosParamCreator = funct
 };
 
 /**
- * StockAnalysisWorkflowDownloadControllerApi - functional programming interface
+ * StockAnalysisExcelDownloaderControllerApi - functional programming interface
  * @export
  */
-export const StockAnalysisWorkflowDownloadControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = StockAnalysisWorkflowDownloadControllerApiAxiosParamCreator(configuration)
+export const StockAnalysisExcelDownloaderControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = StockAnalysisExcelDownloaderControllerApiAxiosParamCreator(configuration)
     return {
         /**
          * 
@@ -4494,11 +4278,11 @@ export const StockAnalysisWorkflowDownloadControllerApiFp = function(configurati
 };
 
 /**
- * StockAnalysisWorkflowDownloadControllerApi - factory interface
+ * StockAnalysisExcelDownloaderControllerApi - factory interface
  * @export
  */
-export const StockAnalysisWorkflowDownloadControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = StockAnalysisWorkflowDownloadControllerApiFp(configuration)
+export const StockAnalysisExcelDownloaderControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = StockAnalysisExcelDownloaderControllerApiFp(configuration)
     return {
         /**
          * 
@@ -4513,21 +4297,21 @@ export const StockAnalysisWorkflowDownloadControllerApiFactory = function (confi
 };
 
 /**
- * StockAnalysisWorkflowDownloadControllerApi - object-oriented interface
+ * StockAnalysisExcelDownloaderControllerApi - object-oriented interface
  * @export
- * @class StockAnalysisWorkflowDownloadControllerApi
+ * @class StockAnalysisExcelDownloaderControllerApi
  * @extends {BaseAPI}
  */
-export class StockAnalysisWorkflowDownloadControllerApi extends BaseAPI {
+export class StockAnalysisExcelDownloaderControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StockAnalysisWorkflowDownloadControllerApi
+     * @memberof StockAnalysisExcelDownloaderControllerApi
      */
     public download(id: string, options?: any) {
-        return StockAnalysisWorkflowDownloadControllerApiFp(this.configuration).download(id, options).then((request) => request(this.axios, this.basePath));
+        return StockAnalysisExcelDownloaderControllerApiFp(this.configuration).download(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

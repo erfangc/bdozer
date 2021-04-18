@@ -8,7 +8,6 @@ import {
     FilingEntityManagerUnsecuredControllerApi,
     MarketingControllerApi,
     MxParserControllerApi, PublishedStockAnalysisControllerApi, StockAnalysisControllerApi,
-    StockAnalysisWorkflowControllerApi,
 } from "./client";
 import {useAuth0} from "@auth0/auth0-react";
 import axios from "axios";
@@ -57,11 +56,6 @@ export function useFactAutoFiller() {
     return new FactAutoFillerControllerApi(null, basePath, axiosInstance)
 }
 
-export function useFactBase() {
-    const axiosInstance = useAxios();
-    return new FactBaseControllerApi(null, basePath, axiosInstance);
-}
-
 export function useFactBaseUnsecured() {
     const axiosInstance = useAxios();
     return new FactBaseUnsecuredControllerApi(null, basePath, axiosInstance);
@@ -72,17 +66,12 @@ export function useMxParser() {
     return new MxParserControllerApi(null, basePath, axiosInstance);
 }
 
-export function useStockAnalysisWorkflow() {
-    const axiosInstance = useAxios();
-    return new StockAnalysisWorkflowControllerApi(null, basePath, axiosInstance);
-}
-
 export function useStockAnalysisPublication() {
     const axiosInstance = useAxios();
     return new PublishedStockAnalysisControllerApi(null, basePath, axiosInstance);
 }
 
-export function useStockAnalysisCrud() {
+export function useStockAnalysis() {
     const axiosInstance = useAxios();
     return new StockAnalysisControllerApi(null, basePath, axiosInstance);
 }

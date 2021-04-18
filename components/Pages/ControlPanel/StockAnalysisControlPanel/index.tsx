@@ -1,6 +1,6 @@
 import {useRouter} from 'next/router'
 import React, {useEffect, useState} from 'react'
-import {useFilingEntityManagerUnsecured, useStockAnalysisCrud} from '../../../../api-hooks'
+import {useFilingEntityManagerUnsecured, useStockAnalysis} from '../../../../api-hooks'
 import {FilingEntity, StockAnalysis2} from '../../../../client'
 import {Title} from '../../../Common/Title'
 import {FilingEntityCard} from '../FilingEntityCard'
@@ -14,7 +14,7 @@ export function StockAnalysisControlPanel() {
     const [filingEntity, setFilingEntity] = useState<FilingEntity>()
     const [loading, setLoading] = useState(false)
     const filingEntityManagerUnsecured = useFilingEntityManagerUnsecured()
-    const stockAnalysisCrud = useStockAnalysisCrud()
+    const stockAnalysisCrud = useStockAnalysis()
     const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
     const {id} = router.query
 
