@@ -107,7 +107,7 @@ export function ControlPanel() {
                         className="text-blueGray-50 pl-4 py-4 focus:outline-none bg-blueGray-700 placeholder-blueGray-400 text-lg"
                     />
                 </div>
-                <div className="flex justify-between">
+                <div className="flex flex-col space-y-8 md:flex-row md:space-y-0 justify-between">
                     <PrimaryButton onClick={navigateToNew} className="h-12">
                         <Plus/><span className="pl-1">Create New</span>
                     </PrimaryButton>

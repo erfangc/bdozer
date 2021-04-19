@@ -2,7 +2,6 @@ import React, {ChangeEvent, useState} from 'react'
 import {useTags} from "../../api-hooks";
 import {Tag} from "../../client";
 import {Delete, Plus} from "./Svgs";
-import {SecondaryButton} from "./SecondaryButton";
 
 interface Props {
     selected?: Tag[]
