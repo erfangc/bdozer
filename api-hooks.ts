@@ -2,12 +2,14 @@ import {
     CommentsControllerApi,
     EdgarExplorerControllerApi,
     FactAutoFillerControllerApi,
-    FactBaseControllerApi,
     FactBaseUnsecuredControllerApi,
     FilingEntityManagerControllerApi,
     FilingEntityManagerUnsecuredControllerApi,
     MarketingControllerApi,
-    MxParserControllerApi, PublishedStockAnalysisControllerApi, StockAnalysisControllerApi,
+    MxParserControllerApi,
+    PublishedStockAnalysisControllerApi,
+    StockAnalysisControllerApi,
+    TagControllerApi,
 } from "./client";
 import {useAuth0} from "@auth0/auth0-react";
 import axios from "axios";
@@ -94,4 +96,9 @@ export function useFilingEntityManagerUnsecured() {
 export function useComments() {
     const axiosInstance = useAxios();
     return new CommentsControllerApi(null, basePath, axiosInstance)
+}
+
+export function useTags() {
+    const axiosInstance = useAxios()
+    return new TagControllerApi(null, basePath, axiosInstance)
 }

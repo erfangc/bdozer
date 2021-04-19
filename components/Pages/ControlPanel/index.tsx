@@ -8,6 +8,7 @@ import {useRouter} from "next/router";
 import {ChevronLeft, ChevronRight, Plus, SearchIcon} from "../../Common/Svgs";
 import {SecondaryButton} from "../../Common/SecondaryButton";
 import {PublishedToggle} from "./PublishedToggle";
+import {TagInput} from "../../Common/TagInput";
 
 export function ControlPanel() {
 
@@ -107,9 +108,10 @@ export function ControlPanel() {
                     />
                 </div>
                 <div className="flex justify-between">
-                    <PrimaryButton onClick={navigateToNew}>
+                    <PrimaryButton onClick={navigateToNew} className="h-12">
                         <Plus/><span className="pl-1">Create New</span>
                     </PrimaryButton>
+                    <TagInput selected={[]} onChange={console.log}/>
                 </div>
             </div>
 

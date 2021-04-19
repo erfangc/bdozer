@@ -531,6 +531,12 @@ export interface EvaluateModelRequest {
 export interface EvaluateModelResponse {
     /**
      * 
+     * @type {Model}
+     * @memberof EvaluateModelResponse
+     */
+    model: Model;
+    /**
+     * 
      * @type {Array<Cell>}
      * @memberof EvaluateModelResponse
      */
@@ -1546,6 +1552,31 @@ export interface SumOfOtherItems {
      * @memberof SumOfOtherItems
      */
     components: Array<Component>;
+}
+/**
+ * 
+ * @export
+ * @interface Tag
+ */
+export interface Tag {
+    /**
+     * 
+     * @type {string}
+     * @memberof Tag
+     */
+    get_id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Tag
+     */
+    description: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Tag
+     */
+    createdAt: string;
 }
 /**
  * 
@@ -4312,6 +4343,238 @@ export class StockAnalysisExcelDownloaderControllerApi extends BaseAPI {
      */
     public download(id: string, options?: any) {
         return StockAnalysisExcelDownloaderControllerApiFp(this.configuration).download(id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * TagControllerApi - axios parameter creator
+ * @export
+ */
+export const TagControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTag: async (id: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteTag', 'id', id)
+            const localVarPath = `/api/tags/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} term 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        findTag: async (term: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'term' is not null or undefined
+            assertParamExists('findTag', 'term', term)
+            const localVarPath = `/api/tags`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (term !== undefined) {
+                localVarQueryParameter['term'] = term;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Tag} tag 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveTag: async (tag: Tag, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'tag' is not null or undefined
+            assertParamExists('saveTag', 'tag', tag)
+            const localVarPath = `/api/tags`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(tag, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TagControllerApi - functional programming interface
+ * @export
+ */
+export const TagControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TagControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteTag(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTag(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} term 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async findTag(term: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Tag>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.findTag(term, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Tag} tag 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveTag(tag: Tag, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveTag(tag, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * TagControllerApi - factory interface
+ * @export
+ */
+export const TagControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TagControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTag(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteTag(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} term 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        findTag(term: string, options?: any): AxiosPromise<Array<Tag>> {
+            return localVarFp.findTag(term, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Tag} tag 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveTag(tag: Tag, options?: any): AxiosPromise<void> {
+            return localVarFp.saveTag(tag, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * TagControllerApi - object-oriented interface
+ * @export
+ * @class TagControllerApi
+ * @extends {BaseAPI}
+ */
+export class TagControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TagControllerApi
+     */
+    public deleteTag(id: string, options?: any) {
+        return TagControllerApiFp(this.configuration).deleteTag(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} term 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TagControllerApi
+     */
+    public findTag(term: string, options?: any) {
+        return TagControllerApiFp(this.configuration).findTag(term, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Tag} tag 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TagControllerApi
+     */
+    public saveTag(tag: Tag, options?: any) {
+        return TagControllerApiFp(this.configuration).saveTag(tag, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
