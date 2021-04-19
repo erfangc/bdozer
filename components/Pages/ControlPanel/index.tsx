@@ -55,7 +55,6 @@ export function ControlPanel() {
             ...state,
             tags: tags.map(it => it['_id'])
         }
-        console.log(nextState)
         await refreshState(nextState)
     }
 
@@ -149,9 +148,7 @@ export function ControlPanel() {
                         <span>
                         <b>Showing</b> {showingFrom} - {showingTo} out of {isNaN(totalCount) ? 0 : totalCount}
                         </span>
-                        <SecondaryButton disabled={loading} onClick={nextPage}>
-                            <ChevronRight/>
-                        </SecondaryButton>
+                        <SecondaryButton disabled={loading} onClick={nextPage}><ChevronRight/></SecondaryButton>
                     </div>
                     <PublishedToggle setPublished={handleSetPublished} published={state.published}/>
                 </div>
@@ -165,9 +162,7 @@ export function ControlPanel() {
                                 ?.stockAnalyses
                                 ?.map(stockAnalysis => (
                                     <StockAnalysisCard
-                                        key={stockAnalysis['_id']}
-                                        stockAnalysis={stockAnalysis}
-                                        onDelete={deleteStockAnalysis}
+                                        key={stockAnalysis['_id']} stockAnalysis={stockAnalysis} onDelete={deleteStockAnalysis}
                                     />
                                 ))
                         }
