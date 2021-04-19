@@ -10,60 +10,73 @@ import {SecondaryButton} from "../../Common/SecondaryButton";
 import {PublishedToggle} from "./PublishedToggle";
 import {TagInput} from "../../Common/TagInput";
 
+interface ControlStates {
+    page: number
+    pageSize: number
+    term?: string
+    published?: boolean
+    tags: string[]
+}
+
+const initialState: ControlStates = {
+    tags: [],
+    pageSize: 10,
+    page: 0,
+}
+
 export function ControlPanel() {
 
     const router = useRouter()
     const stockAnalysisCrud = useStockAnalysis()
     const [findStockAnalysisResponse, setFindStockAnalysisResponse] = useState<FindStockAnalysisResponse>()
     const [loading, setLoading] = useState(false)
-    const [published, setPublished] = useState<boolean | undefined>()
-
-    const pageSize = 10
-    const [page, setPage] = useState(0)
-    const [term, setTerm] = useState<string>()
+    const [state, setState] = useState(initialState)
 
     async function nextPage() {
-        const nextPage = page + 1;
-        if (nextPage * pageSize > findStockAnalysisResponse.totalCount) {
+        const nextPage = state.page + 1;
+        if (nextPage * state.pageSize > findStockAnalysisResponse.totalCount) {
             return
         }
-        setPage(nextPage)
-        await refresh(nextPage, pageSize, term, published)
+        const nextState = {...state, page: nextPage}
+        setState(nextState)
+        await refresh(nextState)
     }
 
     async function previousPage() {
-        if (page === 0) {
+        if (state.page === 0) {
             return
         }
-        const previousPage = page - 1;
-        setPage(previousPage)
-        await refresh(previousPage, pageSize, term, published)
+        const previousPage = state.page - 1;
+        const nextState: ControlStates = {...state, page: previousPage}
+        setState(nextState)
+        await refresh(nextState)
     }
 
     async function handleTermChange(event: ChangeEvent<HTMLInputElement>) {
         event.preventDefault()
         const {target} = event
         const nextTerm = target.value;
-        setTerm(nextTerm)
-        await refresh(0, pageSize, nextTerm, published)
+        const nextState: ControlStates = {...state, term: nextTerm, page: 0,}
+        setState(nextState)
+        await refresh(nextState)
     }
 
     async function init() {
-        await refresh(page, pageSize, term, published)
+        await refresh(state)
     }
 
-    async function refresh(page, pageSize, term, published) {
+    async function refresh(nextState: ControlStates) {
         setLoading(true)
-        const skip = page * pageSize
-        const limit = pageSize
+        const skip = nextState.page * nextState.pageSize
+        const limit = nextState.pageSize
         const resp = await stockAnalysisCrud.findStockAnalyses(
-            published,
+            nextState.published,
             undefined,
             undefined,
             undefined,
             skip,
             limit,
-            term === '' ? undefined : term,
+            nextState.term === '' ? undefined : nextState.term,
         )
         setFindStockAnalysisResponse(resp.data)
         setLoading(false)
@@ -79,9 +92,13 @@ export function ControlPanel() {
     }
 
     async function handleSetPublished(value?: boolean) {
-        setPublished(value)
-        setPage(0)
-        await refresh(0, pageSize, term, value)
+        const nextState: ControlStates = {
+            ...state,
+            published: value,
+            page: 0,
+        }
+        setState(nextState)
+        await refresh(nextState)
     }
 
     useEffect(() => {
@@ -89,8 +106,8 @@ export function ControlPanel() {
     }, [])
 
     const totalCount = findStockAnalysisResponse?.totalCount;
-    const showingFrom = isNaN(totalCount) ? 0 : page * pageSize + 1;
-    const showingTo = Math.min((page + 1) * pageSize, isNaN(totalCount) ? 0 : totalCount);
+    const showingFrom = isNaN(totalCount) ? 0 : state.page * state.pageSize + 1;
+    const showingTo = Math.min((state.page + 1) * state.pageSize, isNaN(totalCount) ? 0 : totalCount);
 
     return (
         <main className="text-blueGray-50 container mx-auto space-y-16 py-16 px-4">
@@ -100,7 +117,7 @@ export function ControlPanel() {
                 <div className="bg-blueGray-700 px-4 rounded">
                     <SearchIcon/>
                     <input
-                        value={term}
+                        value={state.term}
                         onChange={handleTermChange}
                         autoFocus
                         placeholder="Filter analyses"
@@ -129,7 +146,7 @@ export function ControlPanel() {
                             <ChevronRight/>
                         </SecondaryButton>
                     </div>
-                    <PublishedToggle setPublished={handleSetPublished} published={published}/>
+                    <PublishedToggle setPublished={handleSetPublished} published={state.published}/>
                 </div>
 
                 {/* Stop of filtering and pagination */}
