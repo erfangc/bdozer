@@ -100,7 +100,7 @@ export function TagInput(props: Props) {
                         }}
                     >
                         {tags.map(tag => (
-                            <li className="px-4 py-1 hover:bg-blueGray-900 flex items-center justify-between"
+                            <li className="px-4 py-1 hover:bg-blueGray-900 flex items-center justify-between transition-all ease-in"
                                 key={tag['_id']} onClick={() => selectTag(tag)}>
                                 <span
                                     className="px-2 py-0.5 rounded border border-blue-500 bg-blue-900 text-blue-400 flex justify-between items-center space-x-4"
@@ -115,7 +115,7 @@ export function TagInput(props: Props) {
                         {
                             showCreate
                                 ?
-                                <li className="border-t border-blueGray-600 mt-1 px-4 py-2 hover:bg-blueGray-900 flex items-center"
+                                <li className="border-t border-blueGray-600 mt-1 px-4 py-2 hover:bg-blueGray-900 flex items-center transition-all ease-in"
                                     key="new"
                                     onClick={create}
                                 >
