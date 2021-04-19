@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 import {useStockAnalysis} from "../../../api-hooks";
-import {FindStockAnalysisResponse} from "../../../client";
+import {FindStockAnalysisResponse, Tag} from "../../../client";
 import {PrimaryButton} from "../../Common/PrimaryButton";
 import {Title} from "../../Common/Title";
 import {LoadingSkeletons, StockAnalysisCard} from "./StockAnalysisCard";
@@ -38,8 +38,7 @@ export function ControlPanel() {
             return
         }
         const nextState = {...state, page: nextPage}
-        setState(nextState)
-        await refresh(nextState)
+        await refreshState(nextState)
     }
 
     async function previousPage() {
@@ -48,8 +47,16 @@ export function ControlPanel() {
         }
         const previousPage = state.page - 1;
         const nextState: ControlStates = {...state, page: previousPage}
-        setState(nextState)
-        await refresh(nextState)
+        await refreshState(nextState)
+    }
+
+    async function updateTags(tags: Tag[]) {
+        const nextState: ControlStates = {
+            ...state,
+            tags: tags.map(it => it['_id'])
+        }
+        console.log(nextState)
+        await refreshState(nextState)
     }
 
     async function handleTermChange(event: ChangeEvent<HTMLInputElement>) {
@@ -57,15 +64,15 @@ export function ControlPanel() {
         const {target} = event
         const nextTerm = target.value;
         const nextState: ControlStates = {...state, term: nextTerm, page: 0,}
-        setState(nextState)
-        await refresh(nextState)
+        await refreshState(nextState)
     }
 
     async function init() {
-        await refresh(state)
+        await refreshState(state)
     }
 
-    async function refresh(nextState: ControlStates) {
+    async function refreshState(nextState: ControlStates) {
+        setState(nextState)
         setLoading(true)
         const skip = nextState.page * nextState.pageSize
         const limit = nextState.pageSize
@@ -77,6 +84,7 @@ export function ControlPanel() {
             skip,
             limit,
             nextState.term === '' ? undefined : nextState.term,
+            nextState.tags,
         )
         setFindStockAnalysisResponse(resp.data)
         setLoading(false)
@@ -97,8 +105,7 @@ export function ControlPanel() {
             published: value,
             page: 0,
         }
-        setState(nextState)
-        await refresh(nextState)
+        await refreshState(nextState)
     }
 
     useEffect(() => {
@@ -128,7 +135,7 @@ export function ControlPanel() {
                     <PrimaryButton onClick={navigateToNew} className="h-12">
                         <Plus/><span className="pl-1">Create New</span>
                     </PrimaryButton>
-                    <TagInput selected={[]} onChange={console.log}/>
+                    <TagInput selected={state.tags} onChange={updateTags}/>
                 </div>
             </div>
 
