@@ -27,7 +27,7 @@ export function StockAnalysisCard(props: { stockAnalysis: StockAnalysisProjectio
                 <span className="flex space-x-4">
                     <div>
                         <div className="uppercase text-sm text-blueGray-300">Target Price</div>
-                        <div className="font-extrabold">${targetPrice.toFixed(1)}</div>
+                        <div className="font-extrabold">${targetPrice?.toFixed(1)}</div>
                     </div>
                     <div>
                         <div className="uppercase text-sm text-blueGray-300">{percentUpside > 0 ? 'Upside' : 'Downside'}</div>
