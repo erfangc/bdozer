@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router'
 import React from 'react'
-import { StockAnalysis2 } from '../../../client'
+import { StockAnalysisProjection} from '../../../client'
 
-export function StockAnalysisCard(props: { stockAnalysis: StockAnalysis2 }) {
+export function StockAnalysisCard(props: { stockAnalysis: StockAnalysisProjection }) {
     const router = useRouter()
 
     const { stockAnalysis } = props
-    const { derivedStockAnalytics: { currentPrice, targetPrice }, name, ticker, cik } = stockAnalysis
+    const { currentPrice, targetPrice, name, ticker, cik } = stockAnalysis
     const percentUpside = (targetPrice / currentPrice - 1) * 100
 
     function navigate(id: string) {

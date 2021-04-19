@@ -1,4 +1,4 @@
-import {StockAnalysis2} from "../../../client";
+import {StockAnalysis2, StockAnalysisProjection} from "../../../client";
 import {useRouter} from "next/router";
 import {PrimaryButton} from "../../Common/PrimaryButton";
 import React from "react";
@@ -7,7 +7,7 @@ import {Published} from "./Publish";
 import {DeleteConfirmationDialog} from "../../Common/DeleteConfirmationDialog";
 
 interface Props {
-    stockAnalysis: StockAnalysis2
+    stockAnalysis: StockAnalysisProjection
     onDelete: (string) => void
 }
 

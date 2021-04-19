@@ -1,16 +1,16 @@
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 import React, {useEffect, useState} from 'react'
-import { StockAnalysis2 } from '../../../client'
-import { LegalDisclaimer } from '../../LegalDisclaimer'
-import { StockAnalysisCard } from './StockAnalysisCard'
-import { StockAnalysisSearch } from './StockAnalysisSearch'
+import {StockAnalysisProjection} from '../../../client'
+import {LegalDisclaimer} from '../../LegalDisclaimer'
+import {StockAnalysisCard} from './StockAnalysisCard'
+import {StockAnalysisSearch} from './StockAnalysisSearch'
 import {LoadingSkeletons} from "./LoadingSkeleton";
 import {useStockAnalysisPublication} from "../../../api-hooks";
 import {Popover} from "../../Popover";
 
 export function Browse() {
     const stockAnalysisPublication = useStockAnalysisPublication()
-    const [stockAnalyses, setStockAnalyses] = useState<StockAnalysis2[]>([])
+    const [stockAnalyses, setStockAnalyses] = useState<StockAnalysisProjection[]>([])
     const [loading, setLoading] = useState(false)
 
     async function init() {
@@ -20,7 +20,9 @@ export function Browse() {
         setLoading(false)
     }
 
-    useEffect(() => {init()}, [])
+    useEffect(() => {
+        init()
+    }, [])
 
     const router = useRouter()
 
@@ -31,11 +33,11 @@ export function Browse() {
     return (
         <main className="min-h-screen mx-auto container px-2 flex flex-col justify-between">
             <section>
-                <StockAnalysisSearch onSubmit={({ cik }) => navigate(cik)} className="mb-20 mt-16" />
+                <StockAnalysisSearch onSubmit={({cik}) => navigate(cik)} className="mb-20 mt-16"/>
                 <div className="mb-8">
                     <div className="flex space-x-4">
                         <StockTab active>#featured stocks</StockTab>
-                        <Popover trigger={<StockTab >#FAANG</StockTab>} className="w-42">
+                        <Popover trigger={<StockTab>#FAANG</StockTab>} className="w-42">
                             Coming soon
                         </Popover>
                     </div>
@@ -46,7 +48,7 @@ export function Browse() {
                 <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
                     {loading ? <LoadingSkeletons/> : null}
                     {
-                            stockAnalyses
+                        stockAnalyses
                             .map(stockAnalysis => (
                                 <StockAnalysisCard
                                     key={stockAnalysis['_id']}
@@ -56,7 +58,7 @@ export function Browse() {
                     }
                 </div>
             </section>
-            <LegalDisclaimer />
+            <LegalDisclaimer/>
         </main>
     )
 }
@@ -65,7 +67,7 @@ interface StockTabProps extends React.DetailedHTMLProps<React.ButtonHTMLAttribut
     active?: boolean
 }
 
-function StockTab({ active, className, children, ...props }: StockTabProps) {
+function StockTab({active, className, children, ...props}: StockTabProps) {
     return (
         <button
             className={`focus:outline-none px-2 py-1 rounded font-extrabold uppercase transition ${active ? 'bg-blue-500 cursor-default' : 'border-blueGray-500 bg-blueGray-700 shadow-lg hover:bg-blue-500 hover:border-0'} ease-linear ${className}`}

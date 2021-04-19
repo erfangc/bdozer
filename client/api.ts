@@ -927,10 +927,10 @@ export interface FindStockAnalysisResponse {
     totalCount: number;
     /**
      * 
-     * @type {Array<StockAnalysis2>}
+     * @type {Array<StockAnalysisProjection>}
      * @memberof FindStockAnalysisResponse
      */
-    stockAnalyses: Array<StockAnalysis2>;
+    stockAnalyses: Array<StockAnalysisProjection>;
 }
 /**
  * 
@@ -1487,6 +1487,67 @@ export interface StockAnalysisInterest {
 /**
  * 
  * @export
+ * @interface StockAnalysisProjection
+ */
+export interface StockAnalysisProjection {
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysisProjection
+     */
+    get_id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysisProjection
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysisProjection
+     */
+    description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysisProjection
+     */
+    cik?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysisProjection
+     */
+    ticker?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof StockAnalysisProjection
+     */
+    currentPrice?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StockAnalysisProjection
+     */
+    targetPrice?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StockAnalysisProjection
+     */
+    published?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysisProjection
+     */
+    lastUpdated?: string;
+}
+/**
+ * 
+ * @export
  * @interface StockAnalysisRequest
  */
 export interface StockAnalysisRequest {
@@ -1570,7 +1631,7 @@ export interface Tag {
      * @type {string}
      * @memberof Tag
      */
-    description: string;
+    description?: string;
     /**
      * 
      * @type {string}
