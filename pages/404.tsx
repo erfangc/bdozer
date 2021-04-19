@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
-import { UnsecuredApp } from "../components/App";
+import {useRouter} from "next/router";
+import {UnsecuredApp} from "../components/App";
 
 export default function NotFound() {
     const router = useRouter()

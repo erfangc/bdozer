@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { useMarketing } from "../api-hooks";
-import { UnsecuredApp } from "../components/App";
-import { PrimaryButton } from "../components/Common/PrimaryButton";
-import { TextInput } from "../components/Common/TextInput";
+import {useState} from "react";
+import {useMarketing} from "../api-hooks";
+import {UnsecuredApp} from "../components/App";
+import {PrimaryButton} from "../components/Common/PrimaryButton";
+import {TextInput} from "../components/Common/TextInput";
 
 export default function EarlyAccessPage() {
     const marketing = useMarketing()

@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 import React from 'react'
 
 export function Logo(props: { className?: string }) {

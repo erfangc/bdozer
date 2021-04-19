@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react"
+import React, {ChangeEvent, useEffect, useState} from "react"
 
 interface TextInputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
     label?: string

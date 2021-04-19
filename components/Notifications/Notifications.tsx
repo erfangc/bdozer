@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import { notificationStore, Notification } from "./NotificationStore"
-import { Message } from "./Message"
+import React, {Component} from "react"
+import {Notification, notificationStore} from "./NotificationStore"
+import {Message} from "./Message"
 
 interface State {
     notifications: Notification[]

@@ -1,4 +1,4 @@
-import { ApiError } from "./ServerErrorStore";
+import {ApiError} from "./ServerErrorStore";
 
 export function ErrorMessage({ error, onDismiss }: { error: ApiError, onDismiss: () => void }) {
     return (

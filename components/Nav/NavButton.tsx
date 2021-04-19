@@ -1,6 +1,6 @@
-import React from "react"
-import { ReactNode } from "react"
+import React, {ReactNode} from "react"
 import Link from 'next/link'
+
 interface NavButtonProps {
     active?: boolean
     icon?: ReactNode

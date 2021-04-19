@@ -1,8 +1,8 @@
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import { useEdgarExplorer, useFilingEntityManagerUnsecured, useStockAnalysisPublication } from '../../../api-hooks'
-import {EdgarEntity, EdgarEntitySource, FilingEntity, StockAnalysis2, StockAnalysisProjection} from '../../../client'
-import { PrimaryButton } from '../../Common/PrimaryButton'
+import {useRouter} from 'next/router'
+import React, {useEffect, useState} from 'react'
+import {useEdgarExplorer, useFilingEntityManagerUnsecured, useStockAnalysisPublication} from '../../../api-hooks'
+import {EdgarEntity, EdgarEntitySource, FilingEntity, StockAnalysisProjection} from '../../../client'
+import {PrimaryButton} from '../../Common/PrimaryButton'
 
 interface Props {
     className?: string

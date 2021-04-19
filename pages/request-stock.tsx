@@ -1,10 +1,10 @@
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import { useFilingEntityManager, useMarketing, useFilingEntityManagerUnsecured } from '../api-hooks'
-import { FilingEntity } from '../client'
-import { UnsecuredApp } from '../components/App'
-import { FilingEntitySearch } from '../components/Pages/FilingEntitySearch'
-import { TextInput } from '../components/Common/TextInput'
+import {useRouter} from 'next/router'
+import React, {useEffect, useState} from 'react'
+import {useFilingEntityManagerUnsecured, useMarketing} from '../api-hooks'
+import {FilingEntity} from '../client'
+import {UnsecuredApp} from '../components/App'
+import {TextInput} from '../components/Common/TextInput'
+import {FilingEntitySearch} from "../components/FilingEntitySearch";
 
 export default function RequestStockPage() {
 
@@ -12,13 +12,13 @@ export default function RequestStockPage() {
     const marketing = useMarketing()
 
     async function handleSubmit(entities: FilingEntity[]) {
-        const requests = entities.map(entity => ({ cik: entity.cik, ticker: entity.tradingSymbol }))
+        const requests = entities.map(entity => ({cik: entity.cik, ticker: entity.tradingSymbol}))
         marketing.stockAnalysisRequest(requests as any)
         setEntities(entities)
     }
 
     async function submitEmail(email: string) {
-        const requests = entities.map(entity => ({ cik: entity.cik, ticker: entity.tradingSymbol }))
+        const requests = entities.map(entity => ({cik: entity.cik, ticker: entity.tradingSymbol}))
         marketing.stockAnalysisInterest({
             email,
             requests,
@@ -27,18 +27,23 @@ export default function RequestStockPage() {
 
     return (
         <UnsecuredApp>
-            <main className="flex-col flex flex-grow min-h-screen items-center justify-center text-blueGray-200 bg-blueGray-900">
+            <main
+                className="flex-col flex flex-grow min-h-screen items-center justify-center text-blueGray-200 bg-blueGray-900">
                 {
                     entities.length === 0
-                        ? <Request onSubmit={handleSubmit} />
-                        : <Confirm onSubmit={submitEmail} />
+                        ? <Request onSubmit={handleSubmit}/>
+                        : <Confirm onSubmit={submitEmail}/>
                 }
             </main>
         </UnsecuredApp>
     )
 }
 
-function PrimaryButton({ className, children, ...props }: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) {
+function PrimaryButton({
+                           className,
+                           children,
+                           ...props
+                       }: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) {
     return (
         <button
             className={`bg-blue-600 text-blueGray-50 rounded py-2 px-4 transition ease-linear hover:bg-blue-700 focus:outline-none flex items-center ${className}`}
@@ -65,7 +70,8 @@ function Confirm(props: { onSubmit: (email: string) => void }) {
                 {
                     submitted
                         ? <>We will keep you posted on our progress via <b>{email}</b>. Thank you for your interest</>
-                        : <>Your interest help us produce better analyses. If you'd like to be notified when the stock report is ready, enter your Email below. We won't send you marketing email</>
+                        : <>Your interest help us produce better analyses. If you'd like to be notified when the stock
+                            report is ready, enter your Email below. We won't send you marketing email</>
                 }
             </p>
             {
@@ -78,7 +84,7 @@ function Confirm(props: { onSubmit: (email: string) => void }) {
                             placeholder="Email Address"
                             className="w-96"
                             value={email}
-                            onChange={({ currentTarget: { value } }) => setEmail(value)}
+                            onChange={({currentTarget: {value}}) => setEmail(value)}
                         />
                         <PrimaryButton onClick={submit}>Submit</PrimaryButton>
                     </div>
@@ -88,17 +94,17 @@ function Confirm(props: { onSubmit: (email: string) => void }) {
     )
 }
 
-function Request({ onSubmit }: { onSubmit: (entities: FilingEntity[]) => void }) {
+function Request({onSubmit}: { onSubmit: (entities: FilingEntity[]) => void }) {
 
     const [entities, setEntities] = useState<FilingEntity[]>([])
     const router = useRouter()
     const publicFilingEntityManager = useFilingEntityManagerUnsecured()
-    const { cik } = router.query
+    const {cik} = router.query
     useEffect(() => {
         if (cik) {
             publicFilingEntityManager
                 .getFilingEntity(cik as string)
-                .then(({ data }) => setEntities([data]))
+                .then(({data}) => setEntities([data]))
         }
     }, [cik])
 
@@ -115,17 +121,19 @@ function Request({ onSubmit }: { onSubmit: (entities: FilingEntity[]) => void })
         <section className="w-full px-4 xl:px-0 xl:w-2/5">
             <h1 className="text-2xl lg:text-6xl font-extrabold mb-4 lg:mb-8 w-full">Request Stock Coverage</h1>
             <p className="text-blueGray-300 mb-4 lg:mb-8">
-                If you enjoyed our analysis so far, and would like for us to run our algorithm on a stock you are interested in, then
+                If you enjoyed our analysis so far, and would like for us to run our algorithm on a stock you are
+                interested in, then
                 just fill out the form below. We will initiate coverage when there is enough demand
             </p>
-            <FilingEntitySearch onSubmit={entity => setEntities([...entities, entity])} />
+            <FilingEntitySearch onSubmit={entity => setEntities([...entities, entity])}/>
             <div className="flex flex-col space-y-4 mt-8">
                 {
                     entities.map(entity => (
                         <div className="flex justify-between bg-blueGray-800 p-4 rounded">
                             <div className="flex-col space-y-3">
                                 <p>
-                                    <b>{entity.name}</b> ({entity.tradingSymbol}) <span className="text-sm">{entity.exchanges[0]}</span>
+                                    <b>{entity.name}</b> ({entity.tradingSymbol}) <span
+                                    className="text-sm">{entity.exchanges[0]}</span>
                                 </p>
                                 <p className="text-xs">
                                     {entity.sicDescription}

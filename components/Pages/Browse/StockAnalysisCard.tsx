@@ -1,6 +1,6 @@
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 import React from 'react'
-import { StockAnalysisProjection} from '../../../client'
+import {StockAnalysisProjection} from '../../../client'
 
 export function StockAnalysisCard(props: { stockAnalysis: StockAnalysisProjection }) {
     const router = useRouter()

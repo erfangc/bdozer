@@ -3,8 +3,8 @@ import Head from "next/head";
 import React from "react";
 import {Hamburger} from "./Nav/Hamburger";
 import {Nav} from "./Nav/Nav";
-import { Notifications } from "./Notifications/Notifications";
-import { ServerErrors } from "./ServerErrors/ServerErrors";
+import {Notifications} from "./Notifications/Notifications";
+import {ServerErrors} from "./ServerErrors/ServerErrors";
 
 export function App({children}) {
 

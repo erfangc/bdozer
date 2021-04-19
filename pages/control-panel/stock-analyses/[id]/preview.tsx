@@ -1,9 +1,9 @@
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import { useStockAnalysis } from '../../../../api-hooks'
-import { StockAnalysis2 } from '../../../../client'
-import { App } from '../../../../components/App'
-import { Narrative2 } from '../../../../components/Pages/Narrative2/Narrative2'
+import {useRouter} from 'next/router'
+import React, {useEffect, useState} from 'react'
+import {useStockAnalysis} from '../../../../api-hooks'
+import {StockAnalysis2} from '../../../../client'
+import {App} from '../../../../components/App'
+import {Narrative2} from '../../../../components/Pages/PublishedStockAnalysesNarrative2/Narrative2'
 
 function PreviewComponent() {
     const stockAnalysisCrud = useStockAnalysis()

@@ -1,7 +1,7 @@
 import React, {FocusEvent, useState} from "react";
-import { NumberInput } from "../Common/NumberInput";
-import { TextArea } from "../Common/Textarea";
-import { TextInput } from "../Common/TextInput";
+import {NumberInput} from "../Common/NumberInput";
+import {TextArea} from "../Common/Textarea";
+import {TextInput} from "../Common/TextInput";
 
 export interface Schema {
     type: 'number' | 'percent' | 'integer' | 'string' | 'textarea',

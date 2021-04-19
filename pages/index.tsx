@@ -1,11 +1,11 @@
 import Head from 'next/head'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 import React from 'react'
-import { LegalDisclaimer } from '../components/LegalDisclaimer'
-import { Logo } from '../components/Nav/Logo'
-import { PrimaryButton } from '../components/Common/PrimaryButton'
-import { SecondaryButton } from '../components/Common/SecondaryButton'
-import { useAuth0 } from "@auth0/auth0-react";
+import {LegalDisclaimer} from '../components/LegalDisclaimer'
+import {Logo} from '../components/Nav/Logo'
+import {PrimaryButton} from '../components/Common/PrimaryButton'
+import {SecondaryButton} from '../components/Common/SecondaryButton'
+import {useAuth0} from "@auth0/auth0-react";
 
 function Home() {
 

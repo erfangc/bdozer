@@ -1,9 +1,9 @@
-import {StockAnalysis2, StockAnalysisProjection} from "../../../client";
+import {StockAnalysisProjection} from "../../../client";
 import {useRouter} from "next/router";
 import {PrimaryButton} from "../../Common/PrimaryButton";
 import React from "react";
 import {Edit} from "../../Common/Svgs";
-import {Published} from "./Publish";
+import {Published} from "../../Publish/Publish";
 import {DeleteConfirmationDialog} from "../../Common/DeleteConfirmationDialog";
 
 interface Props {

@@ -8,7 +8,7 @@ import {useRouter} from "next/router";
 import {ChevronLeft, ChevronRight, Plus, SearchIcon} from "../../Common/Svgs";
 import {SecondaryButton} from "../../Common/SecondaryButton";
 import {PublishedToggle} from "./PublishedToggle";
-import {TagInput} from "../../Common/TagInput";
+import {TagInput} from "../../TagInput";
 
 interface ControlStates {
     page: number

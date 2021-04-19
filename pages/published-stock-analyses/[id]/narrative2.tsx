@@ -1,8 +1,8 @@
 import React from "react";
-import { basePath } from "../../../api-hooks";
+import {basePath} from "../../../api-hooks";
 import {PublishedStockAnalysisControllerApi, StockAnalysis2} from "../../../client";
-import { UnsecuredApp } from "../../../components/App";
-import { Narrative2 } from "../../../components/Pages/Narrative2/Narrative2";
+import {UnsecuredApp} from "../../../components/App";
+import {Narrative2} from "../../../components/Pages/PublishedStockAnalysesNarrative2/Narrative2";
 
 interface Props {
     stockAnalysis: StockAnalysis2

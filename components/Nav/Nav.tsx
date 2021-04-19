@@ -1,8 +1,8 @@
 import React from "react"
-import { Logo } from "./Logo"
-import { ModelIcon, NavButton, Settings } from "./NavButton"
-import { useAuth0 } from '@auth0/auth0-react'
-import { useRouter } from 'next/router'
+import {Logo} from "./Logo"
+import {ModelIcon, NavButton, Settings} from "./NavButton"
+import {useAuth0} from '@auth0/auth0-react'
+import {useRouter} from 'next/router'
 
 interface NavProps {
 

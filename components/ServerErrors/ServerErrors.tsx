@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import { ApiError, serverErrorStore } from "./ServerErrorStore"
-import { ErrorMessage } from "./ErrorMessage"
+import React, {Component} from "react"
+import {ApiError, serverErrorStore} from "./ServerErrorStore"
+import {ErrorMessage} from "./ErrorMessage"
 
 interface State {
     errors: ApiError[]

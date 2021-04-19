@@ -1,11 +1,11 @@
 import React from 'react'
 import {App} from '../../../../components/App'
-import {FilingEntityChooser} from "../../../../components/Pages/ControlPanel/StockAnalysisControlFlow/FilingEntityChooser";
+import {NewStockAnalysis} from "../../../../components/Pages/NewStockAnalysis";
 
 export default function Index() {
     return (
         <App>
-            <FilingEntityChooser/>
+            <NewStockAnalysis/>
         </App>
     )
 }

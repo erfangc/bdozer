@@ -1,10 +1,10 @@
 import HighchartsReact from 'highcharts-react-official'
-import React, { useEffect, useState } from 'react'
-import { useFactBaseUnsecured } from '../../../api-hooks'
-import { Item, StockAnalysis2 } from '../../../client'
-import { highcharts } from '../../../highcharts'
-import { simpleNumber } from '../../../simple-number'
-import { year } from '../../../year'
+import React, {useEffect, useState} from 'react'
+import {useFactBaseUnsecured} from '../../../api-hooks'
+import {Item, StockAnalysis2} from '../../../client'
+import {highcharts} from '../../../highcharts'
+import {simpleNumber} from '../../../simple-number'
+import {year} from '../../../year'
 
 interface Props {
     result: StockAnalysis2
