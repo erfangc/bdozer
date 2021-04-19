@@ -1,10 +1,12 @@
-import React, {ChangeEvent, useState} from 'react'
+import React, {ChangeEvent, useEffect, useState} from 'react'
 import {useTags} from "../../api-hooks";
 import {Tag} from "../../client";
 import {Delete, Plus} from "./Svgs";
 
 interface Props {
-    selected?: Tag[]
+    label?: string
+    placeholder?: string
+    selected?: string[]
     onChange: (tag: Tag[]) => void
 }
 
@@ -14,7 +16,9 @@ export function TagInput(props: Props) {
 
     const [term, setTerm] = useState<string | undefined>()
     const [tags, setTags] = useState<Tag[]>([])
-    const [selected, setSelected] = useState<Tag[]>(props.selected || [])
+    const [selected, setSelected] = useState<Tag[]>(props.selected?.map(it => ({_id: it})) as any || [])
+
+    useEffect(() => {setSelected(props.selected?.map(it => ({_id: it})) as any || [])}, [props.selected])
 
     function selectTag(tag: Tag) {
         const updatedSelected = [
@@ -77,16 +81,16 @@ export function TagInput(props: Props) {
 
     return (
         <div className="relative w-80">
-            <span className="text-sm font-semibold text-blueGray-400">Filtering on Tags:</span>
+            <span className="text-sm font-semibold text-blueGray-400">{props.label ?? 'Filtering on Tags:'}</span>
             <div className="mb-2 grid grid-cols-2 gap-2 w-full">
                 {
                     selected.length === 0
                         ? <span className="h-8"/>
-                        : selected.map(tag => <TagComponent tag={tag} onDelete={() => deselectTag(tag)}/>)
+                        : selected.map(tag => <TagComponent key={tag['_id']} tag={tag} onDelete={() => deselectTag(tag)}/>)
                 }
             </div>
             <input
-                placeholder="Search tags"
+                placeholder={props.placeholder ?? "Search tags"}
                 className="text-blueGray-50 py-2 focus:outline-none bg-blueGray-700 placeholder-blueGray-400 border-none rounded w-full"
                 type="text" value={term} onChange={handleTermChange}
             />
@@ -100,14 +104,19 @@ export function TagInput(props: Props) {
                         }}
                     >
                         {tags.map(tag => (
-                            <li className="px-4 py-1 hover:bg-blueGray-900 flex items-center justify-between transition-all ease-in"
-                                key={tag['_id']} onClick={() => selectTag(tag)}>
+                            <li
+                                onClick={() => selectTag(tag)}
+                                className="px-4 py-1 hover:bg-blueGray-900 flex items-center justify-between transition-all ease-in"
+                                key={tag['_id']}
+                            >
                                 <span
-                                    className="px-2 py-0.5 rounded border border-blue-500 bg-blue-900 text-blue-400 flex justify-between items-center space-x-4"
+                                    className="px-1 py-0.5 rounded border border-blue-500 bg-blue-900 text-blue-400 flex justify-between items-center space-x-4"
                                 >
                                     {tag['_id']}
                                 </span>
-                                <button onClick={event => deleteTag(event, tag)} className="text-blueGray-300 hover:text-blueGray-100 p-1 rounded hover:bg-blueGray-700">
+                                <button
+                                    onClick={event => deleteTag(event, tag)}
+                                    className="text-blueGray-300 hover:text-blueGray-100 p-1 rounded hover:bg-blueGray-700">
                                     <Delete/>
                                 </button>
                             </li>
@@ -115,7 +124,8 @@ export function TagInput(props: Props) {
                         {
                             showCreate
                                 ?
-                                <li className="border-t border-blueGray-600 mt-1 px-4 py-2 hover:bg-blueGray-900 flex items-center transition-all ease-in"
+                                <li
+                                    className="border-t border-blueGray-600 mt-1 px-4 py-2 hover:bg-blueGray-900 flex items-center transition-all ease-in"
                                     key="new"
                                     onClick={create}
                                 >
@@ -132,19 +142,11 @@ export function TagInput(props: Props) {
 }
 
 function TagComponent(
-    {
-        tag, onDelete
-    }
-        :
-        {
-            tag: Tag, onDelete
-                :
-                () => void
-        }
+    {tag, onDelete}: { tag: Tag, onDelete: () => void }
 ) {
     return (
         <span
-            className="px-2 py-0.5 rounded border border-blue-500 bg-blue-900 text-blue-400 flex justify-between items-center space-x-4">
+            className="px-1 py-0.5 rounded border border-blue-500 bg-blue-900 text-blue-400 flex justify-between items-center space-x-4">
             <span>{tag['_id']}</span>
             <button onClick={() => onDelete()}>
                 <Delete/>

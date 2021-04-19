@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {StockAnalysis2} from '../../../../client';
+import {StockAnalysis2, Tag} from '../../../../client';
 import Tab from '../../../Common/Tab';
 import {ManagedTextInput} from '../../../Common/TextInput';
 import {ItemDisplay} from './ItemDisplay';
 import StockAnalysisSummary from './StockAnalysisSummary';
+import {TagInput} from "../../../Common/TagInput";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -34,10 +35,19 @@ export default function Editor(props: Props) {
         saveStockAnalysis(updatedStockAnalysis)
     }
 
+    async function updateTags(tags: Tag[]) {
+        const updatedStockAnalysis: StockAnalysis2 = {
+            ...stockAnalysis,
+            tags: tags.map(it => it['_id'])
+        }
+        saveStockAnalysis(updatedStockAnalysis)
+    }
+
     return (
         <div className="md:p-4 space-y-8">
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 rounded">
-                <div className="space-y-2">
+                <div className="space-y-4">
+                    <TagInput onChange={updateTags} label="Tags" selected={stockAnalysis?.tags}/>
                     <div className="flex space-x-4">
                         <ManagedTextInput
                             value={stockAnalysis?.model?.beta ?? ''}
