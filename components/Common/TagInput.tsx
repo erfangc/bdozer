@@ -47,7 +47,7 @@ export function TagInput(props: Props) {
         props.onChange(updatedSelected)
     }
 
-    async function deleteTag(event: React.MouseEvent<HTMLButtonElement>,tag: Tag) {
+    async function deleteTag(event: React.MouseEvent<HTMLButtonElement>, tag: Tag) {
         event.preventDefault()
         event.stopPropagation()
         await tagsApi.deleteTag(tag['_id'])
@@ -56,7 +56,7 @@ export function TagInput(props: Props) {
         ];
         setSelected(updatedSelected)
         setTags([])
-        setTerm(undefined)
+        setTerm('')
         setTags([])
         props.onChange(updatedSelected)
     }
@@ -76,9 +76,11 @@ export function TagInput(props: Props) {
     const showCreate = tags.find(it => it['_id'] !== term) !== undefined || tags.length === 0
 
     return (
-        <div className="relative w-80" >
+        <div className="relative w-80">
+            <span className="text-sm">Tags:</span>
             <div className="mb-2 grid grid-cols-2 gap-2 w-full">
-                {selected.length === 0 ? <span className="h-8"/>  : selected.map(tag => <TagComponent tag={tag} onDelete={() => deselectTag(tag)}/>)}
+                {selected.length === 0 ? <span className="h-8"/> : selected.map(tag => <TagComponent tag={tag}
+                                                                                                     onDelete={() => deselectTag(tag)}/>)}
             </div>
             <input
                 placeholder="Search tags"
@@ -95,7 +97,8 @@ export function TagInput(props: Props) {
                         }}
                     >
                         {tags.map(tag => (
-                            <li className="px-4 py-2 hover:bg-blue-500 flex items-center justify-between" key={tag['_id']} onClick={() => selectTag(tag)}>
+                            <li className="px-4 py-2 hover:bg-blue-500 flex items-center justify-between"
+                                key={tag['_id']} onClick={() => selectTag(tag)}>
                                 <span>{tag['_id']}</span>
                                 <button onClick={event => deleteTag(event, tag)}>
                                     <Delete/>
@@ -119,9 +122,20 @@ export function TagInput(props: Props) {
     )
 }
 
-function TagComponent({tag, onDelete}: { tag: Tag, onDelete: () => void }) {
+function TagComponent(
+    {
+        tag, onDelete
+    }
+        :
+        {
+            tag: Tag, onDelete
+                :
+                () => void
+        }
+) {
     return (
-        <span className="px-2 py-0.5 rounded border text-blue-500 border-blue-500 flex justify-between items-center space-x-4">
+        <span
+            className="px-2 py-0.5 rounded border text-blue-500 border-blue-500 flex justify-between items-center space-x-4">
             <span>{tag['_id']}</span>
             <button onClick={() => onDelete()}>
                 <Delete/>
@@ -129,7 +143,16 @@ function TagComponent({tag, onDelete}: { tag: Tag, onDelete: () => void }) {
         </span>
     )
 }
-function TagComponent2({tag}: { tag: Tag }) {
+
+function TagComponent2(
+    {
+        tag
+    }
+        :
+        {
+            tag: Tag
+        }
+) {
     return (
         <span className="px-2 py-0.5 rounded border text-blue-500 border-blue-500">
             <span>{tag['_id']}</span>
