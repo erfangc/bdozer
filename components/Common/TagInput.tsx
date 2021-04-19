@@ -77,10 +77,13 @@ export function TagInput(props: Props) {
 
     return (
         <div className="relative w-80">
-            <span className="text-sm">Tags:</span>
+            <span className="text-sm font-semibold text-blueGray-400">Filtering on Tags:</span>
             <div className="mb-2 grid grid-cols-2 gap-2 w-full">
-                {selected.length === 0 ? <span className="h-8"/> : selected.map(tag => <TagComponent tag={tag}
-                                                                                                     onDelete={() => deselectTag(tag)}/>)}
+                {
+                    selected.length === 0
+                        ? <span className="h-8"/>
+                        : selected.map(tag => <TagComponent tag={tag} onDelete={() => deselectTag(tag)}/>)
+                }
             </div>
             <input
                 placeholder="Search tags"

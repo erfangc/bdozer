@@ -1,10 +1,10 @@
 import {StockAnalysis2} from "../../../client";
 import {useRouter} from "next/router";
 import {PrimaryButton} from "../../Common/PrimaryButton";
-import {DeleteButton} from "../../Common/DeleteButton";
 import React from "react";
-import {Delete, Edit} from "../../Common/Svgs";
+import {Edit} from "../../Common/Svgs";
 import {Published} from "./Publish";
+import {DeleteConfirmationDialog} from "../../Common/DeleteConfirmationDialog";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -35,9 +35,7 @@ export function StockAnalysisCard({stockAnalysis, onDelete}: Props) {
                 <PrimaryButton onClick={() => navigateToStockAnalysis(id)}>
                     <Edit/><span className="pl-1">Edit</span>
                 </PrimaryButton>
-                <DeleteButton onClick={() => onDelete(id)}>
-                    <Delete/><span className="pl-1">Delete</span>
-                </DeleteButton>
+                <DeleteConfirmationDialog onDelete={() => onDelete(id)} resourceName={name}/>
             </div>
         </li>
     )
@@ -48,7 +46,7 @@ export function LoadingSkeletons() {
         {[1, 2, 3, 4].map(i => (
             <li
                 key={i}
-                className="bg-blueGray-700 px-6 py-6 shadow-md flex-col flex space-y-4 cursor-pointer hover:bg-blueGray-600 transition ease-linear"
+                className="bg-blueGray-700 px-6 py-6 shadow-md flex-col flex space-y-4 cursor-pointer transition ease-linear"
             >
                 <div className="flex justify-between">
                     <div className="flex flex-col space-y-4">
