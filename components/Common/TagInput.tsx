@@ -2,6 +2,7 @@ import React, {ChangeEvent, useState} from 'react'
 import {useTags} from "../../api-hooks";
 import {Tag} from "../../client";
 import {Delete, Plus} from "./Svgs";
+import {SecondaryButton} from "./SecondaryButton";
 
 interface Props {
     selected?: Tag[]
@@ -94,16 +95,20 @@ export function TagInput(props: Props) {
                 term || tags.length > 0
                     ?
                     <ul
-                        className={`absolute cursor-pointer bg-blueGray-600 py-2 top-full shadow-md w-full rounded mt-1 ease-in transition-all overflow-hidden z-10`}
+                        className={`absolute cursor-pointer bg-blueGray-700 py-2 top-full shadow-md w-full rounded mt-1 ease-in transition-all overflow-hidden z-10`}
                         style={{
                             height: tags.length > 0 ? `${(tags.length + 1) * 40 + 24}px` : showCreate ? 56 : 0
                         }}
                     >
                         {tags.map(tag => (
-                            <li className="px-4 py-2 hover:bg-blue-500 flex items-center justify-between"
+                            <li className="px-4 py-1 hover:bg-blueGray-900 flex items-center justify-between"
                                 key={tag['_id']} onClick={() => selectTag(tag)}>
-                                <span>{tag['_id']}</span>
-                                <button onClick={event => deleteTag(event, tag)}>
+                                <span
+                                    className="px-2 py-0.5 rounded border border-blue-500 bg-blue-900 text-blue-400 flex justify-between items-center space-x-4"
+                                >
+                                    {tag['_id']}
+                                </span>
+                                <button onClick={event => deleteTag(event, tag)} className="text-blueGray-300 hover:text-blueGray-100 p-1 rounded hover:bg-blueGray-700">
                                     <Delete/>
                                 </button>
                             </li>
@@ -111,8 +116,10 @@ export function TagInput(props: Props) {
                         {
                             showCreate
                                 ?
-                                <li className="px-4 py-2 hover:bg-blueGray-900 flex items-center" key="new"
-                                    onClick={create}>
+                                <li className="border-t border-blueGray-600 mt-1 px-4 py-2 hover:bg-blueGray-900 flex items-center"
+                                    key="new"
+                                    onClick={create}
+                                >
                                     <Plus/>
                                     <span className="pl-2">Create {<TagComponent2 tag={{_id: term} as any}/>}</span>
                                 </li>
@@ -138,7 +145,7 @@ function TagComponent(
 ) {
     return (
         <span
-            className="px-2 py-0.5 rounded border text-blue-500 border-blue-500 flex justify-between items-center space-x-4">
+            className="px-2 py-0.5 rounded border border-blue-500 bg-blue-900 text-blue-400 flex justify-between items-center space-x-4">
             <span>{tag['_id']}</span>
             <button onClick={() => onDelete()}>
                 <Delete/>
@@ -157,7 +164,7 @@ function TagComponent2(
         }
 ) {
     return (
-        <span className="px-2 py-0.5 rounded border text-blue-500 border-blue-500">
+        <span className="px-2 py-0.5 rounded border border-blue-500 bg-blue-900 text-blue-400">
             <span>{tag['_id']}</span>
         </span>
     )
