@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react'
+import React, {useState} from 'react'
 import {DeleteButton} from "./DeleteButton";
 import {Delete} from "./Svgs";
 import {Dialog, Transition} from "@headlessui/react";
