@@ -1,15 +1,15 @@
 import React, {Fragment, useEffect, useState} from 'react'
 import {RadioGroup} from "@headlessui/react";
 import {Title} from "../../Common/Title";
-import {EdgarExplorerControllerApi, EdgarFilingMetadata, StockAnalysis2} from "../../../client";
-import {useIssues, useModelBuilderFactory, useStockAnalysis} from "../../../api-hooks";
+import {EdgarFilingMetadata, StockAnalysis2} from "../../../client";
+import {useEdgarExplorer, useIssues, useModelBuilderFactory, useStockAnalysis} from "../../../api-hooks";
 import {useRouter} from "next/router";
 import {PrimaryButton} from "../../Common/PrimaryButton";
 import {Loading} from "../../Common/Svgs";
 
 export function FilingChooser() {
 
-    const api = new EdgarExplorerControllerApi()
+    const api = useEdgarExplorer()
     const router = useRouter();
     const stockAnalysisApi = useStockAnalysis();
     const modelBuilderFactory = useModelBuilderFactory()
@@ -87,7 +87,7 @@ export function FilingChooser() {
                                 <div className="flex flex-col space-y-2">
                                     <span className="text-2xl font-extrabold text-blueGray-100">{filing.form}</span>
                                     <span className="text-blueGray-300 text-base">
-                                        Filed for  {new Date(filing.period_ending).toLocaleDateString()}
+                                        Filed for {new Date(filing.period_ending).toLocaleDateString()}
                                     </span>
                                 </div>
                                 <div className={`flex items-center`}>
