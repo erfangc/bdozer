@@ -6,6 +6,7 @@ import {BlockQuote} from "../../Common/BlockQuote";
 import {useStockAnalysis} from "../../../api-hooks";
 import {v4 as uuid} from 'uuid'
 import {useRouter} from "next/router";
+
 export function NewStockAnalysis() {
 
     const [loading, setLoading] = useState(false)

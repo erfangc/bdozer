@@ -66,7 +66,7 @@ export function FilingChooser() {
     return (
         <main className="text-blueGray-50 mx-auto container max-w-md flex flex-col px-4 mt-10">
             <Title>Choose a Filing</Title>
-            <p className="font-light mt-2 mb-8">
+            <p className="mt-2 mb-8">
                 Facts from the SEC filing you choose will be used to bootstrap the model
             </p>
             <PrimaryButton className="my-4" disabled={filing === undefined || processing} onClick={confirm}>
@@ -81,15 +81,12 @@ export function FilingChooser() {
                     <RadioGroup.Option value={filing} key={filing.adsh} as={Fragment}>
                         {({checked}) => (
                             <div
-                                className={`flex p-4 my-4 rounded justify-between shadow ${checked ? 'bg-blue-600' : 'bg-blueGray-800'} focus:outline-none transition ease-in cursor-pointer`}
+                                className={`flex p-4 my-4 rounded justify-between shadow-lg ${checked ? 'bg-blue-600' : 'bg-blueGray-800'} focus:outline-none transition ease-in cursor-pointer`}
                             >
                                 <div className="flex flex-col space-y-2">
-                                    <span className="text-2xl font-extrabold text-blueGray-300">{filing.form}</span>
-                                    <span>
-                                        <span className="font-bold text-blueGray-300">Filed on </span>
-                                        <span className="font-light text-blueGray-200 text-base">
-                                            {new Date(filing.period_ending).toLocaleDateString()}
-                                        </span>
+                                    <span className="text-2xl font-extrabold text-blueGray-100">{filing.form}</span>
+                                    <span className="text-blueGray-300 text-base">
+                                            Filed for  {new Date(filing.period_ending).toLocaleDateString()}
                                     </span>
                                 </div>
                                 <div className={`flex items-center`}>
@@ -100,7 +97,8 @@ export function FilingChooser() {
                                                  viewBox="0 0 20 20" fill="currentColor">
                                                 <path fillRule="evenodd"
                                                       d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                      clipRule="evenodd"/>
+                                                      clipRule="evenodd"
+                                                />
                                             </svg>
                                             :
                                             <span className="h-10 w-10"/>
