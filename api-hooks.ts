@@ -4,8 +4,8 @@ import {
     FactAutoFillerControllerApi,
     FactBaseUnsecuredControllerApi,
     FilingEntityManagerControllerApi,
-    FilingEntityManagerUnsecuredControllerApi,
-    MarketingControllerApi,
+    FilingEntityManagerUnsecuredControllerApi, IssuesControllerApi,
+    MarketingControllerApi, ModelBuilderFactoryControllerApi,
     MxParserControllerApi,
     PublishedStockAnalysisControllerApi,
     StockAnalysisControllerApi,
@@ -71,6 +71,16 @@ export function useMxParser() {
 export function useStockAnalysisPublication() {
     const axiosInstance = useAxios();
     return new PublishedStockAnalysisControllerApi(null, basePath, axiosInstance);
+}
+
+export function useIssues() {
+    const axiosInstance = useAxios();
+    return new IssuesControllerApi(null, basePath, axiosInstance);
+}
+
+export function useModelBuilderFactory() {
+    const axiosInstance = useAxios();
+    return new ModelBuilderFactoryControllerApi(null, basePath, axiosInstance)
 }
 
 export function useStockAnalysis() {
