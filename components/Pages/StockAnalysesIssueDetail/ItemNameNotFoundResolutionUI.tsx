@@ -1,10 +1,11 @@
 import {useRouter} from "next/router";
-import {useStockAnalysis} from "../../../api-hooks";
+import {useIssues, useStockAnalysis} from "../../../api-hooks";
 import React, {Fragment, useEffect, useState} from "react";
-import {Issue, Item, StockAnalysis2} from "../../../client";
+import {Issue, IssueIssueTypeEnum, Item, StockAnalysis2} from "../../../client";
 import {Listbox, Transition} from "@headlessui/react";
 import {PrimaryButton} from "../../Common/PrimaryButton";
 import {SecondaryButton} from "../../Common/SecondaryButton";
+import {Loading} from "../../Common/Svgs";
 
 interface Props {
     issue: Issue
@@ -24,11 +25,12 @@ function Check() {
 export function ItemNameNotFoundResolutionUI(props: Props) {
 
     const {issue, onResolved} = props
-
+    const issuesApi = useIssues()
     const router = useRouter()
     const {id} = router.query
     const stockAnalysisApi = useStockAnalysis()
     const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
+    const [processing, setProcessing] = useState(false)
 
     const [selected, setSelected] = useState<Item>()
 
@@ -38,9 +40,44 @@ export function ItemNameNotFoundResolutionUI(props: Props) {
     }
 
     async function handleSubmit() {
+        setProcessing(true)
         const issueType = issue.issueType
-        // TODO attach the chosen item properly - the rerun issue generator on the stock analysis
-        onResolved()
+        let updatedStockAnalysis = {...stockAnalysis}
+        switch (issueType) {
+            case IssueIssueTypeEnum.EpsItemNotFound:
+                updatedStockAnalysis.model = {
+                    ...stockAnalysis.model,
+                    epsConceptName: selected.name,
+                }
+                break;
+            case IssueIssueTypeEnum.NetIncomeItemNotFound:
+                updatedStockAnalysis.model = {
+                    ...stockAnalysis.model,
+                    netIncomeConceptName: selected.name,
+                }
+                break;
+            case IssueIssueTypeEnum.RevenueItemNotFound:
+                updatedStockAnalysis.model = {
+                    ...stockAnalysis.model,
+                    totalRevenueConceptName: selected.name,
+                }
+                break;
+            case IssueIssueTypeEnum.SharesOutstandingItemNotFound:
+                updatedStockAnalysis.model = {
+                    ...stockAnalysis.model,
+                    sharesOutstandingConceptName: selected.name,
+                }
+                break;
+            default:
+                break;
+        }
+        await issuesApi.deleteIssue(issue['_id'])
+        // call APIs to update
+        await stockAnalysisApi.saveStockAnalysis(updatedStockAnalysis)
+        const {data: issues} = await issuesApi.generateIssues(updatedStockAnalysis)
+        await issuesApi.saveIssues(issues)
+        setProcessing(false)
+        router.push(`/control-panel/stock-analyses/${id}/issues-summary`)
     }
 
     useEffect(() => {
@@ -94,7 +131,7 @@ export function ItemNameNotFoundResolutionUI(props: Props) {
                 )}
             </Listbox>
             <div className="flex space-x-2 mt-4">
-                <PrimaryButton onClick={handleSubmit} disabled={!selected}>Confirm</PrimaryButton>
+                <PrimaryButton onClick={handleSubmit} disabled={!selected || processing}>{processing ? <><Loading/> Processing</> : <span>Confirm</span>}</PrimaryButton>
                 <SecondaryButton onClick={props.onDismiss}>Back</SecondaryButton>
             </div>
         </div>
