@@ -24,7 +24,7 @@ export function IssueDetail() {
         const {data: issues} = await issuesApi.findIssues(id as string)
         const issue = issues.find(it => it['_id'] === issueId)
         if (!issue) {
-            setError('Cannot find issue')
+            setError(`Cannot find the issue with id ${issueId}`)
         } else {
             setIssue(issue);
         }

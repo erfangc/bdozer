@@ -7,6 +7,7 @@ import {PrimaryButton} from "../../Common/PrimaryButton";
 import {DeleteConfirmationDialog} from "../../Common/DeleteConfirmationDialog";
 import {SecondaryButton} from "../../Common/SecondaryButton";
 import {Loading, LoadingNotSpinning} from "../../Common/Svgs";
+import {BlockQuote} from "../../Common/BlockQuote";
 
 export function IssuesSummary() {
 
@@ -54,18 +55,26 @@ export function IssuesSummary() {
         setProcessing(false)
     }
 
-    useEffect(() => { init() }, [])
+    useEffect(() => {
+        init()
+    }, [])
 
+    const name = stockAnalysis?.model?.name
     return (
-        <main className="px-4 max-w-xl mx-auto container mt-12 text-blueGray-100">
-            <Title>Issues</Title>
+        <main className="px-4 max-w-prose mx-auto container mt-12 text-blueGray-100">
+
+            <div className="flex justify-between">
+                <Title>Issues</Title>
+                <SecondaryButton className="mb-4" onClick={regenerateIssues} disabled={processing}>
+                    {processing ? <Loading/> : <LoadingNotSpinning className="text-blueGray-500"/>}<span
+                    className="ml-1">Refresh Issues</span>
+                </SecondaryButton>
+            </div>
+
             <p className="mt-2 mb-8">
-                We identified a few issues while attempting to construct a model automatically. These require your
-                attention
+                We identified some issues while attempting to construct a model for {name} automatically
             </p>
-            <SecondaryButton className="mb-4" onClick={regenerateIssues} disabled={processing}>
-                {processing ? <Loading/> : <LoadingNotSpinning className="text-blueGray-500"/>}<span className="ml-1">Refresh Issues</span>
-            </SecondaryButton>
+            <BlockQuote>Please fix these issues to move on</BlockQuote>
             {
                 issues?.map(issue => {
                     return (
