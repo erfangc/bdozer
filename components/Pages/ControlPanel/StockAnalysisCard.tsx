@@ -35,7 +35,7 @@ export function StockAnalysisCard({stockAnalysis, onDelete}: Props) {
                 <PrimaryButton onClick={() => navigateToStockAnalysis(id)}>
                     <Edit/><span className="pl-1">Edit</span>
                 </PrimaryButton>
-                <DeleteConfirmationDialog onDelete={() => onDelete(id)} resourceName={name}/>
+                <DeleteConfirmationDialog onDelete={() => onDelete(id)} resourceName={name} label="Delete"/>
             </div>
         </li>
     )

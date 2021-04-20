@@ -2,6 +2,8 @@ import React, {ChangeEvent, useEffect, useState} from 'react'
 import {useTags} from "../../api-hooks";
 import {Tag} from "../../client";
 import {Delete, Plus} from "../Common/Svgs";
+import {TagAutocompleteItem} from "./TagAutocompleteItem";
+import {TagDisplay} from "./TagDisplay";
 
 interface Props {
     label?: string
@@ -18,7 +20,9 @@ export function TagInput(props: Props) {
     const [tags, setTags] = useState<Tag[]>([])
     const [selected, setSelected] = useState<Tag[]>(props.selected?.map(it => ({_id: it})) as any || [])
 
-    useEffect(() => {setSelected(props.selected?.map(it => ({_id: it})) as any || [])}, [props.selected])
+    useEffect(() => {
+        setSelected(props.selected?.map(it => ({_id: it})) as any || [])
+    }, [props.selected])
 
     function selectTag(tag: Tag) {
         const updatedSelected = [
@@ -86,7 +90,8 @@ export function TagInput(props: Props) {
                 {
                     selected.length === 0
                         ? <span className="h-8"/>
-                        : selected.map(tag => <TagComponent key={tag['_id']} tag={tag} onDelete={() => deselectTag(tag)}/>)
+                        : selected.map(tag => <TagDisplay key={tag['_id']} tag={tag}
+                                                            onDelete={() => deselectTag(tag)}/>)
                 }
             </div>
             <input
@@ -130,7 +135,7 @@ export function TagInput(props: Props) {
                                     onClick={create}
                                 >
                                     <Plus/>
-                                    <span className="pl-2">Create {<TagComponent2 tag={{_id: term} as any}/>}</span>
+                                    <span className="pl-2">Create {<TagAutocompleteItem tag={{_id: term} as any}/>}</span>
                                 </li>
                                 : null
                         }
@@ -138,35 +143,5 @@ export function TagInput(props: Props) {
                     : null
             }
         </div>
-    )
-}
-
-function TagComponent(
-    {tag, onDelete}: { tag: Tag, onDelete: () => void }
-) {
-    return (
-        <span
-            className="px-1 py-0.5 rounded border border-blue-500 bg-blue-900 text-blue-400 flex justify-between items-center space-x-4">
-            <span>{tag['_id']}</span>
-            <button onClick={() => onDelete()}>
-                <Delete/>
-            </button>
-        </span>
-    )
-}
-
-function TagComponent2(
-    {
-        tag
-    }
-        :
-        {
-            tag: Tag
-        }
-) {
-    return (
-        <span className="px-2 py-0.5 rounded border border-blue-500 bg-blue-900 text-blue-400">
-            <span>{tag['_id']}</span>
-        </span>
     )
 }

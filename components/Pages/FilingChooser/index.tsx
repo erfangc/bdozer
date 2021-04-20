@@ -8,6 +8,7 @@ import {PrimaryButton} from "../../Common/PrimaryButton";
 import {Loading} from "../../Common/Svgs";
 
 export function FilingChooser() {
+
     const api = new EdgarExplorerControllerApi()
     const router = useRouter();
     const stockAnalysisApi = useStockAnalysis();
