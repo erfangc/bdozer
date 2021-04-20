@@ -30,14 +30,14 @@ export function NewStockAnalysis() {
     }
 
     return (
-        <main className="container mx-auto min-h-screen px-2">
+        <main className="container mx-auto min-h-screen px-4">
             <div className="space-y-8 flex justify-center flex-col h-full">
                 <Title>Create New Analysis</Title>
                 <FilingEntitySearch
-                    className="w-80 lg:w-full"
+                    className="w-80 w-full"
                     onSubmit={handleFilingEntitySelect}
                     loading={loading}
-                    placeholder="Search for a company to get started"
+                    placeholder="Search Company"
                 />
                 <BlockQuote>
                     <span className="inline-block my-1 p-1 rounded bg-amber-500 text-blueGray-800">Warning</span><br/>
