@@ -24,11 +24,6 @@ export default function AnalysisSummary(props: Props) {
                 state={targetPrice < currentPrice ? 'danger' : 'good'}
                 running={loading}
             />
-            <Money
-                value={stockAnalysis?.derivedStockAnalytics?.zeroGrowthPrice}
-                label={"Zero Growth Price"}
-                running={loading}
-            />
             <CardPercent value={stockAnalysis?.model?.terminalGrowthRate} label={"Terminal Growth Rate"} running={loading} />
             <CardPercent value={stockAnalysis?.derivedStockAnalytics?.discountRate} label={"Discount Rate"} running={loading} />
             <CardPercent value={stockAnalysis?.derivedStockAnalytics?.revenueCAGR} label={"Revenue CAGR"} running={loading} />

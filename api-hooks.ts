@@ -9,7 +9,7 @@ import {
     MxParserControllerApi,
     PublishedStockAnalysisControllerApi,
     StockAnalysisControllerApi,
-    TagControllerApi,
+    TagControllerApi, ZacksEstimatesControllerApi,
 } from "./client";
 import {useAuth0} from "@auth0/auth0-react";
 import axios from "axios";
@@ -111,4 +111,9 @@ export function useComments() {
 export function useTags() {
     const axiosInstance = useAxios()
     return new TagControllerApi(null, basePath, axiosInstance)
+}
+
+export function useZacksEstimates() {
+    const axiosInstance = useAxios()
+    return new ZacksEstimatesControllerApi(null, basePath, axiosInstance)
 }

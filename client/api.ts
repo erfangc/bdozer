@@ -5116,3 +5116,107 @@ export class TagControllerApi extends BaseAPI {
 }
 
 
+/**
+ * ZacksEstimatesControllerApi - axios parameter creator
+ * @export
+ */
+export const ZacksEstimatesControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        revenueProjections: async (ticker: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ticker' is not null or undefined
+            assertParamExists('revenueProjections', 'ticker', ticker)
+            const localVarPath = `/api/zacks-estimates/revenue-projections`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (ticker !== undefined) {
+                localVarQueryParameter['ticker'] = ticker;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ZacksEstimatesControllerApi - functional programming interface
+ * @export
+ */
+export const ZacksEstimatesControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ZacksEstimatesControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async revenueProjections(ticker: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Discrete>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.revenueProjections(ticker, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ZacksEstimatesControllerApi - factory interface
+ * @export
+ */
+export const ZacksEstimatesControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ZacksEstimatesControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        revenueProjections(ticker: string, options?: any): AxiosPromise<Discrete> {
+            return localVarFp.revenueProjections(ticker, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ZacksEstimatesControllerApi - object-oriented interface
+ * @export
+ * @class ZacksEstimatesControllerApi
+ * @extends {BaseAPI}
+ */
+export class ZacksEstimatesControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} ticker 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ZacksEstimatesControllerApi
+     */
+    public revenueProjections(ticker: string, options?: any) {
+        return ZacksEstimatesControllerApiFp(this.configuration).revenueProjections(ticker, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+

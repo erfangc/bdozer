@@ -1,6 +1,6 @@
 import {useRouter} from "next/router";
 import React, {ReactNode, useCallback, useEffect, useState} from "react";
-import {useFactBaseUnsecured, useStockAnalysis} from "../../../api-hooks";
+import {useFactBaseUnsecured, useStockAnalysis, useZacksEstimates} from "../../../api-hooks";
 import {Fact, Item, ItemTypeEnum, Model, StockAnalysis2} from "../../../client";
 import {AutoForm} from "../../AutoForms/AutoForm";
 import {bodyOf, merge, schemaOf} from "../../AutoForms/Schemas";
@@ -32,9 +32,10 @@ export function ItemEditor() {
     const router = useRouter()
     const factBase = useFactBaseUnsecured()
     const [fact, setFact] = useState<Fact>()
-    const { id, itemName } = router.query
+    const {id, itemName} = router.query
     const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
     const stockAnalysisCrud = useStockAnalysis()
+    const zacksEstimates = useZacksEstimates()
 
     const escFunction = useCallback((event) => {
         if (event.keyCode === 27) {
@@ -50,14 +51,14 @@ export function ItemEditor() {
     }, []);
 
     async function init() {
-        const { data: stockAnalysis } = await stockAnalysisCrud.getStockAnalysis(id as string)
+        const {data: stockAnalysis} = await stockAnalysisCrud.getStockAnalysis(id as string)
         const item = getItem(stockAnalysis?.model, itemName);
         /*
         query the underlying fact that populated this item
          */
         const factId = item?.historicalValue?.factId;
         if (factId) {
-            const { data: fact } = await factBase.getFact(factId)
+            const {data: fact} = await factBase.getFact(factId)
             setFact(fact)
         }
 
@@ -96,7 +97,7 @@ export function ItemEditor() {
     }
 
     function updateType(newType: ItemTypeEnum) {
-        const newItem: Item = { ...item, type: newType }
+        const newItem: Item = {...item, type: newType}
         handleItemChange(newItem)
     }
 
@@ -118,8 +119,19 @@ export function ItemEditor() {
         back()
     }
 
+    async function assignZacksEstimates() {
+        const ticker = model.ticker
+        const {data: discrete} = await zacksEstimates.revenueProjections(ticker);
+        const newItem: Item = {
+            ...item,
+            type: ItemTypeEnum.Discrete,
+            discrete,
+        }
+        await handleItemChange(newItem)
+    }
+
     function back() {
-        router.push(`/control-panel/stock-analyses/${id}`,undefined,{scroll:false})
+        router.push(`/control-panel/stock-analyses/${id}`, undefined, {scroll: false})
     }
 
     const model = stockAnalysis?.model
@@ -134,17 +146,17 @@ export function ItemEditor() {
 
         let editor: ReactNode
         if (item.type === ItemTypeEnum.Discrete) {
-            editor = <DiscreteEditor item={item} onSubmit={handleItemChange} />
+            editor = <DiscreteEditor item={item} onSubmit={handleItemChange}/>
         } else if (item.type === ItemTypeEnum.FixedCost) {
-            editor = <FixedCostEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange} />
+            editor = <FixedCostEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange}/>
         } else if (item.type === ItemTypeEnum.PercentOfRevenue) {
-            editor = <PercentOfRevenueEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange} />
+            editor = <PercentOfRevenueEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange}/>
         } else if (item.type === ItemTypeEnum.Custom) {
-            editor = <FormulaEditor item={item} onSubmit={handleItemChange} />
+            editor = <FormulaEditor item={item} onSubmit={handleItemChange}/>
         } else if (item.type === ItemTypeEnum.SumOfOtherItems) {
-            editor = <SumOfOtherItemsEditor item={item} onSubmit={handleItemChange} />
+            editor = <SumOfOtherItemsEditor item={item} onSubmit={handleItemChange}/>
         } else {
-            editor = <AutoForm schema={schemaOf(item)} body={bodyOf(item)} onSubmit={handleAutoFormChange} />
+            editor = <AutoForm schema={schemaOf(item)} body={bodyOf(item)} onSubmit={handleAutoFormChange}/>
         }
 
         const isOverridden = item === overriddenItem
@@ -163,18 +175,19 @@ export function ItemEditor() {
                         {
                             fact?.documentation
                                 ?
-                                <blockquote className="px-3 inline-block border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300 mb-1">
+                                <blockquote
+                                    className="px-3 inline-block border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300 mb-1">
                                     {fact.documentation}
                                 </blockquote>
                                 : null
                         }
-                        <ItemDescriptionInput item={item} onSubmit={handleItemChange} />
-                        <ItemFY0Input item={item} onSubmit={handleItemChange} />
+                        <ItemDescriptionInput item={item} onSubmit={handleItemChange}/>
+                        <ItemFY0Input item={item} onSubmit={handleItemChange}/>
                     </div>
                     <Select
                         label="Item Type"
                         value={item.type}
-                        onChange={({ currentTarget: { value } }) => updateType(value as any)}
+                        onChange={({currentTarget: {value}}) => updateType(value as any)}
                     >
                         <option value={ItemTypeEnum.Custom}>Custom</option>
                         <option value={ItemTypeEnum.SubscriptionRevenue}>Subscription Revenue</option>
@@ -184,6 +197,9 @@ export function ItemEditor() {
                         <option value={ItemTypeEnum.SumOfOtherItems}>Sum of Other Items</option>
                         <option value={ItemTypeEnum.CompoundedGrowth}>Compounded Growth</option>
                     </Select>
+                    {/* Revenue Item get the option to populate with Zacks Estimates */}
+                    {itemName === model.totalRevenueConceptName ?
+                        <button onClick={assignZacksEstimates}>Use Zacks Estimates</button> : null}
                     {editor}
                     <div className="flex space-x-2">
                         <PrimaryButton onClick={handleSubmit}>
