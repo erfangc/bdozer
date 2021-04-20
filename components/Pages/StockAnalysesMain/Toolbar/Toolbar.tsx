@@ -1,13 +1,13 @@
 import {useAuth0} from '@auth0/auth0-react'
 import {useRouter} from 'next/router'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {v4 as uuid} from 'uuid'
-import {basePath, useStockAnalysis} from '../../../../api-hooks'
-import {StockAnalysis2} from '../../../../client'
+import {basePath, useIssues, useStockAnalysis} from '../../../../api-hooks'
+import {Issue, StockAnalysis2} from '../../../../client'
 import {ExcelDownloading, ExcelIcon} from '../../../Common/DownloadToExcel'
 import {Notification, notificationStore} from '../../../Notifications/NotificationStore'
 import {ToolButton} from './ToolButton'
-import {Loading, Play, Preview, Publish, Settings, Table, Unpublish} from "../../../Common/Svgs";
+import {Loading, Play, Preview, Publish, Settings, Table, Unpublish, Warning} from "../../../Common/Svgs";
 import {Published} from "../../../Publish/Publish";
 
 interface Props {
@@ -22,13 +22,20 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
     const {getIdTokenClaims} = useAuth0()
     const router = useRouter()
     const {id} = router.query
-    const stockAnalysisService = useStockAnalysis()
+    const stockAnalysisApi = useStockAnalysis()
+    const issuesApi = useIssues()
+    const [issues, setIssues] = useState<Issue[]>()
     const [downloading, setDownloading] = useState(false)
+
+    async function init() {
+        const {data:issues} = await issuesApi.findIssues(id as string)
+        setIssues(issues)
+    }
 
     async function refresh() {
         setLoading(true)
         try {
-            const resp = await stockAnalysisService.refreshStockAnalysis(stockAnalysis)
+            const resp = await stockAnalysisApi.refreshStockAnalysis(stockAnalysis)
             await updateStockAnalysis(resp.data)
         } catch (e) {
             console.error(e);
@@ -42,13 +49,13 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
 
     async function publish() {
         const id = stockAnalysis['_id'];
-        await stockAnalysisService.publish(id)
+        await stockAnalysisApi.publish(id)
         router.push(`/published-stock-analyses/${id}/narrative2`)
     }
 
     async function unpublish() {
         const id = stockAnalysis['_id']
-        await stockAnalysisService.unpublish(id)
+        await stockAnalysisApi.unpublish(id)
         const notification: Notification = {
             id: uuid(),
             delay: 100,
@@ -64,6 +71,10 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
 
     async function navigateToModelSettings() {
         router.push(`/control-panel/stock-analyses/${stockAnalysis['_id']}/model-settings`)
+    }
+
+    async function navigateToIssues() {
+        router.push(`/control-panel/stock-analyses/${stockAnalysis['_id']}/issues-summary`)
     }
 
     async function updateStockAnalysis(stockAnalysis: StockAnalysis2) {
@@ -105,6 +116,8 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
                 }))
     }
 
+    useEffect(() => {init()}, [])
+    const noIssues = issues?.length === 0 || !issues
     return (
         <div className="relative">
             {stockAnalysis?.published ? <Published/> : null}
@@ -127,6 +140,10 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
                 <ToolButton onClick={navigateToModelSettings} loading={loading} label="Settings">
                     <Settings/>
                 </ToolButton>
+                <ToolButton onClick={navigateToIssues} loading={loading} disabled={loading || noIssues} label="Issues" className="relative">
+                    {noIssues ? null : <span className="absolute -top-2 -right-2 rounded-full bg-amber-600 w-6 h-6">{issues?.length}</span>}
+                    <Warning/>
+                </ToolButton>
                 <ToolButton onClick={downloadModel} loading={downloading} label="Download">
                     {downloading ? <ExcelDownloading/> : <ExcelIcon/>}
                 </ToolButton>
@@ -134,3 +151,5 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
         </div>
     )
 }
+
+
