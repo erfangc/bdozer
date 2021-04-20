@@ -34,14 +34,10 @@ export function IssueDetail() {
         init()
     }, [])
 
-    function goBack() {
-        router.back()
-    }
-
     const issueType = issue?.issueType
     let resolutionComponent: ReactNode = null
     if (itemNamesNotFoundIssueTypes.includes(issueType)) {
-        resolutionComponent = <ItemNameNotFoundResolutionUI issue={issue} onResolved={console.log} onDismiss={goBack}/>
+        resolutionComponent = <ItemNameNotFoundResolutionUI issue={issue} />
     }
     return (
         <main className="px-4 mt-12 mx-auto container text-blueGray-100 max-w-prose bg-blueGray-900">

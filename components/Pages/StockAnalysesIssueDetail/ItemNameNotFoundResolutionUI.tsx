@@ -9,8 +9,6 @@ import {Loading} from "../../Common/Svgs";
 
 interface Props {
     issue: Issue
-    onResolved: () => void
-    onDismiss: () => void
 }
 
 function Check() {
@@ -24,7 +22,7 @@ function Check() {
 
 export function ItemNameNotFoundResolutionUI(props: Props) {
 
-    const {issue, onResolved} = props
+    const {issue} = props
     const issuesApi = useIssues()
     const router = useRouter()
     const {id} = router.query
@@ -33,6 +31,10 @@ export function ItemNameNotFoundResolutionUI(props: Props) {
     const [processing, setProcessing] = useState(false)
 
     const [selected, setSelected] = useState<Item>()
+
+    function goBack() {
+        router.back()
+    }
 
     async function init() {
         const {data: stockAnalysis} = await stockAnalysisApi.getStockAnalysis(id as string)
@@ -132,7 +134,7 @@ export function ItemNameNotFoundResolutionUI(props: Props) {
             </Listbox>
             <div className="flex space-x-2 mt-4">
                 <PrimaryButton onClick={handleSubmit} disabled={!selected || processing}>{processing ? <><Loading/> Processing</> : <span>Confirm</span>}</PrimaryButton>
-                <SecondaryButton onClick={props.onDismiss}>Back</SecondaryButton>
+                <SecondaryButton onClick={goBack}>Back</SecondaryButton>
             </div>
         </div>
     )
