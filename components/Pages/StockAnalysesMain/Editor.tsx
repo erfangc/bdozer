@@ -75,10 +75,6 @@ export default function Editor(props: Props) {
                         Statement</Tab>
                     <Tab active={tab === 'balance sheet'} onClick={() => setTab('balance sheet')}>Balance Sheet</Tab>
                 </div>
-                <blockquote
-                    className="px-3 inline-block border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300 mb-1">
-                    Click on items to edit
-                </blockquote>
                 <div className="space-y-2">
                     <div
                         className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 py-2 px-4 font-semibold text-blueGray-400">

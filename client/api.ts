@@ -1083,8 +1083,7 @@ export enum IssueIssueTypeEnum {
     RevenueItemNotFound = 'RevenueItemNotFound',
     NetIncomeItemNotFound = 'NetIncomeItemNotFound',
     SharesOutstandingItemNotFound = 'SharesOutstandingItemNotFound',
-    EpsItemNotFound = 'EpsItemNotFound',
-    OrphanItem = 'OrphanItem'
+    EpsItemNotFound = 'EpsItemNotFound'
 }
 
 /**

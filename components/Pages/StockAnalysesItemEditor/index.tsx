@@ -119,7 +119,7 @@ export function ItemEditor() {
     }
 
     function back() {
-        router.push(`/control-panel/stock-analyses/${id}`)
+        router.push(`/control-panel/stock-analyses/${id}`,undefined,{scroll:false})
     }
 
     const model = stockAnalysis?.model
