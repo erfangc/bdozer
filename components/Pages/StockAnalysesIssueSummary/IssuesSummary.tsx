@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useRouter} from "next/router";
-import {useIssues, useModelBuilderFactory, useStockAnalysis} from "../../../api-hooks";
+import {useIssues, useStockAnalysis} from "../../../api-hooks";
 import {Issue, StockAnalysis2} from "../../../client";
 import {Title} from "../../Common/Title";
 import {PrimaryButton} from "../../Common/PrimaryButton";
@@ -15,7 +15,6 @@ export function IssuesSummary() {
 
     const issuesApi = useIssues()
     const stockAnalysisApi = useStockAnalysis()
-    const modelBuilderFactory = useModelBuilderFactory()
 
     const [issues, setIssues] = useState<Issue[]>()
     const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
@@ -38,19 +37,24 @@ export function IssuesSummary() {
         await init()
     }
 
+    function navigateToIssueDetail(issue: Issue) {
+        router.push(`/control-panel/stock-analyses/${id}/issues/${issue['_id']}`)
+    }
+
+    /**
+     * business logic to retrieve the latest analysis object
+     * and regenerate any issues
+     */
     async function regenerateIssues() {
         setProcessing(true)
-        const {data: model} = await modelBuilderFactory.bestEffortModel(stockAnalysis.cik, stockAnalysis.model.adsh)
-        const updatedStockAnalysis: StockAnalysis2 = {...stockAnalysis, model,}
-        const {data: issues} = await issuesApi.generateIssues(updatedStockAnalysis)
+        const {data: latestStockAnalysis} = await stockAnalysisApi.getStockAnalysis(stockAnalysis['_id'])
+        const {data: issues} = await issuesApi.generateIssues(latestStockAnalysis)
         await issuesApi.saveIssues(issues)
         setIssues(issues)
         setProcessing(false)
     }
 
-    useEffect(() => {
-        init()
-    }, [])
+    useEffect(() => { init() }, [])
 
     return (
         <main className="px-4 max-w-xl mx-auto container mt-12 text-blueGray-100">
@@ -75,7 +79,7 @@ export function IssuesSummary() {
                                 </div>
                             </div>
                             <div className="flex space-x-2 md:flex-col md:space-x-0 md:space-y-2">
-                                <PrimaryButton>
+                                <PrimaryButton onClick={() => navigateToIssueDetail(issue)}>
                                     <svg
                                         fill="none"
                                         xmlns="http://www.w3.org/2000/svg"
