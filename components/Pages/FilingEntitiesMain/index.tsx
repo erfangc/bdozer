@@ -67,7 +67,7 @@ export default function FilingEntityControlPanel() {
     }
 
     return (
-        <main className="container mx-auto py-20 space-y-8">
+        <main className="container mx-auto mt-12 px-4 space-y-8">
             <div className="space-y-4">
                 <Title>Filing Entity Summary</Title>
                 <FilingEntityCard filingEntity={filingEntity} />
