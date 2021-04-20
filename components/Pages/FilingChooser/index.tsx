@@ -86,7 +86,7 @@ export function FilingChooser() {
                                 <div className="flex flex-col space-y-2">
                                     <span className="text-2xl font-extrabold text-blueGray-100">{filing.form}</span>
                                     <span className="text-blueGray-300 text-base">
-                                            Filed for  {new Date(filing.period_ending).toLocaleDateString()}
+                                        Filed for  {new Date(filing.period_ending).toLocaleDateString()}
                                     </span>
                                 </div>
                                 <div className={`flex items-center`}>

@@ -6,10 +6,12 @@ import {SecondaryButton} from "./SecondaryButton";
 
 interface DeleteConfirmationDialogProps {
     resourceName?: string
+    message?: string
+    label?: string
     onDelete: () => void
 }
 
-export function DeleteConfirmationDialog({resourceName, onDelete}: DeleteConfirmationDialogProps) {
+export function DeleteConfirmationDialog({label, message, resourceName, onDelete}: DeleteConfirmationDialogProps) {
 
     const [open, setOpen] = useState(false)
 
@@ -29,7 +31,7 @@ export function DeleteConfirmationDialog({resourceName, onDelete}: DeleteConfirm
     return (
         <>
             <DeleteButton onClick={openModal}>
-                <Delete/><span className="pl-1">Delete</span>
+                <Delete/><span className="pl-1">{label}</span>
             </DeleteButton>
             <Transition show={open}>
                 <Dialog
@@ -52,7 +54,7 @@ export function DeleteConfirmationDialog({resourceName, onDelete}: DeleteConfirm
                     >
                         <Dialog.Title className="text-xl font-bold">Confirm Delete</Dialog.Title>
                         <Dialog.Description className="text-blueGray-300">
-                            You are about to delete {resourceName ?? 'a resource'} permanently
+                            {message ? message : `You are about to delete ${resourceName ?? 'this resource'} permanently`}
                         </Dialog.Description>
                         <div className="flex space-x-2">
                             <DeleteButton onClick={handleConfirm}><Delete/><span>Confirm</span></DeleteButton>

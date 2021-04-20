@@ -1,20 +1,48 @@
 import React, {useEffect, useState} from 'react'
 import {useRouter} from "next/router";
-import {useIssues} from "../../../api-hooks";
-import {Issue} from "../../../client";
+import {useIssues, useModelBuilderFactory, useStockAnalysis} from "../../../api-hooks";
+import {Issue, StockAnalysis2} from "../../../client";
 import {Title} from "../../Common/Title";
 import {PrimaryButton} from "../../Common/PrimaryButton";
-import {DeleteButton} from "../../Common/DeleteButton";
+import {DeleteConfirmationDialog} from "../../Common/DeleteConfirmationDialog";
+import {SecondaryButton} from "../../Common/SecondaryButton";
+import {Loading, LoadingNotSpinning} from "../../Common/Svgs";
 
 export function IssuesSummary() {
     const router = useRouter()
     const {id} = router.query
     const issuesApi = useIssues()
+    const stockAnalysisApi = useStockAnalysis()
+    const modelBuilderFactory = useModelBuilderFactory()
     const [issues, setIssues] = useState<Issue[]>()
+    const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
+    const [processing, setProcessing] = useState(false)
 
     async function init() {
         const {data: issues} = await issuesApi.findIssues(id as any)
         setIssues(issues)
+        const {data: stockAnalysis} = await stockAnalysisApi.getStockAnalysis(id as string)
+        setStockAnalysis(stockAnalysis)
+        if (issues.length === 0) {
+            const {data: reEvaluatedStockAnalysis} = await stockAnalysisApi.refreshStockAnalysis(stockAnalysis)
+            await stockAnalysisApi.saveStockAnalysis(reEvaluatedStockAnalysis)
+            await router.push(`/control-panel/stock-analyses/${id}`)
+        }
+    }
+
+    async function ignoreIssue(issue: Issue) {
+        await issuesApi.deleteIssue(issue['_id'])
+        await init()
+    }
+
+    async function regenerateIssues() {
+        setProcessing(true)
+        const {data: model} = await modelBuilderFactory.bestEffortModel(stockAnalysis.cik, stockAnalysis.model.adsh)
+        const updatedStockAnalysis: StockAnalysis2 = {...stockAnalysis, model,}
+        const {data: issues} = await issuesApi.generateIssues(updatedStockAnalysis)
+        await issuesApi.saveIssues(issues)
+        setIssues(issues)
+        setProcessing(false)
     }
 
     useEffect(() => {
@@ -28,6 +56,9 @@ export function IssuesSummary() {
                 We identified a few issues while attempting to construct a model automatically. These require your
                 attention
             </p>
+            <SecondaryButton className="mb-4" onClick={regenerateIssues} disabled={processing}>
+                {processing ? <Loading /> : <LoadingNotSpinning className="text-blueGray-500"/>}<span className="ml-1">Refresh Issues</span>
+            </SecondaryButton>
             {issues?.map(issue => {
                 return (
                     <div key={issue['_id']}
@@ -57,9 +88,8 @@ export function IssuesSummary() {
                                 </svg>
                                 <span className="ml-1">Fix</span>
                             </PrimaryButton>
-                            <DeleteButton>
-                                Ignore
-                            </DeleteButton>
+                            <DeleteConfirmationDialog onDelete={() => ignoreIssue(issue)} label="Ignore"
+                                                      message="Are you sure you want to ignore this issue?"/>
                         </div>
                     </div>
                 )
