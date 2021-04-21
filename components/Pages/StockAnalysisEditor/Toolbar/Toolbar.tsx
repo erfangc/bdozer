@@ -139,16 +139,16 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
         <div className="relative">
             {stockAnalysis?.published ? <Published/> : null}
             <div className="grid grid-cols-4 gap-1 md:flex md:space-x-5 px-3 pt-2 pb-1 bg-blueGray-800 rounded">
-                <ToolButton onClick={refresh} loading={loading} label="Rerun" tooltip="Rerun the model with manual overrides without re-parsing the SEC filing">
+                <ToolButton onClick={refresh} loading={loading} label="Rerun">
                     {loading ? <Loading/> : <Play/>}
                 </ToolButton>
-                <ToolButton onClick={navigateToFullOutput} loading={loading} label="Table" tooltip="Just a full table of future cells">
+                <ToolButton onClick={navigateToFullOutput} loading={loading} label="Table">
                     <Table/>
                 </ToolButton>
-                <ToolButton onClick={navigateToPreview} loading={loading} label="Preview" tooltip="Preview what an end consumer will see using the standard presentation template">
+                <ToolButton onClick={navigateToPreview} loading={loading} label="Preview">
                     <Preview/>
                 </ToolButton>
-                <ToolButton onClick={publish} loading={loading} label="Publish" tooltip="Publish the stock analysis so it is visible and searchable on the site">
+                <ToolButton onClick={publish} loading={loading} label="Publish">
                     <Publish/>
                 </ToolButton>
                 <ToolButton onClick={unpublish} loading={loading} label="Unpublish">
@@ -157,8 +157,16 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
                 <ToolButton onClick={navigateToModelSettings} loading={loading} label="Settings">
                     <Settings/>
                 </ToolButton>
-                <ToolButton onClick={navigateToIssues} loading={loading} disabled={loading || noIssues} label="Issues" className="relative" tooltip="Fix any issues identified during the initial bootstrapping process">
-                    {noIssues ? null : <span className="absolute -top-2 -right-2 rounded-full bg-amber-600 w-6 h-6">{issues?.length}</span>}
+                <ToolButton onClick={navigateToIssues} loading={loading} disabled={loading || noIssues} label="Issues" className="relative">
+                    {
+                        noIssues
+                            ?
+                            null
+                            :
+                            <span className="absolute -top-2 -right-2 rounded-full bg-amber-600 w-6 h-6">
+                                {issues?.length}
+                            </span>
+                    }
                     <Warning/>
                 </ToolButton>
                 <ToolButton onClick={downloadModel} loading={downloading} label="Download">

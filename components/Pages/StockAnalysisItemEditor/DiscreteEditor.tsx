@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import {Item} from "../../../client";
 import {NumberFormatValues} from "react-number-format";
 import {NumberInput} from "../../Common/NumberInput";
-import {year} from "../../../year";
 import {GhostButton} from "../../Common/GhostButton";
 import {Plus} from "../../Common/Svgs";
 
@@ -69,7 +68,7 @@ export function DiscreteEditor({item, onSubmit}: DiscreteEditorProps) {
                         <div key={key} className="flex space-x-1">
                             <NumberInput
                                 value={formulas[key]}
-                                label={year(key).toString()}
+                                label={key.toString()}
                                 onValueChange={values => handleChange(key, values)}
                                 onBlur={handleSubmit}
                             />
