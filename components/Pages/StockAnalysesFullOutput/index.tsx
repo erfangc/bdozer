@@ -3,7 +3,7 @@ import {useRouter} from "next/router";
 import {useStockAnalysis} from "../../../api-hooks";
 import {StockAnalysis2} from "../../../client";
 import {Title} from "../../Common/Title";
-import {TableOutput} from "../StockAnalysesMain/TableOutput";
+import {TableOutput} from "../StockAnalysisEditor/TableOutput";
 
 
 export function StockAnalysesFullOutput() {

@@ -5,7 +5,7 @@ import {useFactBaseUnsecured} from "../../../api-hooks"
 import {Item, StockAnalysis2} from "../../../client"
 import {SmallGhostButton} from "../../Common/GhostButton"
 import {ItemDisplayDetail} from "./ItemDisplayDetail"
-import {Attention as Manual, Check, Nothing} from "../StockAnalysesItemEditor/Svgs"
+import {Attention as Manual, Check, Nothing} from "../StockAnalysisItemEditor/Svgs"
 
 interface Props {
     item: Item

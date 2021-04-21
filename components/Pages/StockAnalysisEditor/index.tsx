@@ -41,9 +41,7 @@ export function StockAnalysisControlPanel() {
 
     return (
         <main className="container mx-auto px-4 py-20 space-y-12">
-            <Title>
-                Stock Analysis Editor
-            </Title>
+            <Title>Stock Analysis Editor</Title>
             <FilingEntityCard filingEntity={filingEntity}/>
             <section className="space-y-6">
                 <Toolbar
@@ -55,7 +53,7 @@ export function StockAnalysisControlPanel() {
                 <Editor
                     loading={loading}
                     stockAnalysis={stockAnalysis}
-                    saveStockAnalysis={saveStockAnalysis}
+                    setStockAnalysis={saveStockAnalysis}
                 />
             </section>
         </main>

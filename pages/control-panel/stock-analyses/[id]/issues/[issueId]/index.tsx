@@ -1,6 +1,6 @@
 import React from 'react'
 import {App} from "../../../../../../components/App";
-import {IssueDetail} from "../../../../../../components/Pages/StockAnalysesIssueDetail/IssueDetail";
+import {IssueDetail} from "../../../../../../components/Pages/StockAnalysisIssueDetail/IssueDetail";
 
 export default function Index() {
     return (

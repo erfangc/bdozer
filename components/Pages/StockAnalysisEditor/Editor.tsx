@@ -8,13 +8,13 @@ import {TagInput} from "../../TagInput";
 
 interface Props {
     stockAnalysis: StockAnalysis2
-    saveStockAnalysis: (StockAnalysis2) => void
+    setStockAnalysis: (StockAnalysis2) => void
     loading: boolean
 }
 
 export default function Editor(props: Props) {
 
-    const {stockAnalysis, saveStockAnalysis, loading} = props
+    const {stockAnalysis, setStockAnalysis, loading} = props
     const [tab, setTab] = useState<'income statement' | 'balance sheet'>('income statement')
 
     async function updateBeta(newValue: string) {
@@ -23,7 +23,7 @@ export default function Editor(props: Props) {
             ...stockAnalysis,
             model: {...stockAnalysis.model, beta}
         }
-        saveStockAnalysis(updatedStockAnalysis)
+        setStockAnalysis(updatedStockAnalysis)
     }
 
     async function updatePeriods(newValue: string) {
@@ -32,7 +32,7 @@ export default function Editor(props: Props) {
             ...stockAnalysis,
             model: {...stockAnalysis.model, periods}
         }
-        saveStockAnalysis(updatedStockAnalysis)
+        setStockAnalysis(updatedStockAnalysis)
     }
 
     async function updateTags(tags: Tag[]) {
@@ -40,7 +40,7 @@ export default function Editor(props: Props) {
             ...stockAnalysis,
             tags: tags.map(it => it['_id'])
         }
-        saveStockAnalysis(updatedStockAnalysis)
+        setStockAnalysis(updatedStockAnalysis)
     }
 
     return (
