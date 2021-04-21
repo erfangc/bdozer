@@ -12,7 +12,7 @@ interface Props {
 
 export function SumOfOtherItemsEditor({item, onSubmit}: Props) {
 
-    const [sumOfOtherItems, setSumOfOtherItems] = useState(item.sumOfOtherItems)
+    const [sumOfOtherItems, setSumOfOtherItems] = useState(item.sumOfOtherItems || {components:[]})
 
     function updateComponentName(oldValue: string, newValue: string) {
         const updatedComponent = sumOfOtherItems.components.map(component => {
@@ -70,9 +70,6 @@ export function SumOfOtherItemsEditor({item, onSubmit}: Props) {
         })
     }
 
-    if (!sumOfOtherItems) {
-        return null
-    }
     return (
         <div className="flex-col space-y-4">
             <BlockQuote>Specify other items to sum over</BlockQuote>

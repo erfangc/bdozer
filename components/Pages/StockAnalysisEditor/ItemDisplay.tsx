@@ -9,12 +9,13 @@ import {Attention as Manual, Check, Nothing} from "../StockAnalysisItemEditor/Sv
 
 interface Props {
     item: Item
+    orphaned?: boolean
     stockAnalysis: StockAnalysis2
 }
 
 export function ItemDisplay(props: Props) {
 
-    const {item: originalItem, stockAnalysis} = props
+    const {item: originalItem, stockAnalysis, orphaned} = props
     const router = useRouter()
     const {id} = router.query
     const factBase = useFactBaseUnsecured()
@@ -32,7 +33,11 @@ export function ItemDisplay(props: Props) {
 
     return (
         <div
-            className={`cursor-pointer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 rounded py-2 ${item.subtotal ? '' : 'bg-blueGray-800'} shadow-lg px-4 hover:bg-blueGray-700 transition ease-linear`}
+            className={
+                `cursor-pointer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 rounded py-2 
+                ${item.subtotal ? '' : 'bg-blueGray-800'} shadow-lg px-4 hover:bg-blueGray-700 transition ease-linear 
+                ${orphaned ? 'ring-2 ring-rose-700' : null}`
+            }
             onClick={() => router.push(`/control-panel/stock-analyses/${id}/items/${item.name}`)}
         >
             <div className="flex items-center overflow-hidden">

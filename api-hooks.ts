@@ -6,7 +6,7 @@ import {
     FilingEntityManagerControllerApi,
     FilingEntityManagerUnsecuredControllerApi, IssuesControllerApi,
     MarketingControllerApi, ModelBuilderFactoryControllerApi,
-    MxParserControllerApi,
+    MxParserControllerApi, OrphanedItemsFinderControllerApi,
     PublishedStockAnalysisControllerApi,
     StockAnalysisControllerApi,
     TagControllerApi, ZacksEstimatesControllerApi,
@@ -86,6 +86,11 @@ export function useModelBuilderFactory() {
 export function useStockAnalysis() {
     const axiosInstance = useAxios();
     return new StockAnalysisControllerApi(null, basePath, axiosInstance);
+}
+
+export function useOrphanedItemsFinder() {
+    const axiosInstance = useAxios();
+    return new OrphanedItemsFinderControllerApi(null, basePath, axiosInstance);
 }
 
 export function useEdgarExplorer() {

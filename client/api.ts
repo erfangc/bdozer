@@ -1238,6 +1238,12 @@ export interface Model {
     itemOverrides: Array<Item>;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof Model
+     */
+    suppressedItems: Array<string>;
+    /**
+     * 
      * @type {string}
      * @memberof Model
      */
@@ -3961,6 +3967,109 @@ export class MxParserControllerApi extends BaseAPI {
      */
     public evaluate(mxParserEvaluateRequest: MxParserEvaluateRequest, options?: any) {
         return MxParserControllerApiFp(this.configuration).evaluate(mxParserEvaluateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * OrphanedItemsFinderControllerApi - axios parameter creator
+ * @export
+ */
+export const OrphanedItemsFinderControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orphanedItems: async (stockAnalysis2: StockAnalysis2, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'stockAnalysis2' is not null or undefined
+            assertParamExists('orphanedItems', 'stockAnalysis2', stockAnalysis2)
+            const localVarPath = `/api/orphaned-items-finder`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(stockAnalysis2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrphanedItemsFinderControllerApi - functional programming interface
+ * @export
+ */
+export const OrphanedItemsFinderControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OrphanedItemsFinderControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async orphanedItems(stockAnalysis2: StockAnalysis2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Item>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.orphanedItems(stockAnalysis2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * OrphanedItemsFinderControllerApi - factory interface
+ * @export
+ */
+export const OrphanedItemsFinderControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OrphanedItemsFinderControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        orphanedItems(stockAnalysis2: StockAnalysis2, options?: any): AxiosPromise<Array<Item>> {
+            return localVarFp.orphanedItems(stockAnalysis2, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OrphanedItemsFinderControllerApi - object-oriented interface
+ * @export
+ * @class OrphanedItemsFinderControllerApi
+ * @extends {BaseAPI}
+ */
+export class OrphanedItemsFinderControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {StockAnalysis2} stockAnalysis2 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrphanedItemsFinderControllerApi
+     */
+    public orphanedItems(stockAnalysis2: StockAnalysis2, options?: any) {
+        return OrphanedItemsFinderControllerApiFp(this.configuration).orphanedItems(stockAnalysis2, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

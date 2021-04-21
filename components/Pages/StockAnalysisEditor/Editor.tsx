@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
-import {StockAnalysis2, Tag} from '../../../client';
+import React, {useEffect, useState} from 'react';
+import {Item, StockAnalysis2, Tag} from '../../../client';
 import Tab from '../../Common/Tab';
 import {ManagedTextInput} from '../../Common/TextInput';
 import {ItemDisplay} from './ItemDisplay';
 import StockAnalysisSummary from './StockAnalysisVisualizations/StockAnalysisSummary';
 import {TagInput} from "../../TagInput";
+import {useOrphanedItemsFinder} from "../../../api-hooks";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -16,12 +17,16 @@ export default function Editor(props: Props) {
 
     const {stockAnalysis, setStockAnalysis, loading} = props
     const [tab, setTab] = useState<'income statement' | 'balance sheet'>('income statement')
+    const orphanedItemsFinder = useOrphanedItemsFinder()
+    const [orphanedItems, setOrphanedItems] = useState<Item[]>([])
 
     async function updateBeta(newValue: string) {
         const beta = parseFloat(newValue)
         const updatedStockAnalysis: StockAnalysis2 = {
             ...stockAnalysis,
-            model: {...stockAnalysis.model, beta}
+            model: {
+                ...stockAnalysis.model, beta,
+            }
         }
         setStockAnalysis(updatedStockAnalysis)
     }
@@ -42,6 +47,18 @@ export default function Editor(props: Props) {
         }
         setStockAnalysis(updatedStockAnalysis)
     }
+
+    async function refresh() {
+        if (!stockAnalysis) {
+            return
+        }
+        const {data: orphanedItems} = await orphanedItemsFinder.orphanedItems(stockAnalysis);
+        setOrphanedItems(orphanedItems)
+    }
+
+    useEffect(() => {
+        refresh()
+    }, [stockAnalysis])
 
     return (
         <div className="md:p-4 space-y-8">
@@ -87,12 +104,26 @@ export default function Editor(props: Props) {
                             stockAnalysis
                                 ?.model
                                 ?.incomeStatementItems
-                                ?.map(item => <ItemDisplay key={item.name} stockAnalysis={stockAnalysis} item={item}/>)
+                                ?.map(item => (
+                                    <ItemDisplay
+                                        key={item.name}
+                                        stockAnalysis={stockAnalysis}
+                                        item={item}
+                                        orphaned={orphanedItems.find(it => it.name === item.name) !== undefined}
+                                    />
+                                ))
                             :
                             stockAnalysis
                                 ?.model
                                 ?.balanceSheetItems
-                                ?.map(item => <ItemDisplay key={item.name} stockAnalysis={stockAnalysis} item={item}/>)
+                                ?.map(item => (
+                                    <ItemDisplay
+                                        key={item.name}
+                                        stockAnalysis={stockAnalysis}
+                                        item={item}
+                                        orphaned={orphanedItems.find(it => it.name === item.name) !== undefined}
+                                    />
+                                ))
                     }
                 </div>
             </div>
