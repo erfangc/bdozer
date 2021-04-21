@@ -38,8 +38,8 @@ export function IssuesSummary() {
         await init()
     }
 
-    function navigateToIssueDetail(issue: Issue) {
-        router.push(`/control-panel/stock-analyses/${id}/issues/${issue['_id']}`)
+    async function navigateToIssueDetail(issue: Issue) {
+        await router.push(`/control-panel/stock-analyses/${id}/issues/${issue['_id']}`)
     }
 
     /**
@@ -92,13 +92,7 @@ export function IssuesSummary() {
                                 </div>
                                 <div className="flex space-x-2 md:flex-col md:space-x-0 md:space-y-2">
                                     <PrimaryButton onClick={() => navigateToIssueDetail(issue)}>
-                                        <svg
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="h-6 w-6"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
+                                        <svg fill="none" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" stroke="currentColor" viewBox="0 0 24 24">
                                             <path
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
