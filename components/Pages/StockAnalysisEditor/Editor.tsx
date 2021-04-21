@@ -3,7 +3,7 @@ import {StockAnalysis2, Tag} from '../../../client';
 import Tab from '../../Common/Tab';
 import {ManagedTextInput} from '../../Common/TextInput';
 import {ItemDisplay} from './ItemDisplay';
-import StockAnalysisSummary from './StockAnalysisSummary';
+import StockAnalysisSummary from './StockAnalysisVisualizations/StockAnalysisSummary';
 import {TagInput} from "../../TagInput";
 
 interface Props {
