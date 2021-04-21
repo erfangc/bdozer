@@ -34,7 +34,6 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
     const {getIdTokenClaims} = useAuth0()
     const router = useRouter()
     const {id} = router.query
-    const modelBuilder = useModelBuilderFactory();
     const stockAnalysisApi = useStockAnalysis()
     const issuesApi = useIssues()
     const [issues, setIssues] = useState<Issue[]>()
@@ -165,12 +164,15 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
                 <ToolButton onClick={downloadModel} loading={downloading} label="Download">
                     {downloading ? <ExcelDownloading/> : <ExcelIcon/>}
                 </ToolButton>
-                <ToolButton onClick={navigateToFilingChooser} loading={loading} label="Reboot">
+                <ToolButton
+                    label="Reboot"
+                    loading={loading}
+                    tooltip="Rebuild the whole model from another SEC filing"
+                    onClick={navigateToFilingChooser}
+                >
                     <ModelTraining/>
                 </ToolButton>
             </div>
         </div>
     )
 }
-
-

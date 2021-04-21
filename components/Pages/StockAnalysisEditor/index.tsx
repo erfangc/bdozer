@@ -10,21 +10,21 @@ import Editor from './Editor'
 export function StockAnalysisControlPanel() {
 
     const router = useRouter()
-    const [filingEntity, setFilingEntity] = useState<FilingEntity>()
-    const [loading, setLoading] = useState(false)
+    const [ filingEntity, setFilingEntity ] = useState<FilingEntity>()
+    const [ loading, setLoading ] = useState(false)
     const filingEntityManagerUnsecured = useFilingEntityManagerUnsecured()
-    const stockAnalysisCrud = useStockAnalysis()
-    const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
-    const {id} = router.query
+    const stockAnalysisApi = useStockAnalysis()
+    const [ stockAnalysis, setStockAnalysis ] = useState<StockAnalysis2>()
+    const { id } = router.query
 
     async function saveStockAnalysis(stockAnalysis: StockAnalysis2) {
-        await stockAnalysisCrud.saveStockAnalysis(stockAnalysis)
+        await stockAnalysisApi.saveStockAnalysis(stockAnalysis)
         setStockAnalysis(stockAnalysis)
     }
 
     async function init() {
         try {
-            const {data: stockAnalysis} = await stockAnalysisCrud.getStockAnalysis(id as string)
+            const {data: stockAnalysis} = await stockAnalysisApi.getStockAnalysis(id as string)
             const {data: filingEntity} = await filingEntityManagerUnsecured.getFilingEntity(stockAnalysis.cik)
             setFilingEntity(filingEntity)
             setStockAnalysis(stockAnalysis)
