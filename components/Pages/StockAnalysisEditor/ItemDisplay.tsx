@@ -62,4 +62,3 @@ export function ItemDisplay(props: Props) {
         </div>
     )
 }
-

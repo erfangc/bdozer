@@ -16,7 +16,7 @@ export function BusinessBreakdown(props: Props) {
     const { result: { ticker, derivedStockAnalytics: { businessWaterfall } } } = props;
 
     const [options, setOptions] = useState<Highcharts.Options>()
-    const [period, setPeriod] = useState<number>(0)
+    const [period, setPeriod] = useState<number>(1)
 
     function updateChart(period: number) {
 
@@ -30,10 +30,11 @@ export function BusinessBreakdown(props: Props) {
         }
 
         const topExpenses = waterfall.expenses.map(({ item, value }) => {
+            const valueT = -value
             return {
                 name: item.description ?? item.name,
-                y: value,
-                color: value > 0 ? lime700 : rose500,
+                y: valueT,
+                color: valueT > 0 ? lime700 : rose500,
                 item: item,
             }
         })
@@ -110,6 +111,7 @@ export function BusinessBreakdown(props: Props) {
             <div className="flex space-x-1 text-sm">
                 {Object
                     .keys(businessWaterfall)
+                    .filter(currentPeriod => parseInt(currentPeriod) !== 0)
                     .map(currentPeriod => {
                         const currPeriod = parseInt(currentPeriod)
                         return <Pill active={currPeriod === period} label={year(currPeriod).toString()} onClick={() => updatePeriod(currPeriod)} />
