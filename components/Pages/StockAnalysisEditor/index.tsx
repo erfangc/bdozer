@@ -45,9 +45,9 @@ export function StockAnalysisControlPanel() {
             <FilingEntityCard filingEntity={filingEntity}/>
             <section className="space-y-6">
                 <Toolbar
+                    loading={loading}
                     stockAnalysis={stockAnalysis}
                     setStockAnalysis={saveStockAnalysis}
-                    loading={loading}
                     setLoading={setLoading}
                 />
                 <Editor

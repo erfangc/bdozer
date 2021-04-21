@@ -2,13 +2,25 @@ import {useAuth0} from '@auth0/auth0-react'
 import {useRouter} from 'next/router'
 import React, {useEffect, useState} from 'react'
 import {v4 as uuid} from 'uuid'
-import {basePath, useIssues, useStockAnalysis} from '../../../../api-hooks'
+import {basePath, useIssues, useModelBuilderFactory, useStockAnalysis} from '../../../../api-hooks'
 import {Issue, StockAnalysis2} from '../../../../client'
 import {ExcelDownloading, ExcelIcon} from '../../../Common/DownloadToExcel'
 import {Notification, notificationStore} from '../../../Notifications/NotificationStore'
 import {ToolButton} from './ToolButton'
-import {Loading, Play, Preview, Publish, Settings, Table, Unpublish, Warning} from "../../../Common/Svgs";
+import {
+    Loading,
+    ModelTraining,
+    Play,
+    Preview,
+    Publish,
+    Settings,
+    Table,
+    Unpublish,
+    Warning
+} from "../../../Common/Svgs";
 import {Published} from "../../../Publish/Publish";
+import {itemAdditions} from "./helper";
+import {serverErrorStore} from "../../../ServerErrors/ServerErrorStore";
 
 interface Props {
     loading: boolean
@@ -22,6 +34,7 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
     const {getIdTokenClaims} = useAuth0()
     const router = useRouter()
     const {id} = router.query
+    const modelBuilder = useModelBuilderFactory();
     const stockAnalysisApi = useStockAnalysis()
     const issuesApi = useIssues()
     const [issues, setIssues] = useState<Issue[]>()
@@ -116,8 +129,13 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
                 }))
     }
 
+    function navigateToFilingChooser() {
+        router.push(`/control-panel/stock-analyses/${stockAnalysis['_id']}/filing-chooser`)
+    }
+
     useEffect(() => {init()}, [])
     const noIssues = issues?.length === 0 || !issues
+
     return (
         <div className="relative">
             {stockAnalysis?.published ? <Published/> : null}
@@ -146,6 +164,9 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
                 </ToolButton>
                 <ToolButton onClick={downloadModel} loading={downloading} label="Download">
                     {downloading ? <ExcelDownloading/> : <ExcelIcon/>}
+                </ToolButton>
+                <ToolButton onClick={navigateToFilingChooser} loading={loading} label="Reboot">
+                    <ModelTraining/>
                 </ToolButton>
             </div>
         </div>
