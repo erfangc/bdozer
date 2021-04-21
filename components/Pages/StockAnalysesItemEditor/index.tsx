@@ -183,6 +183,20 @@ export function ItemEditor() {
                         }
                         <ItemDescriptionInput item={item} onSubmit={handleItemChange}/>
                         <ItemFY0Input item={item} onSubmit={handleItemChange}/>
+                        {/* Revenue Item get the option to populate with Zacks Estimates */}
+                        {
+                            itemName === model.totalRevenueConceptName
+                                ? (
+                                    <div className="flex flex-col space-y-1">
+                                        <label className="block text-sm">Quick Options: </label>
+                                        <div className="h-px border-t border-blueGray-500 pt-2"/>
+                                        <button onClick={assignZacksEstimates} className="py-1 px-2 text-sm bg-blue-600 rounded w-40">
+                                            Use Zacks Estimates
+                                        </button>
+                                    </div>
+                                )
+                                : null
+                        }
                     </div>
                     <Select
                         label="Item Type"
@@ -197,9 +211,6 @@ export function ItemEditor() {
                         <option value={ItemTypeEnum.SumOfOtherItems}>Sum of Other Items</option>
                         <option value={ItemTypeEnum.CompoundedGrowth}>Compounded Growth</option>
                     </Select>
-                    {/* Revenue Item get the option to populate with Zacks Estimates */}
-                    {itemName === model.totalRevenueConceptName ?
-                        <button onClick={assignZacksEstimates}>Use Zacks Estimates</button> : null}
                     {editor}
                     <div className="flex space-x-2">
                         <PrimaryButton onClick={handleSubmit}>

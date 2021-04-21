@@ -57,21 +57,24 @@ export function FixedCostEditor({item, model, onSubmit}: Props) {
                 onValueChange={handleChange}
                 onBlur={() => handleSubmit(value)}
             />
-            <div className="space-y-2 flex flex-col mt-2">
-                <label className="text-sm">Quick Autofill Options:</label>
-                <div className="flex space-x-2">
-                    {
-                        fixedCostAutoFills.map(autoFillOption => {
-                            const cost = autoFillOption.fixedCost.cost;
-                            return (
-                                <GhostButton key={autoFillOption.label} onClick={() => autoFill(autoFillOption)}>
-                                    {autoFillOption.label} {simpleMoney(cost.toFixed(0))}
-                                </GhostButton>
-                            );
-                        })
-                    }
+            {!!fixedCostAutoFills.length
+            ?
+                <div className="space-y-2 flex flex-col mt-2">
+                    <label className="text-sm">Autofill Options:</label>
+                    <div className="flex space-x-2">
+                        {
+                            fixedCostAutoFills.map(autoFillOption => {
+                                const cost = autoFillOption.fixedCost.cost;
+                                return (
+                                    <GhostButton key={autoFillOption.label} onClick={() => autoFill(autoFillOption)}>
+                                        {autoFillOption.label} {simpleMoney(cost.toFixed(0))}
+                                    </GhostButton>
+                                );
+                            })
+                        }
+                    </div>
                 </div>
-            </div>
+            : null}
         </div>
     )
 }

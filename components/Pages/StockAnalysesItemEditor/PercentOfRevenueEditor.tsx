@@ -57,21 +57,26 @@ export function PercentOfRevenueEditor({item, model, onSubmit}: Props) {
                 onValueChange={handleChange}
                 onBlur={() => handleSubmit(value)}
             />
-            <div className="space-y-2 flex flex-col mt-2">
-                <label className="text-sm">Quick Autofill Options:</label>
-                <div className="flex space-x-2">
-                    {
-                        percentOfRevenueAutoFills.map(autoFillOption => {
-                            const percentOfRevenue = autoFillOption.percentOfRevenue.percentOfRevenue;
-                            return (
-                                <GhostButton key={autoFillOption.label} onClick={() => autoFill(autoFillOption)}>
-                                    {autoFillOption.label} {simplePercent(percentOfRevenue)}
-                                </GhostButton>
-                            );
-                        })
-                    }
-                </div>
-            </div>
+            {
+                !!percentOfRevenueAutoFills.length
+                ?
+                    <div className="space-y-2 flex flex-col mt-2">
+                        <label className="text-sm">Quick Autofill Options:</label>
+                        <div className="flex space-x-2">
+                            {
+                                percentOfRevenueAutoFills.map(autoFillOption => {
+                                    const percentOfRevenue = autoFillOption.percentOfRevenue.percentOfRevenue;
+                                    return (
+                                        <GhostButton key={autoFillOption.label} onClick={() => autoFill(autoFillOption)}>
+                                            {autoFillOption.label} {simplePercent(percentOfRevenue)}
+                                        </GhostButton>
+                                    );
+                                })
+                            }
+                        </div>
+                    </div>
+                : null
+            }
         </div>
     )
 }
