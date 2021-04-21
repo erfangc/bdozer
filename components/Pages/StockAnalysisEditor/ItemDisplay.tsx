@@ -32,10 +32,10 @@ export function ItemDisplay(props: Props) {
 
     return (
         <div
-            className={`cursor-pointer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 rounded py-2 ${item.subtotal ? '' : 'bg-blueGray-800'} shadow-lg px-4 hover:bg-blueGray-700 transition ease-linear overflow-hidden`}
+            className={`cursor-pointer grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 rounded py-2 ${item.subtotal ? '' : 'bg-blueGray-800'} shadow-lg px-4 hover:bg-blueGray-700 transition ease-linear`}
             onClick={() => router.push(`/control-panel/stock-analyses/${id}/items/${item.name}`)}
         >
-            <div className="flex items-center">
+            <div className="flex items-center overflow-hidden">
                 <span className={item.subtotal ? 'font-extrabold' : ''}>
                     {item.description ?? item.name}
                 </span>
@@ -52,7 +52,7 @@ export function ItemDisplay(props: Props) {
             <div className="flex justify-start lg:justify-end items-center space-x-4">
                 <SmallGhostButton onClick={openSourceDocument}>Source</SmallGhostButton>
                 <ItemDisplayDetail {...props} />
-                {item.subtotal ? <Nothing/> : !overridden ? <Check/> : <Manual/>}
+                {item.subtotal && !overridden ? <Nothing/> : !overridden ? <Check/> : <Manual/>}
             </div>
         </div>
     )
