@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {ReactNode, useState} from 'react'
 import {StockAnalysis2} from '../../../../client'
 import {CardPercent, Money} from '../../../Common/Card'
 import {highcharts} from "../../../../highcharts";
@@ -18,10 +18,11 @@ export default function AnalysisSummary(props: Props) {
     const targetPrice = stockAnalysis?.derivedStockAnalytics?.targetPrice;
     const currentPrice = stockAnalysis?.derivedStockAnalytics?.currentPrice;
 
+    let component: ReactNode = null
     if (tab === 'cards') {
-        return stockAnalysis !== undefined
+         stockAnalysis !== undefined
             ?
-            <div className="grid grid-flow-row gap-4 grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+            component = <div className="grid grid-flow-row gap-4 grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
                 <Money value={currentPrice} label={"Current Price"} running={loading} />
                 <Money
                     value={targetPrice}
@@ -35,8 +36,17 @@ export default function AnalysisSummary(props: Props) {
             </div>
             : null
     } else {
-        return <div>
+        component = <div>
                 <StockAnalysisCharts stockAnalysis={props.stockAnalysis}/>
             </div>
     }
+    return (
+        <div>
+            {component}
+            <div className="flex space-x-1 mt-2">
+                <button className={`px-2 py-1 rounded-xl ${tab === 'cards' ? 'bg-blueGray-700' : 'bg-blueGray-800'} focus:outline-none`} onClick={() => setTab('cards')}>Cards</button>
+                <button className={`px-2 py-1 rounded-xl ${tab === 'chart' ? 'bg-blueGray-700' : 'bg-blueGray-800'} focus:outline-none`} onClick={() => setTab('chart')}>Chart</button>
+            </div>
+        </div>
+    )
 }

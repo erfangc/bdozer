@@ -5,6 +5,7 @@ import {simpleNumber} from "../../../../simple-number";
 import {StockAnalysis2} from "../../../../client";
 import HighchartsReact from "highcharts-react-official";
 import {highcharts} from "../../../../highcharts";
+import {Loading} from "../../../Common/Svgs";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -13,6 +14,7 @@ interface Props {
 export function StockAnalysisCharts({stockAnalysis}: Props) {
 
     const [options, setOptions] = useState<Highcharts.Options>()
+    const [loading, setLoading] = useState(true)
     const totalRevenueConceptName = stockAnalysis?.model?.totalRevenueConceptName
     const netIncomeConceptName = stockAnalysis?.model?.netIncomeConceptName
 
@@ -25,6 +27,7 @@ export function StockAnalysisCharts({stockAnalysis}: Props) {
         if (!stockAnalysis) {
             return
         }
+        setLoading(true)
         const cells = stockAnalysis?.cells || []
         const revenueHistoricalValue = revenueItem?.historicalValue;
         const netIncomeHistoricalValue = netIncomeItem?.historicalValue;
@@ -72,6 +75,7 @@ export function StockAnalysisCharts({stockAnalysis}: Props) {
         const options: Highcharts.Options = {
             chart: {
                 type: 'column',
+                height: 192,
             },
             title: { text: null, },
             yAxis: {
@@ -90,6 +94,7 @@ export function StockAnalysisCharts({stockAnalysis}: Props) {
             ] as any
         }
         setOptions(options)
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -98,7 +103,12 @@ export function StockAnalysisCharts({stockAnalysis}: Props) {
 
     return (
         <div>
-            <HighchartsReact highcharts={highcharts} options={options} />
+            {loading
+                ?
+                <div className="h-48 flex items-center justify-center"><Loading/> Loading</div>
+                :
+                <HighchartsReact highcharts={highcharts} options={options} />
+            }
         </div>
     )
 }
