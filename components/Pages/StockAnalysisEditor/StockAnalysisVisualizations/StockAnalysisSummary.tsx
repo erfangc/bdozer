@@ -44,8 +44,8 @@ export default function AnalysisSummary(props: Props) {
         <div>
             {component}
             <div className="flex space-x-1 mt-2">
-                <button className={`px-2 py-1 rounded-xl ${tab === 'cards' ? 'bg-blueGray-700' : 'bg-blueGray-800'} focus:outline-none`} onClick={() => setTab('cards')}>Cards</button>
-                <button className={`px-2 py-1 rounded-xl ${tab === 'chart' ? 'bg-blueGray-700' : 'bg-blueGray-800'} focus:outline-none`} onClick={() => setTab('chart')}>Chart</button>
+                <button className={`text-sm px-2 py-1.5 rounded-xl ${tab === 'cards' ? 'bg-blueGray-700' : 'bg-blueGray-800'} focus:outline-none`} onClick={() => setTab('cards')}>Cards</button>
+                <button className={`text-sm px-2 py-1.5 rounded-xl ${tab === 'chart' ? 'bg-blueGray-700' : 'bg-blueGray-800'} focus:outline-none`} onClick={() => setTab('chart')}>Chart</button>
             </div>
         </div>
     )
