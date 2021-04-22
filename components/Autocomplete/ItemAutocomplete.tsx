@@ -3,7 +3,10 @@ import {Item, Model} from "../../client";
 
 interface Props extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
     model?: Model
-    item?: Item
+    initialValue?: string
+    wrapperClassName?: string
+    choicesContainerClassName?: string
+    choiceClassName?: string
     onItemSelect: (item: Item) => void
 }
 
@@ -26,7 +29,7 @@ export class ItemAutocomplete extends React.Component<Props, State> {
             choices: [],
             activeIdx: undefined,
             activeItem: undefined,
-            term: props.item?.name || '',
+            term: props.initialValue || '',
         }
     }
 
@@ -129,6 +132,7 @@ export class ItemAutocomplete extends React.Component<Props, State> {
         const activeItem = this.state.activeItem
         this.props.onItemSelect(activeItem)
         this.setState({choices: [], activeItem: undefined, activeIdx: undefined, term: activeItem.name});
+        this.ref.current?.focus()
     }
 
     escape = () => {
@@ -141,17 +145,17 @@ export class ItemAutocomplete extends React.Component<Props, State> {
 
     componentWillReceiveProps(nextProps: Props) {
         this.setState({
-            term: nextProps.item?.name || ''
+            term: nextProps.initialValue || ''
         });
     }
 
     render() {
 
         const {choices, activeIdx, term} = this.state
-        const {className, ...props} = this.props
+        const {className, wrapperClassName, choicesContainerClassName, choiceClassName, ...props} = this.props
 
         return (
-            <div className="relative text-blueGray-100">
+            <div className={`relative text-blueGray-100 ${wrapperClassName}`}>
                 <input
                     ref={this.ref}
                     value={term}
@@ -162,10 +166,7 @@ export class ItemAutocomplete extends React.Component<Props, State> {
                     {...props}
                 />
                 <ul
-                    className={`mt-1 cursor-pointer absolute bg-blueGray-700 top-full shadow rounded ease-in transition-all ${choices.length > 0 ? 'border-blueGray-600' : 'border-blueGray-900'} overflow-hidden z-10 text-sm`}
-                    style={{
-                        height: choices.length > 0 ? `${(choices.length + 1) * 32}px` : 0
-                    }}
+                    className={`mt-1 cursor-pointer absolute top-full overflow-hidden z-10 ${choicesContainerClassName}`}
                 >
                     {choices.map((item, idx) => {
                         const {name, description} = item
@@ -173,7 +174,7 @@ export class ItemAutocomplete extends React.Component<Props, State> {
                         return (
                             <li
                                 key={name}
-                                className={`overflow-hidden px-2 py-2 transition ease-in ${active ? 'bg-blueGray-800' : ''}`}
+                                className={`overflow-hidden px-2 py-3 transition ease-in ${active ? 'bg-blue-600' : ''} ${choiceClassName}`}
                                 onMouseEnter={() => this.select(idx)}
                                 onMouseLeave={this.deselect}
                                 onClick={this.enter}

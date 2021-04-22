@@ -1,16 +1,18 @@
 import React, {useState} from "react"
-import {Component, Item, ItemTypeEnum} from "../../../client"
+import {Component, Item, ItemTypeEnum, Model} from "../../../client"
 import {BlockQuote} from "../../Common/BlockQuote";
 import {GhostButton} from "../../Common/GhostButton";
 import {Plus} from "../../Common/Svgs";
 import {ManagedTextInput} from "../../Common/TextInput";
+import {ItemAutocomplete} from "../../Autocomplete/ItemAutocomplete";
 
 interface Props {
+    model: Model
     item: Item
     onSubmit: (item: Item) => void
 }
 
-export function SumOfOtherItemsEditor({item, onSubmit}: Props) {
+export function SumOfOtherItemsEditor({item, model, onSubmit}: Props) {
 
     const [sumOfOtherItems, setSumOfOtherItems] = useState(item.sumOfOtherItems || {components:[]})
 
@@ -81,10 +83,14 @@ export function SumOfOtherItemsEditor({item, onSubmit}: Props) {
             <ul className="flex flex-col space-y-6">
                 {sumOfOtherItems.components.map(component => (
                     <li key={component.itemName} className="grid gap-2 grid-cols-6">
-                        <ManagedTextInput
+                        <ItemAutocomplete
+                            model={model}
+                            onItemSelect={newItem => updateComponentName(component.itemName, newItem.name)}
+                            initialValue={component.itemName}
                             wrapperClassName="col-span-6 md:col-span-4"
-                            onInputSubmit={newValue => updateComponentName(component.itemName, newValue)}
-                            value={component.itemName}
+                            className="border border-blueGray-500 rounded w-full bg-blueGray-900"
+                            choicesContainerClassName="rounded bg-blueGray-800 shadow-md min-w-full text-sm"
+                            choiceClassName="text-blueGray-100 px-3"
                         />
                         <ManagedTextInput
                             onInputSubmit={newValue => updateComponentWeight(component.itemName, newValue)}

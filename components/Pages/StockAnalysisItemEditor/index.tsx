@@ -154,7 +154,7 @@ export function ItemEditor() {
         } else if (item.type === ItemTypeEnum.Custom) {
             editor = <FormulaEditor item={item} onSubmit={handleItemChange}/>
         } else if (item.type === ItemTypeEnum.SumOfOtherItems) {
-            editor = <SumOfOtherItemsEditor item={item} onSubmit={handleItemChange}/>
+            editor = <SumOfOtherItemsEditor model={stockAnalysis?.model} item={item} onSubmit={handleItemChange}/>
         } else {
             editor = <AutoForm schema={schemaOf(item)} body={bodyOf(item)} onSubmit={handleAutoFormChange}/>
         }
