@@ -1,7 +1,7 @@
 import {useRouter} from 'next/router'
 import React, {useEffect, useState} from 'react'
-import {useFilingEntityManagerUnsecured, useOrphanedItemsFinder, useStockAnalysis} from '../../../api-hooks'
-import {FilingEntity, Item, StockAnalysis2} from '../../../client'
+import {useFilingEntityManagerUnsecured, useStockAnalysis} from '../../../api-hooks'
+import {FilingEntity, StockAnalysis2} from '../../../client'
 import {Title} from '../../Common/Title'
 import {FilingEntityCard} from '../../FilingEntityCard'
 import Toolbar from './Toolbar/Toolbar'
@@ -10,13 +10,13 @@ import Editor from './Editor'
 export function StockAnalysisControlPanel() {
 
     const router = useRouter()
-    const [ filingEntity, setFilingEntity ] = useState<FilingEntity>()
-    const [ loading, setLoading ] = useState(false)
-    const [ stockAnalysis, setStockAnalysis ] = useState<StockAnalysis2>()
+    const [filingEntity, setFilingEntity] = useState<FilingEntity>()
+    const [loading, setLoading] = useState(false)
+    const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
     const filingEntityManagerUnsecured = useFilingEntityManagerUnsecured()
     const stockAnalysisApi = useStockAnalysis()
 
-    const { id } = router.query
+    const {id} = router.query
 
     async function saveStockAnalysis(stockAnalysis: StockAnalysis2) {
         await stockAnalysisApi.saveStockAnalysis(stockAnalysis)
