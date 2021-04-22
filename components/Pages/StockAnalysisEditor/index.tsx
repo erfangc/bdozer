@@ -26,8 +26,11 @@ export function StockAnalysisControlPanel() {
     async function init() {
         try {
             const {data: stockAnalysis} = await stockAnalysisApi.getStockAnalysis(id as string)
-            const {data: filingEntity} = await filingEntityManagerUnsecured.getFilingEntity(stockAnalysis.cik)
-            setFilingEntity(filingEntity)
+            const cik = stockAnalysis.cik;
+            if (cik) {
+                const {data: filingEntity} = await filingEntityManagerUnsecured.getFilingEntity(stockAnalysis.cik)
+                setFilingEntity(filingEntity);
+            }
             setStockAnalysis(stockAnalysis)
         } catch (e) {
             console.error(e);
@@ -43,7 +46,7 @@ export function StockAnalysisControlPanel() {
     return (
         <main className="container mx-auto px-4 py-20 space-y-12">
             <Title>Stock Analysis Editor</Title>
-            <FilingEntityCard filingEntity={filingEntity}/>
+            {!filingEntity ? null : <FilingEntityCard filingEntity={filingEntity}/>}
             <section className="space-y-6">
                 <Toolbar
                     loading={loading}
