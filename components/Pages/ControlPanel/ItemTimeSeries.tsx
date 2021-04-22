@@ -5,6 +5,7 @@ import {Item, StockAnalysis2} from '../../../client'
 import {highcharts} from '../../../highcharts'
 import {simpleNumber} from '../../../simple-number'
 import {year} from '../../../year'
+import {Loading} from "../../Common/Svgs";
 
 interface Props {
     result: StockAnalysis2
@@ -14,56 +15,63 @@ interface Props {
 export function ItemTimeSeries({ result, item }: Props) {
 
     const [options, setOptions] = useState<Highcharts.Options>()
+    const [loading, setLoading] = useState(false)
     const factBase = useFactBaseUnsecured()
     const { cells } = result
     const historicalValue = item?.historicalValue;
     const factIds = (historicalValue?.factId ? [historicalValue.factId] : historicalValue?.factIds) ?? []
 
     async function refresh() {
-        const { data: factTimeSeries } = await factBase.getAnnualTimeSeries1(factIds)
+        setLoading(true)
+        try {
+            const { data: factTimeSeries } = await factBase.getAnnualTimeSeries1(factIds)
 
-        const futureData = cells
-            .filter(cell => cell.item.name === item.name && cell.period !== 0)
-            .map(cell => {
+            const futureData = cells
+                .filter(cell => cell.item.name === item.name && cell.period !== 0)
+                .map(cell => {
+                    return {
+                        x: year(cell.period),
+                        y: cell.value,
+                    }
+                })
+
+            const pastData = factTimeSeries.map(fact => {
                 return {
-                    x: year(cell.period),
-                    y: cell.value,
+                    x: new Date(fact.documentPeriodEndDate).getFullYear(),
+                    y: fact.value,
                 }
             })
 
-        const pastData = factTimeSeries.map(fact => {
-            return {
-                x: new Date(fact.documentPeriodEndDate).getFullYear(),
-                y: fact.value,
-            }
-        })
-
-        const options: Highcharts.Options = {
-            chart: {
-                type: 'column',
-                height: 300
-            },
-            title: { text: null, },
-            yAxis: {
+            const options: Highcharts.Options = {
+                chart: {
+                    type: 'column',
+                    height: 320
+                },
                 title: { text: null, },
-                labels: {
-                    formatter: function () {
-                        return `${simpleNumber(this.value)}`
+                yAxis: {
+                    title: { text: null, },
+                    labels: {
+                        formatter: function () {
+                            return `${simpleNumber(this.value)}`
+                        }
                     }
-                }
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0, pointWidth: 20
-                }
-            },
-            xAxis: { lineWidth: 0, },
-            series: [
-                { data: pastData, name: 'Past', },
-                { data: futureData, name: 'Projected', }
-            ] as any
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0, pointWidth: 20
+                    }
+                },
+                xAxis: { lineWidth: 0, },
+                series: [
+                    { data: pastData, name: 'Past', },
+                    { data: futureData, name: 'Projected', }
+                ] as any
+            }
+            setOptions(options)
+        } catch (e){
+            console.error(e)
         }
-        setOptions(options)
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -75,7 +83,14 @@ export function ItemTimeSeries({ result, item }: Props) {
             <p className="mb-8">
                 History and Projection for {item.description ?? item.name}
             </p>
-            <HighchartsReact highcharts={highcharts} options={options} />
+            {
+                loading
+                ?
+                <div className="h-80 flex items-center justify-center">
+                    <Loading/><span>Loading ...</span>
+                </div>
+                : <HighchartsReact highcharts={highcharts} options={options} />
+            }
         </div>
     )
 }
