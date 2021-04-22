@@ -10,7 +10,7 @@ interface Props {
     loading: boolean
 }
 
-export default function AnalysisSummary(props: Props) {
+export default function StockAnalysisSummary(props: Props) {
 
     const { stockAnalysis, loading } = props
     const [tab, setTab] = useState<'cards' | 'chart'>('cards')
@@ -22,18 +22,20 @@ export default function AnalysisSummary(props: Props) {
     if (tab === 'cards') {
          stockAnalysis !== undefined
             ?
-            component = <div className="grid grid-flow-row gap-4 grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
-                <Money value={currentPrice} label={"Current Price"} running={loading} />
-                <Money
-                    value={targetPrice}
-                    label={"Target Price"}
-                    state={targetPrice < currentPrice ? 'danger' : 'good'}
-                    running={loading}
-                />
-                <CardPercent value={stockAnalysis?.model?.terminalGrowthRate} label={"Terminal Growth Rate"} running={loading} />
-                <CardPercent value={stockAnalysis?.derivedStockAnalytics?.discountRate} label={"Discount Rate"} running={loading} />
-                <CardPercent value={stockAnalysis?.derivedStockAnalytics?.revenueCAGR} label={"Revenue CAGR"} running={loading} />
-            </div>
+            component = (
+                <div className="grid grid-flow-row gap-4 grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+                    <Money value={currentPrice} label={"Current Price"} running={loading} />
+                    <Money
+                        value={targetPrice}
+                        label={"Target Price"}
+                        state={targetPrice < currentPrice ? 'danger' : 'good'}
+                        running={loading}
+                    />
+                    <CardPercent value={stockAnalysis?.model?.terminalGrowthRate} label={"Terminal Growth Rate"} running={loading} />
+                    <CardPercent value={stockAnalysis?.derivedStockAnalytics?.discountRate} label={"Discount Rate"} running={loading} />
+                    <CardPercent value={stockAnalysis?.derivedStockAnalytics?.revenueCAGR} label={"Revenue CAGR"} running={loading} />
+                </div>
+            )
             : null
     } else {
         component = <div>
@@ -42,11 +44,11 @@ export default function AnalysisSummary(props: Props) {
     }
     return (
         <div>
-            {component}
-            <div className="flex space-x-1 mt-2">
-                <button className={`text-sm px-2 py-1.5 rounded-xl ${tab === 'cards' ? 'bg-blueGray-700' : 'bg-blueGray-800'} focus:outline-none`} onClick={() => setTab('cards')}>Cards</button>
-                <button className={`text-sm px-2 py-1.5 rounded-xl ${tab === 'chart' ? 'bg-blueGray-700' : 'bg-blueGray-800'} focus:outline-none`} onClick={() => setTab('chart')}>Chart</button>
+            <div className="flex mb-4">
+                <button className={`text-blueGray-200 text-sm px-2 w-32 py-1.5 transition ease-out rounded-l-xl ${tab === 'cards' ? 'bg-blueGray-700' : 'bg-blueGray-800'} focus:outline-none`} onClick={() => setTab('cards')}>Cards</button>
+                <button className={`text-blueGray-200 text-sm px-2 w-32 py-1.5 transition ease-out rounded-r-xl ${tab === 'chart' ? 'bg-blueGray-700' : 'bg-blueGray-800'} focus:outline-none`} onClick={() => setTab('chart')}>Chart</button>
             </div>
+            {component}
         </div>
     )
 }

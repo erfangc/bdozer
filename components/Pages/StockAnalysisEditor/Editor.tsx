@@ -62,7 +62,7 @@ export default function Editor(props: Props) {
 
     return (
         <div className="md:p-4 space-y-8">
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 rounded">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
                 <div className="space-y-4">
                     <TagInput onChange={updateTags} label="Tags" selected={stockAnalysis?.tags}/>
                     <div className="flex space-x-4">
@@ -93,8 +93,7 @@ export default function Editor(props: Props) {
                     <Tab active={tab === 'balance sheet'} onClick={() => setTab('balance sheet')}>Balance Sheet</Tab>
                 </div>
                 <div className="space-y-2">
-                    <div
-                        className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 py-2 px-4 font-semibold text-blueGray-400">
+                    <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 py-2 px-4 font-semibold text-blueGray-400">
                         <span>Name</span>
                         <span className="flex justify-start md:justify-end items-center">Most Recently Reported</span>
                     </div>
