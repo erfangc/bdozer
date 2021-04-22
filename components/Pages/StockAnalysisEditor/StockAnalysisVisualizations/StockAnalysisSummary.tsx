@@ -1,6 +1,6 @@
 import React, {ReactNode, useState} from 'react'
 import {StockAnalysis2} from '../../../../client'
-import {CardPercent, Money} from '../../../Common/Card'
+import {CardPercent, Money, Number} from '../../../Common/Card'
 import {highcharts} from "../../../../highcharts";
 import HighchartsReact from "highcharts-react-official";
 import {StockAnalysisCharts} from "./StockAnalysisCharts";
@@ -15,10 +15,12 @@ export default function StockAnalysisSummary(props: Props) {
     const { stockAnalysis, loading } = props
     const [tab, setTab] = useState<'cards' | 'chart'>('cards')
 
-    const targetPrice = stockAnalysis?.derivedStockAnalytics?.targetPrice;
-    const currentPrice = stockAnalysis?.derivedStockAnalytics?.currentPrice;
+    const derivedStockAnalytics = stockAnalysis?.derivedStockAnalytics;
+    const targetPrice = derivedStockAnalytics?.targetPrice;
+    const currentPrice = derivedStockAnalytics?.currentPrice;
 
     let component: ReactNode = null
+    const terminalPe = 1.0 / (derivedStockAnalytics?.discountRate - stockAnalysis?.model?.terminalGrowthRate)
     if (tab === 'cards') {
          stockAnalysis !== undefined
             ?
@@ -32,8 +34,9 @@ export default function StockAnalysisSummary(props: Props) {
                         running={loading}
                     />
                     <CardPercent value={stockAnalysis?.model?.terminalGrowthRate} label={"Terminal Growth Rate"} running={loading} />
-                    <CardPercent value={stockAnalysis?.derivedStockAnalytics?.discountRate} label={"Discount Rate"} running={loading} />
-                    <CardPercent value={stockAnalysis?.derivedStockAnalytics?.revenueCAGR} label={"Revenue CAGR"} running={loading} />
+                    <CardPercent value={derivedStockAnalytics?.discountRate} label={"Discount Rate"} running={loading} />
+                    <CardPercent value={derivedStockAnalytics?.revenueCAGR} label={"Revenue CAGR"} running={loading} />
+                    <Number value={terminalPe} label={"Terminal Year P/E"} running={loading} />
                 </div>
             )
             : null
