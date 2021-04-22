@@ -12,27 +12,6 @@ export function schemaOf(item: Item): Schema[] {
                     fullLength: true,
                 }
             ]
-        case ItemTypeEnum.SubscriptionRevenue:
-            return [
-                {
-                    name: "totalSubscriptionAtTerminalYear",
-                    label: "Total Subscription at Terminal Year",
-                    type: "integer",
-                    fullLength: true,
-                },
-                {
-                    name: "initialSubscriptions",
-                    label: "Initial Subscriptions",
-                    type: "integer",
-                    fullLength: true,
-                },
-                {
-                    name: "averageRevenuePerSubscription",
-                    label: "Average Revenue per Subscription",
-                    type: "number",
-                    fullLength: true,
-                },
-            ];
         case ItemTypeEnum.FixedCost:
             return [
                 {
@@ -76,8 +55,6 @@ export function schemaOf(item: Item): Schema[] {
 
 export function bodyOf(item: Item): any {
     switch (item.type) {
-        case ItemTypeEnum.SubscriptionRevenue:
-            return item.subscriptionRevenue;
         case ItemTypeEnum.PercentOfRevenue:
             return item.percentOfRevenue;
         case ItemTypeEnum.FixedCost:
@@ -95,8 +72,6 @@ export function bodyOf(item: Item): any {
 
 export function merge(item: Item, property: any): Item {
     switch (item.type) {
-        case ItemTypeEnum.SubscriptionRevenue:
-            return {...item, subscriptionRevenue: {...property}};
         case ItemTypeEnum.PercentOfRevenue:
             return {...item, percentOfRevenue: {...property}};
         case ItemTypeEnum.FixedCost:

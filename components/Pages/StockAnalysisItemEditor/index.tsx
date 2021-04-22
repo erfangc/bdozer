@@ -204,7 +204,6 @@ export function ItemEditor() {
                         onChange={({currentTarget: {value}}) => updateType(value as any)}
                     >
                         <option value={ItemTypeEnum.Custom}>Custom</option>
-                        <option value={ItemTypeEnum.SubscriptionRevenue}>Subscription Revenue</option>
                         <option value={ItemTypeEnum.PercentOfRevenue}>Percent of Revenue</option>
                         <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
                         <option value={ItemTypeEnum.Discrete}>Discrete</option>

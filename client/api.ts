@@ -1130,12 +1130,6 @@ export interface Item {
     sumOfOtherItems?: SumOfOtherItems;
     /**
      * 
-     * @type {SubscriptionRevenue}
-     * @memberof Item
-     */
-    subscriptionRevenue?: SubscriptionRevenue;
-    /**
-     * 
      * @type {UnitSalesRevenue}
      * @memberof Item
      */
@@ -1158,6 +1152,12 @@ export interface Item {
      * @memberof Item
      */
     percentOfRevenue?: PercentOfRevenue;
+    /**
+     * 
+     * @type {PercentOfAnotherItem}
+     * @memberof Item
+     */
+    percentOfAnotherItem?: PercentOfAnotherItem;
     /**
      * 
      * @type {CompoundedGrowth}
@@ -1190,12 +1190,12 @@ export interface Item {
     */
 export enum ItemTypeEnum {
     Discrete = 'Discrete',
-    SubscriptionRevenue = 'SubscriptionRevenue',
     CompoundedGrowth = 'CompoundedGrowth',
     SumOfOtherItems = 'SumOfOtherItems',
     UnitSalesRevenue = 'UnitSalesRevenue',
     Custom = 'Custom',
     PercentOfRevenue = 'PercentOfRevenue',
+    PercentOfAnotherItem = 'PercentOfAnotherItem',
     PercentOfTotalAsset = 'PercentOfTotalAsset',
     FixedCost = 'FixedCost'
 }
@@ -1383,6 +1383,25 @@ export interface MxParserEvaluateResponse {
      * @memberof MxParserEvaluateResponse
      */
     error?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PercentOfAnotherItem
+ */
+export interface PercentOfAnotherItem {
+    /**
+     * 
+     * @type {string}
+     * @memberof PercentOfAnotherItem
+     */
+    itemName: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PercentOfAnotherItem
+     */
+    percent: number;
 }
 /**
  * 
@@ -1630,31 +1649,6 @@ export interface StockAnalysisRequest {
      * @memberof StockAnalysisRequest
      */
     lastUpdated: string;
-}
-/**
- * 
- * @export
- * @interface SubscriptionRevenue
- */
-export interface SubscriptionRevenue {
-    /**
-     * 
-     * @type {number}
-     * @memberof SubscriptionRevenue
-     */
-    totalSubscriptionAtTerminalYear: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof SubscriptionRevenue
-     */
-    initialSubscriptions: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof SubscriptionRevenue
-     */
-    averageRevenuePerSubscription: number;
 }
 /**
  * 
@@ -4498,6 +4492,7 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
         },
         /**
          *          This API refreshes an existing stock analysis and re-evaluate         the model attached to it to produce renewed outputs. Call this API          when you are in possession of a previously run stock analysis                  The returned refreshed stock analysis preserve all the metadata, model overrides         of the original analysis                  This API does not persist (save) the new analysis. This API is a stateless calculator         
+         * @summary Refresh a stock analysis by rerunning the model
          * @param {StockAnalysis2} stockAnalysis2 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4668,6 +4663,7 @@ export const StockAnalysisControllerApiFp = function(configuration?: Configurati
         },
         /**
          *          This API refreshes an existing stock analysis and re-evaluate         the model attached to it to produce renewed outputs. Call this API          when you are in possession of a previously run stock analysis                  The returned refreshed stock analysis preserve all the metadata, model overrides         of the original analysis                  This API does not persist (save) the new analysis. This API is a stateless calculator         
+         * @summary Refresh a stock analysis by rerunning the model
          * @param {StockAnalysis2} stockAnalysis2 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4760,6 +4756,7 @@ export const StockAnalysisControllerApiFactory = function (configuration?: Confi
         },
         /**
          *          This API refreshes an existing stock analysis and re-evaluate         the model attached to it to produce renewed outputs. Call this API          when you are in possession of a previously run stock analysis                  The returned refreshed stock analysis preserve all the metadata, model overrides         of the original analysis                  This API does not persist (save) the new analysis. This API is a stateless calculator         
+         * @summary Refresh a stock analysis by rerunning the model
          * @param {StockAnalysis2} stockAnalysis2 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4859,6 +4856,7 @@ export class StockAnalysisControllerApi extends BaseAPI {
 
     /**
      *          This API refreshes an existing stock analysis and re-evaluate         the model attached to it to produce renewed outputs. Call this API          when you are in possession of a previously run stock analysis                  The returned refreshed stock analysis preserve all the metadata, model overrides         of the original analysis                  This API does not persist (save) the new analysis. This API is a stateless calculator         
+     * @summary Refresh a stock analysis by rerunning the model
      * @param {StockAnalysis2} stockAnalysis2 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
