@@ -12,7 +12,7 @@ interface Props {
 
 export function PercentOfAnotherItemEditor({item, model, onSubmit}: Props) {
     const initialDependentItem = [...(model?.incomeStatementItems || []), ...(model?.balanceSheetItems || [])]
-        .find(it => it.name === item.percentOfAnotherItem.itemName)
+        .find(it => it.name === item?.percentOfAnotherItem?.itemName)
 
     const [value, setValue] = useState((item?.percentOfAnotherItem?.percent ?? 0) * 100)
     const [dependentItem, setDependentItem] = useState<Item>(initialDependentItem)
