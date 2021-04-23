@@ -123,7 +123,6 @@ export class ItemAutocomplete extends React.Component<Props, State> {
         if (activeIdx === undefined) {
             this.select(0)
         } else if (activeIdx !== choices.length - 1) {
-            console.log(activeIdx, activeIdx + 1)
             this.select(activeIdx + 1)
         }
     }

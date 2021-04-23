@@ -25,7 +25,6 @@ export function ExecutiveSummary(props: Props) {
     } = props;
 
     const { profit, expenses, revenue, } = businessWaterfall[0]
-    console.log(expenses)
 
     const upside = (targetPrice / currentPrice - 1) * 100
     const totalExpense = expenses.map(expense => expense.value).reduce((a, b) => a + b, 0)

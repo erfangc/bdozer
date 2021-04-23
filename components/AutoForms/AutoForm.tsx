@@ -36,7 +36,6 @@ export function AutoForm({ body, schema, onSubmit }: AutoFormProps) {
                 newState[property.name] = newState[property.name] / 100
             }
         })
-        console.log(newState)
         onSubmit(newState)
     }
 
