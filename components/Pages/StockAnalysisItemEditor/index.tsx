@@ -7,14 +7,15 @@ import {bodyOf, merge, schemaOf} from "../../AutoForms/Schemas";
 import {DeleteButton} from "../../Common/DeleteButton";
 import {SecondaryButton} from "../../Common/SecondaryButton";
 import {Select} from "../../Common/Select";
-import {FormulaEditor} from "./FormulaEditor";
+import {FormulaEditor} from "./Editors/FormulaEditor";
 import {ItemDescriptionInput} from "./ItemDescriptionInput";
 import {ItemFY0Input} from "./ItemFY0Input";
-import {DiscreteEditor} from "./DiscreteEditor";
-import {PercentOfRevenueEditor} from "./PercentOfRevenueEditor";
+import {DiscreteEditor} from "./Editors/DiscreteEditor";
+import {PercentOfRevenueEditor} from "./Editors/PercentOfRevenueEditor";
 import {PrimaryButton} from "../../Common/PrimaryButton";
-import {FixedCostEditor} from "./FixedCostEditor";
-import {SumOfOtherItemsEditor} from "./SumOfOtherItemsEditor";
+import {FixedCostEditor} from "./Editors/FixedCostEditor";
+import {SumOfOtherItemsEditor} from "./Editors/SumOfOtherItemsEditor";
+import {PercentOfAnotherItemEditor} from "./Editors/PercentOfAnotherItemEditor";
 
 function getItem(model?: Model, itemName?: string | string[]) {
     return (
@@ -155,6 +156,8 @@ export function ItemEditor() {
             editor = <FormulaEditor item={item} onSubmit={handleItemChange}/>
         } else if (item.type === ItemTypeEnum.SumOfOtherItems) {
             editor = <SumOfOtherItemsEditor model={stockAnalysis?.model} item={item} onSubmit={handleItemChange}/>
+        } else if (item.type === ItemTypeEnum.PercentOfAnotherItem) {
+            editor = <PercentOfAnotherItemEditor model={stockAnalysis?.model} item={item} onSubmit={handleItemChange}/>
         } else {
             editor = <AutoForm schema={schemaOf(item)} body={bodyOf(item)} onSubmit={handleAutoFormChange}/>
         }
@@ -205,6 +208,7 @@ export function ItemEditor() {
                     >
                         <option value={ItemTypeEnum.Custom}>Custom</option>
                         <option value={ItemTypeEnum.PercentOfRevenue}>Percent of Revenue</option>
+                        <option value={ItemTypeEnum.PercentOfAnotherItem}>Percent of Another Item</option>
                         <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
                         <option value={ItemTypeEnum.Discrete}>Discrete</option>
                         <option value={ItemTypeEnum.SumOfOtherItems}>Sum of Other Items</option>

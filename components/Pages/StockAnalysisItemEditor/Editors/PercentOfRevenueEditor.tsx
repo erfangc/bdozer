@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import {useFactAutoFiller} from "../../../api-hooks";
-import {Item, ItemTypeEnum, Model, PercentOfRevenueAutoFill} from "../../../client";
+import {useFactAutoFiller} from "../../../../api-hooks";
+import {Item, ItemTypeEnum, Model, PercentOfRevenueAutoFill} from "../../../../client";
 import {NumberFormatValues} from "react-number-format";
-import {NumberInput} from "../../Common/NumberInput";
-import {GhostButton} from "../../Common/GhostButton";
-import {simplePercent} from "../../../simple-number";
+import {NumberInput} from "../../../Common/NumberInput";
+import {GhostButton} from "../../../Common/GhostButton";
+import {simplePercent} from "../../../../simple-number";
 
 interface Props {
     item: Item

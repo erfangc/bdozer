@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
-import {Item} from "../../../client";
+import {Item} from "../../../../client";
 import {NumberFormatValues} from "react-number-format";
-import {NumberInput} from "../../Common/NumberInput";
-import {GhostButton} from "../../Common/GhostButton";
-import {Plus} from "../../Common/Svgs";
+import {NumberInput} from "../../../Common/NumberInput";
+import {GhostButton} from "../../../Common/GhostButton";
+import {Plus} from "../../../Common/Svgs";
 
 interface DiscreteEditorProps {
     item: Item

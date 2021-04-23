@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from "react"
-import {Item, ItemTypeEnum} from "../../../client"
+import {Item, ItemTypeEnum} from "../../../../client"
 
 interface Props {
     item: Item

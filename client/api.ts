@@ -1142,12 +1142,6 @@ export interface Item {
     discrete?: Discrete;
     /**
      * 
-     * @type {PercentOfTotalAsset}
-     * @memberof Item
-     */
-    percentOfTotalAsset?: PercentOfTotalAsset;
-    /**
-     * 
      * @type {PercentOfRevenue}
      * @memberof Item
      */
@@ -1196,7 +1190,6 @@ export enum ItemTypeEnum {
     Custom = 'Custom',
     PercentOfRevenue = 'PercentOfRevenue',
     PercentOfAnotherItem = 'PercentOfAnotherItem',
-    PercentOfTotalAsset = 'PercentOfTotalAsset',
     FixedCost = 'FixedCost'
 }
 
@@ -1434,19 +1427,6 @@ export interface PercentOfRevenueAutoFill {
      * @memberof PercentOfRevenueAutoFill
      */
     percentOfRevenue: PercentOfRevenue;
-}
-/**
- * 
- * @export
- * @interface PercentOfTotalAsset
- */
-export interface PercentOfTotalAsset {
-    /**
-     * 
-     * @type {number}
-     * @memberof PercentOfTotalAsset
-     */
-    percentOfTotalAsset: number;
 }
 /**
  * 

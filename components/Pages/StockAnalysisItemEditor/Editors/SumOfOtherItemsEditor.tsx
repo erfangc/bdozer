@@ -1,10 +1,10 @@
 import React, {useState} from "react"
-import {Component, Item, ItemTypeEnum, Model} from "../../../client"
-import {BlockQuote} from "../../Common/BlockQuote";
-import {GhostButton} from "../../Common/GhostButton";
-import {Plus} from "../../Common/Svgs";
-import {ManagedTextInput} from "../../Common/TextInput";
-import {ItemAutocomplete} from "../../Autocomplete/ItemAutocomplete";
+import {Component, Item, ItemTypeEnum, Model} from "../../../../client"
+import {BlockQuote} from "../../../Common/BlockQuote";
+import {GhostButton} from "../../../Common/GhostButton";
+import {Plus} from "../../../Common/Svgs";
+import {ManagedTextInput} from "../../../Common/TextInput";
+import {ItemAutocomplete} from "../../../Autocomplete/ItemAutocomplete";
 
 interface Props {
     model: Model

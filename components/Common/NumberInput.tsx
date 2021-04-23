@@ -17,7 +17,7 @@ export class NumberInput extends React.Component<NumberInputProps, State> {
     }
 
     render() {
-        const {className, label, ...props} = this.props;
+        const {className, label, disabled, ...props} = this.props;
         const {value} = this.state;
 
         return (
@@ -26,8 +26,9 @@ export class NumberInput extends React.Component<NumberInputProps, State> {
                 <NumberFormat
                     thousandSeparator
                     decimalScale={1}
-                    className="outline-none border border-blueGray-500 bg-blueGray-900 text-blueGray-50 rounded px-3 py-2 cursor-pointer"
+                    className={`outline-none border border-blueGray-500 text-blueGray-50 rounded px-3 py-2 cursor-pointer ${disabled ? 'bg-blueGray-600 cursor-not-allowed' : 'bg-blueGray-900'}`}
                     value={value}
+                    disabled={disabled}
                     onValueChange={({floatValue}) => this.setState({value: floatValue})}
                     {...props}
                 />
