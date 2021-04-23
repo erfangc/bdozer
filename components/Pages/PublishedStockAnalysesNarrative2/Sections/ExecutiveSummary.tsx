@@ -17,7 +17,6 @@ export function ExecutiveSummary(props: Props) {
             model: { periods, epsConceptName, },
             derivedStockAnalytics: {
                 businessWaterfall,
-                zeroGrowthPrice,
                 targetPrice,
                 currentPrice,
                 revenueCAGR,
@@ -26,6 +25,7 @@ export function ExecutiveSummary(props: Props) {
     } = props;
 
     const { profit, expenses, revenue, } = businessWaterfall[0]
+    console.log(expenses)
 
     const upside = (targetPrice / currentPrice - 1) * 100
     const totalExpense = expenses.map(expense => expense.value).reduce((a, b) => a + b, 0)
@@ -53,9 +53,6 @@ export function ExecutiveSummary(props: Props) {
             </ul>
             <div className="font-bold mt-8 mb-4">Future Projections</div>
             <ul className="list-disc pl-4 space-y-2">
-                <li>
-                    If they stop growing, the company will be worth ${zeroGrowthPrice.toFixed(1)} per share.
-                </li>
                 <li>
                     Based on Wall Street forecasts, the company will grow at {growthRatePopover} a year for the next {periods} years.
                     That means {name} will be worth ${targetPrice.toFixed(1)}, which represents <span className={`font-bold ${upside > 0 ? 'text-lime-400' : 'text-rose-500'}`}>

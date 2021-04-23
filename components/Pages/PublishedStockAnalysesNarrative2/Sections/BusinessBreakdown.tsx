@@ -114,7 +114,14 @@ export function BusinessBreakdown(props: Props) {
                     .filter(currentPeriod => parseInt(currentPeriod) !== 0)
                     .map(currentPeriod => {
                         const currPeriod = parseInt(currentPeriod)
-                        return <Pill active={currPeriod === period} label={year(currPeriod).toString()} onClick={() => updatePeriod(currPeriod)} />
+                        return (
+                            <Pill
+                                key={currentPeriod}
+                                active={currPeriod === period}
+                                label={year(currPeriod).toString()}
+                                onClick={() => updatePeriod(currPeriod)}
+                            />
+                        )
                 })}
             </div>
         </div>

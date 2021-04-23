@@ -75,19 +75,19 @@ export function SumOfOtherItemsEditor({item, model, onSubmit}: Props) {
     return (
         <div className="flex-col space-y-4">
             <BlockQuote>Specify other items to sum over</BlockQuote>
-            <div className="hidden md:grid gap-2 grid-cols-6 text-sm font-bold">
-                <div className="md:col-span-4">Item Name</div>
+            <div className="hidden md:grid gap-2 grid-cols-8 text-sm font-bold">
+                <div className="md:col-span-6">Item Name</div>
                 <div>Weight</div>
                 <div/>
             </div>
             <ul className="flex flex-col space-y-6">
                 {sumOfOtherItems.components.map(component => (
-                    <li key={component.itemName} className="grid gap-2 grid-cols-6">
+                    <li key={component.itemName} className="grid gap-2 grid-cols-8">
                         <ItemAutocomplete
                             model={model}
                             onItemSelect={newItem => updateComponentName(component.itemName, newItem.name)}
                             initialValue={component.itemName}
-                            wrapperClassName="col-span-6 md:col-span-4"
+                            wrapperClassName="col-span-8 md:col-span-6"
                             className="border border-blueGray-500 rounded w-full bg-blueGray-900"
                             choicesContainerClassName="rounded bg-blueGray-800 shadow-md min-w-full text-sm"
                             choiceClassName="text-blueGray-100 px-3"
