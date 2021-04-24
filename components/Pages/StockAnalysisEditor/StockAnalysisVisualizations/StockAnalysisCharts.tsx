@@ -34,8 +34,27 @@ export function StockAnalysisCharts({stockAnalysis}: Props) {
         const revenueFactIds = (revenueHistoricalValue?.factId ? [revenueHistoricalValue.factId] : revenueHistoricalValue?.factIds) ?? []
         const netIncomeFactIds = (netIncomeHistoricalValue?.factId ? [netIncomeHistoricalValue.factId] : netIncomeHistoricalValue?.factIds) ?? []
 
-        const { data: revenueFactTimeSeries } = await factBase.getAnnualTimeSeries1(revenueFactIds)
-        const { data: netIncomeFactTimeSeries } = await factBase.getAnnualTimeSeries1(netIncomeFactIds)
+        let pastRevenue = []
+        let pastNetIncome = []
+        try {
+            const { data: revenueFactTimeSeries } = await factBase.getAnnualTimeSeries1(revenueFactIds)
+            pastRevenue = revenueFactTimeSeries.map(fact => {
+                return {
+                    x: new Date(fact.documentPeriodEndDate).getFullYear(),
+                    y: fact.value,
+                }
+            })
+            const { data: netIncomeFactTimeSeries } = await factBase.getAnnualTimeSeries1(netIncomeFactIds)
+            pastNetIncome = netIncomeFactTimeSeries.map(fact => {
+                return {
+                    x: new Date(fact.documentPeriodEndDate).getFullYear(),
+                    y: fact.value,
+                }
+            })
+        } catch (e) {
+
+        }
+
         /*
          Revenue
          */
@@ -47,12 +66,6 @@ export function StockAnalysisCharts({stockAnalysis}: Props) {
                     y: cell.value,
                 }
             })
-        const pastRevenue = revenueFactTimeSeries.map(fact => {
-            return {
-                x: new Date(fact.documentPeriodEndDate).getFullYear(),
-                y: fact.value,
-            }
-        })
 
         /*
          Net Income
@@ -65,12 +78,6 @@ export function StockAnalysisCharts({stockAnalysis}: Props) {
                     y: cell.value,
                 }
             })
-        const pastNetIncome = netIncomeFactTimeSeries.map(fact => {
-            return {
-                x: new Date(fact.documentPeriodEndDate).getFullYear(),
-                y: fact.value,
-            }
-        })
 
         const options: Highcharts.Options = {
             chart: {
