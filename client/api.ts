@@ -1170,12 +1170,6 @@ export interface Item {
      * @memberof Item
      */
     commentaries?: Commentary;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Item
-     */
-    subtotal: boolean;
 }
 
 /**
@@ -1395,6 +1389,25 @@ export interface PercentOfAnotherItem {
      * @memberof PercentOfAnotherItem
      */
     percent: number;
+}
+/**
+ * 
+ * @export
+ * @interface PercentOfAnotherItemAutoFill
+ */
+export interface PercentOfAnotherItemAutoFill {
+    /**
+     * 
+     * @type {string}
+     * @memberof PercentOfAnotherItemAutoFill
+     */
+    label: string;
+    /**
+     * 
+     * @type {PercentOfAnotherItem}
+     * @memberof PercentOfAnotherItemAutoFill
+     */
+    percentOfAnotherItem: PercentOfAnotherItem;
 }
 /**
  * 
@@ -2121,18 +2134,64 @@ export const FactAutoFillerControllerApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @param {string} factId 
+         * @param {string} itemName 
+         * @param {string} dependentItemName 
          * @param {Model} model 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPercentOfRevenueAutoFills: async (factId: string, model: Model, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'factId' is not null or undefined
-            assertParamExists('getPercentOfRevenueAutoFills', 'factId', factId)
+        getPercentOfItemsAutoFills: async (itemName: string, dependentItemName: string, model: Model, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'itemName' is not null or undefined
+            assertParamExists('getPercentOfItemsAutoFills', 'itemName', itemName)
+            // verify required parameter 'dependentItemName' is not null or undefined
+            assertParamExists('getPercentOfItemsAutoFills', 'dependentItemName', dependentItemName)
+            // verify required parameter 'model' is not null or undefined
+            assertParamExists('getPercentOfItemsAutoFills', 'model', model)
+            const localVarPath = `/api/fact-auto-filler/{itemName}/percent-of-another-item`
+                .replace(`{${"itemName"}}`, encodeURIComponent(String(itemName)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (dependentItemName !== undefined) {
+                localVarQueryParameter['dependentItemName'] = dependentItemName;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(model, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} itemName 
+         * @param {Model} model 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPercentOfRevenueAutoFills: async (itemName: string, model: Model, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'itemName' is not null or undefined
+            assertParamExists('getPercentOfRevenueAutoFills', 'itemName', itemName)
             // verify required parameter 'model' is not null or undefined
             assertParamExists('getPercentOfRevenueAutoFills', 'model', model)
-            const localVarPath = `/api/fact-auto-filler/{factId}/percent-of-revenue`
-                .replace(`{${"factId"}}`, encodeURIComponent(String(factId)));
+            const localVarPath = `/api/fact-auto-filler/{itemName}/percent-of-revenue`
+                .replace(`{${"itemName"}}`, encodeURIComponent(String(itemName)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2181,13 +2240,25 @@ export const FactAutoFillerControllerApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @param {string} factId 
+         * @param {string} itemName 
+         * @param {string} dependentItemName 
          * @param {Model} model 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPercentOfRevenueAutoFills(factId: string, model: Model, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PercentOfRevenueAutoFill>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPercentOfRevenueAutoFills(factId, model, options);
+        async getPercentOfItemsAutoFills(itemName: string, dependentItemName: string, model: Model, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PercentOfAnotherItemAutoFill>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPercentOfItemsAutoFills(itemName, dependentItemName, model, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} itemName 
+         * @param {Model} model 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPercentOfRevenueAutoFills(itemName: string, model: Model, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PercentOfRevenueAutoFill>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPercentOfRevenueAutoFills(itemName, model, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2212,13 +2283,24 @@ export const FactAutoFillerControllerApiFactory = function (configuration?: Conf
         },
         /**
          * 
-         * @param {string} factId 
+         * @param {string} itemName 
+         * @param {string} dependentItemName 
          * @param {Model} model 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPercentOfRevenueAutoFills(factId: string, model: Model, options?: any): AxiosPromise<Array<PercentOfRevenueAutoFill>> {
-            return localVarFp.getPercentOfRevenueAutoFills(factId, model, options).then((request) => request(axios, basePath));
+        getPercentOfItemsAutoFills(itemName: string, dependentItemName: string, model: Model, options?: any): AxiosPromise<Array<PercentOfAnotherItemAutoFill>> {
+            return localVarFp.getPercentOfItemsAutoFills(itemName, dependentItemName, model, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} itemName 
+         * @param {Model} model 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPercentOfRevenueAutoFills(itemName: string, model: Model, options?: any): AxiosPromise<Array<PercentOfRevenueAutoFill>> {
+            return localVarFp.getPercentOfRevenueAutoFills(itemName, model, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2244,14 +2326,27 @@ export class FactAutoFillerControllerApi extends BaseAPI {
 
     /**
      * 
-     * @param {string} factId 
+     * @param {string} itemName 
+     * @param {string} dependentItemName 
      * @param {Model} model 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FactAutoFillerControllerApi
      */
-    public getPercentOfRevenueAutoFills(factId: string, model: Model, options?: any) {
-        return FactAutoFillerControllerApiFp(this.configuration).getPercentOfRevenueAutoFills(factId, model, options).then((request) => request(this.axios, this.basePath));
+    public getPercentOfItemsAutoFills(itemName: string, dependentItemName: string, model: Model, options?: any) {
+        return FactAutoFillerControllerApiFp(this.configuration).getPercentOfItemsAutoFills(itemName, dependentItemName, model, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} itemName 
+     * @param {Model} model 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FactAutoFillerControllerApi
+     */
+    public getPercentOfRevenueAutoFills(itemName: string, model: Model, options?: any) {
+        return FactAutoFillerControllerApiFp(this.configuration).getPercentOfRevenueAutoFills(itemName, model, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2350,12 +2445,11 @@ export const FactBaseControllerApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
-         * @param {number} [numYearsToLookback] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        runRssFilingIngestor: async (numYearsToLookback?: number, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/fact-base/rss-filing-ingestor`;
+        latest: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/fact-base/latest`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2366,10 +2460,6 @@ export const FactBaseControllerApiAxiosParamCreator = function (configuration?: 
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (numYearsToLookback !== undefined) {
-                localVarQueryParameter['numYearsToLookback'] = numYearsToLookback;
-            }
 
 
     
@@ -2416,12 +2506,11 @@ export const FactBaseControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {number} [numYearsToLookback] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async runRssFilingIngestor(numYearsToLookback?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.runRssFilingIngestor(numYearsToLookback, options);
+        async latest(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.latest(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2456,12 +2545,11 @@ export const FactBaseControllerApiFactory = function (configuration?: Configurat
         },
         /**
          * 
-         * @param {number} [numYearsToLookback] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        runRssFilingIngestor(numYearsToLookback?: number, options?: any): AxiosPromise<void> {
-            return localVarFp.runRssFilingIngestor(numYearsToLookback, options).then((request) => request(axios, basePath));
+        latest(options?: any): AxiosPromise<void> {
+            return localVarFp.latest(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2499,13 +2587,12 @@ export class FactBaseControllerApi extends BaseAPI {
 
     /**
      * 
-     * @param {number} [numYearsToLookback] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FactBaseControllerApi
      */
-    public runRssFilingIngestor(numYearsToLookback?: number, options?: any) {
-        return FactBaseControllerApiFp(this.configuration).runRssFilingIngestor(numYearsToLookback, options).then((request) => request(this.axios, this.basePath));
+    public latest(options?: any) {
+        return FactBaseControllerApiFp(this.configuration).latest(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
