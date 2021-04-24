@@ -24,7 +24,18 @@ export function ItemTimeSeries({ result, item }: Props) {
     async function refresh() {
         setLoading(true)
         try {
-            const { data: factTimeSeries } = await factBase.getAnnualTimeSeries1(factIds)
+            let pastData = []
+            try {
+                const { data: factTimeSeries } = await factBase.getAnnualTimeSeries1(factIds)
+                pastData = factTimeSeries.map(fact => {
+                    return {
+                        x: new Date(fact.documentPeriodEndDate).getFullYear(),
+                        y: fact.value,
+                    }
+                })
+            } catch (e) {
+
+            }
 
             const futureData = cells
                 .filter(cell => cell.item.name === item.name && cell.period !== 0)
@@ -34,13 +45,6 @@ export function ItemTimeSeries({ result, item }: Props) {
                         y: cell.value,
                     }
                 })
-
-            const pastData = factTimeSeries.map(fact => {
-                return {
-                    x: new Date(fact.documentPeriodEndDate).getFullYear(),
-                    y: fact.value,
-                }
-            })
 
             const options: Highcharts.Options = {
                 chart: {
