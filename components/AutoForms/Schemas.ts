@@ -30,15 +30,6 @@ export function schemaOf(item: Item): Schema[] {
                     description: "Percent Of Revenue",
                 },
             ];
-        case ItemTypeEnum.PercentOfTotalAsset:
-            return [
-                {
-                    label: "Percent of Total Asset",
-                    name: "percentOfTotalAsset",
-                    type: "percent",
-                    description: "Percent of Total Asset",
-                },
-            ];
         case ItemTypeEnum.Discrete:
             return [
                 {
@@ -59,8 +50,6 @@ export function bodyOf(item: Item): any {
             return item.percentOfRevenue;
         case ItemTypeEnum.FixedCost:
             return item.fixedCost;
-        case ItemTypeEnum.PercentOfTotalAsset:
-            return item.percentOfTotalAsset;
         case ItemTypeEnum.Discrete:
             return item.discrete;
         case ItemTypeEnum.CompoundedGrowth:
@@ -76,8 +65,6 @@ export function merge(item: Item, property: any): Item {
             return {...item, percentOfRevenue: {...property}};
         case ItemTypeEnum.FixedCost:
             return {...item, fixedCost: {...property}};
-        case ItemTypeEnum.PercentOfTotalAsset:
-            return {...item, percentOfTotalAsset: {...property}};
         case ItemTypeEnum.Discrete:
             return {...item, discrete: {...property}};
         case ItemTypeEnum.CompoundedGrowth:
