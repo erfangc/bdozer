@@ -17,9 +17,9 @@ export function FilingEntityCard({loading, filingEntity}: Props) {
                 <div className="flex flex-col">
                     <div className="font-light text-sm">Name</div>
                     <span className="font-semibold">{filingEntity?.name}</span>
+                    <span>CIK</span>
                     <Link href={`/control-panel/filing-entities/${filingEntity?.cik}`}>
                         <a className="text-xs cursor-pointer space-x-1">
-                            <span>CIK</span>
                             <span className="text-xs text-blue-300">
                                 {filingEntity?.cik}
                             </span>
