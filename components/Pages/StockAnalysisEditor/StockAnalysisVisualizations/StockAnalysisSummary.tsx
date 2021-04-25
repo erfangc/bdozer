@@ -17,11 +17,9 @@ export default function StockAnalysisSummary(props: Props) {
     const targetPrice = derivedStockAnalytics?.targetPrice;
     const currentPrice = derivedStockAnalytics?.currentPrice;
 
-    let component: ReactNode = null
+    let component: ReactNode
     const terminalPe = 1.0 / (derivedStockAnalytics?.discountRate - stockAnalysis?.model?.terminalGrowthRate)
     if (tab === 'cards') {
-        stockAnalysis !== undefined
-            ?
             component = (
                 <div className="grid grid-flow-row gap-4 grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
                     <Money
@@ -57,7 +55,6 @@ export default function StockAnalysisSummary(props: Props) {
                     />
                 </div>
             )
-            : null
     } else {
         component = <StockAnalysisCharts stockAnalysis={props.stockAnalysis}/>
     }

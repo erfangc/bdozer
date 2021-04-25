@@ -25,6 +25,7 @@ export function StockAnalysisControlPanel() {
 
     async function init() {
         try {
+            setLoading(true)
             const {data: stockAnalysis} = await stockAnalysisApi.getStockAnalysis(id as string)
             const cik = stockAnalysis.cik;
             if (cik) {
@@ -35,6 +36,7 @@ export function StockAnalysisControlPanel() {
         } catch (e) {
             console.error(e);
         }
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -46,7 +48,7 @@ export function StockAnalysisControlPanel() {
     return (
         <main className="container mx-auto px-4 py-20 space-y-12">
             <Title>Stock Analysis Editor</Title>
-            {!filingEntity ? null : <FilingEntityCard filingEntity={filingEntity}/>}
+            <FilingEntityCard loading={loading} filingEntity={filingEntity}/>
             <section className="space-y-6">
                 <Toolbar
                     loading={loading}

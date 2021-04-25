@@ -2,7 +2,7 @@ import {useAuth0} from '@auth0/auth0-react'
 import {useRouter} from 'next/router'
 import React, {useEffect, useState} from 'react'
 import {v4 as uuid} from 'uuid'
-import {basePath, useIssues, useModelBuilderFactory, useStockAnalysis} from '../../../../api-hooks'
+import {basePath, useIssues, useStockAnalysis} from '../../../../api-hooks'
 import {Issue, StockAnalysis2} from '../../../../client'
 import {ExcelDownloading, ExcelIcon} from '../../../Common/DownloadToExcel'
 import {Notification, notificationStore} from '../../../Notifications/NotificationStore'
@@ -19,8 +19,6 @@ import {
     Warning
 } from "../../../Common/Svgs";
 import {Published} from "../../../Publish/Publish";
-import {itemAdditions} from "./helper";
-import {serverErrorStore} from "../../../ServerErrors/ServerErrorStore";
 
 interface Props {
     loading: boolean
@@ -40,7 +38,7 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
     const [downloading, setDownloading] = useState(false)
 
     async function init() {
-        const {data:issues} = await issuesApi.findIssues(id as string)
+        const {data: issues} = await issuesApi.findIssues(id as string)
         setIssues(issues)
     }
 
@@ -132,7 +130,9 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
         router.push(`/control-panel/stock-analyses/${stockAnalysis['_id']}/filing-chooser`)
     }
 
-    useEffect(() => {init()}, [])
+    useEffect(() => {
+        init()
+    }, [])
     const noIssues = issues?.length === 0 || !issues
 
     return (
@@ -157,7 +157,8 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
                 <ToolButton onClick={navigateToModelSettings} loading={loading} label="Settings">
                     <Settings/>
                 </ToolButton>
-                <ToolButton onClick={navigateToIssues} loading={loading} disabled={loading || noIssues} label="Issues" className="relative">
+                <ToolButton onClick={navigateToIssues} loading={loading} disabled={loading || noIssues} label="Issues"
+                            className="relative">
                     {
                         noIssues
                             ?
