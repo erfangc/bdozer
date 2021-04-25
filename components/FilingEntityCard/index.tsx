@@ -17,14 +17,16 @@ export function FilingEntityCard({loading, filingEntity}: Props) {
                 <div className="flex flex-col">
                     <div className="font-light text-sm">Name</div>
                     <span className="font-semibold">{filingEntity?.name}</span>
-                    <span>CIK</span>
-                    <Link href={`/control-panel/filing-entities/${filingEntity?.cik}`}>
-                        <a className="text-xs cursor-pointer space-x-1">
+                    <div>
+                        <span className="text-xs">CIK </span>
+                        <Link href={`/control-panel/filing-entities/${filingEntity?.cik}`}>
+                            <a className="text-xs cursor-pointer space-x-1">
                             <span className="text-xs text-blue-300">
                                 {filingEntity?.cik}
                             </span>
-                        </a>
-                    </Link>
+                            </a>
+                        </Link>
+                    </div>
                 </div>
                 <div className="flex flex-col">
                     <div className="font-light text-sm">Trading Symbol</div>
