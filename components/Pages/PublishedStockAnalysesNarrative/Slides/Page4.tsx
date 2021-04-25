@@ -29,7 +29,10 @@ export function Page4({ result }: Props) {
     const revenueFinal = cells.find(cell => cell.period === model.periods && cell.item.name === revenue.item.name)?.value?.toFixed(0)
 
     async function refresh() {
-        const { data: factTimeSeries } = await factBase.getAnnualTimeSeries(factId)
+        if (!factId) {
+            return
+        }
+        const { data: factTimeSeries } = await factBase.getAnnualTimeSeries(factId);
 
         const futureData = cells
             .filter(cell => cell.item.name === revenue?.item.name && cell.period !== 0)

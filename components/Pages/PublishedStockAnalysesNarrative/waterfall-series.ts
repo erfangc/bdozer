@@ -41,8 +41,8 @@ export function waterfallSeries(waterfall: Waterfall) {
     const topExpenses = waterfall.expenses.map(({ item, value }) => {
         return {
             name: item.description ?? item.name,
-            y: value,
-            color: value > 0 ? lime700 : rose500,
+            y: -value,
+            color: -value > 0 ? lime700 : rose500,
             item: item,
         };
     });
