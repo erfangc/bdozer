@@ -16,7 +16,7 @@ export function BusinessBreakdown(props: Props) {
     const { result: { ticker, derivedStockAnalytics: { businessWaterfall } } } = props;
 
     const [options, setOptions] = useState<Highcharts.Options>()
-    const [period, setPeriod] = useState<number>(1)
+    const [period, setPeriod] = useState<number>(0)
 
     function updateChart(period: number) {
 
@@ -111,7 +111,6 @@ export function BusinessBreakdown(props: Props) {
             <div className="flex space-x-1 text-sm">
                 {Object
                     .keys(businessWaterfall)
-                    .filter(currentPeriod => parseInt(currentPeriod) !== 0)
                     .map(currentPeriod => {
                         const currPeriod = parseInt(currentPeriod)
                         return (
