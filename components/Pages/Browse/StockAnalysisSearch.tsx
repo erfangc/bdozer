@@ -104,7 +104,7 @@ export function StockAnalysisSearch({onSubmit, className}: Props) {
                     />
                 </div>
                 <div
-                    className={`absolute bg-blueGray-700 top-full shadow-md w-full rounded-b border-t ease-in transition-all ${entities.length > 0 ? 'border-blueGray-600' : 'border-blueGray-900'} overflow-hidden`}
+                    className={`absolute bg-blueGray-700 top-full shadow-md w-full rounded-b border-t ease-in transition-all ${entities.length > 0 ? 'border-blueGray-600' : 'border-blueGray-900'} overflow-hidden z-10`}
                     style={{
                         height: entities.length > 0 ? `${(entities.length + 1) * 52 + 24}px` : 0
                     }}
