@@ -6,6 +6,7 @@ import {StockAnalysisCard} from './StockAnalysisCard'
 import {StockAnalysisSearch} from './StockAnalysisSearch'
 import {LoadingSkeletons} from "./LoadingSkeleton";
 import {usePublishedStockAnalysis} from "../../../api-hooks";
+import { Menu } from '@headlessui/react'
 
 export function Browse() {
     const stockAnalysisPublication = usePublishedStockAnalysis()
@@ -47,9 +48,10 @@ export function Browse() {
         <main className="min-h-screen mx-auto container px-2 flex flex-col justify-between max-w-prose">
             <section>
                 <StockAnalysisSearch onSubmit={stockAnalysis => navigate(stockAnalysis)} className="mb-20 mt-16"/>
-                <div className="mb-8">
+                <div className="mb-8 flex justify-between items-center">
                     <div className="flex space-x-4 items-center">
-                        <b>Filters:</b> <StockTab active={underValuedFilter} onClick={toggleUnderValued}>undervalued stocks</StockTab>
+                        <b>Filters:</b> <StockTab active={underValuedFilter} onClick={toggleUnderValued}>undervalued
+                        stocks</StockTab>
                     </div>
                 </div>
                 <blockquote className="my-4 pl-6 border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300">
@@ -70,6 +72,16 @@ export function Browse() {
             </section>
             <LegalDisclaimer className="mt-20"/>
         </main>
+    )
+}
+
+function SortIcon() {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"/>
+        </svg>
     )
 }
 
