@@ -1,6 +1,6 @@
 import {useRouter} from 'next/router'
-import React, {useEffect, useState} from 'react'
-import {useEdgarExplorer, useFilingEntityManagerUnsecured, useStockAnalysisPublication} from '../../../api-hooks'
+import React, {useState} from 'react'
+import {useEdgarExplorer, useFilingEntityManagerUnsecured, usePublishedStockAnalysis} from '../../../api-hooks'
 import {EdgarEntity, EdgarEntitySource, FilingEntity, StockAnalysisProjection} from '../../../client'
 import {PrimaryButton} from '../../Common/PrimaryButton'
 
@@ -9,45 +9,46 @@ interface Props {
     onSubmit: (cik: FilingEntity) => void
 }
 
-export function StockAnalysisSearch(props: Props) {
+export function StockAnalysisSearch({onSubmit, className}: Props) {
     const router = useRouter()
 
-    const stockAnalysisPublication = useStockAnalysisPublication()
+    const stockAnalysisApi = usePublishedStockAnalysis()
     const edgarExplorer = useEdgarExplorer()
     const publicFilingEntityManager = useFilingEntityManagerUnsecured()
 
     const [term, setTerm] = useState<string>()
-    const [found, setFound] = useState<EdgarEntity[]>([])
+    const [edgarEntities, setEdgarEntities] = useState<EdgarEntity[]>([])
     const [stockAnalyses, setStockAnalyses] = useState<StockAnalysisProjection[]>([])
-
-    async function init() {
-        const {data: resp} = await stockAnalysisPublication.findPublishedStockAnalyses()
-        setStockAnalyses(resp.stockAnalyses)
-    }
-
-    useEffect(() => {
-        init()
-    }, [])
 
     async function search(newTerm) {
         if (newTerm) {
-            const {data} = await edgarExplorer.searchEntities(newTerm)
-            setFound(data)
+            const {data: stockAnalysisResponse} = await stockAnalysisApi.findPublishedStockAnalyses(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                newTerm,
+                undefined,
+            )
+            setStockAnalyses(stockAnalysisResponse.stockAnalyses)
+            const {data: found} = await edgarExplorer.searchEntities(newTerm)
+            setEdgarEntities(found)
         } else {
-            setFound([])
+            setEdgarEntities([])
         }
     }
 
     async function submit(edgarEntity: EdgarEntity) {
-        setFound([])
+        setEdgarEntities([])
         const {data} = await publicFilingEntityManager.getFilingEntity(edgarEntity['_id'])
         try {
-            props.onSubmit(data)
+            onSubmit(data)
         } catch (e) {
             console.error(e);
         }
         setTerm('')
-        setFound([])
+        setEdgarEntities([])
     }
 
     function changeTerm(newTerm: string) {
@@ -60,7 +61,7 @@ export function StockAnalysisSearch(props: Props) {
         router.push(`/request-stock?cik=${filingEntity.cik}`)
     }
 
-    const entities = found.map(entity => {
+    const entities = edgarEntities.map(entity => {
         const source = entity['_source'] as EdgarEntitySource
         const id = entity['_id']
         const hasAnalysis = stockAnalyses.find(stockAnalysis => stockAnalysis['_id']?.endsWith(id)) !== undefined
@@ -90,7 +91,7 @@ export function StockAnalysisSearch(props: Props) {
     }).slice(0, 5)
 
     return (
-        <div className={`w-full text-blueGray-50 ${props.className}`}>
+        <div className={`w-full text-blueGray-50 ${className}`}>
             <div className="relative container max-w-lg">
                 <div className={`bg-blueGray-700 px-4 ${entities.length > 0 ? 'rounded-t' : 'rounded'}`}>
                     <SearchIcon/>

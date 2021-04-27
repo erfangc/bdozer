@@ -68,7 +68,7 @@ export function useMxParser() {
     return new MxParserControllerApi(null, basePath, axiosInstance);
 }
 
-export function useStockAnalysisPublication() {
+export function usePublishedStockAnalysis() {
     const axiosInstance = useAxios();
     return new PublishedStockAnalysisControllerApi(null, basePath, axiosInstance);
 }

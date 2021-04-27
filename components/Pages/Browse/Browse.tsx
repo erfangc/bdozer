@@ -5,11 +5,11 @@ import {LegalDisclaimer} from '../../LegalDisclaimer'
 import {StockAnalysisCard} from './StockAnalysisCard'
 import {StockAnalysisSearch} from './StockAnalysisSearch'
 import {LoadingSkeletons} from "./LoadingSkeleton";
-import {useStockAnalysisPublication} from "../../../api-hooks";
+import {usePublishedStockAnalysis} from "../../../api-hooks";
 import {Popover} from "../../Popover";
 
 export function Browse() {
-    const stockAnalysisPublication = useStockAnalysisPublication()
+    const stockAnalysisPublication = usePublishedStockAnalysis()
     const [stockAnalyses, setStockAnalyses] = useState<StockAnalysisProjection[]>([])
     const [loading, setLoading] = useState(false)
 
