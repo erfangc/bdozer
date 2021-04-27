@@ -6,7 +6,6 @@ import {StockAnalysisCard} from './StockAnalysisCard'
 import {StockAnalysisSearch} from './StockAnalysisSearch'
 import {LoadingSkeletons} from "./LoadingSkeleton";
 import {usePublishedStockAnalysis} from "../../../api-hooks";
-import { Menu } from '@headlessui/react'
 
 export function Browse() {
     const stockAnalysisPublication = usePublishedStockAnalysis()

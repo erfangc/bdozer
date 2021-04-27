@@ -19,7 +19,7 @@ interface Props {
 export function Narrative2(props: Props) {
     const { stockAnalysis } = props;
     return (
-        <main className="px-4 py-20 container mx-auto max-w-prose overflow-x-scroll">
+        <main className="px-4 py-20 container mx-auto max-w-prose">
             <Toolbar />
             <div className="flex flex-col space-y-20 py-0 lg:py-20">
                 <Overview result={stockAnalysis} />
