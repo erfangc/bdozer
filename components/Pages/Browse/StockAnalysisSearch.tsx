@@ -1,12 +1,12 @@
 import {useRouter} from 'next/router'
 import React, {useState} from 'react'
 import {useEdgarExplorer, useFilingEntityManagerUnsecured, usePublishedStockAnalysis} from '../../../api-hooks'
-import {EdgarEntity, EdgarEntitySource, FilingEntity, StockAnalysisProjection} from '../../../client'
+import {EdgarEntity, EdgarEntitySource, StockAnalysisProjection} from '../../../client'
 import {PrimaryButton} from '../../Common/PrimaryButton'
 
 interface Props {
     className?: string
-    onSubmit: (cik: FilingEntity) => void
+    onSubmit: (cik: StockAnalysisProjection) => void
 }
 
 export function StockAnalysisSearch({onSubmit, className}: Props) {
@@ -39,11 +39,10 @@ export function StockAnalysisSearch({onSubmit, className}: Props) {
         }
     }
 
-    async function submit(edgarEntity: EdgarEntity) {
+    async function submit(stockAnalysis: StockAnalysisProjection) {
         setEdgarEntities([])
-        const {data} = await publicFilingEntityManager.getFilingEntity(edgarEntity['_id'])
         try {
-            onSubmit(data)
+            onSubmit(stockAnalysis)
         } catch (e) {
             console.error(e);
         }
@@ -64,14 +63,15 @@ export function StockAnalysisSearch({onSubmit, className}: Props) {
     const entities = edgarEntities.map(entity => {
         const source = entity['_source'] as EdgarEntitySource
         const id = entity['_id']
-        const hasAnalysis = stockAnalyses.find(stockAnalysis => stockAnalysis['_id']?.endsWith(id)) !== undefined
+        const analysis = stockAnalyses.find(stockAnalysis => stockAnalysis['cik']?.endsWith(id));
+        const hasAnalysis = analysis !== undefined
         return (
             <li
                 key={id}
                 className={`px-4 py-2 ${hasAnalysis ? 'cursor-pointer' : null} hover:bg-blueGray-900 text-sm flex justify-between items-center whitespace-nowrap transition ease-linear`}
                 onClick={() => {
                     if (hasAnalysis) {
-                        submit(entity)
+                        submit(analysis)
                     }
                 }}
             >

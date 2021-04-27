@@ -38,15 +38,15 @@ export function Browse() {
 
     const router = useRouter()
 
-    function navigate(cik: string) {
-        router.push(`/${cik}/narrative2`)
+    function navigate(stockAnalysis: StockAnalysisProjection) {
+        router.push(`/published-stock-analyses/${stockAnalysis['_id']}/narrative2`)
     }
 
     const filteredStockAnalyses = underValuedFilter ? stockAnalyses.filter(sa => sa.currentPrice < sa.targetPrice) : stockAnalyses;
     return (
         <main className="min-h-screen mx-auto container px-2 flex flex-col justify-between max-w-prose">
             <section>
-                <StockAnalysisSearch onSubmit={({cik}) => navigate(cik)} className="mb-20 mt-16"/>
+                <StockAnalysisSearch onSubmit={stockAnalysis => navigate(stockAnalysis)} className="mb-20 mt-16"/>
                 <div className="mb-8">
                     <div className="flex space-x-4 items-center">
                         <b>Filters:</b> <StockTab active={underValuedFilter} onClick={toggleUnderValued}>undervalued stocks</StockTab>
