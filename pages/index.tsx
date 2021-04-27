@@ -6,14 +6,18 @@ import {Logo} from '../components/Nav/Logo'
 import {PrimaryButton} from '../components/Common/PrimaryButton'
 import {SecondaryButton} from '../components/Common/SecondaryButton'
 import {useAuth0} from "@auth0/auth0-react";
+import {usePublishedStockAnalysis} from "../api-hooks";
 
 function Home() {
 
     const router = useRouter()
     const auth0 = useAuth0()
+    const stockAnalysisApi = usePublishedStockAnalysis()
 
-    function seeSampleReport() {
-        router.push(`/published-stock-analyses/0c04b9cb-ddec-4c6e-9445-099bde6c86ca/narrative2`)
+    async function seeSampleReport() {
+        const {data: response} = await stockAnalysisApi.findPublishedStockAnalyses()
+        const id = response.stockAnalyses[0]['_id']
+        router.push(`/published-stock-analyses/${id}/narrative2`)
     }
 
     function browse() {
