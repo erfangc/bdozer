@@ -39,11 +39,6 @@ export default function StockAnalysisSummary(props: Props) {
                         running={loading}
                     />
                     <CardPercent
-                        value={derivedStockAnalytics?.discountRate}
-                        label={"Discount Rate"}
-                        running={loading}
-                    />
-                    <CardPercent
                         value={derivedStockAnalytics?.revenueCAGR}
                         label={"Revenue CAGR"}
                         running={loading}
@@ -51,6 +46,11 @@ export default function StockAnalysisSummary(props: Props) {
                     <Number
                         value={terminalPe}
                         label={"Terminal Year P/E"}
+                        running={loading}
+                    />
+                    <CardPercent
+                        value={derivedStockAnalytics?.irr}
+                        label={"IRR"}
                         running={loading}
                     />
                 </div>

@@ -312,6 +312,12 @@ export interface DerivedStockAnalytics {
      * @memberof DerivedStockAnalytics
      */
     currentPrice: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DerivedStockAnalytics
+     */
+    irr?: number;
 }
 /**
  * 
@@ -1130,12 +1136,6 @@ export interface Item {
     sumOfOtherItems?: SumOfOtherItems;
     /**
      * 
-     * @type {UnitSalesRevenue}
-     * @memberof Item
-     */
-    unitSalesRevenue?: UnitSalesRevenue;
-    /**
-     * 
      * @type {Discrete}
      * @memberof Item
      */
@@ -1180,7 +1180,6 @@ export enum ItemTypeEnum {
     Discrete = 'Discrete',
     CompoundedGrowth = 'CompoundedGrowth',
     SumOfOtherItems = 'SumOfOtherItems',
-    UnitSalesRevenue = 'UnitSalesRevenue',
     Custom = 'Custom',
     PercentOfRevenue = 'PercentOfRevenue',
     PercentOfAnotherItem = 'PercentOfAnotherItem',
@@ -1680,31 +1679,6 @@ export interface Tag {
      * @memberof Tag
      */
     createdAt: string;
-}
-/**
- * 
- * @export
- * @interface UnitSalesRevenue
- */
-export interface UnitSalesRevenue {
-    /**
-     * 
-     * @type {number}
-     * @memberof UnitSalesRevenue
-     */
-    steadyStateUnitsSold: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UnitSalesRevenue
-     */
-    averageSellingPrice: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UnitSalesRevenue
-     */
-    initialUnitsSold: number;
 }
 /**
  * 
