@@ -70,7 +70,7 @@ export default function FilingEntityControlPanel() {
         <main className="container mx-auto mt-12 px-4 space-y-8">
             <div className="space-y-4">
                 <Title>Filing Entity Summary</Title>
-                <FilingEntityCard filingEntity={filingEntity} />
+                <FilingEntityCard filingEntity={filingEntity} loading={loading}/>
             </div>
             {message}
             <div className="flex space-x-2">
