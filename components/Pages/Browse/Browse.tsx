@@ -6,7 +6,6 @@ import {StockAnalysisCard} from './StockAnalysisCard'
 import {StockAnalysisSearch} from './StockAnalysisSearch'
 import {LoadingSkeletons} from "./LoadingSkeleton";
 import {usePublishedStockAnalysis} from "../../../api-hooks";
-import {Popover} from "../../Popover";
 
 export function Browse() {
     const stockAnalysisPublication = usePublishedStockAnalysis()
@@ -15,7 +14,14 @@ export function Browse() {
 
     async function init() {
         setLoading(true)
-        const {data: resp} = await stockAnalysisPublication.findPublishedStockAnalyses()
+        const {data: resp} = await stockAnalysisPublication.findPublishedStockAnalyses(
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            500,
+            undefined,
+        )
         setStockAnalyses(resp.stockAnalyses)
         setLoading(false)
     }
@@ -31,21 +37,18 @@ export function Browse() {
     }
 
     return (
-        <main className="min-h-screen mx-auto container px-2 flex flex-col justify-between">
+        <main className="min-h-screen mx-auto container px-2 flex flex-col justify-between max-w-prose">
             <section>
                 <StockAnalysisSearch onSubmit={({cik}) => navigate(cik)} className="mb-20 mt-16"/>
                 <div className="mb-8">
                     <div className="flex space-x-4">
                         <StockTab active>#featured stocks</StockTab>
-                        <Popover trigger={<StockTab>#FAANG</StockTab>} className="w-42">
-                            Coming soon
-                        </Popover>
                     </div>
                 </div>
                 <blockquote className="my-4 pl-6 border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300">
                     Click on the Cards to View Analysis
                 </blockquote>
-                <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
+                <div className="flex flex-col space-y-6">
                     {loading ? <LoadingSkeletons/> : null}
                     {
                         stockAnalyses
@@ -58,7 +61,7 @@ export function Browse() {
                     }
                 </div>
             </section>
-            <LegalDisclaimer/>
+            <LegalDisclaimer className="mt-20"/>
         </main>
     )
 }
