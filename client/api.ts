@@ -4946,7 +4946,7 @@ export const StockAnalysisExcelDownloaderControllerApiAxiosParamCreator = functi
         download: async (id: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('download', 'id', id)
-            const localVarPath = `/api/stock-analyzer/workflow/{id}/download`
+            const localVarPath = `/public/stock-analyses/{id}/excel-download`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

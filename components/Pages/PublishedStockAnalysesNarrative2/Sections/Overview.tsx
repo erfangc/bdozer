@@ -27,16 +27,18 @@ export function Overview(props: Props) {
 
     async function downloadModel() {
         setLoading(true)
-        const url = `${basePath}/public/stock-analysis-excel-downloader/${cik}`
-        fetch(url, {
-            headers: {
-                'content-type': 'application/vnd.ms-excel;charset=UTF-8',
-            },
-            method: 'GET'
-        })
+        const id = props.result['_id'];
+        const url = `${basePath}/public/stock-analyses/${id}/excel-download`
+        fetch(url,
+            {
+                headers: {
+                    'content-type': 'application/vnd.ms-excel;charset=UTF-8',
+                },
+                method: 'GET'
+            })
             .then(res => res.blob()
                 .then(blob => {
-                    const filename = `${cik}.xlsx`
+                    const filename = `${id}.xlsx`
                     if (window.navigator.msSaveOrOpenBlob) {
                         navigator.msSaveBlob(blob, filename)
                     } else {
@@ -52,6 +54,7 @@ export function Overview(props: Props) {
                     setLoading(false)
                 }))
     }
+
 
     return (
         <div className="flex flex-col space-y-8 lg:flex-row lg:space-y-0 lg:justify-between">

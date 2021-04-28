@@ -1,4 +1,3 @@
-import {useAuth0} from '@auth0/auth0-react'
 import {useRouter} from 'next/router'
 import React, {useEffect, useState} from 'react'
 import {v4 as uuid} from 'uuid'
@@ -29,7 +28,6 @@ interface Props {
 
 export default function Toolbar({loading, setLoading, stockAnalysis, setStockAnalysis}: Props) {
 
-    const {getIdTokenClaims} = useAuth0()
     const router = useRouter()
     const {id} = router.query
     const stockAnalysisApi = useStockAnalysis()
@@ -96,14 +94,12 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
     }
 
     async function downloadModel() {
-        const {__raw} = await getIdTokenClaims()
         setDownloading(true)
-        const url = `${basePath}/api/stock-analyzer/workflow/${stockAnalysis['_id']}/download`
+        const url = `${basePath}/public/stock-analyses/${stockAnalysis['_id']}/excel-download`
         fetch(url,
             {
                 headers: {
                     'content-type': 'application/vnd.ms-excel;charset=UTF-8',
-                    'authorization': `Bearer ${__raw}`
                 },
                 method: 'GET'
             })
