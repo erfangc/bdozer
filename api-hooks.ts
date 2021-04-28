@@ -7,7 +7,7 @@ import {
     FilingEntityManagerUnsecuredControllerApi, IssuesControllerApi,
     MarketingControllerApi, ModelBuilderFactoryControllerApi,
     MxParserControllerApi, OrphanedItemsFinderControllerApi,
-    PublishedStockAnalysisControllerApi,
+    PublishedStockAnalysisControllerApi, RevenueModelerControllerApi,
     StockAnalysisControllerApi,
     TagControllerApi, ZacksEstimatesControllerApi,
 } from "./client";
@@ -66,6 +66,11 @@ export function useFactBaseUnsecured() {
 export function useMxParser() {
     const axiosInstance = useAxios();
     return new MxParserControllerApi(null, basePath, axiosInstance);
+}
+
+export function useRevenueModeler() {
+    const axiosInstance = useAxios()
+    return new RevenueModelerControllerApi(null, basePath, axiosInstance)
 }
 
 export function usePublishedStockAnalysis() {

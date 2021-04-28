@@ -1443,6 +1443,90 @@ export interface PercentOfRevenueAutoFill {
 /**
  * 
  * @export
+ * @interface RevenueComponent
+ */
+export interface RevenueComponent {
+    /**
+     * 
+     * @type {string}
+     * @memberof RevenueComponent
+     */
+    label: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RevenueComponent
+     */
+    description: string;
+    /**
+     * 
+     * @type {Array<Value>}
+     * @memberof RevenueComponent
+     */
+    values: Array<Value>;
+}
+/**
+ * 
+ * @export
+ * @interface RevenueDriver
+ */
+export interface RevenueDriver {
+    /**
+     * 
+     * @type {RevenueComponent}
+     * @memberof RevenueDriver
+     */
+    component1: RevenueComponent;
+    /**
+     * 
+     * @type {RevenueComponent}
+     * @memberof RevenueDriver
+     */
+    component2: RevenueComponent;
+    /**
+     * 
+     * @type {string}
+     * @memberof RevenueDriver
+     */
+    operator: RevenueDriverOperatorEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RevenueDriverOperatorEnum {
+    Times = 'Times'
+}
+
+/**
+ * 
+ * @export
+ * @interface RevenueModel
+ */
+export interface RevenueModel {
+    /**
+     * 
+     * @type {string}
+     * @memberof RevenueModel
+     */
+    get_id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RevenueModel
+     */
+    stockAnalysisId: string;
+    /**
+     * 
+     * @type {Array<RevenueDriver>}
+     * @memberof RevenueModel
+     */
+    drivers: Array<RevenueDriver>;
+}
+/**
+ * 
+ * @export
  * @interface StockAnalysis2
  */
 export interface StockAnalysis2 {
@@ -1679,6 +1763,25 @@ export interface Tag {
      * @memberof Tag
      */
     createdAt: string;
+}
+/**
+ * 
+ * @export
+ * @interface Value
+ */
+export interface Value {
+    /**
+     * 
+     * @type {number}
+     * @memberof Value
+     */
+    year: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Value
+     */
+    value: number;
 }
 /**
  * 
@@ -4318,6 +4421,235 @@ export class PublishedStockAnalysisControllerApi extends BaseAPI {
      */
     public getPublishedStockAnalysis(id: string, options?: any) {
         return PublishedStockAnalysisControllerApiFp(this.configuration).getPublishedStockAnalysis(id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * RevenueModelerControllerApi - axios parameter creator
+ * @export
+ */
+export const RevenueModelerControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteRevenueModel: async (id: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteRevenueModel', 'id', id)
+            const localVarPath = `/api/revenue-modeler/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRevenueModel: async (id: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getRevenueModel', 'id', id)
+            const localVarPath = `/api/revenue-modeler/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {RevenueModel} revenueModel 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveRevenueModel: async (revenueModel: RevenueModel, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'revenueModel' is not null or undefined
+            assertParamExists('saveRevenueModel', 'revenueModel', revenueModel)
+            const localVarPath = `/api/revenue-modeler`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(revenueModel, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * RevenueModelerControllerApi - functional programming interface
+ * @export
+ */
+export const RevenueModelerControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RevenueModelerControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteRevenueModel(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRevenueModel(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRevenueModel(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevenueModel>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRevenueModel(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {RevenueModel} revenueModel 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveRevenueModel(revenueModel: RevenueModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveRevenueModel(revenueModel, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * RevenueModelerControllerApi - factory interface
+ * @export
+ */
+export const RevenueModelerControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RevenueModelerControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteRevenueModel(id: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteRevenueModel(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRevenueModel(id: string, options?: any): AxiosPromise<RevenueModel> {
+            return localVarFp.getRevenueModel(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {RevenueModel} revenueModel 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveRevenueModel(revenueModel: RevenueModel, options?: any): AxiosPromise<void> {
+            return localVarFp.saveRevenueModel(revenueModel, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * RevenueModelerControllerApi - object-oriented interface
+ * @export
+ * @class RevenueModelerControllerApi
+ * @extends {BaseAPI}
+ */
+export class RevenueModelerControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RevenueModelerControllerApi
+     */
+    public deleteRevenueModel(id: string, options?: any) {
+        return RevenueModelerControllerApiFp(this.configuration).deleteRevenueModel(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RevenueModelerControllerApi
+     */
+    public getRevenueModel(id: string, options?: any) {
+        return RevenueModelerControllerApiFp(this.configuration).getRevenueModel(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {RevenueModel} revenueModel 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RevenueModelerControllerApi
+     */
+    public saveRevenueModel(revenueModel: RevenueModel, options?: any) {
+        return RevenueModelerControllerApiFp(this.configuration).saveRevenueModel(revenueModel, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
