@@ -16,6 +16,7 @@ import {PrimaryButton} from "../../Common/PrimaryButton";
 import {FixedCostEditor} from "./Editors/FixedCostEditor";
 import {SumOfOtherItemsEditor} from "./Editors/SumOfOtherItemsEditor";
 import {PercentOfAnotherItemEditor} from "./Editors/PercentOfAnotherItemEditor";
+import {RevenueItemEditor} from "./RevenueItemEditor";
 
 function getItem(model?: Model, itemName?: string | string[]) {
     return (
@@ -145,21 +146,39 @@ export function ItemEditor() {
         return null
     } else {
 
+        const select = (
+            <Select
+                label="Item Type"
+                value={item.type}
+                onChange={({currentTarget: {value}}) => updateType(value as any)}
+            >
+                <option value={ItemTypeEnum.Custom}>Custom</option>
+                <option value={ItemTypeEnum.PercentOfRevenue}>Percent of Revenue</option>
+                <option value={ItemTypeEnum.PercentOfAnotherItem}>Percent of Another Item</option>
+                <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
+                <option value={ItemTypeEnum.Discrete}>Discrete</option>
+                <option value={ItemTypeEnum.SumOfOtherItems}>Sum of Other Items</option>
+                <option value={ItemTypeEnum.CompoundedGrowth}>Compounded Growth</option>
+            </Select>
+        )
+
         let editor: ReactNode
-        if (item.type === ItemTypeEnum.Discrete) {
-            editor = <DiscreteEditor item={item} onSubmit={handleItemChange}/>
+        if (itemName === model.totalRevenueConceptName) {
+            editor = <RevenueItemEditor item={item} onSubmit={handleItemChange} model={model} />
+        } else if (item.type === ItemTypeEnum.Discrete) {
+            editor = <>{select}<DiscreteEditor item={item} onSubmit={handleItemChange}/></>
         } else if (item.type === ItemTypeEnum.FixedCost) {
-            editor = <FixedCostEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange}/>
+            editor = <>{select}<FixedCostEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange}/></>
         } else if (item.type === ItemTypeEnum.PercentOfRevenue) {
-            editor = <PercentOfRevenueEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange}/>
+            editor = <>{select}<PercentOfRevenueEditor item={item} model={stockAnalysis?.model} onSubmit={handleItemChange}/></>
         } else if (item.type === ItemTypeEnum.Custom) {
-            editor = <FormulaEditor item={item} onSubmit={handleItemChange}/>
+            editor = <>{select}<FormulaEditor item={item} onSubmit={handleItemChange}/></>
         } else if (item.type === ItemTypeEnum.SumOfOtherItems) {
-            editor = <SumOfOtherItemsEditor model={stockAnalysis?.model} item={item} onSubmit={handleItemChange}/>
+            editor = <>{select}<SumOfOtherItemsEditor model={stockAnalysis?.model} item={item} onSubmit={handleItemChange}/></>
         } else if (item.type === ItemTypeEnum.PercentOfAnotherItem) {
-            editor = <PercentOfAnotherItemEditor model={stockAnalysis?.model} item={item} onSubmit={handleItemChange}/>
+            editor = <>{select}<PercentOfAnotherItemEditor model={stockAnalysis?.model} item={item} onSubmit={handleItemChange}/></>
         } else {
-            editor = <AutoForm schema={schemaOf(item)} body={bodyOf(item)} onSubmit={handleAutoFormChange}/>
+            editor = <>{select}<AutoForm schema={schemaOf(item)} body={bodyOf(item)} onSubmit={handleAutoFormChange}/></>
         }
 
         const isOverridden = item === overriddenItem
@@ -186,34 +205,8 @@ export function ItemEditor() {
                         }
                         <ItemDescriptionInput item={item} onSubmit={handleItemChange}/>
                         <ItemFY0Input item={item} onSubmit={handleItemChange}/>
-                        {/* Revenue Item get the option to populate with Zacks Estimates */}
-                        {
-                            itemName === model.totalRevenueConceptName
-                                ? (
-                                    <div className="flex flex-col space-y-1">
-                                        <label className="block text-sm">Quick Options: </label>
-                                        <div className="h-px border-t border-blueGray-500 pt-2"/>
-                                        <button onClick={assignZacksEstimates} className="py-1 px-2 text-sm bg-blue-600 rounded w-40">
-                                            Use Zacks Estimates
-                                        </button>
-                                    </div>
-                                )
-                                : null
-                        }
                     </div>
-                    <Select
-                        label="Item Type"
-                        value={item.type}
-                        onChange={({currentTarget: {value}}) => updateType(value as any)}
-                    >
-                        <option value={ItemTypeEnum.Custom}>Custom</option>
-                        <option value={ItemTypeEnum.PercentOfRevenue}>Percent of Revenue</option>
-                        <option value={ItemTypeEnum.PercentOfAnotherItem}>Percent of Another Item</option>
-                        <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
-                        <option value={ItemTypeEnum.Discrete}>Discrete</option>
-                        <option value={ItemTypeEnum.SumOfOtherItems}>Sum of Other Items</option>
-                        <option value={ItemTypeEnum.CompoundedGrowth}>Compounded Growth</option>
-                    </Select>
+
                     {editor}
                     <div className="flex space-x-2">
                         <PrimaryButton onClick={handleSubmit}>
