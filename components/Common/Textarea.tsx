@@ -11,6 +11,7 @@ export function TextArea({ label, className, ...props }: TextAreaInputProps) {
             <textarea
                 type="text"
                 className={`cursor-pointer w-full rounded border bg-blueGray-900 border-blueGray-500 px-4 py-4 focus:outline-none ${className}`}
+                onClick={e => e.currentTarget.select()}
                 {...props}
             />
         </div>

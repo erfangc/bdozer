@@ -11,7 +11,7 @@ interface Props {
 
 export function Narrative(props: Props) {
     return (
-        <main className="slides text-blueGray-100 relative md:container md:mx-auto md:max-w-2xl">
+        <main className="slides text-blueGray-100 relative container mx-auto max-w-prose">
             <Page1 {...props} />
             <Page2 {...props} />
             <Page3 {...props} />

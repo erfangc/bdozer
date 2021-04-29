@@ -1516,6 +1516,18 @@ export interface RevenueModel {
      * @type {string}
      * @memberof RevenueModel
      */
+    revenueDriverType?: RevenueModelRevenueDriverTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RevenueModel
+     */
+    enabled: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RevenueModel
+     */
     stockAnalysisId: string;
     /**
      * 
@@ -1524,6 +1536,16 @@ export interface RevenueModel {
      */
     drivers: Array<RevenueDriver>;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RevenueModelRevenueDriverTypeEnum {
+    ZacksEstimates = 'ZacksEstimates',
+    DriverBased = 'DriverBased'
+}
+
 /**
  * 
  * @export

@@ -20,6 +20,7 @@ export const TextInput = function ({ label, className, ...props }: TextInputProp
             <input
                 type="text"
                 className={`focus:outline-none border border-blueGray-500 bg-blueGray-900 text-blueGray-50 rounded px-3 py-2 ${className}`}
+                onClick={e => e.currentTarget.select()}
                 {...props}
             />
         </div>
