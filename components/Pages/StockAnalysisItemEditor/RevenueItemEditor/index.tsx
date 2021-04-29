@@ -1,5 +1,13 @@
 import React, {useEffect, useState} from 'react'
-import {Discrete, Item, ItemTypeEnum, Model, RevenueDriverOperatorEnum, RevenueModel} from "../../../../client";
+import {
+    Discrete,
+    Item,
+    ItemTypeEnum,
+    Model,
+    RevenueDriverOperatorEnum,
+    RevenueModel,
+    RevenueModelRevenueDriverTypeEnum
+} from "../../../../client";
 import {RevenueDriverChooser} from "./RevenueDriverChooser";
 import {Carousel} from "../../../Carousel";
 import {Slide} from "../../../Carousel/Slide";
@@ -72,12 +80,15 @@ export function RevenueItemEditor({item, onSubmit, model}: Props) {
     }
 
     function handleNextOnRevenueDriverChoosen() {
-        if (revenueModel.enabled) {
+        if (revenueModel.revenueDriverType === RevenueModelRevenueDriverTypeEnum.DriverBased) {
             goToDriverBased()
-        } else {
+        } else if (revenueModel.revenueDriverType === RevenueModelRevenueDriverTypeEnum.ZacksEstimates){
             goToZacksEstimates()
+        } else {
+            router.back()
         }
     }
+
     function goTo(id: string) {
         const asPath = router.asPath.split('#')[0]
         router.push(`${asPath}/#${id}`)
@@ -88,11 +99,14 @@ export function RevenueItemEditor({item, onSubmit, model}: Props) {
     }, [])
 
     function submit(discrete: Discrete) {
+        if (revenueModel.revenueDriverType === undefined) {
+            onSubmit(undefined)
+        }
         const newItem: Item = {
             ...item,
             type: ItemTypeEnum.Discrete,
             discrete,
-        }
+        };
         onSubmit(newItem)
     }
 

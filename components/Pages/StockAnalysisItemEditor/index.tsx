@@ -88,22 +88,26 @@ export function ItemEditor() {
     }
 
     async function handleChangeAndSubmit(newItem: Item) {
-        // delete it item from overrides
-        const model = stockAnalysis.model
-        const updatedModel: Model = {
-            ...model,
-            itemOverrides: [
-                ...model.itemOverrides.filter(item => item.name !== newItem.name),
-                newItem
-            ],
+        if (!newItem) {
+            clearItem();
+        } else {
+            // delete it item from overrides
+            const model = stockAnalysis.model;
+            const updatedModel: Model = {
+                ...model,
+                itemOverrides: [
+                    ...model.itemOverrides.filter(item => item.name !== newItem.name),
+                    newItem
+                ],
+            }
+            const updatedStockAnalysis: StockAnalysis2 = {
+                ...stockAnalysis,
+                model: updatedModel
+            }
+            setStockAnalysis(updatedStockAnalysis)
+            await stockAnalysisCrud.saveStockAnalysis(updatedStockAnalysis)
+            back()
         }
-        const updatedStockAnalysis: StockAnalysis2 = {
-            ...stockAnalysis,
-            model: updatedModel
-        }
-        setStockAnalysis(updatedStockAnalysis)
-        await stockAnalysisCrud.saveStockAnalysis(stockAnalysis)
-        back()
     }
 
     async function handleSubmit() {
@@ -152,6 +156,12 @@ export function ItemEditor() {
         // probably still loading
         return null
     } else {
+        // revenue items gets its own super component
+        if (itemName === model.totalRevenueConceptName) {
+            return (
+                <RevenueItemEditor item={item} onSubmit={handleChangeAndSubmit} model={model}/>
+            )
+        }
 
         const select = (
             <Select
@@ -171,74 +181,98 @@ export function ItemEditor() {
 
         let editor: ReactNode
         if (item.type === ItemTypeEnum.Discrete) {
-            editor = <>{select}<DiscreteEditor item={item} onSubmit={handleItemChange}/></>
+            editor = (
+                <DiscreteEditor
+                    item={item}
+                    onSubmit={handleItemChange}
+                />
+            )
         } else if (item.type === ItemTypeEnum.FixedCost) {
-            editor = <>{select}<FixedCostEditor item={item} model={stockAnalysis?.model}
-                                                onSubmit={handleItemChange}/></>
+            editor = (
+                <FixedCostEditor
+                    item={item}
+                    model={stockAnalysis?.model}
+                    onSubmit={handleItemChange}
+                />
+            )
         } else if (item.type === ItemTypeEnum.PercentOfRevenue) {
-            editor = <>{select}<PercentOfRevenueEditor item={item} model={stockAnalysis?.model}
-                                                       onSubmit={handleItemChange}/></>
+            editor = (
+                <PercentOfRevenueEditor
+                    item={item}
+                    model={stockAnalysis?.model}
+                    onSubmit={handleItemChange}
+                />
+            )
         } else if (item.type === ItemTypeEnum.Custom) {
-            editor = <>{select}<FormulaEditor item={item} onSubmit={handleItemChange}/></>
+            editor = (
+                <FormulaEditor item={item} onSubmit={handleItemChange}/>
+            )
         } else if (item.type === ItemTypeEnum.SumOfOtherItems) {
-            editor = <>{select}<SumOfOtherItemsEditor model={stockAnalysis?.model} item={item}
-                                                      onSubmit={handleItemChange}/></>
+            editor = (
+                <SumOfOtherItemsEditor
+                    model={stockAnalysis?.model}
+                    item={item}
+                    onSubmit={handleItemChange}
+                />
+            )
         } else if (item.type === ItemTypeEnum.PercentOfAnotherItem) {
-            editor = <>{select}<PercentOfAnotherItemEditor model={stockAnalysis?.model} item={item}
-                                                           onSubmit={handleItemChange}/></>
+            editor = (
+                <PercentOfAnotherItemEditor
+                    model={stockAnalysis?.model}
+                    item={item}
+                    onSubmit={handleItemChange}
+                />
+            )
         } else {
-            editor = <>{select}<AutoForm schema={schemaOf(item)} body={bodyOf(item)}
-                                         onSubmit={handleAutoFormChange}/></>
+            editor = (
+                <AutoForm
+                    schema={schemaOf(item)}
+                    body={bodyOf(item)}
+                    onSubmit={handleAutoFormChange}
+                />
+            )
         }
 
         const isOverridden = item === overriddenItem
 
-        if (itemName === model.totalRevenueConceptName) {
-            return (
-                <RevenueItemEditor item={item} onSubmit={handleChangeAndSubmit} model={model}/>
-            )
-        } else {
-            return (
-                // outer layer is the overlay
-                <div className="container mx-auto px-2 max-w-prose py-12">
-                    <div className="bg-blueGray-700 px-2 lg:px-12 py-3 lg:py-8 rounded-lg shadow-md flex-col space-y-8">
-                        <div className="flex-col space-y-4">
-                            <div>
-                                <label className="text-sm">Name</label>
-                                <p className="mt-2 cursor-not-allowed border rounded border-blueGray-400 text-blueGray-300 px-3 py-2 overflow-hidden overflow-ellipsis">
-                                    {item.name}
-                                </p>
-                            </div>
-                            {
-                                fact?.documentation
-                                    ?
-                                    <blockquote
-                                        className="px-3 inline-block border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300 mb-1">
-                                        {fact.documentation}
-                                    </blockquote>
-                                    : null
-                            }
-                            <ItemDescriptionInput item={item} onSubmit={handleItemChange}/>
-                            <ItemFY0Input item={item} onSubmit={handleItemChange}/>
+        return (
+            // outer layer is the overlay
+            <div className="container mx-auto px-2 max-w-prose py-12">
+                <div className="bg-blueGray-700 px-2 lg:px-12 py-3 lg:py-8 rounded-lg shadow-md flex-col space-y-8">
+                    <div className="flex-col space-y-4">
+                        <div>
+                            <label className="text-sm">Name</label>
+                            <p className="mt-2 cursor-not-allowed border rounded border-blueGray-400 text-blueGray-300 px-3 py-2 overflow-hidden overflow-ellipsis">
+                                {item.name}
+                            </p>
                         </div>
-
-                        {editor}
-                        <div className="flex space-x-2">
-                            <PrimaryButton onClick={handleSubmit}>
-                                {isOverridden ? 'Confirm' : 'Override'}
-                            </PrimaryButton>
-                            <SecondaryButton className="w-24" onClick={back}>
-                                Back
-                            </SecondaryButton>
-                            {
-                                isOverridden
-                                    ? <DeleteButton className="w-40" onClick={clearItem}>Clear Override</DeleteButton>
-                                    : null
-                            }
-                        </div>
+                        {
+                            fact?.documentation
+                                ?
+                                <blockquote
+                                    className="px-3 inline-block border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300 mb-1">
+                                    {fact.documentation}
+                                </blockquote>
+                                : null
+                        }
+                        <ItemDescriptionInput item={item} onSubmit={handleItemChange}/>
+                        <ItemFY0Input item={item} onSubmit={handleItemChange}/>
+                    </div>
+                    {select}
+                    {editor}
+                    <div className="flex space-x-2">
+                        <PrimaryButton onClick={handleSubmit}>
+                            {isOverridden ? 'Confirm' : 'Override'}
+                        </PrimaryButton>
+                        <SecondaryButton className="w-24" onClick={back}>Back</SecondaryButton>
+                        {
+                            isOverridden
+                                ? <DeleteButton className="w-40" onClick={clearItem}>Clear Override</DeleteButton>
+                                : null
+                        }
                     </div>
                 </div>
-            );
-        }
+            </div>
+        );
     }
 }

@@ -34,9 +34,14 @@ export function RevenueDriverChooser({revenueModel, setRevenueModel, next}: Prop
                     explanation="Define your own revenue driver"
                     value={RevenueModelRevenueDriverTypeEnum.DriverBased}
                 />
+                <Choice
+                    label={`None`}
+                    explanation="Revert to automation default"
+                    value={undefined}
+                />
             </RadioGroup>
-            <PrimaryButton disabled={!choice} onClick={next}>
-                Next
+            <PrimaryButton onClick={next}>
+                {!choice ? 'Revert' : 'Next'}
             </PrimaryButton>
         </div>
     )
