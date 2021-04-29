@@ -38,7 +38,7 @@ export function ValueEditor(props: Props) {
                 <ComponentValuesEditor {...props} component={driver.component2} setComponent={setComponent2}/>
             </div>
             <div className="space-x-2 mt-12 mb-4">
-                <PrimaryButton onClick={next}>Next</PrimaryButton>
+                <PrimaryButton onClick={next}>Done</PrimaryButton>
                 <SecondaryButton onClick={back}>Back</SecondaryButton>
             </div>
         </div>

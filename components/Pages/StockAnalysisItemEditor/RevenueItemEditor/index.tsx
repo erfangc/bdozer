@@ -21,13 +21,14 @@ import {ValueEditor} from "./DriverBased/ValueEditor";
 interface Props {
     model: Model
     item: Item
-    onSubmit: (item: Item) => void
+    onSubmit: (item?: Item) => void
 }
 
 export function RevenueItemEditor({item, onSubmit, model}: Props) {
     const router = useRouter()
     const {id} = router.query
-    const [revenueModel, setRevenueModel] = useState<RevenueModel>({
+    const revenueModelApi = useRevenueModeler()
+    const [revenueModel, setRevenueModel1] = useState<RevenueModel>({
         drivers: [{
             component1: {
                 description: 'Enter description',
@@ -48,11 +49,16 @@ export function RevenueItemEditor({item, onSubmit, model}: Props) {
 
     const revenueModelerApi = useRevenueModeler()
 
+    async function setRevenueModel(revenueModel: RevenueModel) {
+        setRevenueModel1(revenueModel)
+        await revenueModelApi.saveRevenueModel(revenueModel)
+    }
+
     async function init() {
         try {
             const {data: revenueModel} = await revenueModelerApi.getRevenueModel(id as string);
             if (revenueModel) {
-                setRevenueModel(revenueModel);
+                setRevenueModel1(revenueModel);
             }
         } catch (e) {
             console.error(e);
@@ -80,11 +86,13 @@ export function RevenueItemEditor({item, onSubmit, model}: Props) {
     }
 
     function handleNextOnRevenueDriverChoosen() {
+        console.log(revenueModel)
         if (revenueModel.revenueDriverType === RevenueModelRevenueDriverTypeEnum.DriverBased) {
             goToDriverBased()
         } else if (revenueModel.revenueDriverType === RevenueModelRevenueDriverTypeEnum.ZacksEstimates){
             goToZacksEstimates()
         } else {
+            onSubmit()
             router.back()
         }
     }
@@ -99,15 +107,16 @@ export function RevenueItemEditor({item, onSubmit, model}: Props) {
     }, [])
 
     function submit(discrete: Discrete) {
-        if (revenueModel.revenueDriverType === undefined) {
-            onSubmit(undefined)
-        }
         const newItem: Item = {
             ...item,
             type: ItemTypeEnum.Discrete,
             discrete,
         };
         onSubmit(newItem)
+    }
+
+    function done() {
+        onSubmit()
     }
 
     return (
@@ -147,7 +156,7 @@ export function RevenueItemEditor({item, onSubmit, model}: Props) {
                     <ValueEditor
                         revenueModel={revenueModel}
                         setRevenueModel={setRevenueModel}
-                        next={goToValueEditor}
+                        next={done}
                         back={goToDescription}
                     />
                 </Slide>

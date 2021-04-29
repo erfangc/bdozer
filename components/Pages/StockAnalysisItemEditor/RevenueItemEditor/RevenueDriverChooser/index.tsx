@@ -13,17 +13,14 @@ interface Props {
 
 export function RevenueDriverChooser({revenueModel, setRevenueModel, next}: Props) {
 
-    const [choice, setChoice] = useState<RevenueModelRevenueDriverTypeEnum>(revenueModel.revenueDriverType)
-
     function handleSetChoice(choice: RevenueModelRevenueDriverTypeEnum) {
-        setChoice(choice)
-        setRevenueModel({...revenueModel, enabled: choice === 'DriverBased'})
+        setRevenueModel({...revenueModel, revenueDriverType: choice})
     }
 
     return (
         <div className="space-y-4">
             <Title className="mb-8">How will Revenue be Determined?</Title>
-            <RadioGroup value={choice} onChange={handleSetChoice}>
+            <RadioGroup value={revenueModel.revenueDriverType} onChange={handleSetChoice}>
                 <Choice
                     label={`Use Zack's Estimates`}
                     explanation="Apply Zack's median estimates for revenue"
@@ -41,7 +38,7 @@ export function RevenueDriverChooser({revenueModel, setRevenueModel, next}: Prop
                 />
             </RadioGroup>
             <PrimaryButton onClick={next}>
-                {!choice ? 'Revert' : 'Next'}
+                {!revenueModel.revenueDriverType ? 'Done' : 'Next'}
             </PrimaryButton>
         </div>
     )
