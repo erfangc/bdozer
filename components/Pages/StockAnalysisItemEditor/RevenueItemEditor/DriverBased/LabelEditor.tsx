@@ -2,7 +2,6 @@ import React, {ChangeEvent} from 'react'
 import {Title} from "../../../../Common/Title";
 import {RevenueModel} from "../../../../../client";
 import {TextInput} from "../../../../Common/TextInput";
-import {Close} from "../../../../Common/Svgs";
 import {PrimaryButton} from "../../../../Common/PrimaryButton";
 import {SecondaryButton} from "../../../../Common/SecondaryButton";
 
@@ -46,8 +45,8 @@ export function LabelEditor({revenueModel, setRevenueModel, next, back}: Props) 
         <div>
             <Title>Driver Variables</Title>
             <div className="flex my-8 space-y-2 flex-col md:flex-row md:space-x-2 md:space-y-0">
-                <TextInput label="Variable1 Name" value={component1.label} onChange={changeLabel1}/>
-                <TextInput label="Variable2 Name" value={component2.label} onChange={changeLabel2}/>
+                <TextInput label="Variable 1 Name" value={component1.label} onChange={changeLabel1}/>
+                <TextInput label="Variable 2 Name" value={component2.label} onChange={changeLabel2}/>
             </div>
             <div className="space-x-2">
                 <PrimaryButton onClick={next}>Next</PrimaryButton>
