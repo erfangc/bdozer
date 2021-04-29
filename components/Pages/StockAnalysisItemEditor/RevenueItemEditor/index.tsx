@@ -89,7 +89,7 @@ export function RevenueItemEditor({item, onSubmit, model}: Props) {
         console.log(revenueModel)
         if (revenueModel.revenueDriverType === RevenueModelRevenueDriverTypeEnum.DriverBased) {
             goToDriverBased()
-        } else if (revenueModel.revenueDriverType === RevenueModelRevenueDriverTypeEnum.ZacksEstimates){
+        } else if (revenueModel.revenueDriverType === RevenueModelRevenueDriverTypeEnum.ZacksEstimates) {
             goToZacksEstimates()
         } else {
             onSubmit()
@@ -116,6 +116,11 @@ export function RevenueItemEditor({item, onSubmit, model}: Props) {
     }
 
     function done() {
+        const [driver] = revenueModel.drivers
+        const {component1, component2} = driver
+        component1.values.reduce((prev, curr, idx) => {
+                return {...prev, [curr.year]: curr.value * component2[idx]?.value ?? 0.0}
+            }, {})
         onSubmit()
     }
 
