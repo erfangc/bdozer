@@ -88,15 +88,15 @@ function FutureProjectionTalkingPoint({revenueModel, stockAnalysis}: FutureProje
         </AnchorPopover>
     )
 
-    if (revenueModel && revenueModel.revenueDriverType === RevenueModelRevenueDriverTypeEnum.AverageRevenuePerUserTimesActiveUser) {
-        // FIXME create a talking point per driver type
+    if (revenueModel?.revenueDriverType === RevenueModelRevenueDriverTypeEnum.AverageRevenuePerUserTimesActiveUser) {
         return (
             <>
                 <li>
-                    By <b>{revenueModel.terminalFiscalYear} </b>, we expect {name} to reach {simpleNumber(revenueModel.terminalYearActiveUser)} active users making <b>{simpleMoney(revenueModel.terminalYearAverageRevenuePerUser)}</b> per user
+                    By <b>{revenueModel.terminalFiscalYear}</b>, we expect {name} to reach <b>{simpleNumber(revenueModel.terminalYearActiveUser)} </b>
+                    active users making <b>{simpleMoney(revenueModel.terminalYearAverageRevenuePerUser)}</b> per user
                 </li>
                 <li>
-                    As such, their stock price's fair value is {simpleMoney(targetPrice)}, which represents
+                    As such, {name}'s fair value is {simpleMoney(targetPrice)}, which represents
                     <span className={`font-bold ${upside > 0 ? 'text-lime-400' : 'text-rose-500'}`}> {upside.toFixed(1)}% </span>
                     {upside > 0 ? 'upside' : 'downside'} from current price
                 </li>
