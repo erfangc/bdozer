@@ -1142,6 +1142,12 @@ export interface Item {
     discrete?: Discrete;
     /**
      * 
+     * @type {ManualProjections}
+     * @memberof Item
+     */
+    manualProjections?: ManualProjections;
+    /**
+     * 
      * @type {PercentOfRevenue}
      * @memberof Item
      */
@@ -1181,11 +1187,44 @@ export enum ItemTypeEnum {
     CompoundedGrowth = 'CompoundedGrowth',
     SumOfOtherItems = 'SumOfOtherItems',
     Custom = 'Custom',
+    ManualProjections = 'ManualProjections',
     PercentOfRevenue = 'PercentOfRevenue',
     PercentOfAnotherItem = 'PercentOfAnotherItem',
     FixedCost = 'FixedCost'
 }
 
+/**
+ * 
+ * @export
+ * @interface ManualProjection
+ */
+export interface ManualProjection {
+    /**
+     * 
+     * @type {number}
+     * @memberof ManualProjection
+     */
+    period: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ManualProjection
+     */
+    value: number;
+}
+/**
+ * 
+ * @export
+ * @interface ManualProjections
+ */
+export interface ManualProjections {
+    /**
+     * 
+     * @type {Array<ManualProjection>}
+     * @memberof ManualProjections
+     */
+    manualProjections: Array<ManualProjection>;
+}
 /**
  * 
  * @export
@@ -1443,65 +1482,6 @@ export interface PercentOfRevenueAutoFill {
 /**
  * 
  * @export
- * @interface RevenueComponent
- */
-export interface RevenueComponent {
-    /**
-     * 
-     * @type {string}
-     * @memberof RevenueComponent
-     */
-    label: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RevenueComponent
-     */
-    description: string;
-    /**
-     * 
-     * @type {Array<Value>}
-     * @memberof RevenueComponent
-     */
-    values: Array<Value>;
-}
-/**
- * 
- * @export
- * @interface RevenueDriver
- */
-export interface RevenueDriver {
-    /**
-     * 
-     * @type {RevenueComponent}
-     * @memberof RevenueDriver
-     */
-    component1: RevenueComponent;
-    /**
-     * 
-     * @type {RevenueComponent}
-     * @memberof RevenueDriver
-     */
-    component2: RevenueComponent;
-    /**
-     * 
-     * @type {string}
-     * @memberof RevenueDriver
-     */
-    operator: RevenueDriverOperatorEnum;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum RevenueDriverOperatorEnum {
-    Times = 'Times'
-}
-
-/**
- * 
- * @export
  * @interface RevenueModel
  */
 export interface RevenueModel {
@@ -1519,22 +1499,28 @@ export interface RevenueModel {
     revenueDriverType?: RevenueModelRevenueDriverTypeEnum;
     /**
      * 
-     * @type {boolean}
-     * @memberof RevenueModel
-     */
-    enabled: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof RevenueModel
      */
     stockAnalysisId: string;
     /**
      * 
-     * @type {Array<RevenueDriver>}
+     * @type {number}
      * @memberof RevenueModel
      */
-    drivers: Array<RevenueDriver>;
+    terminalYear?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RevenueModel
+     */
+    terminalYearAverageRevenuePerUser?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RevenueModel
+     */
+    terminalYearActiveUser?: number;
 }
 
 /**
@@ -1543,7 +1529,7 @@ export interface RevenueModel {
     */
 export enum RevenueModelRevenueDriverTypeEnum {
     ZacksEstimates = 'ZacksEstimates',
-    DriverBased = 'DriverBased'
+    AverageRevenuePerUserTimesActiveUser = 'AverageRevenuePerUserTimesActiveUser'
 }
 
 /**
@@ -1785,25 +1771,6 @@ export interface Tag {
      * @memberof Tag
      */
     createdAt: string;
-}
-/**
- * 
- * @export
- * @interface Value
- */
-export interface Value {
-    /**
-     * 
-     * @type {number}
-     * @memberof Value
-     */
-    year: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Value
-     */
-    value: number;
 }
 /**
  * 
@@ -4525,6 +4492,41 @@ export const RevenueModelerControllerApiAxiosParamCreator = function (configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        modelRevenue: async (revenueModel: RevenueModel, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'revenueModel' is not null or undefined
+            assertParamExists('modelRevenue', 'revenueModel', revenueModel)
+            const localVarPath = `/api/revenue-modeler/model-revenue`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(revenueModel, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {RevenueModel} revenueModel 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         saveRevenueModel: async (revenueModel: RevenueModel, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'revenueModel' is not null or undefined
             assertParamExists('saveRevenueModel', 'revenueModel', revenueModel)
@@ -4590,6 +4592,16 @@ export const RevenueModelerControllerApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async modelRevenue(revenueModel: RevenueModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Discrete>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.modelRevenue(revenueModel, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {RevenueModel} revenueModel 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async saveRevenueModel(revenueModel: RevenueModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.saveRevenueModel(revenueModel, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -4621,6 +4633,15 @@ export const RevenueModelerControllerApiFactory = function (configuration?: Conf
          */
         getRevenueModel(id: string, options?: any): AxiosPromise<RevenueModel> {
             return localVarFp.getRevenueModel(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {RevenueModel} revenueModel 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        modelRevenue(revenueModel: RevenueModel, options?: any): AxiosPromise<Discrete> {
+            return localVarFp.modelRevenue(revenueModel, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4661,6 +4682,17 @@ export class RevenueModelerControllerApi extends BaseAPI {
      */
     public getRevenueModel(id: string, options?: any) {
         return RevenueModelerControllerApiFp(this.configuration).getRevenueModel(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {RevenueModel} revenueModel 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RevenueModelerControllerApi
+     */
+    public modelRevenue(revenueModel: RevenueModel, options?: any) {
+        return RevenueModelerControllerApiFp(this.configuration).modelRevenue(revenueModel, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

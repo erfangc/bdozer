@@ -4,19 +4,13 @@ import {
     Item,
     ItemTypeEnum,
     Model,
-    RevenueDriverOperatorEnum,
     RevenueModel,
-    RevenueModelRevenueDriverTypeEnum
 } from "../../../../client";
-import {RevenueDriverChooser} from "./RevenueDriverChooser";
 import {Carousel} from "../../../Carousel";
 import {Slide} from "../../../Carousel/Slide";
 import {ZacksEstimates} from "./ZacksEstimates";
-import {LabelEditor} from "./DriverBased/LabelEditor";
 import {useRouter} from "next/router";
 import {useRevenueModeler} from "../../../../api-hooks";
-import {DescriptionEditor} from "./DriverBased/DescriptionEditor";
-import {ValueEditor} from "./DriverBased/ValueEditor";
 
 interface Props {
     model: Model
@@ -29,19 +23,6 @@ export function RevenueItemEditor({item, onSubmit, model}: Props) {
     const {id} = router.query
     const revenueModelApi = useRevenueModeler()
     const [revenueModel, setRevenueModel1] = useState<RevenueModel>({
-        drivers: [{
-            component1: {
-                description: 'Enter description',
-                label: 'Enter label',
-                values: []
-            },
-            component2: {
-                description: 'Enter description',
-                label: 'Enter label',
-                values: []
-            },
-            operator: RevenueDriverOperatorEnum.Times,
-        }],
         stockAnalysisId: id as string,
         // @ts-ignore
         _id: id as string,
@@ -87,14 +68,6 @@ export function RevenueItemEditor({item, onSubmit, model}: Props) {
 
     function handleNextOnRevenueDriverChoosen() {
         console.log(revenueModel)
-        if (revenueModel.revenueDriverType === RevenueModelRevenueDriverTypeEnum.DriverBased) {
-            goToDriverBased()
-        } else if (revenueModel.revenueDriverType === RevenueModelRevenueDriverTypeEnum.ZacksEstimates) {
-            goToZacksEstimates()
-        } else {
-            onSubmit()
-            router.back()
-        }
     }
 
     function goTo(id: string) {
@@ -116,54 +89,20 @@ export function RevenueItemEditor({item, onSubmit, model}: Props) {
     }
 
     function done() {
-        const [driver] = revenueModel.drivers
-        const {component1, component2} = driver
-        component1.values.reduce((prev, curr, idx) => {
-                return {...prev, [curr.year]: curr.value * component2[idx]?.value ?? 0.0}
-            }, {})
-        onSubmit()
     }
 
     return (
         <main className="max-w-prose mx-auto container px-4">
             <Carousel>
                 <Slide id="RevenueDriverChooser" className="pt-20">
-                    <RevenueDriverChooser
-                        setRevenueModel={setRevenueModel}
-                        revenueModel={revenueModel}
-                        next={handleNextOnRevenueDriverChoosen}
-                    />
                 </Slide>
                 <Slide id="ZacksEstimates" className="pt-20">
-                    <ZacksEstimates
-                        model={model}
-                        onConfirm={submit}
-                        back={goToRevenueDriverChooser}
-                    />
                 </Slide>
                 <Slide id="DriverBased" className="pt-20">
-                    <LabelEditor
-                        revenueModel={revenueModel}
-                        setRevenueModel={setRevenueModel}
-                        next={goToDescription}
-                        back={goToRevenueDriverChooser}
-                    />
                 </Slide>
                 <Slide id="DescriptionEditor" className="pt-20">
-                    <DescriptionEditor
-                        revenueModel={revenueModel}
-                        setRevenueModel={setRevenueModel}
-                        next={goToValueEditor}
-                        back={goToDriverBased}
-                    />
                 </Slide>
                 <Slide id="ValueEditor" className="pt-20">
-                    <ValueEditor
-                        revenueModel={revenueModel}
-                        setRevenueModel={setRevenueModel}
-                        next={done}
-                        back={goToDescription}
-                    />
                 </Slide>
             </Carousel>
         </main>
