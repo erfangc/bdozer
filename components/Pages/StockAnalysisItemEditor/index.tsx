@@ -10,7 +10,6 @@ import {Select} from "../../Common/Select";
 import {FormulaEditor} from "./Editors/FormulaEditor";
 import {ItemDescriptionInput} from "./ItemDescriptionInput";
 import {ItemFY0Input} from "./ItemFY0Input";
-import {DiscreteEditor} from "./Editors/DiscreteEditor";
 import {PercentOfRevenueEditor} from "./Editors/PercentOfRevenueEditor";
 import {PrimaryButton} from "../../Common/PrimaryButton";
 import {FixedCostEditor} from "./Editors/FixedCostEditor";
@@ -176,21 +175,13 @@ export function ItemEditor() {
                 <option value={ItemTypeEnum.PercentOfRevenue}>Percent of Revenue</option>
                 <option value={ItemTypeEnum.PercentOfAnotherItem}>Percent of Another Item</option>
                 <option value={ItemTypeEnum.FixedCost}>Fixed Cost</option>
-                <option value={ItemTypeEnum.Discrete}>Discrete</option>
                 <option value={ItemTypeEnum.SumOfOtherItems}>Sum of Other Items</option>
                 <option value={ItemTypeEnum.CompoundedGrowth}>Compounded Growth</option>
             </Select>
         )
 
         let editor: ReactNode
-        if (item.type === ItemTypeEnum.Discrete) {
-            editor = (
-                <DiscreteEditor
-                    item={item}
-                    onSubmit={handleItemChange}
-                />
-            )
-        } else if (item.type === ItemTypeEnum.FixedCost) {
+        if (item.type === ItemTypeEnum.FixedCost) {
             editor = (
                 <FixedCostEditor
                     item={item}

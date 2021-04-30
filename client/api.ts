@@ -322,19 +322,6 @@ export interface DerivedStockAnalytics {
 /**
  * 
  * @export
- * @interface Discrete
- */
-export interface Discrete {
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof Discrete
-     */
-    formulas: { [key: string]: string; };
-}
-/**
- * 
- * @export
  * @interface EarlyAccessRequest
  */
 export interface EarlyAccessRequest {
@@ -1136,12 +1123,6 @@ export interface Item {
     sumOfOtherItems?: SumOfOtherItems;
     /**
      * 
-     * @type {Discrete}
-     * @memberof Item
-     */
-    discrete?: Discrete;
-    /**
-     * 
      * @type {ManualProjections}
      * @memberof Item
      */
@@ -1183,7 +1164,6 @@ export interface Item {
     * @enum {string}
     */
 export enum ItemTypeEnum {
-    Discrete = 'Discrete',
     CompoundedGrowth = 'CompoundedGrowth',
     SumOfOtherItems = 'SumOfOtherItems',
     Custom = 'Custom',
