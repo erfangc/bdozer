@@ -43,7 +43,7 @@ export function Page3(props: Props) {
                     <p>
                         <span>{ticker}'s profit is projected to be </span>
                         <span className={`${profit > 0 ? 'text-lime-500' : 'text-rose-500'} font-extrabold text-lg`}>
-                            ${simpleNumber(profit?.toFixed(0))}
+                            ${simpleNumber(profit)}
                         </span>
                         <span> in {finalYear}, see details below</span>
                     </p>
@@ -52,11 +52,11 @@ export function Page3(props: Props) {
                 <div className="flex flex-col text-blueGray-200">
                     <div className="flex justify-between">
                         <b>{finalYear} Profit</b>
-                        <span className="font-light">${simpleNumber(profit?.toFixed(0))}</span>
+                        <span className="font-light">${simpleNumber(profit)}</span>
                     </div>
                     <div className="flex justify-between">
                         <b>Shares Outstanding</b>
-                        <span className="font-light">&#247; {simpleNumber(sharesOutstanding?.toFixed(0))}</span>
+                        <span className="font-light">&#247; {simpleNumber(sharesOutstanding)}</span>
                     </div>
                     <div className="flex justify-between mt-2">
                         <b className="pt-2">Earning per Share</b>

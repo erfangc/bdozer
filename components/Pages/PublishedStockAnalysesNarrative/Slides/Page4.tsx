@@ -74,7 +74,7 @@ export function Page4({ result }: Props) {
                             color: blueGray50,
                         },
                         formatter: function () {
-                            return `<div class="text-white z-0">${simpleNumber(this.y.toFixed(0), true)}</div>`;
+                            return `<div class="text-white z-0">${simpleNumber(this.y, true)}</div>`;
                         },
                     },
                 },

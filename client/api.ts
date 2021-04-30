@@ -1204,7 +1204,7 @@ export interface ManualProjection {
      * @type {number}
      * @memberof ManualProjection
      */
-    period: number;
+    fiscalYear: number;
     /**
      * 
      * @type {number}
@@ -1361,6 +1361,25 @@ export interface Model {
 /**
  * 
  * @export
+ * @interface ModelRevenueRequest
+ */
+export interface ModelRevenueRequest {
+    /**
+     * 
+     * @type {RevenueModel}
+     * @memberof ModelRevenueRequest
+     */
+    revenueModel: RevenueModel;
+    /**
+     * 
+     * @type {Model}
+     * @memberof ModelRevenueRequest
+     */
+    model: Model;
+}
+/**
+ * 
+ * @export
  * @interface ModelTemplate
  */
 export interface ModelTemplate {
@@ -1508,7 +1527,7 @@ export interface RevenueModel {
      * @type {number}
      * @memberof RevenueModel
      */
-    terminalYear?: number;
+    terminalFiscalYear?: number;
     /**
      * 
      * @type {number}
@@ -4488,13 +4507,13 @@ export const RevenueModelerControllerApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @param {RevenueModel} revenueModel 
+         * @param {ModelRevenueRequest} modelRevenueRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        modelRevenue: async (revenueModel: RevenueModel, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'revenueModel' is not null or undefined
-            assertParamExists('modelRevenue', 'revenueModel', revenueModel)
+        modelRevenue: async (modelRevenueRequest: ModelRevenueRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'modelRevenueRequest' is not null or undefined
+            assertParamExists('modelRevenue', 'modelRevenueRequest', modelRevenueRequest)
             const localVarPath = `/api/revenue-modeler/model-revenue`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4514,7 +4533,7 @@ export const RevenueModelerControllerApiAxiosParamCreator = function (configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(revenueModel, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(modelRevenueRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4588,12 +4607,12 @@ export const RevenueModelerControllerApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @param {RevenueModel} revenueModel 
+         * @param {ModelRevenueRequest} modelRevenueRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async modelRevenue(revenueModel: RevenueModel, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Discrete>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.modelRevenue(revenueModel, options);
+        async modelRevenue(modelRevenueRequest: ModelRevenueRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ManualProjections>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.modelRevenue(modelRevenueRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4636,12 +4655,12 @@ export const RevenueModelerControllerApiFactory = function (configuration?: Conf
         },
         /**
          * 
-         * @param {RevenueModel} revenueModel 
+         * @param {ModelRevenueRequest} modelRevenueRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        modelRevenue(revenueModel: RevenueModel, options?: any): AxiosPromise<Discrete> {
-            return localVarFp.modelRevenue(revenueModel, options).then((request) => request(axios, basePath));
+        modelRevenue(modelRevenueRequest: ModelRevenueRequest, options?: any): AxiosPromise<ManualProjections> {
+            return localVarFp.modelRevenue(modelRevenueRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4686,13 +4705,13 @@ export class RevenueModelerControllerApi extends BaseAPI {
 
     /**
      * 
-     * @param {RevenueModel} revenueModel 
+     * @param {ModelRevenueRequest} modelRevenueRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RevenueModelerControllerApi
      */
-    public modelRevenue(revenueModel: RevenueModel, options?: any) {
-        return RevenueModelerControllerApiFp(this.configuration).modelRevenue(revenueModel, options).then((request) => request(this.axios, this.basePath));
+    public modelRevenue(modelRevenueRequest: ModelRevenueRequest, options?: any) {
+        return RevenueModelerControllerApiFp(this.configuration).modelRevenue(modelRevenueRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5708,7 +5727,7 @@ export const ZacksEstimatesControllerApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async revenueProjections(ticker: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Discrete>> {
+        async revenueProjections(ticker: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ManualProjections>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.revenueProjections(ticker, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -5728,7 +5747,7 @@ export const ZacksEstimatesControllerApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        revenueProjections(ticker: string, options?: any): AxiosPromise<Discrete> {
+        revenueProjections(ticker: string, options?: any): AxiosPromise<ManualProjections> {
             return localVarFp.revenueProjections(ticker, options).then((request) => request(axios, basePath));
         },
     };

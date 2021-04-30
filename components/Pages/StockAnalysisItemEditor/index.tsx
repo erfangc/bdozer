@@ -159,7 +159,7 @@ export function ItemEditor() {
         // revenue items gets its own super component
         if (itemName === model.totalRevenueConceptName) {
             return (
-                <RevenueItemEditor item={item} onSubmit={handleChangeAndSubmit} model={model}/>
+                <RevenueItemEditor item={item} onSubmit={handleChangeAndSubmit} model={model} onDismiss={back}/>
             )
         }
 

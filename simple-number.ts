@@ -1,47 +1,36 @@
-export function simpleNumber(costOfIt, short?: boolean) {
-
-    let visualOfIt = costOfIt.toString();
-
-    let visualLeng = 6;
-    let maxLeng = 4;
-    let letterArrayIndex = 0;
-
-    let letterArray = short ? ["K", "MM", "B", "T"] : [" Thousand", " Million", " Billion", " Trillion"];
-
-    let leng = 4;
-    let slic = 1;
-
-    for (let g = 0; g < visualOfIt.length; g++) {
-        if (visualOfIt.length <= visualLeng) {
-            if (leng < maxLeng) {
-                leng = maxLeng;
-            }
-
-            if (visualOfIt.length === leng) {
-                if (slic > 2) {
-                    visualOfIt = costOfIt.toString().slice(0, slic) + letterArray[letterArrayIndex];
-                    break;
-                } else {
-                    visualOfIt = costOfIt.toString().slice(0, slic) + "." + costOfIt.toString().slice(slic, 3) + letterArray[letterArrayIndex];
-                    break;
-                }
-            } else {
-                leng++;
-                slic++;
-            }
+export function simpleNumber(input1: number | string, short?: boolean): string {
+    const input = typeof input1 === 'string' ? parseFloat(input1) : input1
+    const suffix = short ? ["K", "MM", "B", "T"] : ["Thousand", "Million", "Billion", "Trillion"];
+    /*
+    split between decimal and non-decimal portions
+     */
+    const inputStr = input.toString();
+    const isNegative = input < 0;
+    const [wholeNumber, ] = isNegative ? inputStr.substr(1, inputStr.length).split(".") :  inputStr.split(".")
+    const leadingSignificantDigits = wholeNumber.length % 3 === 0 ? 3 : wholeNumber.length % 3;
+    const order = leadingSignificantDigits === 3 ? Math.floor(wholeNumber.length / 4) : Math.floor(wholeNumber.length / 3)
+    if (order > 0) {
+        const chosenSuffix = suffix[order - 1]
+        const remainder = wholeNumber.substr(0, leadingSignificantDigits)
+        if (remainder.length === 1) {
+            const decimal = wholeNumber.substr(leadingSignificantDigits + 1, 2)
+            return `${isNegative ? '-' : ''}${remainder}.${decimal} ${chosenSuffix}`;
+        } else if (remainder.length === 2) {
+            const decimal = wholeNumber.substr(leadingSignificantDigits + 1, 1)
+            return `${isNegative ? '-' : ''}${remainder}.${decimal} ${chosenSuffix}`;
         } else {
-            maxLeng += 3;
-            visualLeng += 3;
-            letterArrayIndex++;
+            return `${isNegative ? '-' : ''}${remainder} ${chosenSuffix}`;
         }
+    } else {
+        return input.toFixed(2)
     }
 
-    return visualOfIt;
 }
 
-export function simpleMoney(costOfIt, short?: boolean) {
-    const number = simpleNumber(costOfIt, short)
-    if (parseFloat(costOfIt) < 0) {
+export function simpleMoney(input: number | string, short?: boolean) {
+    const number = simpleNumber(input, short)
+    const value = typeof input === 'string' ? parseFloat(input) : input
+    if (value < 0) {
         return `-$${number.substr(1, number.length)}`;
     } else {
         return `$${number}`;

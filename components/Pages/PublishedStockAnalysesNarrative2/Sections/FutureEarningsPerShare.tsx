@@ -106,9 +106,9 @@ export function FutureEarningsPerShare(props: Props) {
                         return (
                             <tr key={period}>
                                 <td className="font-light text-left text-blueGray-300 px-2 py-1">{year(period)}</td>
-                                <td className="text-right px-2 py-1">{simpleNumber(netIncomeLoss.toFixed(0))}</td>
+                                <td className="text-right px-2 py-1">{simpleNumber(netIncomeLoss)}</td>
                                 <td className="text-right px-2 py-1"><span className="font-semibold text-lg">÷</span></td>
-                                <td className="text-right px-2 py-1">{simpleNumber(sharesOutstanding.toFixed(0))}</td>
+                                <td className="text-right px-2 py-1">{simpleNumber(sharesOutstanding)}</td>
                                 <td className="text-right px-2 py-1"><span className="font-semibold text-lg">=</span></td>
                                 <td className="text-right px-2 py-1">${eps.toFixed(1)}</td>
                             </tr>
