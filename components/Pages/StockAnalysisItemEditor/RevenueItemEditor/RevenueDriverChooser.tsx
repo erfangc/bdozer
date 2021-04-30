@@ -24,7 +24,7 @@ export function RevenueDriverChooser({revenueModel, setRevenueModel, next, close
 
     return (
         <div>
-            <Title>How is revenue driven?</Title>
+            <Title className="mb-8">How is Revenue Computed?</Title>
             <RadioGroup
                 value={revenueModel.revenueDriverType}
                 onChange={setRevenueDriverType}
