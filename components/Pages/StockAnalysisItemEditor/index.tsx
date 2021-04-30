@@ -4,7 +4,7 @@ import {useFactBaseUnsecured, useStockAnalysis} from "../../../api-hooks";
 import {Fact, Item, ItemTypeEnum, Model, StockAnalysis2} from "../../../client";
 import {AutoForm} from "../../AutoForms/AutoForm";
 import {bodyOf, merge, schemaOf} from "../../AutoForms/Schemas";
-import {DeleteButton} from "../../Common/DeleteButton";
+import {DangerButton} from "../../Common/DangerButton";
 import {SecondaryButton} from "../../Common/SecondaryButton";
 import {Select} from "../../Common/Select";
 import {FormulaEditor} from "./Editors/FormulaEditor";
@@ -87,27 +87,25 @@ export function ItemEditor() {
         setStockAnalysis(updatedStockAnalysis)
     }
 
-    async function handleChangeAndSubmit(newItem: Item) {
-        if (!newItem) {
-            clearItem();
-        } else {
-            // delete it item from overrides
-            const model = stockAnalysis.model;
-            const updatedModel: Model = {
-                ...model,
-                itemOverrides: [
-                    ...model.itemOverrides.filter(item => item.name !== newItem.name),
-                    newItem
-                ],
-            }
-            const updatedStockAnalysis: StockAnalysis2 = {
-                ...stockAnalysis,
-                model: updatedModel
-            }
-            setStockAnalysis(updatedStockAnalysis)
-            await stockAnalysisCrud.saveStockAnalysis(updatedStockAnalysis)
-            back()
+    /**
+     * Update overrides for the item as well as submit to the server
+     */
+    async function handleItemUpdateAndSubmit(updatedItem: Item) {
+        const model = stockAnalysis.model;
+        const updatedModel: Model = {
+            ...model,
+            itemOverrides: [
+                ...model.itemOverrides.filter(item => item.name !== updatedItem.name),
+                updatedItem
+            ],
         }
+        const updatedStockAnalysis: StockAnalysis2 = {
+            ...stockAnalysis,
+            model: updatedModel
+        }
+        setStockAnalysis(updatedStockAnalysis)
+        await stockAnalysisCrud.saveStockAnalysis(updatedStockAnalysis)
+        back()
     }
 
     async function handleSubmit() {
@@ -153,16 +151,21 @@ export function ItemEditor() {
     const item = overriddenItem ?? originalItem
 
     if (!item) {
-        // probably still loading
         return null
     } else {
-        // revenue items gets its own super component
+        /*
+        revenue items are special and gets its own top level
+        component
+         */
         if (itemName === model.totalRevenueConceptName) {
             return (
-                <RevenueItemEditor item={item} onSubmit={handleChangeAndSubmit} model={model} onDismiss={back}/>
+                <RevenueItemEditor item={item} onSubmit={handleItemUpdateAndSubmit} model={model} onDismiss={back} onClear={clearItem}/>
             )
         }
 
+        /*
+        render other item types
+         */
         const select = (
             <Select
                 label="Item Type"
@@ -267,7 +270,7 @@ export function ItemEditor() {
                         <SecondaryButton className="w-24" onClick={back}>Back</SecondaryButton>
                         {
                             isOverridden
-                                ? <DeleteButton className="w-40" onClick={clearItem}>Clear Override</DeleteButton>
+                                ? <DangerButton className="w-40" onClick={clearItem}>Clear Override</DangerButton>
                                 : null
                         }
                     </div>

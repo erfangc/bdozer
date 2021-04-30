@@ -4,6 +4,7 @@ import {RevenueModel, RevenueModelRevenueDriverTypeEnum} from "../../../../clien
 import {PrimaryButton} from "../../../Common/PrimaryButton";
 import {SecondaryButton} from "../../../Common/SecondaryButton";
 import {RadioOption} from "./RadioOption";
+import {Title} from "../../../Common/Title";
 
 interface Props {
     revenueModel: RevenueModel
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export function RevenueDriverChooser({revenueModel, setRevenueModel, next, close}: Props) {
+
     function setRevenueDriverType(revenueDriverType: RevenueModelRevenueDriverTypeEnum) {
         setRevenueModel({
             ...revenueModel,
@@ -22,6 +24,7 @@ export function RevenueDriverChooser({revenueModel, setRevenueModel, next, close
 
     return (
         <div>
+            <Title>How is revenue driven?</Title>
             <RadioGroup
                 value={revenueModel.revenueDriverType}
                 onChange={setRevenueDriverType}
@@ -37,11 +40,15 @@ export function RevenueDriverChooser({revenueModel, setRevenueModel, next, close
                     explanation="Model Average Revenue per User times Active User"
                     revenueDriverType={RevenueModelRevenueDriverTypeEnum.AverageRevenuePerUserTimesActiveUser}
                 />
+                <RadioOption
+                    label="Default"
+                    explanation="Use the auto generated model's default"
+                    revenueDriverType={undefined}
+                />
             </RadioGroup>
             <div className="space-x-2">
                 <PrimaryButton
                     className="mt-4"
-                    disabled={revenueModel.revenueDriverType === undefined}
                     onClick={next}
                 >
                     Confirm

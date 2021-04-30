@@ -2,7 +2,7 @@ import {useRouter} from 'next/router'
 import React, {useEffect, useState} from 'react'
 import {useFilingEntityManager, useFilingEntityManagerUnsecured} from '../../../api-hooks'
 import {FilingEntity} from '../../../client'
-import {DeleteButton} from '../../Common/DeleteButton'
+import {DangerButton} from '../../Common/DangerButton'
 import {PrimaryButton} from '../../Common/PrimaryButton'
 import {SecondaryButton} from '../../Common/SecondaryButton'
 import {Title} from '../../Common/Title'
@@ -77,7 +77,7 @@ export default function FilingEntityControlPanel() {
                 <SecondaryButton onClick={router.back}>Back</SecondaryButton>
                 { (status != 'Bootstrapping' && status != 'Completed') ? <PrimaryButton className="w-32" onClick={bootstrap}>{loading ? <Loading/> : 'Bootstrap'}</PrimaryButton> : null}
                 { status === 'Bootstrapping' ? <PrimaryButton className="w-32" disabled><Loading/></PrimaryButton> : null}
-                { status === 'Completed' ? <DeleteButton className="w-44" onClick={bootstrap}>{loading ? <Loading/> : 'Bootstrap Again'}</DeleteButton> : null}
+                { status === 'Completed' ? <DangerButton className="w-44" onClick={bootstrap}>{loading ? <Loading/> : 'Bootstrap Again'}</DangerButton> : null}
             </div>
         </main>
     )

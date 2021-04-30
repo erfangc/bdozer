@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {DeleteButton} from "./DeleteButton";
+import {DangerButton} from "./DangerButton";
 import {Delete} from "./Svgs";
 import {Dialog, Transition} from "@headlessui/react";
 import {SecondaryButton} from "./SecondaryButton";
@@ -30,9 +30,9 @@ export function DeleteConfirmationDialog({label, message, resourceName, onDelete
 
     return (
         <>
-            <DeleteButton onClick={openModal}>
+            <DangerButton onClick={openModal}>
                 <Delete/><span className="pl-1">{label}</span>
-            </DeleteButton>
+            </DangerButton>
             <Transition show={open}>
                 <Dialog
                     static
@@ -57,7 +57,7 @@ export function DeleteConfirmationDialog({label, message, resourceName, onDelete
                             {message ? message : `You are about to delete ${resourceName ?? 'this resource'} permanently`}
                         </Dialog.Description>
                         <div className="flex space-x-2">
-                            <DeleteButton onClick={handleConfirm}><Delete/><span>Confirm</span></DeleteButton>
+                            <DangerButton onClick={handleConfirm}><Delete/><span>Confirm</span></DangerButton>
                             <SecondaryButton onClick={closeModal}>No, Keep It</SecondaryButton>
                         </div>
                     </Transition.Child>

@@ -19,10 +19,11 @@ interface Props {
     model: Model
     item: Item
     onSubmit: (item?: Item) => void
+    onClear: () => void
     onDismiss: () => void
 }
 
-export function RevenueItemEditor({item, onSubmit, model, onDismiss}: Props) {
+export function RevenueItemEditor({item, onSubmit, model, onDismiss, onClear}: Props) {
     const router = useRouter()
     const {id} = router.query
 
@@ -67,6 +68,8 @@ export function RevenueItemEditor({item, onSubmit, model, onDismiss}: Props) {
             goTo('ManualProjectionsPreview');
         } else if (revenueModel.revenueDriverType === RevenueModelRevenueDriverTypeEnum.AverageRevenuePerUserTimesActiveUser) {
             goTo('ARPU');
+        } else if (revenueModel.revenueDriverType === undefined) {
+            onClear()
         }
     }
 
@@ -86,7 +89,7 @@ export function RevenueItemEditor({item, onSubmit, model, onDismiss}: Props) {
         init()
     }, [])
 
-    function submit(manualProjections: ManualProjections) {
+    function handleSubmit(manualProjections: ManualProjections) {
         const newItem: Item = {
             ...item,
             type: ItemTypeEnum.ManualProjections,
@@ -118,7 +121,7 @@ export function RevenueItemEditor({item, onSubmit, model, onDismiss}: Props) {
                     <ManualProjectionsPreview
                         manualProjections={manualProjections}
                         back={() => goTo('RevenueDriverChooser')}
-                        onConfirm={submit}
+                        onConfirm={handleSubmit}
                         close={onDismiss}
                     />
                 </Slide>
