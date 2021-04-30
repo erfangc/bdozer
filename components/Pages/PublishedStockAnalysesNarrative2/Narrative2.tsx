@@ -23,7 +23,7 @@ export function Narrative2(props: Props) {
             <Toolbar stockAnalysis={stockAnalysis}/>
             <div className="flex flex-col space-y-20 py-0 lg:py-20">
                 <Overview result={stockAnalysis} />
-                <ExecutiveSummary result={stockAnalysis} />
+                <ExecutiveSummary stockAnalysis={stockAnalysis} />
                 <BusinessBreakdown result={stockAnalysis} />
                 <FutureEarningsPerShare result={stockAnalysis} />
                 <TerminalValueDerivation result={stockAnalysis} />

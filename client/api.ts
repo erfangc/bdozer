@@ -1167,6 +1167,7 @@ export enum ItemTypeEnum {
     CompoundedGrowth = 'CompoundedGrowth',
     SumOfOtherItems = 'SumOfOtherItems',
     Custom = 'Custom',
+    Discrete = 'Discrete',
     ManualProjections = 'ManualProjections',
     PercentOfRevenue = 'PercentOfRevenue',
     PercentOfAnotherItem = 'PercentOfAnotherItem',
@@ -4428,7 +4429,7 @@ export const RevenueModelerControllerApiAxiosParamCreator = function (configurat
         deleteRevenueModel: async (id: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteRevenueModel', 'id', id)
-            const localVarPath = `/api/revenue-modeler/{id}`
+            const localVarPath = `/public/revenue-modeler/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4461,7 +4462,7 @@ export const RevenueModelerControllerApiAxiosParamCreator = function (configurat
         getRevenueModel: async (id: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getRevenueModel', 'id', id)
-            const localVarPath = `/api/revenue-modeler/{id}`
+            const localVarPath = `/public/revenue-modeler/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4494,7 +4495,7 @@ export const RevenueModelerControllerApiAxiosParamCreator = function (configurat
         modelRevenue: async (modelRevenueRequest: ModelRevenueRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'modelRevenueRequest' is not null or undefined
             assertParamExists('modelRevenue', 'modelRevenueRequest', modelRevenueRequest)
-            const localVarPath = `/api/revenue-modeler/model-revenue`;
+            const localVarPath = `/public/revenue-modeler/model-revenue`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4529,7 +4530,7 @@ export const RevenueModelerControllerApiAxiosParamCreator = function (configurat
         saveRevenueModel: async (revenueModel: RevenueModel, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'revenueModel' is not null or undefined
             assertParamExists('saveRevenueModel', 'revenueModel', revenueModel)
-            const localVarPath = `/api/revenue-modeler`;
+            const localVarPath = `/public/revenue-modeler`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;

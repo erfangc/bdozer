@@ -66,6 +66,7 @@ export function Overview(props: Props) {
                         <span className="text-blueGray-300">Latest Price</span> <span className={currentPrice < targetPrice ? `text-rose-500` : null}>${currentPrice.toFixed(2)}</span>
                     </span>
                 </div>
+                <DownloadToExcel onClick={downloadModel} loading={loading} />
             </div>
             <div className="flex-col space-y-2 w-64">
                 <div className="flex flex-col justify-between shadow-lg space-y-1 px-6 py-3 bg-blueGray-700 rounded">
@@ -77,7 +78,6 @@ export function Overview(props: Props) {
                         </span>
                     </div>
                 </div>
-                <DownloadToExcel onClick={downloadModel} loading={loading} />
             </div>
 
         </div>
@@ -91,12 +91,12 @@ interface DownloadToExcelProps extends React.DetailedHTMLProps<React.ButtonHTMLA
 function DownloadToExcel({ loading, className, ...props }: DownloadToExcelProps) {
     return (
         <button
-            className={`focus:outline-none hidden md:flex items-center text-sm px-2 py-1.5 rounded border border-emerald-700 text-emerald-500 transition ease-linear hover:bg-emerald-500 hover:text-emerald-50 w-full ${className}`}
+            className={`focus:outline-none hidden md:flex items-center text-sm px-4 py-2 rounded border border-emerald-700 text-emerald-500 transition ease-linear hover:bg-emerald-500 hover:text-emerald-50 w-36 ${className}`}
             disabled={loading}
             {...props}
         >
             {loading ? <Loader /> : <ExcelIcon />}
-            <span className="ml-4">Download Model</span>
+            <span className="ml-4">Download</span>
         </button>
     )
 }
