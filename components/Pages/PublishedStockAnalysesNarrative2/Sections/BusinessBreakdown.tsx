@@ -6,6 +6,7 @@ import {simpleNumber} from "../../../../simple-number";
 import {year} from "../../../../year";
 import {SubTitle} from "../../../Common/Title";
 import {Pill} from "../Pill";
+import {BlockQuote} from "../../../Common/BlockQuote";
 
 
 interface Props {
@@ -13,7 +14,7 @@ interface Props {
 }
 
 export function BusinessBreakdown(props: Props) {
-    const { result: { ticker, derivedStockAnalytics: { businessWaterfall } } } = props;
+    const { result: { name, derivedStockAnalytics: { businessWaterfall } } } = props;
 
     const [options, setOptions] = useState<Highcharts.Options>()
     const [period, setPeriod] = useState<number>(0)
@@ -106,7 +107,8 @@ export function BusinessBreakdown(props: Props) {
     return (
         <div id="business-breakdown">
             <SubTitle className="mb-6">Business Breakdown</SubTitle>
-            <p>How did {ticker} make and spend it's money in the most recent year. You can click different years to see analyst projections</p>
+            <p>See how {name} make and spend it's money</p>
+            <BlockQuote>Click on different years to see projections</BlockQuote>
             <HighchartsReact highcharts={highcharts} options={options} />
             <div className="flex space-x-1 text-sm">
                 {Object

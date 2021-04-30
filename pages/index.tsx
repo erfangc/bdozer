@@ -37,15 +37,15 @@ function Home() {
                 <link rel="icon" href="/favicon.ico"/>
                 <script type="text/javascript" src="/fullstops.js"/>
             </Head>
-            <div className="flex flex-col justify-between min-h-screen lg:container lg:mx-auto">
+            <div className="flex flex-col justify-between min-h-screen container mx-auto px-4">
                 <div>
-                    <div className="flex space-x-2 items-end px-2 pt-4 lg:mt-10">
-                        <Logo className="inline"/>
-                        <div className="text-blueGray-300 font-extrabold text-xl">bdzoer</div>
+                    <div className="flex space-x-2 items-center pt-4 lg:mt-10">
+                        <Logo />
+                        <div className="text-blueGray-200 font-extrabold text-2xl">bdzoer</div>
                     </div>
                     <div className="lg:flex">
                         {/* tag line + subtext */}
-                        <div className="px-4 mt-14 space-y-16 flex flex-col lg:w-1/2 xl:w-1/3 lg:space-y-8 lg:mt-24">
+                        <div className="mt-14 space-y-16 flex flex-col lg:w-1/2 xl:w-1/3 lg:space-y-8 lg:mt-24">
                             <h1 className="text-4xl font-bold tracking-tighter">Save Time <br/>Finding Your Next Trade
                             </h1>
                             <p className="leading-relaxed">
@@ -94,7 +94,7 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <LegalDisclaimer className="px-4 lg:px-0 mt-32"/>
+                <LegalDisclaimer />
             </div>
         </main>
     )

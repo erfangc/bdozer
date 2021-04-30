@@ -3,6 +3,7 @@ import NumberFormat from "react-number-format";
 import {basePath} from "../../../../api-hooks";
 import {StockAnalysis2} from "../../../../client";
 import {Title} from "../../../Common/Title";
+import {TrendingDown, TrendingUp} from "../../../Common/Svgs";
 
 interface Props {
     result: StockAnalysis2
@@ -56,30 +57,37 @@ export function Overview(props: Props) {
     }
 
 
+    const underValued = upside > 0;
     return (
-        <div className="flex flex-col space-y-8 lg:flex-row lg:space-y-0 lg:justify-between">
+        <div className="space-y-4">
             <div className="flex-col flex space-y-2">
-                <span className="text-blueGray-300">{name}</span>
-                <div className="flex items-baseline">
-                    <Title>{ticker}</Title>
-                    <span className="ml-4">
-                        <span className="text-blueGray-300">Latest Price</span> <span className={currentPrice < targetPrice ? `text-rose-500` : null}>${currentPrice.toFixed(2)}</span>
-                    </span>
-                </div>
-                <DownloadToExcel onClick={downloadModel} loading={loading} />
+                <span className="text-blueGray-300 uppercase">{name}</span>
+                <Title>{ticker}</Title>
             </div>
-            <div className="flex-col space-y-2 w-64">
-                <div className="flex flex-col justify-between shadow-lg space-y-1 px-6 py-3 bg-blueGray-700 rounded">
-                    <span className="font-semibold">Target Price</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex items-center justify-between shadow px-6 py-4 bg-blueGray-700 rounded">
                     <div>
-                        <NumberFormat className="font-light" value={targetPrice} displayType="text" prefix="$" decimalScale={2} />
-                        <span className={`text-xs ml-3 ${upside > 0 ? 'text-lime-400' : 'text-rose-500'} font-bold`}>
-                            {upside.toFixed(1)}% <span className="font-normal">{upside > 0 ? 'Upside' : 'Downside'}</span>
-                        </span>
+                        <span className="text-sm">Target Price</span>
+                        <div>
+                            <NumberFormat className="text-2xl font-bold" value={targetPrice} displayType="text" prefix="$" decimalScale={2} />
+                            <div className={`${underValued ? 'text-lime-400' : 'text-rose-500'} font-bold`}>
+                                {underValued ? '+' : ''}{upside.toFixed(1)}% <span className="font-normal">{underValued ? 'Upside' : 'Downside'}</span>
+                            </div>
+                        </div>
                     </div>
+                    {
+                        underValued
+                            ? <TrendingUp className="text-lime-400 h-10 w-10"/>
+                            : <TrendingDown className="text-rose-500 h-10 w-10"/>
+                    }
+                </div>
+                <div className="flex flex-col justify-between shadow px-6 py-4 bg-blueGray-700 rounded">
+                    <span className="text-sm">Current Price</span>
+                    <NumberFormat className="text-2xl font-bold" value={currentPrice} displayType="text" prefix="$" decimalScale={2} />
+                    <div>&nbsp;</div>
                 </div>
             </div>
-
+            <DownloadToExcel onClick={downloadModel} loading={loading} />
         </div>
     )
 }

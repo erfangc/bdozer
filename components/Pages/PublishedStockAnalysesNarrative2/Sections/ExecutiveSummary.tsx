@@ -45,19 +45,19 @@ export function ExecutiveSummary(props: Props) {
     return (
         <div>
             <SubTitle className="mb-6">Executive Summary</SubTitle>
-            <div className="font-bold mt-8 mb-4">Current Business Situation</div>
+            <div className="text-lg text-blueGray-400 font-bold mt-8 mb-2">Current Business Situation</div>
             <ul className="list-disc pl-4 space-y-2">
                 <li>
                     Last year, {name} made {simpleMoney(revenue.value)} revenue
                 </li>
                 <li>
-                    They spend more than {simpleMoney(totalExpense)} with a {profit.value > 0 ? 'profit' : 'loss'} of {simpleMoney(profit.value)}
+                    The company spent {simpleMoney(totalExpense)}, leading to {simpleMoney(profit.value)} in {profit.value > 0 ? 'profit' : 'losses'}
                 </li>
                 <li>
-                    Investors {eps > 0 ? 'made' : 'lost'} {eps?.toFixed(1)} per share
+                    As a result, investors {eps > 0 ? 'made' : 'lost'} <b>{simpleMoney(eps)}</b> per share
                 </li>
             </ul>
-            <div className="font-bold mt-8 mb-4">Future Projections</div>
+            <div className="text-lg text-blueGray-400 font-bold mt-8 mb-2">Future Projections</div>
             <ul className="list-disc pl-4 space-y-2">
                 <FutureProjectionTalkingPoint stockAnalysis={stockAnalysis} revenueModel={revenueModel}/>
             </ul>
@@ -82,12 +82,6 @@ function FutureProjectionTalkingPoint({revenueModel, stockAnalysis}: FutureProje
     } = stockAnalysis;
     const upside = (targetPrice / currentPrice - 1) * 100
 
-    const growthRatePopover = (
-        <AnchorPopover trigger={`${(revenueCAGR * 100).toFixed(1)}%`}>
-            <RevenueTimeSeries result={stockAnalysis} />
-        </AnchorPopover>
-    )
-
     if (revenueModel?.revenueDriverType === RevenueModelRevenueDriverTypeEnum.AverageRevenuePerUserTimesActiveUser) {
         return (
             <>
@@ -104,12 +98,16 @@ function FutureProjectionTalkingPoint({revenueModel, stockAnalysis}: FutureProje
         )
     } else {
         return (
-            <li>
-                Based on Wall Street forecasts, the company will grow at {growthRatePopover} a year for the next {periods} years.
-                That means {name} will be worth ${targetPrice.toFixed(1)}, which represents
-                <span className={`font-bold ${upside > 0 ? 'text-lime-400' : 'text-rose-500'}`}> {upside.toFixed(1)}% </span>
-                {upside > 0 ? 'upside' : 'downside'} from current price
-            </li>
+            <>
+                <li>
+                    Based on Wall Street forecasts, the company will grow {(revenueCAGR * 100).toFixed(1)}% a year for the next {periods} years
+                </li>
+                <li>
+                    Given this, {name} will be worth ${targetPrice.toFixed(1)}, which represents
+                    <span className={`font-bold ${upside > 0 ? 'text-lime-400' : 'text-rose-500'}`}> {upside.toFixed(1)}% </span>
+                    {upside > 0 ? 'upside' : 'downside'} from current price
+                </li>
+            </>
         );
     }
 
