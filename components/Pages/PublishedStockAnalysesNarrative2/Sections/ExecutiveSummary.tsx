@@ -15,12 +15,9 @@ export function ExecutiveSummary(props: Props) {
         stockAnalysis: {
             cells,
             name,
-            model: { periods, epsConceptName, },
+            model: { epsConceptName, },
             derivedStockAnalytics: {
                 businessWaterfall,
-                targetPrice,
-                currentPrice,
-                revenueCAGR,
             }
         }
     } = props;

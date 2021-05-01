@@ -9,14 +9,15 @@ export function simpleNumber(input1: number | string, short?: boolean): string {
     const [wholeNumber, ] = isNegative ? inputStr.substr(1, inputStr.length).split(".") :  inputStr.split(".")
     const leadingSignificantDigits = wholeNumber.length % 3 === 0 ? 3 : wholeNumber.length % 3;
     const order = leadingSignificantDigits === 3 ? Math.floor(wholeNumber.length / 4) : Math.floor(wholeNumber.length / 3)
+
     if (order > 0) {
         const chosenSuffix = suffix[order - 1]
         const remainder = wholeNumber.substr(0, leadingSignificantDigits)
         if (remainder.length === 1) {
-            const decimal = wholeNumber.substr(leadingSignificantDigits + 1, 2)
+            const decimal = wholeNumber.substr(leadingSignificantDigits, 2)
             return `${isNegative ? '-' : ''}${remainder}.${decimal} ${chosenSuffix}`;
         } else if (remainder.length === 2) {
-            const decimal = wholeNumber.substr(leadingSignificantDigits + 1, 1)
+            const decimal = wholeNumber.substr(leadingSignificantDigits, 1)
             return `${isNegative ? '-' : ''}${remainder}.${decimal} ${chosenSuffix}`;
         } else {
             return `${isNegative ? '-' : ''}${remainder} ${chosenSuffix}`;
