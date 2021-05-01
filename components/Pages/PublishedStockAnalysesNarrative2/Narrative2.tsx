@@ -22,7 +22,7 @@ export function Narrative2(props: Props) {
     return (
         <main className="px-4 py-20 container mx-auto max-w-prose overflow-x-scroll md:overflow-x-hidden">
             <Toolbar stockAnalysis={stockAnalysis}/>
-            <div className="flex flex-col space-y-20 py-0 lg:py-20">
+            <div className="flex flex-col space-y-20 py-0 lg:py-12">
                 <Overview result={stockAnalysis} />
                 <ExecutiveSummary stockAnalysis={stockAnalysis} />
                 <BusinessBreakdown stockAnalysis={stockAnalysis} />

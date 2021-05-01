@@ -2,7 +2,7 @@ import HighchartsReact from "highcharts-react-official";
 import React, {useEffect, useState} from "react";
 import {StockAnalysis2} from "../../../../client";
 import {green500, highcharts, rose500} from "../../../../highcharts";
-import {simpleNumber} from "../../../../simple-number";
+import {simpleMoney, simpleNumber} from "../../../../simple-number";
 import {year} from "../../../../year";
 import {SubTitle} from "../../../Common/Title";
 
@@ -27,7 +27,7 @@ export function FutureEarningsPerShare(props: Props) {
         const eps = cells
             .filter(cell => cell.item.name === epsConceptName)
             .map(cell => {
-                const { value, period } = cell
+                const {value, period} = cell
                 return {
                     x: year(period),
                     y: value,
@@ -38,7 +38,7 @@ export function FutureEarningsPerShare(props: Props) {
             chart: {
                 type: 'column'
             },
-            legend: { enabled: false },
+            legend: {enabled: false},
             title: {
                 text: null
             },
@@ -84,40 +84,41 @@ export function FutureEarningsPerShare(props: Props) {
             <SubTitle className="mb-6">Future Earnings per Share</SubTitle>
             <p>
                 To compute a target price, we calculate future earnings per share.
-                Let's take projected <b>net income from above</b> for each future period and divide it by shares outstanding
+                Let's take projected <b>net income from above</b> for each future period and divide it by shares
+                outstanding
             </p>
-            <br />
+            <br/>
             <table className="w-full">
                 <thead>
-                    <tr>
-                        <th></th>
-                        <th className="text-right px-2">Net Income</th>
-                        <th></th>
-                        <th className="text-right px-2"># Shares</th>
-                        <th></th>
-                        <th className="text-right px-2">EPS</th>
-                    </tr>
+                <tr>
+                    <th/>
+                    <th className="text-right px-2">Net Income</th>
+                    <th/>
+                    <th className="text-right px-2"># Shares</th>
+                    <th/>
+                    <th className="text-right px-2">EPS</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {range(0, props.result.model.periods).map(period => {
-                        const netIncomeLoss = cells.find(cell => cell.period == period && cell.item?.name === netIncomeConceptName)?.value
-                        const sharesOutstanding = cells.find(cell => cell.period == period && cell.item?.name === sharesOutstandingConceptName)?.value
-                        const eps = cells.find(cell => cell.period == period && cell.item?.name === epsConceptName)?.value
-                        return (
-                            <tr key={period}>
-                                <td className="font-light text-left text-blueGray-300 px-2 py-1">{year(period)}</td>
-                                <td className="text-right px-2 py-1">{simpleNumber(netIncomeLoss)}</td>
-                                <td className="text-right px-2 py-1"><span className="font-semibold text-lg">÷</span></td>
-                                <td className="text-right px-2 py-1">{simpleNumber(sharesOutstanding)}</td>
-                                <td className="text-right px-2 py-1"><span className="font-semibold text-lg">=</span></td>
-                                <td className="text-right px-2 py-1">${eps.toFixed(1)}</td>
-                            </tr>
-                        )
-                    })}
+                {range(0, props.result.model.periods).map(period => {
+                    const netIncomeLoss = cells.find(cell => cell.period == period && cell.item?.name === netIncomeConceptName)?.value
+                    const sharesOutstanding = cells.find(cell => cell.period == period && cell.item?.name === sharesOutstandingConceptName)?.value
+                    const eps = cells.find(cell => cell.period == period && cell.item?.name === epsConceptName)?.value
+                    return (
+                        <tr key={period}>
+                            <td className="font-light text-left text-blueGray-300 px-2 py-1">{year(period)}</td>
+                            <td className="text-right px-2 py-1">{simpleMoney(netIncomeLoss)}</td>
+                            <td className="text-right px-2 py-1"><span className="font-semibold text-lg">÷</span></td>
+                            <td className="text-right px-2 py-1">{simpleNumber(sharesOutstanding)}</td>
+                            <td className="text-right px-2 py-1"><span className="font-semibold text-lg">=</span></td>
+                            <td className="text-right px-2 py-1">{simpleMoney(eps)}</td>
+                        </tr>
+                    )
+                })}
                 </tbody>
             </table>
-            <br />
-            <HighchartsReact highcharts={highcharts} options={options} />
+            <br/>
+            <HighchartsReact highcharts={highcharts} options={options}/>
         </div>
     )
 }

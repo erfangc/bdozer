@@ -19,7 +19,7 @@ export function Feedback(props: Props) {
 
     return (
         <section>
-            <SubTitle className="mb-2">Feedback</SubTitle>
+            <SubTitle className="mb-6">Feedback</SubTitle>
             {
                 !submitted
                     ?

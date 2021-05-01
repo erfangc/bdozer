@@ -71,7 +71,7 @@ export function RevenueTimeSeries({ result }: Props) {
 
     return (
         <div>
-            <p className="mb-8">
+            <p className="mb-6">
                 See past revenue and median analyst projection for revenue going forward
             </p>
             <HighchartsReact highcharts={highcharts} options={options} />

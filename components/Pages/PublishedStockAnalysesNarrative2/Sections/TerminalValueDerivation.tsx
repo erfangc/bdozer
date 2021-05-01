@@ -29,7 +29,7 @@ export function TerminalValueDerivation(props: Props) {
     return (
 
         <div>
-            <SubTitle className="mt-8 mb-4">Terminal Value Calculation</SubTitle>
+            <SubTitle className="mb-6">Terminal Value Calculation</SubTitle>
             <p className="mb-4">
                 After {year(periods)}, we assumed {name} earnings will grow at {(terminalGrowthRate * 100).toFixed(1)}%, the average US GDP growth rate.
                 If you held the stock until {year(periods)}, we expect you can sell it for <b>${finalTvps.toFixed(1)} / share</b><br />

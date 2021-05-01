@@ -41,9 +41,9 @@ export function ExecutiveSummary(props: Props) {
 
     return (
         <div>
-            <SubTitle className="mb-6">Executive Summary</SubTitle>
+            <SubTitle className="mb-6">Summary</SubTitle>
             <div className="text-lg text-blueGray-400 font-bold mt-8 mb-2">Current Business Situation</div>
-            <ul className="list-disc pl-4 space-y-2">
+            <ul className="list-disc list-inside space-y-2">
                 <li>
                     Last year, {name} made {simpleMoney(revenue.value)} revenue
                 </li>
@@ -55,7 +55,7 @@ export function ExecutiveSummary(props: Props) {
                 </li>
             </ul>
             <div className="text-lg text-blueGray-400 font-bold mt-8 mb-2">Future Projections</div>
-            <ul className="list-disc pl-4 space-y-2">
+            <ul className="list-disc list-inside space-y-2">
                 <FutureProjectionTalkingPoint stockAnalysis={stockAnalysis} revenueModel={revenueModel}/>
             </ul>
         </div>
