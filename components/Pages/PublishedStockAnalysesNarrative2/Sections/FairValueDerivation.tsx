@@ -11,7 +11,7 @@ interface Props {
     result: StockAnalysis2
 }
 
-export function TargetPriceDerivation(props: Props) {
+export function FairValueDerivation(props: Props) {
 
     const {
         result: {
@@ -27,7 +27,7 @@ export function TargetPriceDerivation(props: Props) {
         }
     } = props
 
-    const to = `Target Price $${targetPrice.toFixed(1)} / share`
+    const to = `Fair Value $${targetPrice.toFixed(1)} / share`
     const sandkeys = cells
         .filter(cell => cell.item.name === "PresentValueOfEarningsPerShare")
         .map(
@@ -38,7 +38,7 @@ export function TargetPriceDerivation(props: Props) {
             }
         )
     const pvTvps = cells.find(cell => cell.item.name === "PresentValueOfTerminalValuePerShare" && cell.period === model.periods)?.value
-    sandkeys.push(['Terminal Value', to, pvTvps])
+    sandkeys.push([`Discounted ${year(model.periods)} Price`, to, pvTvps])
 
     const [sankeyOptions, setSandkeyOptions] = useState<Highcharts.Options>()
     const [columnOptions, setColumnOptions] = useState<Highcharts.Options>()
@@ -127,11 +127,11 @@ export function TargetPriceDerivation(props: Props) {
 
     return (
         <div id="target-price-derivation">
-            <SubTitle className="mb-6">Target Price Derivation</SubTitle>
+            <SubTitle className="mb-6">Fair Value Derivation</SubTitle>
             <p>
                 To derive the target price of ${targetPrice.toFixed(1)}, we will discount future earnings into
                 the present at a discount rate of <AnchorPopover trigger={`${(discountRate * 100).toFixed(1)}%`}>
-                    <DiscountFactorDerivation {...props} />
+                <DiscountFactorDerivation {...props} />
                 </AnchorPopover>
             </p>
             <HighchartsReact highcharts={highcharts} options={sankeyOptions} />

@@ -8,9 +8,10 @@ import {Feedback} from "./Sections/Feedback";
 import {FutureEarningsPerShare} from "./Sections/FutureEarningsPerShare";
 import {Overview} from "./Sections/Overview";
 import {TargetPriceBreakdown} from "./Sections/TargetPriceBreakdown";
-import {TargetPriceDerivation} from "./Sections/TargetPriceDerivation";
+import {FairValueDerivation} from "./Sections/FairValueDerivation";
 import {TerminalValueDerivation} from "./Sections/TerminalValueDerivation";
 import {Toolbar} from "./Toolbar";
+import {TerminalValueCalculation2} from "./Sections/TerminalValueCalculation2";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -26,9 +27,8 @@ export function Narrative2(props: Props) {
                 <ExecutiveSummary stockAnalysis={stockAnalysis} />
                 <BusinessBreakdown stockAnalysis={stockAnalysis} />
                 <FutureEarningsPerShare result={stockAnalysis} />
-                <TerminalValueDerivation result={stockAnalysis} />
-                <TargetPriceDerivation result={stockAnalysis} />
-                <TargetPriceBreakdown result={stockAnalysis} />
+                <TerminalValueCalculation2 stockAnalysis={stockAnalysis} />
+                <FairValueDerivation result={stockAnalysis} />
                 <Feedback result={stockAnalysis} />
                 <Comments result={stockAnalysis} />
                 <LegalDisclaimer />

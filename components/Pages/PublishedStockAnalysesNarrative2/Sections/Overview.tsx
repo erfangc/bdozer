@@ -73,7 +73,7 @@ export function Overview(props: Props) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex items-center justify-between shadow px-6 py-4 bg-blueGray-700 rounded">
                     <div>
-                        <span className="text-sm">Target Price</span>
+                        <span className="text-sm">Fair Value</span>
                         <div>
                             <NumberFormat className="text-2xl font-bold" value={targetPrice} displayType="text" prefix="$" decimalScale={2} />
                             <div className={`${underValued ? 'text-lime-400' : 'text-rose-500'} font-bold`}>

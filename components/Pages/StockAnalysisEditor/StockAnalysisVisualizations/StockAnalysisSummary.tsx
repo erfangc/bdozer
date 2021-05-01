@@ -29,7 +29,7 @@ export default function StockAnalysisSummary(props: Props) {
                     />
                     <Money
                         value={targetPrice}
-                        label={"Target Price"}
+                        label={"Fair Value"}
                         state={targetPrice < currentPrice ? 'danger' : 'good'}
                         running={loading}
                     />

@@ -43,7 +43,7 @@ export function TargetPriceBreakdown(props: Props) {
         </p>
     return (
         <div id="target-price-breakdown">
-            <SubTitle className="mb-6">Target Price Breakdown</SubTitle>
+            <SubTitle className="mb-6">Fair Value Breakdown</SubTitle>
             {text}
             {
                 zeroGrowthPrice > 0

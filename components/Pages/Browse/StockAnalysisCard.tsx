@@ -22,7 +22,7 @@ export function StockAnalysisCard(props: { stockAnalysis: StockAnalysisProjectio
                     <div className="flex justify-between">
                         <div className="flex space-x-4">
                             <div>
-                                <div className="uppercase text-sm text-blueGray-300">Target Price</div>
+                                <div className="uppercase text-sm text-blueGray-300">Fair Value</div>
                                 <div className="font-extrabold">${targetPrice?.toFixed(1)}</div>
                             </div>
                             <div>
