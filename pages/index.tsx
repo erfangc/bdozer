@@ -44,7 +44,7 @@ function Home() {
                         <div className="text-blueGray-200 font-extrabold text-2xl">bdzoer</div>
                     </div>
                     <div className="lg:flex">
-                        {/* tag line + subtext */}
+                        {/* Tag line + subtext */}
                         <div className="mt-14 space-y-16 flex flex-col lg:w-1/2 xl:w-1/3 lg:space-y-8 lg:mt-24">
                             <h1 className="text-4xl font-bold tracking-tighter">Save Time <br/>Finding Your Next Trade
                             </h1>
@@ -84,7 +84,9 @@ function Home() {
                                             d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
                                         />
                                     </svg>
-                                    <span className="pl-2">Browse All Research</span>
+                                    <span className="pl-2">
+                                        Browse All Research
+                                    </span>
                                 </SecondaryButton>
                             </div>
                         </div>
@@ -94,7 +96,7 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <LegalDisclaimer />
+                <LegalDisclaimer className="mt-36 lg:mt-0" />
             </div>
         </main>
     )

@@ -24,7 +24,7 @@ export function Narrative2(props: Props) {
             <div className="flex flex-col space-y-20 py-0 lg:py-20">
                 <Overview result={stockAnalysis} />
                 <ExecutiveSummary stockAnalysis={stockAnalysis} />
-                <BusinessBreakdown result={stockAnalysis} />
+                <BusinessBreakdown stockAnalysis={stockAnalysis} />
                 <FutureEarningsPerShare result={stockAnalysis} />
                 <TerminalValueDerivation result={stockAnalysis} />
                 <TargetPriceDerivation result={stockAnalysis} />

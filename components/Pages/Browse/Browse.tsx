@@ -46,13 +46,11 @@ export function Browse() {
     return (
         <main className="min-h-screen mx-auto container px-2 flex flex-col justify-between max-w-prose">
             <section>
-                <StockAnalysisSearch onSubmit={stockAnalysis => navigate(stockAnalysis)} className="mb-20 mt-16"/>
-                <div className="mb-8 flex justify-between items-center">
-                    <div className="flex space-x-4 items-center">
-                        <b>Filters:</b> <StockTab active={underValuedFilter} onClick={toggleUnderValued}>undervalued
-                        stocks</StockTab>
-                    </div>
-                </div>
+                <StockAnalysisSearch onSubmit={stockAnalysis => navigate(stockAnalysis)} className="my-20"/>
+                <div><b>Filter for:</b></div>
+                <StockTab active={underValuedFilter} onClick={toggleUnderValued}>
+                    Undervalued Stocks Only
+                </StockTab>
                 <blockquote className="my-4 pl-6 border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300">
                     Click on the Cards to View Analysis
                 </blockquote>
@@ -74,16 +72,6 @@ export function Browse() {
     )
 }
 
-function SortIcon() {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
-             stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                  d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"/>
-        </svg>
-    )
-}
-
 interface StockTabProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
     active?: boolean
 }
@@ -91,7 +79,7 @@ interface StockTabProps extends React.DetailedHTMLProps<React.ButtonHTMLAttribut
 function StockTab({active, className, children, ...props}: StockTabProps) {
     return (
         <button
-            className={`focus:outline-none px-2 py-1 rounded font-extrabold uppercase transition ${active ? 'bg-blue-500' : 'border-blueGray-500 bg-blueGray-700 shadow-lg hover:bg-blue-500 hover:border-0'} ease-linear ${className}`}
+            className={`focus:outline-none px-3 py-1 rounded-sm font-bold transition ${active ? 'bg-blue-500' : 'border-blueGray-500 bg-blueGray-700 shadow-lg hover:bg-blue-500 hover:border-0'} ease-linear ${className}`}
             {...props}
         >
             {children}

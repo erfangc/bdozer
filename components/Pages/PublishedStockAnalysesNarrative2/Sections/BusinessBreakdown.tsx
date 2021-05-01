@@ -10,11 +10,11 @@ import {BlockQuote} from "../../../Common/BlockQuote";
 
 
 interface Props {
-    result: StockAnalysis2
+    stockAnalysis: StockAnalysis2
 }
 
 export function BusinessBreakdown(props: Props) {
-    const { result: { name, derivedStockAnalytics: { businessWaterfall } } } = props;
+    const { stockAnalysis: { name, derivedStockAnalytics: { businessWaterfall } } } = props;
 
     const [options, setOptions] = useState<Highcharts.Options>()
     const [period, setPeriod] = useState<number>(0)
