@@ -9,13 +9,16 @@ interface Props {
 }
 
 export function TerminalValueCalculation2({stockAnalysis}: Props) {
+
     const {name, ticker, derivedStockAnalytics, model, cells} = stockAnalysis
     const {discountRate, irr} = derivedStockAnalytics
     const {periods, epsConceptName, terminalGrowthRate} = model
+
+    const finalFiscalYear = year(periods);
     const finalEps = simpleMoney(cells.find(cell => cell.item?.name === epsConceptName && cell.period == model.periods)?.value)
     const finalTvps = simpleMoney(cells.find(cell => cell.item?.name === "TerminalValuePerShare" && cell.period == model.periods)?.value)
-    const finalFiscalYear = year(periods);
     const finalPe = simpleNumber(1 / (discountRate - terminalGrowthRate))
+
     return (
         <div>
             <SubTitle className="mb-6">{ticker}'s Price in {periods} Years</SubTitle>
@@ -23,7 +26,7 @@ export function TerminalValueCalculation2({stockAnalysis}: Props) {
                 <p>
                     If {name} earns <Emphasis>{finalEps}</Emphasis> / share in {finalFiscalYear}, then it will be
                     worth&nbsp;
-                    <Emphasis>{finalTvps}</Emphasis> at that time. At that price, you would've earned an <Emphasis>{simplePercent(irr)}</Emphasis> annual return
+                    <Emphasis>{finalTvps}</Emphasis> at that time. If you hold the stock and sell at that price, you would earned <Emphasis>{simplePercent(irr)}</Emphasis> annual return
                 </p>
                 <div className="space-y-4">
                     <Label>Computation:</Label>

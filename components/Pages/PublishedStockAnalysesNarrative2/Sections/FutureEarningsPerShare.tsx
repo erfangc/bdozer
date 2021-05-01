@@ -84,7 +84,7 @@ export function FutureEarningsPerShare(props: Props) {
             <SubTitle className="mb-6">Future Earnings per Share</SubTitle>
             <p>
                 To compute a target price, we calculate future earnings per share.
-                Let's take projected <b>net income from above</b> for each future period and divide it by shares
+                Let's take projected <b>net income from above</b>. For each future period, divide net income by shares
                 outstanding
             </p>
             <br/>
