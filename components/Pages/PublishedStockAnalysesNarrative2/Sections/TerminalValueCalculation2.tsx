@@ -3,6 +3,7 @@ import {StockAnalysis2} from "../../../../client";
 import {Label, SubTitle} from "../../../Common/Title";
 import {year} from "../../../../year";
 import {simpleMoney, simpleNumber, simplePercent} from "../../../../simple-number";
+import {Emphasis} from "../Emphasis";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -11,13 +12,41 @@ interface Props {
 export function TerminalValueCalculation2({stockAnalysis}: Props) {
 
     const {name, ticker, derivedStockAnalytics, model, cells} = stockAnalysis
-    const {discountRate, irr} = derivedStockAnalytics
-    const {periods, epsConceptName, terminalGrowthRate} = model
+    const {discountRate, irr, revenueCAGR, currentPrice} = derivedStockAnalytics
+    const {periods, epsConceptName, terminalGrowthRate, beta, equityRiskPremium} = model
 
+    /*
+    Prepare calcualtions
+     */
     const finalFiscalYear = year(periods);
     const finalEps = simpleMoney(cells.find(cell => cell.item?.name === epsConceptName && cell.period == model.periods)?.value)
+    const fy0Eps = cells.find(cell => cell.item?.name === epsConceptName && cell.period == 0)?.value
     const finalTvps = simpleMoney(cells.find(cell => cell.item?.name === "TerminalValuePerShare" && cell.period == model.periods)?.value)
     const finalPe = simpleNumber(1 / (discountRate - terminalGrowthRate))
+    const fy0Pe = currentPrice / fy0Eps;
+
+    /*
+    Business risk bullet point
+     */
+    let businessRiskBullet = <>{name}'s business is about as risky as the average S&P 500 company</>
+    if (beta > 1.5) {
+        businessRiskBullet = <>{name}'s business is significantly riskier than the average S&P 500 company</>
+    } else if (beta < 0.7) {
+        businessRiskBullet = <>{name}'s business is significantly safer than the average S&P 500 company</>
+    } else if (beta > 1.2) {
+        businessRiskBullet = <>{name}'s business is slightly riskier than that of the average S&P 500 company</>
+    } else if (beta < 0.9) {
+        businessRiskBullet = <>{name}'s business is slightly more stable than that of the average S&P 500 company</>
+    }
+
+    /*
+    Growth rate bullet point
+     */
+    let growthRateBullet = (
+        <>
+            We expect the company to grow by {simplePercent(revenueCAGR)} per year for the next {periods} years, then grow steadily at {simplePercent(terminalGrowthRate)} thereafter
+        </>
+    )
 
     return (
         <div>
@@ -28,41 +57,28 @@ export function TerminalValueCalculation2({stockAnalysis}: Props) {
                     worth&nbsp;
                     <Emphasis>{finalTvps}</Emphasis> at that time. If you hold the stock and sell at that price, you would earned <Emphasis>{simplePercent(irr)}</Emphasis> annual return
                 </p>
-                <div className="space-y-4">
-                    <Label>Computation:</Label>
-                    <pre>
-                        {finalTvps} = {finalEps} x {finalPe}
-                    </pre>
-                    <p>
-                        <Emphasis>{finalPe}</Emphasis> is how much investors would be willing to
-                        pay for each $1 in earnings per share in {finalFiscalYear}. It is the projected Price-to-Earnings (P/E) ratio
-                    </p>
-                </div>
-                <div className="space-y-4">
-                    <Label>{finalFiscalYear} Price-to-Earnings Ratio Computation:</Label>
-                    <p>Factors that affect P/E ratio:</p>
-                    <ol className="list-decimal list-inside">
-                        <li>Business risk</li>
-                        <li>Market risk</li>
-                        <li>Growth rate</li>
-                    </ol>
-                </div>
+                <Label>Computation:</Label>
+                <pre>
+                    {finalTvps} = {finalEps} x {finalPe}
+                </pre>
+                <p>
+                    <Emphasis>{finalPe}</Emphasis> is how much investors would be willing to
+                    pay for each dollar of earning in the year {finalFiscalYear}. It is the projected Price-to-Earnings (P/E) ratio
+                </p>
+                {fy0Eps > 0 ? <p>As a reference, the P/E ratio for {ticker} today is <Emphasis>{simpleNumber(fy0Pe)}</Emphasis></p> : null}
+                <Label>Factors that Affect P/E:</Label>
+                <ol className="list-decimal list-inside space-y-1">
+                    <li>Business risk</li>
+                    <li>Market risk</li>
+                    <li>Growth rate</li>
+                </ol>
+                <Label>In {ticker}'s Case:</Label>
+                <ol className="list-decimal list-inside space-y-1">
+                    <li>{businessRiskBullet}</li>
+                    <li>We expect the stock market to return {simplePercent(equityRiskPremium)} on average</li>
+                    <li>{growthRateBullet}</li>
+                </ol>
             </div>
         </div>
-    )
-}
-
-function Emphasis({
-                      className,
-                      children,
-                      ...props
-                  }: React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>) {
-    return (
-        <b
-            className={`text-lg font-bold ${className}`}
-            {...props}
-        >
-            {children}
-        </b>
-    )
+    );
 }

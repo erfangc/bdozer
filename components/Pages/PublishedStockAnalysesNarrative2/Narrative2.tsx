@@ -3,7 +3,7 @@ import {StockAnalysis2} from "../../../client";
 import {LegalDisclaimer} from "../../LegalDisclaimer";
 import {BusinessBreakdown} from "./Sections/BusinessBreakdown";
 import {Comments} from "./Sections/Comments";
-import {ExecutiveSummary} from "./Sections/ExecutiveSummary";
+import {Summary} from "./Sections/Summary";
 import {Feedback} from "./Sections/Feedback";
 import {FutureEarningsPerShare} from "./Sections/FutureEarningsPerShare";
 import {Overview} from "./Sections/Overview";
@@ -24,7 +24,7 @@ export function Narrative2(props: Props) {
             <Toolbar stockAnalysis={stockAnalysis}/>
             <div className="flex flex-col space-y-20 py-0 lg:py-12">
                 <Overview result={stockAnalysis} />
-                <ExecutiveSummary stockAnalysis={stockAnalysis} />
+                <Summary stockAnalysis={stockAnalysis} />
                 <BusinessBreakdown stockAnalysis={stockAnalysis} />
                 <FutureEarningsPerShare result={stockAnalysis} />
                 <TerminalValueCalculation2 stockAnalysis={stockAnalysis} />

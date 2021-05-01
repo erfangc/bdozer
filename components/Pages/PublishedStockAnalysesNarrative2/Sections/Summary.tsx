@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {RevenueModel, RevenueModelRevenueDriverTypeEnum, StockAnalysis2} from "../../../../client";
-import {simpleMoney, simpleNumber} from "../../../../simple-number";
+import {simpleMoney, simpleNumber, simplePercent} from "../../../../simple-number";
 import {AnchorPopover} from "../../../Popover";
 import {SubTitle} from "../../../Common/Title";
 import {RevenueTimeSeries} from "./RevenueTimeSeries";
@@ -9,7 +9,7 @@ import {useRevenueModeler} from "../../../../api-hooks";
 interface Props {
     stockAnalysis: StockAnalysis2
 }
-export function ExecutiveSummary(props: Props) {
+export function Summary(props: Props) {
     const {
         stockAnalysis,
         stockAnalysis: {
@@ -97,7 +97,7 @@ function FutureProjectionTalkingPoint({revenueModel, stockAnalysis}: FutureProje
         return (
             <>
                 <li>
-                    Based on Wall Street forecasts, the company will grow {(revenueCAGR * 100).toFixed(1)}% a year for the next {periods} years
+                    Based on Wall Street forecasts, the company will grow {simplePercent(revenueCAGR)}% a year for the next {periods} years
                 </li>
                 <li>
                     Given this, {name} will be worth ${targetPrice.toFixed(1)}, which represents
