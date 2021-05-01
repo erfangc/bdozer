@@ -84,7 +84,7 @@ function FutureProjectionTalkingPoint({revenueModel, stockAnalysis}: FutureProje
             <>
                 <li>
                     By <b>{revenueModel.terminalFiscalYear}</b>, we expect {name} to reach <b>{simpleNumber(revenueModel.terminalYearActiveUser)} </b>
-                    active users making <b>{simpleMoney(revenueModel.terminalYearAverageRevenuePerUser)}</b> per user
+                    active users, earning <b>{simpleMoney(revenueModel.terminalYearAverageRevenuePerUser)}</b> on average per user
                 </li>
                 <li>
                     As such, {name}'s fair value is {simpleMoney(targetPrice)}, which represents
