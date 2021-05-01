@@ -12,7 +12,7 @@ interface Props {
 export function Overview(props: Props) {
     const {
         result: {
-            cik,
+            lastUpdated,
             ticker,
             name,
             derivedStockAnalytics: {
@@ -60,9 +60,15 @@ export function Overview(props: Props) {
     const underValued = upside > 0;
     return (
         <div className="space-y-4">
-            <div className="flex-col flex space-y-2">
-                <span className="text-blueGray-300 uppercase">{name}</span>
-                <Title>{ticker}</Title>
+            <div className="flex justify-between items-start">
+                <div className="flex-col flex space-y-2">
+                    <span className="text-blueGray-300 uppercase">{name}</span>
+                    <Title>{ticker}</Title>
+                </div>
+                <div className="text-xs text-blueGray-400">
+                    <h4>Last Updated</h4>
+                    <p>{new Date(lastUpdated).toLocaleString()}</p>
+                </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex items-center justify-between shadow px-6 py-4 bg-blueGray-700 rounded">
