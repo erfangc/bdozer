@@ -2399,10 +2399,10 @@ export class FactAutoFillerControllerApi extends BaseAPI {
 
 
 /**
- * FactBaseUnsecuredControllerApi - axios parameter creator
+ * FactBaseControllerApi - axios parameter creator
  * @export
  */
-export const FactBaseUnsecuredControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const FactBaseControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -2510,11 +2510,11 @@ export const FactBaseUnsecuredControllerApiAxiosParamCreator = function (configu
 };
 
 /**
- * FactBaseUnsecuredControllerApi - functional programming interface
+ * FactBaseControllerApi - functional programming interface
  * @export
  */
-export const FactBaseUnsecuredControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = FactBaseUnsecuredControllerApiAxiosParamCreator(configuration)
+export const FactBaseControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = FactBaseControllerApiAxiosParamCreator(configuration)
     return {
         /**
          * 
@@ -2550,11 +2550,11 @@ export const FactBaseUnsecuredControllerApiFp = function(configuration?: Configu
 };
 
 /**
- * FactBaseUnsecuredControllerApi - factory interface
+ * FactBaseControllerApi - factory interface
  * @export
  */
-export const FactBaseUnsecuredControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = FactBaseUnsecuredControllerApiFp(configuration)
+export const FactBaseControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = FactBaseControllerApiFp(configuration)
     return {
         /**
          * 
@@ -2587,21 +2587,21 @@ export const FactBaseUnsecuredControllerApiFactory = function (configuration?: C
 };
 
 /**
- * FactBaseUnsecuredControllerApi - object-oriented interface
+ * FactBaseControllerApi - object-oriented interface
  * @export
- * @class FactBaseUnsecuredControllerApi
+ * @class FactBaseControllerApi
  * @extends {BaseAPI}
  */
-export class FactBaseUnsecuredControllerApi extends BaseAPI {
+export class FactBaseControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} factId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FactBaseUnsecuredControllerApi
+     * @memberof FactBaseControllerApi
      */
     public getAnnualTimeSeries(factId: string, options?: any) {
-        return FactBaseUnsecuredControllerApiFp(this.configuration).getAnnualTimeSeries(factId, options).then((request) => request(this.axios, this.basePath));
+        return FactBaseControllerApiFp(this.configuration).getAnnualTimeSeries(factId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2609,10 +2609,10 @@ export class FactBaseUnsecuredControllerApi extends BaseAPI {
      * @param {Array<string>} factIds 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FactBaseUnsecuredControllerApi
+     * @memberof FactBaseControllerApi
      */
     public getAnnualTimeSeries1(factIds: Array<string>, options?: any) {
-        return FactBaseUnsecuredControllerApiFp(this.configuration).getAnnualTimeSeries1(factIds, options).then((request) => request(this.axios, this.basePath));
+        return FactBaseControllerApiFp(this.configuration).getAnnualTimeSeries1(factIds, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2620,10 +2620,10 @@ export class FactBaseUnsecuredControllerApi extends BaseAPI {
      * @param {string} factId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof FactBaseUnsecuredControllerApi
+     * @memberof FactBaseControllerApi
      */
     public getFact(factId: string, options?: any) {
-        return FactBaseUnsecuredControllerApiFp(this.configuration).getFact(factId, options).then((request) => request(this.axios, this.basePath));
+        return FactBaseControllerApiFp(this.configuration).getFact(factId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

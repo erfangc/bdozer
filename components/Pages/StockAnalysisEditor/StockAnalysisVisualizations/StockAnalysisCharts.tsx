@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {useFactBaseUnsecured} from "../../../../api-hooks";
+import {useFactBase} from "../../../../api-hooks";
 import {year} from "../../../../year";
 import {simpleNumber} from "../../../../simple-number";
 import {StockAnalysis2} from "../../../../client";
@@ -21,7 +21,7 @@ export function StockAnalysisCharts({stockAnalysis}: Props) {
     const revenueItem = stockAnalysis?.model?.incomeStatementItems?.find(it => it.name === totalRevenueConceptName)
     const netIncomeItem = stockAnalysis?.model?.incomeStatementItems?.find(it => it.name === netIncomeConceptName)
 
-    const factBase = useFactBaseUnsecured()
+    const factBase = useFactBase()
 
     async function refresh() {
         if (!stockAnalysis) {

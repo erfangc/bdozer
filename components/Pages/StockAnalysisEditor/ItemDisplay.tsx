@@ -1,7 +1,7 @@
 import {useRouter} from "next/router"
 import React from "react"
 import NumberFormat from "react-number-format"
-import {useFactBaseUnsecured} from "../../../api-hooks"
+import {useFactBase} from "../../../api-hooks"
 import {Item, ItemTypeEnum, StockAnalysis2} from "../../../client"
 import {SmallGhostButton} from "../../Common/GhostButton"
 import {ItemDisplayDetail} from "./ItemDisplayDetail"
@@ -18,7 +18,7 @@ export function ItemDisplay(props: Props) {
     const {item: originalItem, stockAnalysis, orphaned} = props
     const router = useRouter()
     const {id} = router.query
-    const factBase = useFactBaseUnsecured()
+    const factBase = useFactBase()
     const overriddenItem = stockAnalysis.model.itemOverrides.find(i => i.name === props.item.name)
     const overridden = overriddenItem !== undefined
     const item = overriddenItem ?? originalItem

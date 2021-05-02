@@ -1,8 +1,7 @@
 import {
     CommentsControllerApi,
     EdgarExplorerControllerApi,
-    FactAutoFillerControllerApi,
-    FactBaseUnsecuredControllerApi,
+    FactAutoFillerControllerApi, FactBaseControllerApi,
     FilingEntityManagerControllerApi,
     FilingEntityManagerUnsecuredControllerApi, IssuesControllerApi,
     MarketingControllerApi, ModelBuilderFactoryControllerApi,
@@ -58,9 +57,9 @@ export function useFactAutoFiller() {
     return new FactAutoFillerControllerApi(null, basePath, axiosInstance)
 }
 
-export function useFactBaseUnsecured() {
+export function useFactBase() {
     const axiosInstance = useAxios();
-    return new FactBaseUnsecuredControllerApi(null, basePath, axiosInstance);
+    return new FactBaseControllerApi(null, basePath, axiosInstance);
 }
 
 export function useMxParser() {

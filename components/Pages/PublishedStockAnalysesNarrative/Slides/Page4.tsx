@@ -2,7 +2,7 @@ import HighchartsReact from 'highcharts-react-official';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 import React, {useEffect, useState} from 'react';
-import {useFactBaseUnsecured} from '../../../../api-hooks';
+import {useFactBase} from '../../../../api-hooks';
 import {StockAnalysis2} from '../../../../client';
 import {blueGray50, highcharts} from '../../../../highcharts';
 import {simpleNumber} from '../../../../simple-number';
@@ -19,7 +19,7 @@ export function Page4({ result }: Props) {
 
     const router = useRouter()
     const { cik } = router.query
-    const factBase = useFactBaseUnsecured()
+    const factBase = useFactBase()
     const [options, setOptions] = useState<Highcharts.Options>()
     const { cells, model } = result
     const revenue = result?.derivedStockAnalytics?.businessWaterfall[0]?.revenue

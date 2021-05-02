@@ -1,6 +1,6 @@
 import HighchartsReact from 'highcharts-react-official'
 import React, {useEffect, useState} from 'react'
-import {useFactBaseUnsecured} from '../../../api-hooks'
+import {useFactBase} from '../../../api-hooks'
 import {Item, StockAnalysis2} from '../../../client'
 import {highcharts} from '../../../highcharts'
 import {simpleNumber} from '../../../simple-number'
@@ -16,7 +16,7 @@ export function ItemTimeSeries({ result, item }: Props) {
 
     const [options, setOptions] = useState<Highcharts.Options>()
     const [loading, setLoading] = useState(false)
-    const factBase = useFactBaseUnsecured()
+    const factBase = useFactBase()
     const { cells } = result
     const historicalValue = item?.historicalValue;
     const factIds = (historicalValue?.factId ? [historicalValue.factId] : historicalValue?.factIds) ?? []

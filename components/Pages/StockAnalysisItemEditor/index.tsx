@@ -1,6 +1,6 @@
 import {useRouter} from "next/router";
 import React, {ReactNode, useCallback, useEffect, useState} from "react";
-import {useFactBaseUnsecured, useStockAnalysis} from "../../../api-hooks";
+import {useFactBase, useStockAnalysis} from "../../../api-hooks";
 import {Fact, Item, ItemTypeEnum, Model, StockAnalysis2} from "../../../client";
 import {AutoForm} from "../../AutoForms/AutoForm";
 import {bodyOf, merge, schemaOf} from "../../AutoForms/Schemas";
@@ -31,7 +31,7 @@ function getItem(model?: Model, itemName?: string | string[]) {
 export function ItemEditor() {
 
     const router = useRouter()
-    const factBase = useFactBaseUnsecured()
+    const factBase = useFactBase()
     const [fact, setFact] = useState<Fact>()
     const {id, itemName} = router.query
     const [stockAnalysis, setStockAnalysis] = useState<StockAnalysis2>()
