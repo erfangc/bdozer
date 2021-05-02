@@ -29,34 +29,40 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 export interface Address {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Address
      */
-    sheet: number;
+    street1?: string;
     /**
      * 
      * @type {string}
      * @memberof Address
      */
-    sheetName: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Address
-     */
-    row: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Address
-     */
-    column: number;
+    street2?: string;
     /**
      * 
      * @type {string}
      * @memberof Address
      */
-    columnLetter: string;
+    city?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Address
+     */
+    stateOrCountry?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Address
+     */
+    zipCode?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Address
+     */
+    stateOrCountryDescription?: string;
 }
 /**
  * 
@@ -899,12 +905,6 @@ export interface FilingEntity {
      * @memberof FilingEntity
      */
     latestAdsh?: string;
-    /**
-     * 
-     * @type {ModelTemplate}
-     * @memberof FilingEntity
-     */
-    modelTemplate?: ModelTemplate;
 }
 /**
  * 
@@ -1357,25 +1357,6 @@ export interface ModelRevenueRequest {
      * @memberof ModelRevenueRequest
      */
     model: Model;
-}
-/**
- * 
- * @export
- * @interface ModelTemplate
- */
-export interface ModelTemplate {
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelTemplate
-     */
-    name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelTemplate
-     */
-    template: string;
 }
 /**
  * 
@@ -2418,252 +2399,6 @@ export class FactAutoFillerControllerApi extends BaseAPI {
 
 
 /**
- * FactBaseControllerApi - axios parameter creator
- * @export
- */
-export const FactBaseControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {string} cik 
-         * @param {string} adsh 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        ingestFiling: async (cik: string, adsh: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('ingestFiling', 'cik', cik)
-            // verify required parameter 'adsh' is not null or undefined
-            assertParamExists('ingestFiling', 'adsh', adsh)
-            const localVarPath = `/api/fact-base/filing-ingestor`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (cik !== undefined) {
-                localVarQueryParameter['cik'] = cik;
-            }
-
-            if (adsh !== undefined) {
-                localVarQueryParameter['adsh'] = adsh;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {number} year 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        ingestQ4Facts: async (cik: string, year: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('ingestQ4Facts', 'cik', cik)
-            // verify required parameter 'year' is not null or undefined
-            assertParamExists('ingestQ4Facts', 'year', year)
-            const localVarPath = `/api/fact-base/filing-ingestor/q4`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (cik !== undefined) {
-                localVarQueryParameter['cik'] = cik;
-            }
-
-            if (year !== undefined) {
-                localVarQueryParameter['year'] = year;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        latest: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/fact-base/latest`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * FactBaseControllerApi - functional programming interface
- * @export
- */
-export const FactBaseControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = FactBaseControllerApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {string} cik 
-         * @param {string} adsh 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async ingestFiling(cik: string, adsh: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.ingestFiling(cik, adsh, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {number} year 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async ingestQ4Facts(cik: string, year: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.ingestQ4Facts(cik, year, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async latest(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.latest(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * FactBaseControllerApi - factory interface
- * @export
- */
-export const FactBaseControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = FactBaseControllerApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {string} cik 
-         * @param {string} adsh 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        ingestFiling(cik: string, adsh: string, options?: any): AxiosPromise<void> {
-            return localVarFp.ingestFiling(cik, adsh, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {number} year 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        ingestQ4Facts(cik: string, year: number, options?: any): AxiosPromise<void> {
-            return localVarFp.ingestQ4Facts(cik, year, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        latest(options?: any): AxiosPromise<void> {
-            return localVarFp.latest(options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * FactBaseControllerApi - object-oriented interface
- * @export
- * @class FactBaseControllerApi
- * @extends {BaseAPI}
- */
-export class FactBaseControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} cik 
-     * @param {string} adsh 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FactBaseControllerApi
-     */
-    public ingestFiling(cik: string, adsh: string, options?: any) {
-        return FactBaseControllerApiFp(this.configuration).ingestFiling(cik, adsh, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} cik 
-     * @param {number} year 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FactBaseControllerApi
-     */
-    public ingestQ4Facts(cik: string, year: number, options?: any) {
-        return FactBaseControllerApiFp(this.configuration).ingestQ4Facts(cik, year, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FactBaseControllerApi
-     */
-    public latest(options?: any) {
-        return FactBaseControllerApiFp(this.configuration).latest(options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
  * FactBaseUnsecuredControllerApi - axios parameter creator
  * @export
  */
@@ -2905,76 +2640,10 @@ export const FilingEntityManagerControllerApiAxiosParamCreator = function (confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bootstrapFilingEntity: async (cik: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('bootstrapFilingEntity', 'cik', cik)
-            const localVarPath = `/api/filing-entity-manager/{cik}`
-                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        bootstrapFilingEntitySync: async (cik: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'cik' is not null or undefined
-            assertParamExists('bootstrapFilingEntitySync', 'cik', cik)
-            const localVarPath = `/api/filing-entity-manager/{cik}/sync`
-                .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         createFilingEntity: async (cik: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'cik' is not null or undefined
             assertParamExists('createFilingEntity', 'cik', cik)
-            const localVarPath = `/api/filing-entity-manager/{cik}/create`
+            const localVarPath = `/public/filing-entity-manager/{cik}/create`
                 .replace(`{${"cik"}}`, encodeURIComponent(String(cik)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3007,7 +2676,7 @@ export const FilingEntityManagerControllerApiAxiosParamCreator = function (confi
         saveFilingEntity: async (filingEntity: FilingEntity, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'filingEntity' is not null or undefined
             assertParamExists('saveFilingEntity', 'filingEntity', filingEntity)
-            const localVarPath = `/api/filing-entity-manager`;
+            const localVarPath = `/public/filing-entity-manager`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3049,26 +2718,6 @@ export const FilingEntityManagerControllerApiFp = function(configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async bootstrapFilingEntity(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingEntity>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.bootstrapFilingEntity(cik, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async bootstrapFilingEntitySync(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingEntity>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.bootstrapFilingEntitySync(cik, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         async createFilingEntity(cik: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FilingEntity>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createFilingEntity(cik, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -3099,24 +2748,6 @@ export const FilingEntityManagerControllerApiFactory = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bootstrapFilingEntity(cik: string, options?: any): AxiosPromise<FilingEntity> {
-            return localVarFp.bootstrapFilingEntity(cik, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        bootstrapFilingEntitySync(cik: string, options?: any): AxiosPromise<FilingEntity> {
-            return localVarFp.bootstrapFilingEntitySync(cik, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} cik 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         createFilingEntity(cik: string, options?: any): AxiosPromise<FilingEntity> {
             return localVarFp.createFilingEntity(cik, options).then((request) => request(axios, basePath));
         },
@@ -3139,28 +2770,6 @@ export const FilingEntityManagerControllerApiFactory = function (configuration?:
  * @extends {BaseAPI}
  */
 export class FilingEntityManagerControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} cik 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FilingEntityManagerControllerApi
-     */
-    public bootstrapFilingEntity(cik: string, options?: any) {
-        return FilingEntityManagerControllerApiFp(this.configuration).bootstrapFilingEntity(cik, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} cik 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof FilingEntityManagerControllerApi
-     */
-    public bootstrapFilingEntitySync(cik: string, options?: any) {
-        return FilingEntityManagerControllerApiFp(this.configuration).bootstrapFilingEntitySync(cik, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @param {string} cik 
@@ -5313,6 +4922,100 @@ export class StockAnalysisControllerApi extends BaseAPI {
      */
     public unpublish(id: string, options?: any) {
         return StockAnalysisControllerApiFp(this.configuration).unpublish(id, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * StockAnalysisCronJobsControllerApi - axios parameter creator
+ * @export
+ */
+export const StockAnalysisCronJobsControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePrices: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/stock-analysis-cron-jobs/update-prices`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * StockAnalysisCronJobsControllerApi - functional programming interface
+ * @export
+ */
+export const StockAnalysisCronJobsControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = StockAnalysisCronJobsControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updatePrices(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updatePrices(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * StockAnalysisCronJobsControllerApi - factory interface
+ * @export
+ */
+export const StockAnalysisCronJobsControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = StockAnalysisCronJobsControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePrices(options?: any): AxiosPromise<void> {
+            return localVarFp.updatePrices(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * StockAnalysisCronJobsControllerApi - object-oriented interface
+ * @export
+ * @class StockAnalysisCronJobsControllerApi
+ * @extends {BaseAPI}
+ */
+export class StockAnalysisCronJobsControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StockAnalysisCronJobsControllerApi
+     */
+    public updatePrices(options?: any) {
+        return StockAnalysisCronJobsControllerApiFp(this.configuration).updatePrices(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
