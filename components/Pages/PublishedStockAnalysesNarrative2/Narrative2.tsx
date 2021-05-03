@@ -4,12 +4,9 @@ import {LegalDisclaimer} from "../../LegalDisclaimer";
 import {BusinessBreakdown} from "./Sections/BusinessBreakdown";
 import {Comments} from "./Sections/Comments";
 import {Summary} from "./Sections/Summary";
-import {Feedback} from "./Sections/Feedback";
 import {FutureEarningsPerShare} from "./Sections/FutureEarningsPerShare";
 import {Overview} from "./Sections/Overview";
-import {TargetPriceBreakdown} from "./Sections/TargetPriceBreakdown";
 import {FairValueDerivation} from "./Sections/FairValueDerivation";
-import {TerminalValueDerivation} from "./Sections/TerminalValueDerivation";
 import {Toolbar} from "./Toolbar";
 import {TerminalValueCalculation2} from "./Sections/TerminalValueCalculation2";
 
@@ -18,20 +15,20 @@ interface Props {
 }
 
 export function Narrative2(props: Props) {
-    const { stockAnalysis } = props;
+    const {stockAnalysis} = props;
     return (
         <main className="container mx-auto max-w-prose overflow-x-scroll md:overflow-x-hidden">
             <Toolbar stockAnalysis={stockAnalysis}/>
             <div className="flex flex-col space-y-20 px-4 pt-20 lg:pt-32">
-                <Overview result={stockAnalysis} />
-                <Summary stockAnalysis={stockAnalysis} />
-                <BusinessBreakdown stockAnalysis={stockAnalysis} />
-                <FutureEarningsPerShare result={stockAnalysis} />
-                <TerminalValueCalculation2 stockAnalysis={stockAnalysis} />
-                <FairValueDerivation result={stockAnalysis} />
-                <Feedback result={stockAnalysis} />
-                <Comments result={stockAnalysis} />
-                <LegalDisclaimer />
+                <Overview result={stockAnalysis}/>
+                <Summary stockAnalysis={stockAnalysis}/>
+                <BusinessBreakdown stockAnalysis={stockAnalysis}/>
+                <FutureEarningsPerShare result={stockAnalysis}/>
+                <TerminalValueCalculation2 stockAnalysis={stockAnalysis}/>
+                <FairValueDerivation result={stockAnalysis}/>
+                {/*<Feedback result={stockAnalysis} />*/}
+                <Comments result={stockAnalysis}/>
+                <LegalDisclaimer/>
             </div>
         </main>
     )
