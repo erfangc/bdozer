@@ -35,7 +35,7 @@ function Home() {
             <Head>
                 <title>Bulldozer | Home</title>
                 <link rel="icon" href="/favicon.ico"/>
-                <script type="text/javascript" src="/fullstops.js"/>
+                <script type="text/javascript" src="/fullstory.js"/>
             </Head>
             <div className="flex flex-col justify-between min-h-screen container mx-auto px-4">
                 <div>
