@@ -3811,6 +3811,120 @@ export class OrphanedItemsFinderControllerApi extends BaseAPI {
 
 
 /**
+ * ProcessSecFilingRequestPublisherControllerApi - axios parameter creator
+ * @export
+ */
+export const ProcessSecFilingRequestPublisherControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {string} adsh 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publishRequest: async (cik: string, adsh: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('publishRequest', 'cik', cik)
+            // verify required parameter 'adsh' is not null or undefined
+            assertParamExists('publishRequest', 'adsh', adsh)
+            const localVarPath = `/public/process-secfiling-request-publisher/publish-request`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (cik !== undefined) {
+                localVarQueryParameter['cik'] = cik;
+            }
+
+            if (adsh !== undefined) {
+                localVarQueryParameter['adsh'] = adsh;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ProcessSecFilingRequestPublisherControllerApi - functional programming interface
+ * @export
+ */
+export const ProcessSecFilingRequestPublisherControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ProcessSecFilingRequestPublisherControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {string} adsh 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async publishRequest(cik: string, adsh: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.publishRequest(cik, adsh, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ProcessSecFilingRequestPublisherControllerApi - factory interface
+ * @export
+ */
+export const ProcessSecFilingRequestPublisherControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ProcessSecFilingRequestPublisherControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {string} adsh 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publishRequest(cik: string, adsh: string, options?: any): AxiosPromise<void> {
+            return localVarFp.publishRequest(cik, adsh, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ProcessSecFilingRequestPublisherControllerApi - object-oriented interface
+ * @export
+ * @class ProcessSecFilingRequestPublisherControllerApi
+ * @extends {BaseAPI}
+ */
+export class ProcessSecFilingRequestPublisherControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} cik 
+     * @param {string} adsh 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProcessSecFilingRequestPublisherControllerApi
+     */
+    public publishRequest(cik: string, adsh: string, options?: any) {
+        return ProcessSecFilingRequestPublisherControllerApiFp(this.configuration).publishRequest(cik, adsh, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * PublishedStockAnalysisControllerApi - axios parameter creator
  * @export
  */
