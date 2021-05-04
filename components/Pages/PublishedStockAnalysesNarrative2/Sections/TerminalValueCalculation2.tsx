@@ -12,7 +12,7 @@ interface Props {
 export function TerminalValueCalculation2({stockAnalysis}: Props) {
 
     const {name, ticker, derivedStockAnalytics, model, cells} = stockAnalysis
-    const {discountRate, irr, revenueCAGR, currentPrice} = derivedStockAnalytics
+    const {discountRate, revenueCAGR, currentPrice} = derivedStockAnalytics
     const {periods, epsConceptName, terminalGrowthRate, beta, equityRiskPremium} = model
 
     /*
