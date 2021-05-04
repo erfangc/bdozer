@@ -27,9 +27,9 @@ export function StockAnalysisControlPanel() {
         try {
             setLoading(true)
             const {data: stockAnalysis} = await stockAnalysisApi.getStockAnalysis(id as string)
-            const cik = stockAnalysis.cik;
+            const cik = stockAnalysis.cik ?? stockAnalysis.model.cik;
             if (cik) {
-                const {data: filingEntity} = await filingEntityManagerUnsecured.getFilingEntity(stockAnalysis.cik)
+                const {data: filingEntity} = await filingEntityManagerUnsecured.getFilingEntity(cik)
                 setFilingEntity(filingEntity);
             }
             setStockAnalysis(stockAnalysis)
