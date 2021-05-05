@@ -127,7 +127,7 @@ export function FairValueDerivation(props: Props) {
 
     return (
         <section id="fair-value-derivation">
-            <SubTitle className="mb-6">Fair Value Derivation</SubTitle>
+            <SubTitle className="mb-6">How to Derive Fair Value?</SubTitle>
             <p>
                 To derive the target price of ${targetPrice.toFixed(1)}, we will discount future earnings into
                 the present at a discount rate of <AnchorPopover trigger={`${(discountRate * 100).toFixed(1)}%`}>

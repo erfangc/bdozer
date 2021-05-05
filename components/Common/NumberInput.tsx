@@ -28,6 +28,7 @@ export class NumberInput extends React.Component<NumberInputProps, State> {
                     decimalScale={1}
                     className={`outline-none border border-blueGray-500 text-blueGray-50 rounded px-3 py-2 cursor-pointer ${disabled ? 'bg-blueGray-600 cursor-not-allowed' : 'bg-blueGray-900'}`}
                     value={value}
+                    onClick={e => e.currentTarget.select()}
                     disabled={disabled}
                     onValueChange={({floatValue}) => this.setState({value: floatValue})}
                     {...props}

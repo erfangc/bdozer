@@ -5,6 +5,7 @@ import NumberFormat from "react-number-format";
 interface CardProps {
     label: any
     value: number
+    darker?: boolean
     running?: boolean
     state?: 'danger' | 'good'
 }
@@ -12,7 +13,7 @@ interface CardProps {
 export function Money(props: CardProps) {
     const { running, state } = props;
     return (
-        <div className="py-4 px-5 rounded shadow-md bg-blueGray-700 flex-col flex space-y-2">
+        <div className={`py-4 px-5 rounded shadow-md ${props.darker ? 'bg-blueGray-800' : 'bg-blueGray-700'} flex-col flex space-y-2`}>
             <span className="text-xs">{props.label}</span>
             {
                 running

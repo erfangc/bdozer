@@ -83,7 +83,7 @@ function FutureProjectionTalkingPoint({revenueModel, stockAnalysis}: FutureProje
         return (
             <>
                 <li>
-                    By <b>{revenueModel.terminalFiscalYear}</b>, we expect {name} to reach <b>{simpleNumber(revenueModel.terminalYearActiveUser)} </b>
+                    By <b>{revenueModel.terminalFiscalYear}</b>, forecast expect {name} to reach <b>{simpleNumber(revenueModel.terminalYearActiveUser)} </b>
                     active users, earning <b>{simpleMoney(revenueModel.terminalYearAverageRevenuePerUser)}</b> on average per user
                 </li>
                 <li>
