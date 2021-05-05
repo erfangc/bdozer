@@ -1,10 +1,10 @@
 {
-  "name": "equity-model-builder-ui",
+  "name": "bdozer",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "NODE_ENV=production next build",
     "start": "next start"
   },
   "dependencies": {
