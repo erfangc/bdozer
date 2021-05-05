@@ -8,13 +8,13 @@ import {SubTitle} from "../../../Common/Title";
 import {DiscountFactorDerivation} from "./DiscountFactorDerivation";
 
 interface Props {
-    result: StockAnalysis2
+    stockAnalysis: StockAnalysis2
 }
 
 export function FairValueDerivation(props: Props) {
 
     const {
-        result: {
+        stockAnalysis: {
             model,
             model: {
                 epsConceptName,
@@ -126,7 +126,7 @@ export function FairValueDerivation(props: Props) {
     }, [])
 
     return (
-        <div id="target-price-derivation">
+        <section id="fair-value-derivation">
             <SubTitle className="mb-6">Fair Value Derivation</SubTitle>
             <p>
                 To derive the target price of ${targetPrice.toFixed(1)}, we will discount future earnings into
@@ -135,6 +135,6 @@ export function FairValueDerivation(props: Props) {
                 </AnchorPopover>
             </p>
             <HighchartsReact highcharts={highcharts} options={sankeyOptions} />
-        </div>
+        </section>
     )
 }

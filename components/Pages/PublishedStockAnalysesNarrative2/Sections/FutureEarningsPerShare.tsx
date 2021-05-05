@@ -1,18 +1,18 @@
 import HighchartsReact from "highcharts-react-official";
 import React, {useEffect, useState} from "react";
 import {StockAnalysis2} from "../../../../client";
-import {green500, highcharts, rose500} from "../../../../highcharts";
+import {highcharts, lime500, rose500} from "../../../../highcharts";
 import {simpleMoney, simpleNumber} from "../../../../simple-number";
 import {year} from "../../../../year";
 import {SubTitle} from "../../../Common/Title";
 
 interface Props {
-    result: StockAnalysis2
+    stockAnalysis: StockAnalysis2
 }
 
 export function FutureEarningsPerShare(props: Props) {
     const {
-        result: {
+        stockAnalysis: {
             model: {
                 epsConceptName,
                 sharesOutstandingConceptName,
@@ -31,12 +31,13 @@ export function FutureEarningsPerShare(props: Props) {
                 return {
                     x: year(period),
                     y: value,
-                    color: value < 0 ? rose500 : green500,
+                    color: value < 0 ? rose500 : lime500,
                 }
             })
         const options: Highcharts.Options = {
             chart: {
-                type: 'column'
+                type: 'column',
+                height: 250,
             },
             legend: {enabled: false},
             title: {
@@ -80,7 +81,7 @@ export function FutureEarningsPerShare(props: Props) {
     }, [])
 
     return (
-        <div className="future-earnings-per-share">
+        <div id="future-earnings-per-share">
             <SubTitle className="mb-6">Future Earnings per Share</SubTitle>
             <p>
                 To compute a target price, we calculate future earnings per share.
@@ -100,7 +101,7 @@ export function FutureEarningsPerShare(props: Props) {
                 </tr>
                 </thead>
                 <tbody>
-                {range(0, props.result.model.periods).map(period => {
+                {range(0, props.stockAnalysis.model.periods).map(period => {
                     const netIncomeLoss = cells.find(cell => cell.period == period && cell.item?.name === netIncomeConceptName)?.value
                     const sharesOutstanding = cells.find(cell => cell.period == period && cell.item?.name === sharesOutstandingConceptName)?.value
                     const eps = cells.find(cell => cell.period == period && cell.item?.name === epsConceptName)?.value

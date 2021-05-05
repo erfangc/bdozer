@@ -3,10 +3,10 @@ import {StockAnalysis2} from "../../../../client";
 import {Number, Percent} from "../SmallCards";
 
 interface Props {
-    result: StockAnalysis2
+    stockAnalysis: StockAnalysis2
 }
 export function DiscountFactorDerivation(props: Props) {
-    const { result: { model, derivedStockAnalytics: { discountRate } } } = props
+    const { stockAnalysis: { model, derivedStockAnalytics: { discountRate } } } = props
     const { beta } = model
 
     const fmtDiscountRate = `${(discountRate * 100).toFixed(1)}%`

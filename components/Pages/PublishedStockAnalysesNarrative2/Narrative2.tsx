@@ -9,6 +9,7 @@ import {Overview} from "./Sections/Overview";
 import {FairValueDerivation} from "./Sections/FairValueDerivation";
 import {Toolbar} from "./Toolbar";
 import {TerminalValueCalculation2} from "./Sections/TerminalValueCalculation2";
+import {TocScrollspy} from "./TocScrollspy";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -17,17 +18,17 @@ interface Props {
 export function Narrative2(props: Props) {
     const {stockAnalysis} = props;
     return (
-        <main className="container mx-auto max-w-prose overflow-x-scroll md:overflow-x-hidden">
+        <main className="container mx-auto max-w-prose">
             <Toolbar stockAnalysis={stockAnalysis}/>
-            <div className="flex flex-col space-y-20 px-4 pt-20 lg:pt-32">
-                <Overview result={stockAnalysis}/>
+            <TocScrollspy stockAnalysis={stockAnalysis}/>
+            <div className="flex flex-col space-y-20 px-4 pt-16 overflow-x-scroll md:overflow-x-hidden">
+                <Overview stockAnalysis={stockAnalysis}/>
                 <Summary stockAnalysis={stockAnalysis}/>
                 <BusinessBreakdown stockAnalysis={stockAnalysis}/>
-                <FutureEarningsPerShare result={stockAnalysis}/>
+                <FutureEarningsPerShare stockAnalysis={stockAnalysis}/>
                 <TerminalValueCalculation2 stockAnalysis={stockAnalysis}/>
-                <FairValueDerivation result={stockAnalysis}/>
-                {/*<Feedback result={stockAnalysis} />*/}
-                <Comments result={stockAnalysis}/>
+                <FairValueDerivation stockAnalysis={stockAnalysis}/>
+                <Comments stockAnalysis={stockAnalysis}/>
                 <LegalDisclaimer/>
             </div>
         </main>

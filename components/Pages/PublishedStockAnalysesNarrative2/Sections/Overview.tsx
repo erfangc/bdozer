@@ -6,12 +6,12 @@ import {Title} from "../../../Common/Title";
 import {TrendingDown, TrendingUp} from "../../../Common/Svgs";
 
 interface Props {
-    result: StockAnalysis2
+    stockAnalysis: StockAnalysis2
 }
 
 export function Overview(props: Props) {
     const {
-        result: {
+        stockAnalysis: {
             lastUpdated,
             ticker,
             name,
@@ -28,7 +28,7 @@ export function Overview(props: Props) {
 
     async function downloadModel() {
         setLoading(true)
-        const id = props.result['_id'];
+        const id = props.stockAnalysis['_id'];
         const url = `${basePath}/public/stock-analyses/${id}/excel-download`
         fetch(url,
             {
@@ -59,7 +59,7 @@ export function Overview(props: Props) {
 
     const underValued = upside > 0;
     return (
-        <div className="space-y-4">
+        <section id="overview" className="space-y-4">
             <div className="flex justify-between items-start">
                 <div className="flex-col flex space-y-2">
                     <span className="text-blueGray-300 uppercase">{name}</span>
@@ -94,7 +94,7 @@ export function Overview(props: Props) {
                 </div>
             </div>
             <DownloadToExcel onClick={downloadModel} loading={loading} />
-        </div>
+        </section>
     )
 }
 

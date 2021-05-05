@@ -40,7 +40,7 @@ export function Summary(props: Props) {
     const eps = cells.find(cell => cell.item.name === epsConceptName && cell.period === 0)?.value
 
     return (
-        <div>
+        <section id="summary">
             <SubTitle className="mb-6">Summary</SubTitle>
             <div className="text-lg text-blueGray-400 font-bold mt-8 mb-2">Current Business Situation</div>
             <ul className="list-disc list-inside space-y-2">
@@ -58,7 +58,7 @@ export function Summary(props: Props) {
             <ul className="list-disc list-inside space-y-2">
                 <FutureProjectionTalkingPoint stockAnalysis={stockAnalysis} revenueModel={revenueModel}/>
             </ul>
-        </div>
+        </section>
     )
 }
 
@@ -100,7 +100,7 @@ function FutureProjectionTalkingPoint({revenueModel, stockAnalysis}: FutureProje
                     Based on Wall Street forecasts, the company will grow {simplePercent(revenueCAGR)}% a year for the next {periods} years
                 </li>
                 <li>
-                    Given this, {name} will be worth ${targetPrice.toFixed(1)}, which represents
+                    Given this, {name}'s value fair today is {simpleMoney(targetPrice)}, which represents
                     <span className={`font-bold ${upside > 0 ? 'text-lime-400' : 'text-rose-500'}`}> {upside.toFixed(1)}% </span>
                     {upside > 0 ? 'upside' : 'downside'} from current price
                 </li>

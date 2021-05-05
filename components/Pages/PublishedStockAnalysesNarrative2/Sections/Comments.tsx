@@ -5,17 +5,17 @@ import {Comment, StockAnalysis2} from '../../../../client'
 import {TextInput} from '../../../Common/TextInput'
 
 interface Props {
-    result: StockAnalysis2
+    stockAnalysis: StockAnalysis2
 }
 
-export function Comments({ result }: Props) {
+export function Comments({ stockAnalysis }: Props) {
 
     const commentsApi = useComments()
     const { user } = useAuth0()
     const [comments, setComments] = useState<Comment[]>([])
     const [text, setText] = useState<string>()
 
-    const stockAnalysisId = result['_id']
+    const stockAnalysisId = stockAnalysis['_id']
 
     async function fetchComments() {
         const { data } = await commentsApi.getComments(stockAnalysisId)

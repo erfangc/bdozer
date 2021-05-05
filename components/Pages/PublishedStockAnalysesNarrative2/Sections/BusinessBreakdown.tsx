@@ -1,7 +1,7 @@
 import HighchartsReact from "highcharts-react-official";
 import React, {useEffect, useState} from "react";
 import {Item, StockAnalysis2} from "../../../../client";
-import {blueGray900, highcharts, lime700, rose500} from "../../../../highcharts";
+import {blueGray900, highcharts, lime500, rose500} from "../../../../highcharts";
 import {simpleNumber} from "../../../../simple-number";
 import {year} from "../../../../year";
 import {SubTitle} from "../../../Common/Title";
@@ -26,7 +26,7 @@ export function BusinessBreakdown(props: Props) {
         const revenue = {
             name: waterfall.revenue.item?.description ?? waterfall.revenue.item?.name,
             y: waterfall.revenue.value,
-            color: lime700,
+            color: lime500,
             item: waterfall.revenue.item,
         }
 
@@ -35,7 +35,7 @@ export function BusinessBreakdown(props: Props) {
             return {
                 name: item.description ?? item.name,
                 y: valueT,
-                color: valueT > 0 ? lime700 : rose500,
+                color: valueT > 0 ? lime500 : rose500,
                 item: item,
             }
         })
@@ -44,7 +44,7 @@ export function BusinessBreakdown(props: Props) {
             name: waterfall.profit.item?.description ?? waterfall.profit.item?.name,
             y: waterfall.profit.value,
             color: blueGray900,
-            borderColor: waterfall.profit.value > 0 ? lime700 : rose500,
+            borderColor: waterfall.profit.value > 0 ? lime500 : rose500,
             borderWidth: 1,
             isSum: true,
         }
@@ -105,7 +105,7 @@ export function BusinessBreakdown(props: Props) {
     }
 
     return (
-        <div id="business-breakdown">
+        <section id="business-breakdown">
             <SubTitle className="mb-6">Business Breakdown</SubTitle>
             <p>See how {name} make and spend it's money</p>
             <BlockQuote>Click on different years to see projections</BlockQuote>
@@ -125,6 +125,6 @@ export function BusinessBreakdown(props: Props) {
                         )
                 })}
             </div>
-        </div>
+        </section>
     )
 }

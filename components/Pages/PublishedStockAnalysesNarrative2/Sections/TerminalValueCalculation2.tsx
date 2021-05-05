@@ -52,7 +52,7 @@ export function TerminalValueCalculation2({stockAnalysis}: Props) {
     const annualizedReturn = Math.pow(totalReturn + 1, 1/ periods) - 1;
 
     return (
-        <div>
+        <section id="terminal-value-calculation">
             <SubTitle className="mb-6">{ticker}'s Price in {periods} Years</SubTitle>
             <div className="space-y-10">
                 <div className="space-y-4">
@@ -61,8 +61,8 @@ export function TerminalValueCalculation2({stockAnalysis}: Props) {
                         worth <Emphasis>{simpleMoney(finalTvps)}</Emphasis> at that time
                     </p>
                     <p>
-                        If you held and sold at that price, you would have earned <Emphasis>{simplePercent(annualizedReturn)}</Emphasis> per year on this investment.
-                        Or <Emphasis>{simplePercent(totalReturn)}</Emphasis> in total, not including dividends
+                        At that price, you would have earned <Emphasis>{simplePercent(annualizedReturn)}</Emphasis> per year on this investment,
+                        or <Emphasis>{simplePercent(totalReturn)}</Emphasis> in total, not including dividends
                     </p>
                 </div>
                 <div className="space-y-4">
@@ -89,9 +89,13 @@ export function TerminalValueCalculation2({stockAnalysis}: Props) {
                     </div>
                     <p>
                         <Emphasis>{finalPe}</Emphasis> is how much investors would be willing to
-                        pay for each dollar of earning in the year {finalFiscalYear}. It is the projected Price-to-Earnings (P/E) ratio
+                        pay for each dollar of earning in the year {finalFiscalYear}. In other words, it's the projected Price-to-Earnings (P/E) ratio
                     </p>
-                    {fy0Eps > 0 ? <p>As a reference, the P/E ratio for {ticker} today is <Emphasis>{simpleNumber(fy0Pe)}</Emphasis></p> : null}
+                    {
+                        fy0Eps > 0
+                        ? <p>As a reference, the P/E ratio for {ticker} today is <Emphasis>{simpleNumber(fy0Pe)}</Emphasis></p>
+                        : <p>Since {ticker} is losing money right now, it's current P/E ratio cannot be computed</p>
+                    }
                 </div>
                 <div className="space-y-4">
                     <Label>Factors that Affect P/E</Label>
@@ -110,6 +114,6 @@ export function TerminalValueCalculation2({stockAnalysis}: Props) {
                     </ol>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
