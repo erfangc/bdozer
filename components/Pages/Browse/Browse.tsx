@@ -42,7 +42,15 @@ export function Browse() {
         router.push(`/published-stock-analyses/${stockAnalysis['_id']}/narrative2`)
     }
 
-    const filteredStockAnalyses = underValuedFilter ? stockAnalyses.filter(sa => sa.currentPrice < sa.targetPrice) : stockAnalyses;
+    const filteredStockAnalyses = underValuedFilter
+        ? stockAnalyses
+            .filter(sa => sa.currentPrice < sa.targetPrice)
+            .sort((a1,a2) => {
+                const value1 = a1.targetPrice / a1.currentPrice
+                const value2 = a2.targetPrice / a2.currentPrice
+                return value2 - value1
+        })
+        : stockAnalyses;
     return (
         <main className="min-h-screen mx-auto container px-2 flex flex-col justify-between max-w-prose">
             <section>

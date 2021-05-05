@@ -7,7 +7,6 @@ import {PrimaryButton} from "../../../Common/PrimaryButton";
 import {Loading, Play, PrecisionManufacturing} from "../../../Common/Svgs";
 import {SecondaryButton} from "../../../Common/SecondaryButton";
 import {GhostButton} from "../../../Common/GhostButton";
-import {Beta} from "./TryDifferentAssumptions";
 import {NumberFormatValues} from "react-number-format";
 import {useRevenueModeler, useStockAnalysis} from "../../../../api-hooks";
 import {useRouter} from "next/router";
@@ -150,4 +149,14 @@ export function ARPU({stockAnalysis, revenueModel, onClose}: Props) {
             <PrecisionManufacturing/><span>Try Advanced Mode</span>
         </GhostButton>
     </>)
+}
+
+
+export function Beta() {
+    return (
+        <span
+            className="text-xs py-0.5 px-1 rounded bg-amber-500 text-blueGray-800 absolute -top-2 -right-2 transform rotate-6">
+            Beta
+        </span>
+    )
 }

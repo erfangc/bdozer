@@ -11,6 +11,7 @@ import {
     TwitterIcon, RedditShareButton, RedditIcon, WeiboIcon, WeiboShareButton, EmailIcon, EmailShareButton
 } from 'react-share'
 import {TryDifferentAssumptions} from "./TryDifferentAssumptions/TryDifferentAssumptions";
+import {DownloadToExcel} from "./DownloadToExcel";
 
 interface Props {
     stockAnalysis:StockAnalysis2
@@ -24,7 +25,7 @@ export function TocScrollspy({stockAnalysis}: Props) {
         setHref(window.location.href)
     }, [])
     return (
-        <nav className="hidden lg:block fixed top-12 w-64 right-0 py-4 text-blueGray-200 bg-blueGray-800 shadow-md rounded text-sm">
+        <nav className="hidden lg:block fixed top-16 w-64 py-4 text-blueGray-200 bg-blueGray-800 shadow-md rounded text-sm right-0">
             <Scrollspy
                 items={['overview', 'summary', 'business-breakdown', 'future-earnings-per-share', 'terminal-value-calculation', 'fair-value-derivation']}
                 currentClassName={'bg-blue-500 font-bold'}
@@ -49,7 +50,10 @@ export function TocScrollspy({stockAnalysis}: Props) {
                 </a>
             </Scrollspy>
             <div className="border-t border-blueGray-500 pt-4 mt-4">
-                <TryDifferentAssumptions stockAnalysis={stockAnalysis}/>
+                <div className="space-y-2 mx-2">
+                    <TryDifferentAssumptions stockAnalysis={stockAnalysis}/>
+                    <DownloadToExcel stockAnalysis={stockAnalysis} />
+                </div>
                 <div className="flex space-x-2 items-center justify-center mt-4 px-2">
                     <FacebookShareButton
                         className="focus:outline-none"

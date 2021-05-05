@@ -42,7 +42,7 @@ export function TryDifferentAssumptions({stockAnalysis}: Props) {
         <>
             <button
                 onClick={openModal}
-                className="hover:bg-blue-500 transition ease-in px-4 py-1 rounded border mx-2 border-blueGray-600 block flex justify-center items-center focus:outline-none"
+                className="hover:bg-blue-500 transition ease-in px-4 py-1 rounded border border-blueGray-600 block flex items-center w-full focus:outline-none"
             >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -50,7 +50,7 @@ export function TryDifferentAssumptions({stockAnalysis}: Props) {
                         fill="#CBD5E1"
                     />
                 </svg>
-                <span className="pl-2">Try Different Assumptions</span>
+                <span className="ml-2">Try Different Assumptions</span>
             </button>
             <Transition show={open}>
                 <Dialog
@@ -76,14 +76,5 @@ export function TryDifferentAssumptions({stockAnalysis}: Props) {
                 </Dialog>
             </Transition>
         </>
-    )
-}
-
-export function Beta() {
-    return (
-        <span
-            className="text-xs py-0.5 px-1 rounded bg-amber-500 text-blueGray-800 absolute -top-2 -right-2 transform rotate-6">
-            Beta
-        </span>
     )
 }
