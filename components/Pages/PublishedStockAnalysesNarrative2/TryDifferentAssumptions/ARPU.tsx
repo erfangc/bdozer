@@ -106,6 +106,11 @@ export function ARPU({stockAnalysis, revenueModel, onClose}: Props) {
         router.push(`/control-panel/stock-analyses/${stockAnalysisId}`)
     }
 
+    function close() {
+        onClose();
+        setRefreshedStockAnalysis(stockAnalysis)
+    }
+
     return (
         <>
         <Money
@@ -137,14 +142,14 @@ export function ARPU({stockAnalysis, revenueModel, onClose}: Props) {
             </div>
         </Dialog.Description>
         <div className="flex space-x-2">
-            <PrimaryButton disabled={loading} onClick={rerun}>{loading ? <Loading/> :
-                <Play/>}<span>Go</span></PrimaryButton>
-            <SecondaryButton onClick={() => {
-                onClose();
-                setRefreshedStockAnalysis(stockAnalysis)
-            }}>Dismiss</SecondaryButton>
+            <PrimaryButton disabled={loading} onClick={rerun}>
+                {loading ? <Loading/> : <Play/>}<span>Go</span>
+            </PrimaryButton>
+            <SecondaryButton onClick={close}>
+                Dismiss
+            </SecondaryButton>
         </div>
-        <GhostButton className="w-full justify-center relative" onClick={goToControlPanel}>
+        <GhostButton onClick={goToControlPanel} className="w-full space-x-2 justify-center relative">
             <Beta/>
             <PrecisionManufacturing/><span>Try Advanced Mode</span>
         </GhostButton>

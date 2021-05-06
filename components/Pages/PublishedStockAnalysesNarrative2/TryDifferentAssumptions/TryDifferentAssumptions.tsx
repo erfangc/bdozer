@@ -3,7 +3,7 @@ import {Dialog, Transition} from "@headlessui/react";
 import {RevenueModel, StockAnalysis2} from "../../../../client";
 import {ARPU} from "./ARPU";
 import {useRevenueModeler} from "../../../../api-hooks";
-import {useRouter} from "next/router";
+import {RevenueCAGR} from "./RevenueCAGR";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -11,7 +11,6 @@ interface Props {
 
 export function TryDifferentAssumptions({stockAnalysis}: Props) {
 
-    const router = useRouter();
     const stockAnalysisId = stockAnalysis['_id']
     const [open, setOpen] = useState(false)
     const revenueModelerApi = useRevenueModeler()
@@ -27,11 +26,7 @@ export function TryDifferentAssumptions({stockAnalysis}: Props) {
     }, [])
 
     function openModal() {
-        if (revenueModel.revenueDriverType !== 'AverageRevenuePerUserTimesActiveUser') {
-            router.push(`/control-panel/stock-analyses/${stockAnalysisId}`)
-        } else {
-            setOpen(true);
-        }
+        setOpen(true);
     }
 
     function closeModal() {
@@ -71,7 +66,11 @@ export function TryDifferentAssumptions({stockAnalysis}: Props) {
                         leaveTo="opacity-0 scale-90"
                     >
                         <Dialog.Title className="text-xl font-bold">Try Your Assumptions</Dialog.Title>
-                        <ARPU stockAnalysis={stockAnalysis} revenueModel={revenueModel} onClose={closeModal}/>
+                        {
+                            !revenueModel
+                                ? <RevenueCAGR stockAnalysis={stockAnalysis} onClose={closeModal}/>
+                                : <ARPU revenueModel={revenueModel} stockAnalysis={stockAnalysis} onClose={closeModal}/>
+                        }
                     </Transition.Child>
                 </Dialog>
             </Transition>
