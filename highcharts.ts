@@ -1,6 +1,7 @@
 import Highcharts from "highcharts";
 import HC_more from 'highcharts/highcharts-more';
 import HighchartsSankey from 'highcharts/modules/sankey';
+import {simpleNumber} from "./simple-number";
 
 export const blueGray50 = "#F8FAFC"
 export const blueGray100 = "#F1F5F9"
@@ -125,79 +126,81 @@ export const cyan700 = "#0E7490"
 export const cyan800 = "#155E75"
 export const cyan900 = "#164E63"
 
-
-Highcharts.theme = {
-  colors: [blue600, green600, yellow400, cyan500, indigo600, indigo900],
-  credits: {
-    enabled: false,
-  },
-  tooltip: {
+export const numericTooltip: Highcharts.TooltipOptions = {
     useHTML: true,
     formatter: function () {
-      return `
+        const y = this.y;
+        return `
       <div class="p-1 flex space-x-2 text-blueGray-50">
         <b class="font-semibold">${this.series.name}:</b>
-        <span>${this.y.toLocaleString()}</span>
+        <span>${isNaN(y) ? y.toLocaleString() : simpleNumber(y)}</span>
       </div>`;
     },
     borderWidth: 0,
     backgroundColor: blueGray700,
     borderRadius: 8,
-  },
-  chart: {
-    style: {
-      fontFamily: "Roboto, sans-serif",
-      color: blueGray200,
+}
+
+Highcharts.theme = {
+    colors: [blue600, green600, yellow400, cyan500, indigo600, indigo900],
+    credits: {
+        enabled: false,
     },
-    backgroundColor: "transparent",
-  },
-  title: {
-    align: "left",
-    margin: 32,
-    style: {
-      color: blueGray200,
-    },
-  },
-  legend: {
-    itemStyle: {
-      color: blueGray200,
-    },
-    align: "left",
-  },
-  xAxis: {
-    labels: {
-      style: {
-        color: blueGray200,
-      },
+    tooltip: numericTooltip,
+    chart: {
+        style: {
+            fontFamily: "Roboto, sans-serif",
+            color: blueGray200,
+        },
+        backgroundColor: "transparent",
     },
     title: {
-      style: {
-        color: blueGray200,
-      },
+        align: "left",
+        margin: 32,
+        style: {
+            color: blueGray200,
+        },
     },
-  },
-  yAxis: {
-    gridLineWidth: 0,
-    labels: {
-      style: {
-        color: blueGray200,
-      },
+    legend: {
+        itemStyle: {
+            color: blueGray200,
+        },
+        align: "left",
     },
-  },
-  plotOptions: {
-    column: {
-      borderWidth: 0,
-      dataLabels: {
-        useHTML: true,
-      },
+    xAxis: {
+        labels: {
+            style: {
+                color: blueGray200,
+            },
+        },
+        title: {
+            style: {
+                color: blueGray200,
+            },
+        },
     },
-  },
+    yAxis: {
+        gridLineWidth: 0,
+        labels: {
+            style: {
+                color: blueGray200,
+            },
+        },
+    },
+    plotOptions: {
+        column: {
+            borderWidth: 0,
+            dataLabels: {
+                useHTML: true,
+            },
+        },
+    },
 };
 
 if (typeof Highcharts === 'object') {
-  Highcharts.setOptions(Highcharts.theme);
-  HC_more(Highcharts);
-  HighchartsSankey(Highcharts)
+    Highcharts.setOptions(Highcharts.theme);
+    HC_more(Highcharts);
+    HighchartsSankey(Highcharts)
 }
 
 export const highcharts = Highcharts;

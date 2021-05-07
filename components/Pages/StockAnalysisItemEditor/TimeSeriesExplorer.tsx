@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Item, StockAnalysis2} from "../../../client";
 import {useTimeSeries} from "../../../api-hooks";
 import {simpleNumber} from "../../../simple-number";
-import {highcharts} from "../../../highcharts";
+import {blueGray700, highcharts} from "../../../highcharts";
 import HighchartsReact from "highcharts-react-official";
 import {Loading} from "../../Common/Svgs";
 
