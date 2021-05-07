@@ -1,4 +1,4 @@
-import {ItemTypeEnum, ManualProjection, ManualProjections, StockAnalysis2} from "../../../../client";
+import {ItemTypeEnum, ManualProjection, StockAnalysis2} from "../../../../client";
 import React, {useState} from 'react';
 import {Money} from "../../../Common/Card";
 import {Dialog} from "@headlessui/react";
@@ -30,7 +30,7 @@ export function RevenueCAGR({stockAnalysis, onClose}: Props) {
     async function rerun() {
         setLoading(true)
         try {
-            const {model,cells} = stockAnalysis
+            const {model, cells} = stockAnalysis
             const {totalRevenueConceptName, periods} = model;
             const initialValue = cells.find(it => it.period === 0 && it.item.name === totalRevenueConceptName)?.value;
             const manualProjections: ManualProjection[] = [{fiscalYear: year(0), value: initialValue,}];
@@ -90,12 +90,16 @@ export function RevenueCAGR({stockAnalysis, onClose}: Props) {
         setRefreshedStockAnalysis(stockAnalysis)
     }
 
+    const derivedStockAnalytics = refreshedStockAnalysis.derivedStockAnalytics;
+    const targetPrice = derivedStockAnalytics.targetPrice;
+    const currentPrice = derivedStockAnalytics.currentPrice;
+
     return (
         <>
             <Money
-                value={refreshedStockAnalysis.derivedStockAnalytics.targetPrice}
+                value={targetPrice}
                 label={refreshedStockAnalysis !== stockAnalysis ? 'New Fair Value' : "Fair Value"}
-                state={refreshedStockAnalysis.derivedStockAnalytics.targetPrice < refreshedStockAnalysis.derivedStockAnalytics.currentPrice ? 'danger' : 'good'}
+                state={targetPrice < currentPrice ? 'danger' : 'good'}
                 running={loading}
                 darker
             />

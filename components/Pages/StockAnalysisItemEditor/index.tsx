@@ -16,6 +16,7 @@ import {FixedCostEditor} from "./Editors/FixedCostEditor";
 import {SumOfOtherItemsEditor} from "./Editors/SumOfOtherItemsEditor";
 import {PercentOfAnotherItemEditor} from "./Editors/PercentOfAnotherItemEditor";
 import {RevenueItemEditor} from "./RevenueItemEditor";
+import {TimeSeriesExplorer} from "./TimeSeriesExplorer";
 
 function getItem(model?: Model, itemName?: string | string[]) {
     return (
@@ -158,7 +159,13 @@ export function ItemEditor() {
          */
         if (itemName === model.totalRevenueConceptName) {
             return (
-                <RevenueItemEditor item={item} onSubmit={handleItemUpdateAndSubmit} model={model} onDismiss={back} onClear={clearItem}/>
+                <RevenueItemEditor
+                    item={item}
+                    model={model}
+                    onSubmit={handleItemUpdateAndSubmit}
+                    onDismiss={back}
+                    onClear={clearItem}
+                />
             )
         }
 
@@ -229,8 +236,10 @@ export function ItemEditor() {
 
         const isOverridden = item === overriddenItem
 
+        /*
+        outer layer is the overlay
+         */
         return (
-            // outer layer is the overlay
             <div className="container mx-auto px-2 max-w-prose py-12">
                 <div className="bg-blueGray-700 px-2 lg:px-12 py-3 lg:py-8 rounded-lg shadow-md flex-col space-y-8">
                     <div className="flex-col space-y-4">
@@ -243,8 +252,7 @@ export function ItemEditor() {
                         {
                             fact?.documentation
                                 ?
-                                <blockquote
-                                    className="px-3 inline-block border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300 mb-1">
+                                <blockquote className="px-3 inline-block border-l-4 bg-blueGray-800 py-2 text-sm text-blueGray-300 mb-1">
                                     {fact.documentation}
                                 </blockquote>
                                 : null
@@ -252,6 +260,7 @@ export function ItemEditor() {
                         <ItemDescriptionInput item={item} onSubmit={handleItemChange}/>
                         <ItemFY0Input item={item} onSubmit={handleItemChange}/>
                     </div>
+                    <TimeSeriesExplorer stockAnalysis={stockAnalysis} item={item}/>
                     {select}
                     {editor}
                     <div className="flex space-x-2">

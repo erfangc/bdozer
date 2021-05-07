@@ -727,6 +727,63 @@ export enum FactDocumentFiscalPeriodFocusEnum {
 /**
  * 
  * @export
+ * @interface FactTimeSeries
+ */
+export interface FactTimeSeries {
+    /**
+     * 
+     * @type {Array<Fact>}
+     * @memberof FactTimeSeries
+     */
+    facts: Array<Fact>;
+    /**
+     * 
+     * @type {string}
+     * @memberof FactTimeSeries
+     */
+    conceptName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FactTimeSeries
+     */
+    label?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FactTimeSeries
+     */
+    startDate: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FactTimeSeries
+     */
+    stopDate: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FactTimeSeries
+     */
+    documentFiscalPeriodFocus: FactTimeSeriesDocumentFiscalPeriodFocusEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum FactTimeSeriesDocumentFiscalPeriodFocusEnum {
+    Fy = 'FY',
+    Q1 = 'Q1',
+    Q2 = 'Q2',
+    Q3 = 'Q3',
+    Q4 = 'Q4',
+    Na = 'NA'
+}
+
+/**
+ * 
+ * @export
  * @interface Feedback
  */
 export interface Feedback {
@@ -2624,6 +2681,275 @@ export class FactBaseControllerApi extends BaseAPI {
      */
     public getFact(factId: string, options?: any) {
         return FactBaseControllerApiFp(this.configuration).getFact(factId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * FactTimeSeriesControllerApi - axios parameter creator
+ * @export
+ */
+export const FactTimeSeriesControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {Array<string>} conceptNames 
+         * @param {string} [startDate] 
+         * @param {string} [stopDate] 
+         * @param {'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA'} [documentFiscalPeriodFocus] 
+         * @param {boolean} [prune] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTimeSeries: async (cik: string, conceptNames: Array<string>, startDate?: string, stopDate?: string, documentFiscalPeriodFocus?: 'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA', prune?: boolean, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('getTimeSeries', 'cik', cik)
+            // verify required parameter 'conceptNames' is not null or undefined
+            assertParamExists('getTimeSeries', 'conceptNames', conceptNames)
+            const localVarPath = `/api/fact-base/time-series`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (cik !== undefined) {
+                localVarQueryParameter['cik'] = cik;
+            }
+
+            if (conceptNames) {
+                localVarQueryParameter['conceptNames'] = conceptNames;
+            }
+
+            if (startDate !== undefined) {
+                localVarQueryParameter['startDate'] = (startDate as any instanceof Date) ?
+                    (startDate as any).toISOString().substr(0,10) :
+                    startDate;
+            }
+
+            if (stopDate !== undefined) {
+                localVarQueryParameter['stopDate'] = (stopDate as any instanceof Date) ?
+                    (stopDate as any).toISOString().substr(0,10) :
+                    stopDate;
+            }
+
+            if (documentFiscalPeriodFocus !== undefined) {
+                localVarQueryParameter['documentFiscalPeriodFocus'] = documentFiscalPeriodFocus;
+            }
+
+            if (prune !== undefined) {
+                localVarQueryParameter['prune'] = prune;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {string} factId 
+         * @param {Array<string>} conceptNames 
+         * @param {string} [startDate] 
+         * @param {string} [stopDate] 
+         * @param {'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA'} [documentFiscalPeriodFocus] 
+         * @param {boolean} [prune] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTimeSeriesForFact: async (cik: string, factId: string, conceptNames: Array<string>, startDate?: string, stopDate?: string, documentFiscalPeriodFocus?: 'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA', prune?: boolean, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cik' is not null or undefined
+            assertParamExists('getTimeSeriesForFact', 'cik', cik)
+            // verify required parameter 'factId' is not null or undefined
+            assertParamExists('getTimeSeriesForFact', 'factId', factId)
+            // verify required parameter 'conceptNames' is not null or undefined
+            assertParamExists('getTimeSeriesForFact', 'conceptNames', conceptNames)
+            const localVarPath = `/api/fact-base/time-series/{factId}`
+                .replace(`{${"factId"}}`, encodeURIComponent(String(factId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (cik !== undefined) {
+                localVarQueryParameter['cik'] = cik;
+            }
+
+            if (conceptNames) {
+                localVarQueryParameter['conceptNames'] = conceptNames;
+            }
+
+            if (startDate !== undefined) {
+                localVarQueryParameter['startDate'] = (startDate as any instanceof Date) ?
+                    (startDate as any).toISOString().substr(0,10) :
+                    startDate;
+            }
+
+            if (stopDate !== undefined) {
+                localVarQueryParameter['stopDate'] = (stopDate as any instanceof Date) ?
+                    (stopDate as any).toISOString().substr(0,10) :
+                    stopDate;
+            }
+
+            if (documentFiscalPeriodFocus !== undefined) {
+                localVarQueryParameter['documentFiscalPeriodFocus'] = documentFiscalPeriodFocus;
+            }
+
+            if (prune !== undefined) {
+                localVarQueryParameter['prune'] = prune;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * FactTimeSeriesControllerApi - functional programming interface
+ * @export
+ */
+export const FactTimeSeriesControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = FactTimeSeriesControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {Array<string>} conceptNames 
+         * @param {string} [startDate] 
+         * @param {string} [stopDate] 
+         * @param {'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA'} [documentFiscalPeriodFocus] 
+         * @param {boolean} [prune] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTimeSeries(cik: string, conceptNames: Array<string>, startDate?: string, stopDate?: string, documentFiscalPeriodFocus?: 'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA', prune?: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FactTimeSeries>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTimeSeries(cik, conceptNames, startDate, stopDate, documentFiscalPeriodFocus, prune, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {string} factId 
+         * @param {Array<string>} conceptNames 
+         * @param {string} [startDate] 
+         * @param {string} [stopDate] 
+         * @param {'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA'} [documentFiscalPeriodFocus] 
+         * @param {boolean} [prune] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTimeSeriesForFact(cik: string, factId: string, conceptNames: Array<string>, startDate?: string, stopDate?: string, documentFiscalPeriodFocus?: 'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA', prune?: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FactTimeSeries>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTimeSeriesForFact(cik, factId, conceptNames, startDate, stopDate, documentFiscalPeriodFocus, prune, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * FactTimeSeriesControllerApi - factory interface
+ * @export
+ */
+export const FactTimeSeriesControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = FactTimeSeriesControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} cik 
+         * @param {Array<string>} conceptNames 
+         * @param {string} [startDate] 
+         * @param {string} [stopDate] 
+         * @param {'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA'} [documentFiscalPeriodFocus] 
+         * @param {boolean} [prune] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTimeSeries(cik: string, conceptNames: Array<string>, startDate?: string, stopDate?: string, documentFiscalPeriodFocus?: 'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA', prune?: boolean, options?: any): AxiosPromise<Array<FactTimeSeries>> {
+            return localVarFp.getTimeSeries(cik, conceptNames, startDate, stopDate, documentFiscalPeriodFocus, prune, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} cik 
+         * @param {string} factId 
+         * @param {Array<string>} conceptNames 
+         * @param {string} [startDate] 
+         * @param {string} [stopDate] 
+         * @param {'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA'} [documentFiscalPeriodFocus] 
+         * @param {boolean} [prune] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTimeSeriesForFact(cik: string, factId: string, conceptNames: Array<string>, startDate?: string, stopDate?: string, documentFiscalPeriodFocus?: 'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA', prune?: boolean, options?: any): AxiosPromise<Array<FactTimeSeries>> {
+            return localVarFp.getTimeSeriesForFact(cik, factId, conceptNames, startDate, stopDate, documentFiscalPeriodFocus, prune, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * FactTimeSeriesControllerApi - object-oriented interface
+ * @export
+ * @class FactTimeSeriesControllerApi
+ * @extends {BaseAPI}
+ */
+export class FactTimeSeriesControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} cik 
+     * @param {Array<string>} conceptNames 
+     * @param {string} [startDate] 
+     * @param {string} [stopDate] 
+     * @param {'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA'} [documentFiscalPeriodFocus] 
+     * @param {boolean} [prune] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FactTimeSeriesControllerApi
+     */
+    public getTimeSeries(cik: string, conceptNames: Array<string>, startDate?: string, stopDate?: string, documentFiscalPeriodFocus?: 'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA', prune?: boolean, options?: any) {
+        return FactTimeSeriesControllerApiFp(this.configuration).getTimeSeries(cik, conceptNames, startDate, stopDate, documentFiscalPeriodFocus, prune, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} cik 
+     * @param {string} factId 
+     * @param {Array<string>} conceptNames 
+     * @param {string} [startDate] 
+     * @param {string} [stopDate] 
+     * @param {'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA'} [documentFiscalPeriodFocus] 
+     * @param {boolean} [prune] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FactTimeSeriesControllerApi
+     */
+    public getTimeSeriesForFact(cik: string, factId: string, conceptNames: Array<string>, startDate?: string, stopDate?: string, documentFiscalPeriodFocus?: 'FY' | 'Q1' | 'Q2' | 'Q3' | 'Q4' | 'NA', prune?: boolean, options?: any) {
+        return FactTimeSeriesControllerApiFp(this.configuration).getTimeSeriesForFact(cik, factId, conceptNames, startDate, stopDate, documentFiscalPeriodFocus, prune, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
