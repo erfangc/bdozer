@@ -5,6 +5,7 @@ import {simpleNumber} from "../../../simple-number";
 import {blueGray700, highcharts} from "../../../highcharts";
 import HighchartsReact from "highcharts-react-official";
 import {Loading} from "../../Common/Svgs";
+import {Label, SubTitle} from "../../Common/Title";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -14,20 +15,27 @@ interface Props {
 export function TimeSeriesExplorer({stockAnalysis, item}: Props) {
 
     const {model} = stockAnalysis;
-    const {cik, totalRevenueConceptName} = model;
+    const {cik, totalRevenueConceptName, netIncomeConceptName} = model;
     const {historicalValue} = item;
     const factId = historicalValue?.factId;
     const timeSeriesApi = useTimeSeries()
     const [options, setOptions] = useState<Highcharts.Options>()
     const [loading, setLoading] = useState(true)
 
-    async function init() {
+    const [name, setName1] = useState<string>(totalRevenueConceptName)
+
+    function setName(name: string) {
+        setName1(name);
+        refresh(name);
+    }
+
+    async function refresh(name: string) {
         if (factId) {
             setLoading(true);
             const {data: factTimeSeries} = await timeSeriesApi.getTimeSeriesForFact(
                 cik,
                 factId,
-                [totalRevenueConceptName],
+                [name],
                 undefined,
                 undefined,
                 undefined,
@@ -73,10 +81,11 @@ export function TimeSeriesExplorer({stockAnalysis, item}: Props) {
     }
 
     useEffect(() => {
-        init()
+        refresh(name)
     }, [])
     return (
-        <div>
+        <section>
+            <Label className="mb-4">Visual Comparison</Label>
             {
                 loading
                     ?
@@ -85,6 +94,26 @@ export function TimeSeriesExplorer({stockAnalysis, item}: Props) {
                     </div>
                     : <HighchartsReact highcharts={highcharts} options={options}/>
             }
-        </div>
+            <form className="space-y-1 text-sm">
+                <div className="space-x-1 flex items-center">
+                    <input
+                        type="radio"
+                        name={totalRevenueConceptName}
+                        checked={name === totalRevenueConceptName}
+                        onClick={() => setName(totalRevenueConceptName)}
+                    />
+                    <label htmlFor={totalRevenueConceptName}>Revenue</label>
+                </div>
+                <div className="space-x-1 flex items-center">
+                    <input
+                        type="radio"
+                        name={netIncomeConceptName}
+                        checked={name === netIncomeConceptName}
+                        onClick={() => setName(netIncomeConceptName)}
+                    />
+                    <label htmlFor={netIncomeConceptName}>Net Income</label>
+                </div>
+            </form>
+        </section>
     )
 }
