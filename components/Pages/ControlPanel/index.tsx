@@ -34,9 +34,6 @@ export function ControlPanel() {
 
     async function nextPage() {
         const nextPage = state.page + 1;
-        if (nextPage * state.pageSize > findStockAnalysisResponse.totalCount) {
-            return
-        }
         const nextState = {...state, page: nextPage}
         await refreshState(nextState)
     }
@@ -111,10 +108,6 @@ export function ControlPanel() {
         init()
     }, [])
 
-    const totalCount = findStockAnalysisResponse?.totalCount;
-    const showingFrom = isNaN(totalCount) ? 0 : state.page * state.pageSize + 1;
-    const showingTo = Math.min((state.page + 1) * state.pageSize, isNaN(totalCount) ? 0 : totalCount);
-
     return (
         <main className="text-blueGray-50 container mx-auto space-y-16 py-16 px-4">
             {/* Start of filter and pagination */}
@@ -145,9 +138,6 @@ export function ControlPanel() {
                         <SecondaryButton disabled={loading} onClick={previousPage}>
                             <ChevronLeft/>
                         </SecondaryButton>
-                        <span>
-                        <b>Showing</b> {showingFrom} - {showingTo} out of {isNaN(totalCount) ? 0 : totalCount}
-                        </span>
                         <SecondaryButton disabled={loading} onClick={nextPage}><ChevronRight/></SecondaryButton>
                     </div>
                     <PublishedToggle setPublished={handleSetPublished} published={state.published}/>

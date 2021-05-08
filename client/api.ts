@@ -971,12 +971,6 @@ export interface FilingEntity {
 export interface FindStockAnalysisResponse {
     /**
      * 
-     * @type {number}
-     * @memberof FindStockAnalysisResponse
-     */
-    totalCount: number;
-    /**
-     * 
      * @type {Array<StockAnalysisProjection>}
      * @memberof FindStockAnalysisResponse
      */
