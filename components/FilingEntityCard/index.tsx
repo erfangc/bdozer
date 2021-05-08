@@ -1,6 +1,5 @@
 import React from 'react';
 import {FilingEntity} from "../../client";
-import Link from 'next/link'
 
 interface Props {
     loading: boolean
