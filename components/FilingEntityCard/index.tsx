@@ -19,13 +19,11 @@ export function FilingEntityCard({loading, filingEntity}: Props) {
                     <span className="font-semibold">{filingEntity?.name}</span>
                     <div>
                         <span className="text-xs">CIK </span>
-                        <Link href={`/control-panel/filing-entities/${filingEntity?.cik}`}>
-                            <a className="text-xs cursor-pointer space-x-1">
+                        <a className="text-xs cursor-pointer space-x-1" href={`https://www.sec.gov/edgar/browse/?CIK=${filingEntity?.cik}&owner=exclude`}>
                             <span className="text-xs text-blue-300">
                                 {filingEntity?.cik}
                             </span>
-                            </a>
-                        </Link>
+                        </a>
                     </div>
                 </div>
                 <div className="flex flex-col">
