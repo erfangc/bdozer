@@ -22,7 +22,9 @@ export function DeleteConfirmationDialog({label, message, resourceName, onDelete
         onDelete()
     }
 
-    function openModal() {
+    function openModal(event: MouseEvent<HTMLButtonElement>) {
+        event.stopPropagation();
+        event.preventDefault();
         setOpen(true)
     }
 
