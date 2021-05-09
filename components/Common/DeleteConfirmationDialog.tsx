@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, MouseEvent} from 'react'
 import {DangerButton} from "./DangerButton";
 import {Delete} from "./Svgs";
 import {Dialog, Transition} from "@headlessui/react";
@@ -15,7 +15,9 @@ export function DeleteConfirmationDialog({label, message, resourceName, onDelete
 
     const [open, setOpen] = useState(false)
 
-    function handleConfirm() {
+    function handleConfirm(event: MouseEvent<HTMLButtonElement>) {
+        event.preventDefault();
+        event.stopPropagation();
         setOpen(false)
         onDelete()
     }
