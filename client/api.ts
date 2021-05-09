@@ -1734,6 +1734,12 @@ export interface StockAnalysisProjection {
      * @memberof StockAnalysisProjection
      */
     lastUpdated?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StockAnalysisProjection
+     */
+    tags: Array<string>;
 }
 /**
  * 

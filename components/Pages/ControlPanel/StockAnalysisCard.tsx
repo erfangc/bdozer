@@ -1,65 +1,42 @@
 import {StockAnalysisProjection} from "../../../client";
-import {useRouter} from "next/router";
-import {PrimaryButton} from "../../Common/PrimaryButton";
 import React from "react";
-import {Edit} from "../../Common/Svgs";
 import {Published} from "../../Publish/Publish";
 import {DeleteConfirmationDialog} from "../../Common/DeleteConfirmationDialog";
+import Link from "next/link";
+import {TagDisplay} from "../../TagInput/TagDisplay";
 
 interface Props {
+    first?: boolean
+    last?: boolean
     stockAnalysis: StockAnalysisProjection
     onDelete: (string) => void
 }
 
-export function StockAnalysisCard({stockAnalysis, onDelete}: Props) {
+export function StockAnalysisCard({stockAnalysis, onDelete, first, last}: Props) {
 
-    const router = useRouter()
-    const {ticker, name, lastUpdated} = stockAnalysis
+    const {ticker, name, lastUpdated, tags} = stockAnalysis
     const id = stockAnalysis['_id']
 
-    function navigateToStockAnalysis(id: string) {
-        router.push(`/control-panel/stock-analyses/${id}`)
-    }
-
     return (
-        <li key={id} className="px-4 py-6 bg-blueGray-700 flex justify-between relative">
-            {stockAnalysis.published ? <Published/> : null}
-            <div className="flex flex-col space-y-3">
-                <span className="flex items-center space-x-1">
-                    <span className="text-xl font-extrabold">{ticker}</span>
-                </span>
-                <span className="text-blueGray-300 font-extrabold">{name}</span>
-                <span className="text-xs text-blueGray-300">{new Date(lastUpdated).toLocaleString()}</span>
-            </div>
-            <div className="flex flex-col space-y-2">
-                <PrimaryButton onClick={() => navigateToStockAnalysis(id)}>
-                    <Edit/><span className="pl-1">Edit</span>
-                </PrimaryButton>
-                <DeleteConfirmationDialog onDelete={() => onDelete(id)} resourceName={name} label="Delete"/>
-            </div>
-        </li>
-    )
-}
-
-export function LoadingSkeletons() {
-    return <>
-        {[1, 2, 3, 4].map(i => (
-            <li
-                key={i}
-                className="bg-blueGray-700 px-6 py-6 shadow-md flex-col flex space-y-4 cursor-pointer transition ease-linear"
-            >
-                <div className="flex justify-between">
-                    <div className="flex flex-col space-y-4">
-                        <span className="w-48 h-8 bg-blueGray-500 animate-pulse"/>
-                        <span className="w-48 h-4 bg-blueGray-500 animate-pulse"/>
-                        <span className="w-48 h-4 bg-blueGray-500 animate-pulse"/>
+        <Link href={`/control-panel/stock-analyses/${id}`}>
+            <a
+                key={id}
+                className={
+                    `px-4 py-4 cursor-pointer hover:bg-blueGray-800 bg-blueGray-900 flex border-b border-r border-l border-blueGray-500 justify-between relative ${first ? 'rounded-t border-t' : ''} ${last ? 'rounded-b border-b' :''}`
+                }>
+                {stockAnalysis.published ? <Published/> : null}
+                <div>
+                    <div className="flex items-center space-x-2">
+                        <span className="text-blueGray-300 font-extrabold">{name}</span>
+                        <span className="text-xl font-extrabold">({ticker})</span>
                     </div>
-                    <div className="flex flex-col space-y-2">
-                        <span className="w-20 h-8 bg-blueGray-500 animate-pulse"/>
-                        <span className="w-20 h-8 bg-blueGray-500 animate-pulse"/>
-                    </div>
+                    <div className="text-xs text-blueGray-300">{new Date(lastUpdated).toLocaleString()}</div>
                 </div>
-            </li>
-        ))}
-    </>
+                <div className="items-center justify-end space-x-2 hidden md:flex">
+                    {tags.map(tag => <TagDisplay tag={{createdAt:'',_id: tag, description: tag} as any} key={tag}/>)}
+                    <DeleteConfirmationDialog onDelete={() => onDelete(id)} resourceName={name}/>
+                </div>
+            </a>
+        </Link>
+    )
 }

@@ -62,7 +62,7 @@ export function PercentOfRevenueEditor({item, model, onSubmit}: Props) {
                 ?
                     <div className="space-y-2 flex flex-col mt-2">
                         <label className="text-sm">Quick Autofill Options:</label>
-                        <div className="flex space-x-2">
+                        <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                             {
                                 percentOfRevenueAutoFills.map(autoFillOption => {
                                     const percentOfRevenue = autoFillOption.percentOfRevenue.percentOfRevenue;

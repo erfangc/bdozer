@@ -3,7 +3,7 @@ import {useStockAnalysis} from "../../../api-hooks";
 import {FindStockAnalysisResponse, Tag} from "../../../client";
 import {PrimaryButton} from "../../Common/PrimaryButton";
 import {Title} from "../../Common/Title";
-import {LoadingSkeletons, StockAnalysisCard} from "./StockAnalysisCard";
+import {StockAnalysisCard} from "./StockAnalysisCard";
 import {useRouter} from "next/router";
 import {ChevronLeft, ChevronRight, Plus, SearchIcon} from "../../Common/Svgs";
 import {SecondaryButton} from "../../Common/SecondaryButton";
@@ -108,11 +108,12 @@ export function ControlPanel() {
         init()
     }, [])
 
+    const stockAnalyses = findStockAnalysisResponse?.stockAnalyses || [];
     return (
-        <main className="text-blueGray-50 container mx-auto space-y-16 py-16 px-4">
+        <main className="text-blueGray-50 container mx-auto max-w-6xl space-y-8 py-12 px-4">
             {/* Start of filter and pagination */}
             <div className="space-y-6">
-                <Title>In Progress Analyses</Title>
+                <Title>Stock Analyses</Title>
                 <div className="bg-blueGray-700 px-4 rounded">
                     <SearchIcon/>
                     <input
@@ -134,31 +135,29 @@ export function ControlPanel() {
             {/* Pagination */}
             <div>
                 <div className="mb-6 flex flex-col space-y-2 md:flex-row md:space-y-0 md:justify-between">
+                    <PublishedToggle setPublished={handleSetPublished} published={state.published}/>
                     <div className="flex items-center space-x-2 text-blueGray-400">
-                        <SecondaryButton disabled={loading} onClick={previousPage}>
-                            <ChevronLeft/>
-                        </SecondaryButton>
+                        <SecondaryButton disabled={loading} onClick={previousPage}><ChevronLeft/></SecondaryButton>
                         <SecondaryButton disabled={loading} onClick={nextPage}><ChevronRight/></SecondaryButton>
                     </div>
-                    <PublishedToggle setPublished={handleSetPublished} published={state.published}/>
                 </div>
 
                 {/* Stop of filtering and pagination */}
-                <div className="space-y-8">
-                    <ul className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
-                        {loading
-                            ? <LoadingSkeletons/>
-                            : findStockAnalysisResponse
-                                ?.stockAnalyses
-                                ?.map(stockAnalysis => (
-                                    <StockAnalysisCard
-                                        key={stockAnalysis['_id']} stockAnalysis={stockAnalysis} onDelete={deleteStockAnalysis}
-                                    />
-                                ))
-                        }
-                    </ul>
+                <div>
+                    {loading
+                        ? null
+                        : stockAnalyses
+                            .map((stockAnalysis, idx) => (
+                                <StockAnalysisCard
+                                    first={idx === 0}
+                                    last={idx === stockAnalyses.length - 1}
+                                    key={stockAnalysis['_id']}
+                                    stockAnalysis={stockAnalysis}
+                                    onDelete={deleteStockAnalysis}
+                                />
+                            ))
+                    }
                 </div>
-
             </div>
 
         </main>

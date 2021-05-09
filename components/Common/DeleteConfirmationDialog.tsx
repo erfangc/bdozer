@@ -31,7 +31,7 @@ export function DeleteConfirmationDialog({label, message, resourceName, onDelete
     return (
         <>
             <DangerButton onClick={openModal}>
-                <Delete/><span className="pl-1">{label}</span>
+                <Delete/>{label ? <span className="pl-1">{label}</span> : null}
             </DangerButton>
             <Transition show={open}>
                 <Dialog
