@@ -67,7 +67,7 @@ export function ControlPanel() {
     }
 
     async function refreshState(nextState: ControlStates) {
-        router.push({
+        router.replace({
             query: nextState as any
         })
         setLoading(true)
