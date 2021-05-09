@@ -11,17 +11,11 @@ import {PublishedToggle} from "./PublishedToggle";
 import {TagInput} from "../../TagInput";
 
 interface ControlStates {
-    page: number
-    pageSize: number
+    page?: number
+    pageSize?: number
     term?: string
     published?: boolean
-    tags: string[]
-}
-
-const initialState: ControlStates = {
-    tags: [],
-    pageSize: 10,
-    page: 0,
+    tags: string | string[]
 }
 
 export function ControlPanel() {
@@ -30,19 +24,24 @@ export function ControlPanel() {
     const stockAnalysisCrud = useStockAnalysis()
     const [findStockAnalysisResponse, setFindStockAnalysisResponse] = useState<FindStockAnalysisResponse>()
     const [loading, setLoading] = useState(false)
-    const [state, setState] = useState(initialState)
+
+    const state:ControlStates = router.query as any
+    const page = state.page || 0;
+    const tags = state.tags === undefined ? [] : typeof state.tags === 'string' ? [state.tags] : state.tags;
+    const term = state.term;
+    const published = state.published;
 
     async function nextPage() {
-        const nextPage = state.page + 1;
+        const nextPage = page + 1;
         const nextState = {...state, page: nextPage}
         await refreshState(nextState)
     }
 
     async function previousPage() {
-        if (state.page === 0) {
+        if (page === 0) {
             return
         }
-        const previousPage = state.page - 1;
+        const previousPage = page - 1;
         const nextState: ControlStates = {...state, page: previousPage}
         await refreshState(nextState)
     }
@@ -68,7 +67,9 @@ export function ControlPanel() {
     }
 
     async function refreshState(nextState: ControlStates) {
-        setState(nextState)
+        router.push({
+            query: nextState as any
+        })
         setLoading(true)
         const skip = nextState.page * nextState.pageSize
         const limit = nextState.pageSize
@@ -80,7 +81,7 @@ export function ControlPanel() {
             skip,
             limit,
             nextState.term === '' ? undefined : nextState.term,
-            nextState.tags,
+            typeof nextState.tags === 'string'? [nextState.tags] : nextState.tags,
         )
         setFindStockAnalysisResponse(resp.data)
         setLoading(false)
@@ -117,7 +118,7 @@ export function ControlPanel() {
                 <div className="bg-blueGray-700 px-4 rounded">
                     <SearchIcon/>
                     <input
-                        value={state.term}
+                        value={term}
                         onChange={handleTermChange}
                         autoFocus
                         placeholder="Filter analyses"
@@ -128,14 +129,14 @@ export function ControlPanel() {
                     <PrimaryButton onClick={navigateToNew} className="h-12">
                         <Plus/><span className="pl-1">Create New</span>
                     </PrimaryButton>
-                    <TagInput selected={state.tags} onChange={updateTags}/>
+                    <TagInput selected={tags} onChange={updateTags}/>
                 </div>
             </div>
 
             {/* Pagination */}
             <div>
                 <div className="mb-6 flex flex-col space-y-2 md:flex-row md:space-y-0 md:justify-between">
-                    <PublishedToggle setPublished={handleSetPublished} published={state.published}/>
+                    <PublishedToggle setPublished={handleSetPublished} published={published}/>
                     <div className="flex items-center space-x-2 text-blueGray-400">
                         <SecondaryButton disabled={loading} onClick={previousPage}><ChevronLeft/></SecondaryButton>
                         <SecondaryButton disabled={loading} onClick={nextPage}><ChevronRight/></SecondaryButton>

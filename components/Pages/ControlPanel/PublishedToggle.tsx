@@ -12,7 +12,6 @@ export function PublishedToggle({setPublished, published}: Props) {
         setPublished(false)
     }
 
-
     async function viewPublished() {
         setPublished(true)
     }
