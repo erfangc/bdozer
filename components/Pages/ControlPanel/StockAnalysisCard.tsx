@@ -24,9 +24,16 @@ export function StockAnalysisCard({stockAnalysis, onDelete, first, last}: Props)
                 className={
                     `px-4 py-4 cursor-pointer hover:bg-blueGray-800 bg-blueGray-900 flex border-b border-r border-l border-blueGray-500 justify-between relative ${first ? 'rounded-t border-t' : ''} ${last ? 'rounded-b border-b' :''}`
                 }>
-                {stockAnalysis.published ? <Published/> : null}
                 <div>
                     <div className="flex items-center space-x-2">
+                        {
+                            stockAnalysis.published
+                                ?
+                                <span className="text-xs py-0.5 px-1 rounded bg-amber-500 text-blueGray-800">
+                                    Published
+                                </span>
+                                : null
+                        }
                         <span className="text-blueGray-300 font-extrabold">{name}</span>
                         <span className="text-xl font-extrabold">({ticker})</span>
                     </div>
