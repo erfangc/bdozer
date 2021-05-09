@@ -11,8 +11,8 @@ import {PublishedToggle} from "./PublishedToggle";
 import {TagInput} from "../../TagInput";
 
 interface ControlStates {
-    page?: number
-    pageSize?: number
+    page?: string
+    pageSize?: string
     term?: string
     published?: boolean
     tags: string | string[]
@@ -25,15 +25,15 @@ export function ControlPanel() {
     const [findStockAnalysisResponse, setFindStockAnalysisResponse] = useState<FindStockAnalysisResponse>()
     const [loading, setLoading] = useState(false)
 
-    const state:ControlStates = router.query as any
-    const page = state.page || 0;
+    const state: ControlStates = router.query as any
+    const page:number = state.page ? parseFloat(state.page) : 0;
     const tags = state.tags === undefined ? [] : typeof state.tags === 'string' ? [state.tags] : state.tags;
     const term = state.term;
     const published = state.published;
 
     async function nextPage() {
         const nextPage = page + 1;
-        const nextState = {...state, page: nextPage}
+        const nextState = {...state, page: nextPage.toString()}
         await refreshState(nextState)
     }
 
@@ -42,7 +42,7 @@ export function ControlPanel() {
             return
         }
         const previousPage = page - 1;
-        const nextState: ControlStates = {...state, page: previousPage}
+        const nextState: ControlStates = {...state, page: previousPage.toString()}
         await refreshState(nextState)
     }
 
@@ -58,21 +58,22 @@ export function ControlPanel() {
         event.preventDefault()
         const {target} = event
         const nextTerm = target.value;
-        const nextState: ControlStates = {...state, term: nextTerm, page: 0,}
+        const nextState: ControlStates = {...state, term: nextTerm, page: '0',}
         await refreshState(nextState)
     }
 
     async function init() {
-        await refreshState(state)
+        const initialState = {...state, page: '0', pageSize: '10'};
+        await refreshState(initialState)
     }
 
     async function refreshState(nextState: ControlStates) {
         router.replace({
             query: nextState as any
-        })
+        });
         setLoading(true)
-        const skip = nextState.page * nextState.pageSize
-        const limit = nextState.pageSize
+        const skip = parseFloat(nextState.page) * parseFloat(nextState.pageSize)
+        const limit = parseFloat(nextState.pageSize)
         const resp = await stockAnalysisCrud.findStockAnalyses(
             nextState.published,
             undefined,
@@ -100,7 +101,7 @@ export function ControlPanel() {
         const nextState: ControlStates = {
             ...state,
             published: value,
-            page: 0,
+            page: '0',
         }
         await refreshState(nextState)
     }
