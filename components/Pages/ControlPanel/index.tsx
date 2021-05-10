@@ -26,7 +26,7 @@ export function ControlPanel() {
     const [loading, setLoading] = useState(false)
 
     const state: ControlStates = router.query as any
-    const page:number = state.page ? parseFloat(state.page) : 0;
+    const page = parseFloat(state.page);
     const tags = state.tags === undefined ? [] : typeof state.tags === 'string' ? [state.tags] : state.tags;
     const term = state.term;
     const published = state.published;
@@ -63,8 +63,14 @@ export function ControlPanel() {
     }
 
     async function init() {
-        const initialState = {...state, page: '0', pageSize: '10'};
-        await refreshState(initialState)
+        let initialState = {...state};
+        if (!state.page) {
+            initialState.page = '0';
+        }
+        if (!state.pageSize) {
+            initialState.pageSize = '10';
+        }
+        await refreshState(initialState);
     }
 
     async function refreshState(nextState: ControlStates) {
@@ -111,6 +117,7 @@ export function ControlPanel() {
     }, [])
 
     const stockAnalyses = findStockAnalysisResponse?.stockAnalyses || [];
+
     return (
         <main className="text-blueGray-50 container mx-auto max-w-6xl space-y-8 py-12 px-4">
             {/* Start of filter and pagination */}

@@ -88,8 +88,9 @@ export default function Editor(props: Props) {
             </div>
             <div className="pt-6">
                 <div className="flex space-x-4 mb-8">
-                    <Tab active={tab === 'income statement'} onClick={() => setTab('income statement')}>Income
-                        Statement</Tab>
+                    <Tab active={tab === 'income statement'} onClick={() => setTab('income statement')}>
+                        Income Statement
+                    </Tab>
                     <Tab active={tab === 'balance sheet'} onClick={() => setTab('balance sheet')}>Balance Sheet</Tab>
                 </div>
                 <div className="space-y-2">
