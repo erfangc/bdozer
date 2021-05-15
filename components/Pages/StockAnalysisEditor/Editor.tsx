@@ -35,7 +35,9 @@ export default function Editor(props: Props) {
         const periods = parseFloat(newValue);
         const updatedStockAnalysis: StockAnalysis2 = {
             ...stockAnalysis,
-            model: {...stockAnalysis.model, periods}
+            model: {
+                ...stockAnalysis.model, periods,
+            }
         }
         setStockAnalysis(updatedStockAnalysis)
     }
