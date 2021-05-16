@@ -16,7 +16,7 @@ export function KPICard({itemWrapper}: { itemWrapper: ItemWrapper }) {
     }
 
     return (
-        <div className="px-6 py-3 shadow rounded bg-blueGray-800 space-y-1 my-2">
+        <div className="px-4 py-2 shadow rounded bg-blueGray-800 space-y-1 my-2 w-full">
             <p className="text-sm text-blueGray-300">
                 {description ?? name}
             </p>

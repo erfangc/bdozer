@@ -7,7 +7,7 @@ import {ItemWrapperReact} from "../components/KPIVisualizer/ItemWrapperReact";
 export default function KpiVisualizer() {
     return (
         <UnsecuredApp>
-            <main className="max-w-prose container mx-auto pt-24">
+            <main className="max-w-prose container mx-auto pt-24 px-4">
                 <ItemWrapperReact itemWrapper={data} root/>
             </main>
         </UnsecuredApp>
@@ -32,7 +32,7 @@ const data: ItemWrapper = {
             },
             value: 115885000000,
             format: "money",
-            operator: "addition",
+            operator: "multiplication",
             children: [
                 {
                     item: {
