@@ -4,6 +4,7 @@ import {useCompanyKPIs} from "../../api-hooks";
 import {PrimaryButton} from "../Common/PrimaryButton";
 import {useRouter} from "next/router";
 import {CompanyKPIs} from "../../client";
+import {GhostButton} from "../Common/GhostButton";
 
 export function KPIVisualizer() {
 
@@ -24,8 +25,19 @@ export function KPIVisualizer() {
         setLoading(true)
         try {
             await companyKPIsApi.saveCompanyKPIs(companyKPIs);
-        } catch (e) {}
+        } catch (e) {
+        }
         setLoading(false)
+    }
+
+    async function evaluate() {
+        setLoading(true);
+        try {
+            const {data} = await companyKPIsApi.evaluateCompanyKPIs(companyKPIs)
+            setCompanyKPIs(data);
+        } catch (e) {
+        }
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -47,9 +59,14 @@ export function KPIVisualizer() {
                 companyKPIs={companyKPIs}
                 item={items.find(it => it.name === revenueItemName)}
             />
-            <PrimaryButton disabled={loading} onClick={saveCompanyKPIs} className="mt-6">
-                Save
-            </PrimaryButton>
+            <div className="mt-6 space-x-2">
+                <PrimaryButton disabled={loading} onClick={evaluate}>
+                    Evaluate
+                </PrimaryButton>
+                <GhostButton disabled={loading} onClick={saveCompanyKPIs}>
+                    Save
+                </GhostButton>
+            </div>
         </main>
     );
 

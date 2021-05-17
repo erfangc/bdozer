@@ -2157,9 +2157,9 @@ export const CompanyKpIsControllerApiAxiosParamCreator = function (configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        evaluate1: async (companyKPIs: CompanyKPIs, options: any = {}): Promise<RequestArgs> => {
+        evaluateCompanyKPIs: async (companyKPIs: CompanyKPIs, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'companyKPIs' is not null or undefined
-            assertParamExists('evaluate1', 'companyKPIs', companyKPIs)
+            assertParamExists('evaluateCompanyKPIs', 'companyKPIs', companyKPIs)
             const localVarPath = `/api/company-kpis/evaluate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2270,8 +2270,8 @@ export const CompanyKpIsControllerApiFp = function(configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async evaluate1(companyKPIs: CompanyKPIs, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyKPIs>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.evaluate1(companyKPIs, options);
+        async evaluateCompanyKPIs(companyKPIs: CompanyKPIs, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyKPIs>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.evaluateCompanyKPIs(companyKPIs, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2310,8 +2310,8 @@ export const CompanyKpIsControllerApiFactory = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        evaluate1(companyKPIs: CompanyKPIs, options?: any): AxiosPromise<CompanyKPIs> {
-            return localVarFp.evaluate1(companyKPIs, options).then((request) => request(axios, basePath));
+        evaluateCompanyKPIs(companyKPIs: CompanyKPIs, options?: any): AxiosPromise<CompanyKPIs> {
+            return localVarFp.evaluateCompanyKPIs(companyKPIs, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2348,8 +2348,8 @@ export class CompanyKpIsControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CompanyKpIsControllerApi
      */
-    public evaluate1(companyKPIs: CompanyKPIs, options?: any) {
-        return CompanyKpIsControllerApiFp(this.configuration).evaluate1(companyKPIs, options).then((request) => request(this.axios, this.basePath));
+    public evaluateCompanyKPIs(companyKPIs: CompanyKPIs, options?: any) {
+        return CompanyKpIsControllerApiFp(this.configuration).evaluateCompanyKPIs(companyKPIs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
