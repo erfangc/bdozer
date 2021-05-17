@@ -2153,6 +2153,41 @@ export const CompanyKpIsControllerApiAxiosParamCreator = function (configuration
     return {
         /**
          * 
+         * @param {CompanyKPIs} companyKPIs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        evaluate1: async (companyKPIs: CompanyKPIs, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companyKPIs' is not null or undefined
+            assertParamExists('evaluate1', 'companyKPIs', companyKPIs)
+            const localVarPath = `/api/company-kpis/evaluate`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(companyKPIs, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2231,6 +2266,16 @@ export const CompanyKpIsControllerApiFp = function(configuration?: Configuration
     return {
         /**
          * 
+         * @param {CompanyKPIs} companyKPIs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async evaluate1(companyKPIs: CompanyKPIs, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyKPIs>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.evaluate1(companyKPIs, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2261,6 +2306,15 @@ export const CompanyKpIsControllerApiFactory = function (configuration?: Configu
     return {
         /**
          * 
+         * @param {CompanyKPIs} companyKPIs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        evaluate1(companyKPIs: CompanyKPIs, options?: any): AxiosPromise<CompanyKPIs> {
+            return localVarFp.evaluate1(companyKPIs, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2287,6 +2341,17 @@ export const CompanyKpIsControllerApiFactory = function (configuration?: Configu
  * @extends {BaseAPI}
  */
 export class CompanyKpIsControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {CompanyKPIs} companyKPIs 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CompanyKpIsControllerApi
+     */
+    public evaluate1(companyKPIs: CompanyKPIs, options?: any) {
+        return CompanyKpIsControllerApiFp(this.configuration).evaluate1(companyKPIs, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {string} id 
