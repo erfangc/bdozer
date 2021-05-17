@@ -1174,6 +1174,12 @@ export interface Item {
     sumOfOtherItems?: SumOfOtherItems;
     /**
      * 
+     * @type {ProductOfOtherItems}
+     * @memberof Item
+     */
+    productOfOtherItems?: ProductOfOtherItems;
+    /**
+     * 
      * @type {ManualProjections}
      * @memberof Item
      */
@@ -1217,6 +1223,7 @@ export interface Item {
 export enum ItemTypeEnum {
     CompoundedGrowth = 'CompoundedGrowth',
     SumOfOtherItems = 'SumOfOtherItems',
+    ProductOfOtherItems = 'ProductOfOtherItems',
     Custom = 'Custom',
     Discrete = 'Discrete',
     ManualProjections = 'ManualProjections',
@@ -1510,6 +1517,32 @@ export interface PercentOfRevenueAutoFill {
      * @memberof PercentOfRevenueAutoFill
      */
     percentOfRevenue: PercentOfRevenue;
+}
+/**
+ * 
+ * @export
+ * @interface ProductComponent
+ */
+export interface ProductComponent {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProductComponent
+     */
+    itemName: string;
+}
+/**
+ * 
+ * @export
+ * @interface ProductOfOtherItems
+ */
+export interface ProductOfOtherItems {
+    /**
+     * 
+     * @type {Array<ProductComponent>}
+     * @memberof ProductOfOtherItems
+     */
+    components: Array<ProductComponent>;
 }
 /**
  * 
