@@ -1,5 +1,4 @@
-import {KPI} from "./KPI";
-import {Item} from "../../client";
+import {Item, KPI} from "../../client";
 
 export interface KPIContext {
     kpis: KPI[]

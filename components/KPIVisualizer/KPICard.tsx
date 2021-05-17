@@ -1,18 +1,18 @@
 import React from 'react';
 import {simpleMoney, simpleNumber, simplePercent} from "../../simple-number";
-import {Item} from "../../client";
-import {KPIContext} from "./KPIReact";
+import {Item, KPIFormatEnum} from "../../client";
+import {KPIContext} from "./KPIContext";
 
 export function KPICard({item, kpiContext: {kpis}}: { item: Item, kpiContext: KPIContext }) {
     const {value, format} = kpis.find(it => it.itemName === item.name)
     const {name, description} = item
     let val = null;
 
-    if (format === 'percent') {
+    if (format === KPIFormatEnum.Percent) {
         val = simplePercent(value)
-    } else if (format === 'number') {
+    } else if (format === KPIFormatEnum.Number) {
         val = simpleNumber(value)
-    } else if (format === 'money') {
+    } else if (format === KPIFormatEnum.Money) {
         val = simpleMoney(value)
     }
 

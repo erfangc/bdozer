@@ -235,6 +235,43 @@ export interface Commentary {
 /**
  * 
  * @export
+ * @interface CompanyKPIs
+ */
+export interface CompanyKPIs {
+    /**
+     * 
+     * @type {string}
+     * @memberof CompanyKPIs
+     */
+    get_id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CompanyKPIs
+     */
+    cik: string;
+    /**
+     * 
+     * @type {Array<KPI>}
+     * @memberof CompanyKPIs
+     */
+    kpis: Array<KPI>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CompanyKPIs
+     */
+    revenueItemName: string;
+    /**
+     * 
+     * @type {Array<Item>}
+     * @memberof CompanyKPIs
+     */
+    items: Array<Item>;
+}
+/**
+ * 
+ * @export
  * @interface Component
  */
 export interface Component {
@@ -1235,6 +1272,60 @@ export enum ItemTypeEnum {
 /**
  * 
  * @export
+ * @interface KPI
+ */
+export interface KPI {
+    /**
+     * 
+     * @type {string}
+     * @memberof KPI
+     */
+    itemName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KPI
+     */
+    description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof KPI
+     */
+    format: KPIFormatEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof KPI
+     */
+    value: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof KPI
+     */
+    date: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KPI
+     */
+    collapse?: boolean;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum KPIFormatEnum {
+    Money = 'MONEY',
+    Percent = 'PERCENT',
+    Number = 'NUMBER'
+}
+
+/**
+ * 
+ * @export
  * @interface ManualProjection
  */
 export interface ManualProjection {
@@ -2050,6 +2141,170 @@ export class CommentsControllerApi extends BaseAPI {
      */
     public postComment(comment: Comment, options?: any) {
         return CommentsControllerApiFp(this.configuration).postComment(comment, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * CompanyKpIsControllerApi - axios parameter creator
+ * @export
+ */
+export const CompanyKpIsControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCompanyKPIs: async (id: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getCompanyKPIs', 'id', id)
+            const localVarPath = `/api/company-kpis/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {CompanyKPIs} [companyKPIs] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveCompanyKPIs: async (companyKPIs?: CompanyKPIs, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/company-kpis`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(companyKPIs, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CompanyKpIsControllerApi - functional programming interface
+ * @export
+ */
+export const CompanyKpIsControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CompanyKpIsControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCompanyKPIs(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CompanyKPIs>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCompanyKPIs(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {CompanyKPIs} [companyKPIs] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveCompanyKPIs(companyKPIs?: CompanyKPIs, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveCompanyKPIs(companyKPIs, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * CompanyKpIsControllerApi - factory interface
+ * @export
+ */
+export const CompanyKpIsControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CompanyKpIsControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCompanyKPIs(id: string, options?: any): AxiosPromise<CompanyKPIs> {
+            return localVarFp.getCompanyKPIs(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {CompanyKPIs} [companyKPIs] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveCompanyKPIs(companyKPIs?: CompanyKPIs, options?: any): AxiosPromise<void> {
+            return localVarFp.saveCompanyKPIs(companyKPIs, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * CompanyKpIsControllerApi - object-oriented interface
+ * @export
+ * @class CompanyKpIsControllerApi
+ * @extends {BaseAPI}
+ */
+export class CompanyKpIsControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CompanyKpIsControllerApi
+     */
+    public getCompanyKPIs(id: string, options?: any) {
+        return CompanyKpIsControllerApiFp(this.configuration).getCompanyKPIs(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {CompanyKPIs} [companyKPIs] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CompanyKpIsControllerApi
+     */
+    public saveCompanyKPIs(companyKPIs?: CompanyKPIs, options?: any) {
+        return CompanyKpIsControllerApiFp(this.configuration).saveCompanyKPIs(companyKPIs, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

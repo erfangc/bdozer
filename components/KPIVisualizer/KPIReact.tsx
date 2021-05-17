@@ -14,15 +14,15 @@ export interface Props {
 
 export function KPIReact(props: Props) {
     const {
-        kpiContext: {
-            items
-        },
+        kpiContext: {kpis, items},
         item,
         root,
         lastChild,
         parentOperator,
         kpiContext,
     } = props;
+
+    const kpi = kpis.find(it=>it.itemName === item.name)
 
     /*
     Figure out the children of this component
@@ -40,14 +40,16 @@ export function KPIReact(props: Props) {
     const children = childrenOf(item);
 
     /*
-    this is a recursive component
+    This is a recursive component
     the stopping condition: this item is either collapsed or have no more children
      */
     const operator = !lastChild && !item
         ?
         <div className="ml-4 text-xl font-extrabold">
-            {parentOperator === ItemTypeEnum.ProductOfOtherItems
-                ? '+' : parentOperator === ItemTypeEnum.SumOfOtherItems ? 'x' : null}
+            {
+                parentOperator === ItemTypeEnum.ProductOfOtherItems ? '+'
+                    : parentOperator === ItemTypeEnum.SumOfOtherItems ? 'x' : null
+            }
         </div>
         : null;
 
@@ -60,19 +62,24 @@ export function KPIReact(props: Props) {
             {!root ? <Arrow className="place-self-center text-blueGray-500"/> : null}
         </div>
 
-    if (children.length === 0) {
-        // stopping condition
+    if (children.length === 0 || kpi.collapse) {
+        /*
+        Stopping condition
+         */
         return selfCard;
     } else {
-        // separate children into those with and without grandchildren
-        // those without grand children should be rendered immediately
+        /*
+        Separate children into those with and without grandchildren
+        those without grand children should be rendered immediately
+         */
         const withOutGrandChildren = children
             .filter(child => childrenOf(child).length === 0)
         const withGrandChildren = children
             .filter(child => childrenOf(child).length !== 0)
 
-        // render children recursively (important to render children first)
-        // then selfCard
+        /*
+        Render children recursively (important to render children first) then selfCard
+         */
         const childrenCard = [
             ...withGrandChildren,
             ...withOutGrandChildren,
