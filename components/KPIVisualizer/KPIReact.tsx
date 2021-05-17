@@ -3,6 +3,7 @@ import {KPICard} from "./KPICard";
 import {Arrow} from "./Arrow";
 import {Item, ItemTypeEnum} from "../../client";
 import {KPIContext} from "./KPIContext";
+import {Operator} from "./Operator";
 
 export interface Props {
     kpiContext: KPIContext
@@ -14,27 +15,26 @@ export interface Props {
 
 export function KPIReact(props: Props) {
     const {
-        kpiContext: {kpis, items},
+        kpiContext: {
+            kpis, items
+        },
         item,
-        root,
         lastChild,
         parentOperator,
         kpiContext,
     } = props;
 
-    const kpi = kpis.find(it=>it.itemName === item.name)
+    const kpi = kpis.find(it => it.itemName === item.name)
 
     /*
     Figure out the children of this component
      */
     function childrenOf(item: Item): Item[] {
         if (item.type === ItemTypeEnum.ProductOfOtherItems) {
-            const productOfOtherItems = item.productOfOtherItems;
-            const productComponents = productOfOtherItems.components;
+            const productComponents = item.productOfOtherItems.components;
             return productComponents.map(component => items.find(it => it.name === component.itemName));
         } else if (item.type === ItemTypeEnum.SumOfOtherItems) {
-            const sumOfOtherItems = item.sumOfOtherItems;
-            const components = sumOfOtherItems.components;
+            const components = item.sumOfOtherItems.components;
             return components.map(component => items.find(it => it.name === component.itemName));
         } else {
             return [];
@@ -47,28 +47,18 @@ export function KPIReact(props: Props) {
     This is a recursive component
     the stopping condition: this item is either collapsed or have no more children
      */
-    const operator = !lastChild
-        ?
-        <div className="ml-4 text-xl font-extrabold">
-            {
-                parentOperator === ItemTypeEnum.ProductOfOtherItems ? '+'
-                    : parentOperator === ItemTypeEnum.SumOfOtherItems ? 'x' : null
-            }
-        </div>
-        : null;
-
     const selfCard =
         <div className="flex flex-col self-end">
             <div className="flex items-center w-full">
                 <KPICard item={item} kpiContext={kpiContext}/>
-                {operator}
+                {!lastChild ? <Operator itemType={parentOperator}/> : null}
             </div>
         </div>
 
+    /*
+    Stopping condition
+     */
     if (children.length === 0 || kpi.collapse) {
-        /*
-        Stopping condition
-         */
         return selfCard;
     } else {
         /*
@@ -99,7 +89,7 @@ export function KPIReact(props: Props) {
             <div>
                 <div className="flex space-x-4">{childrenCard}</div>
                 <div className="text-center">
-                    {/* draw the arrow that connects the layers */}
+                    {/* Draw the arrow that connects the layers */}
                     <Arrow className="inline text-blueGray-400"/>
                 </div>
                 {selfCard}
