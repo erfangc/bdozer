@@ -7,26 +7,36 @@ import {Operator} from "./Operator";
 export interface Props {
     companyKPIs: CompanyKPIs
     item: Item
-    root?: boolean
+    parent?: Item
     lastChild?: boolean
-    parentOperator?: ItemTypeEnum
+    onAttemptToAddSibling: (self: Item, parent?:Item) => void
 }
 
+/**
+ * This component renders a single KPI item
+ * for the KPI modeling effort
+ *
+ * Where the passed in Item have children, the children will be recursively rendered. This component
+ * exposes methods for triggering edit operations as well, though the actual editor components will be separate
+ * @param props
+ * @constructor
+ */
 export function KPIReact(props: Props) {
     const {
+        parent,
         companyKPIs,
         companyKPIs: {
             kpis, items
         },
         item,
         lastChild,
-        parentOperator,
+        onAttemptToAddSibling,
     } = props;
 
     const kpi = kpis.find(it => it.itemName === item.name)
 
     /*
-    Figure out the children of this component
+    Function to figure out the children of this component
      */
     function childrenOf(item: Item): Item[] {
         if (item.type === ItemTypeEnum.ProductOfOtherItems) {
@@ -49,8 +59,8 @@ export function KPIReact(props: Props) {
     const selfCard =
         <div className="flex flex-col self-end">
             <div className="flex items-center w-full">
-                <KPICard item={item} companyKPIs={companyKPIs} period={0}/>
-                {!lastChild ? <Operator itemType={parentOperator}/> : null}
+                <KPICard item={item} companyKPIs={companyKPIs} period={0} onAttemptToAddSibling={() => onAttemptToAddSibling(item, parent)}/>
+                {!lastChild ? <Operator itemType={parent?.type}/> : null}
             </div>
         </div>
 
@@ -60,11 +70,12 @@ export function KPIReact(props: Props) {
     if (children.length === 0 || kpi.collapse) {
         return selfCard;
     } else {
+        // the parent item in this recursive call is the item being rendered in this cycle
         /*
         Separate children into those with and without grandchildren
         those without grand children should be rendered immediately
          */
-        const withOutGrandChildren = children
+        const withoutGrandChildren = children
             .filter(child => childrenOf(child).length === 0)
         const withGrandChildren = children
             .filter(child => childrenOf(child).length !== 0)
@@ -74,13 +85,17 @@ export function KPIReact(props: Props) {
          */
         const childrenCard = [
             ...withGrandChildren,
-            ...withOutGrandChildren,
+            ...withoutGrandChildren,
         ].map((child, idx) => (
+            /*
+            Pass onAttemptToAddSibling on the call to children, as invocation of this will bubble with the correct self, parent
+            */
             <KPIReact
-                parentOperator={item.type}
+                parent={item}
                 companyKPIs={companyKPIs}
                 item={child}
                 lastChild={idx === children.length - 1}
+                onAttemptToAddSibling={onAttemptToAddSibling}
             />
         ));
 
