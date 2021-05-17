@@ -1,5 +1,5 @@
 import {
-    CommentsControllerApi,
+    CommentsControllerApi, CompanyKpIsControllerApi,
     EdgarExplorerControllerApi,
     FactAutoFillerControllerApi, FactBaseControllerApi, FactTimeSeriesControllerApi,
     FilingEntityManagerControllerApi,
@@ -55,6 +55,11 @@ export function useMarketing() {
 export function useFactAutoFiller() {
     const axiosInstance = useAxios();
     return new FactAutoFillerControllerApi(null, basePath, axiosInstance)
+}
+
+export function useCompanyKPIs() {
+    const axiosInstance = useAxios();
+    return new CompanyKpIsControllerApi(null, basePath, axiosInstance);
 }
 
 export function useTimeSeries() {

@@ -1,19 +1,33 @@
 import React from 'react';
 import {simpleMoney, simpleNumber, simplePercent} from "../../simple-number";
-import {Item, KPIFormatEnum} from "../../client";
-import {KPIContext} from "./KPIContext";
+import {CompanyKPIs, Item, KPIMetadataFormatEnum} from "../../client";
 
-export function KPICard({item, kpiContext: {kpis}}: { item: Item, kpiContext: KPIContext }) {
-    const {value, format} = kpis.find(it => it.itemName === item.name)
+interface Props {
+    companyKPIs: CompanyKPIs
+    period: number
+    item: Item
+}
+
+export function KPICard({period, item, companyKPIs: { kpis, cells }}: Props) {
+
+    /*
+    Find the KPI to display
+     */
+    const {format} = kpis.find(it => it.itemName === item.name)
     const {name, description} = item
+
+    const cell = cells.find(cell => cell.item.name === item.name && cell.period === period)
+
     let val = null;
 
-    if (format === KPIFormatEnum.Percent) {
-        val = simplePercent(value)
-    } else if (format === KPIFormatEnum.Number) {
-        val = simpleNumber(value)
-    } else if (format === KPIFormatEnum.Money) {
-        val = simpleMoney(value)
+    if (cell) {
+        if (format === KPIMetadataFormatEnum.Percent) {
+            val = simplePercent(cell.value)
+        } else if (format === KPIMetadataFormatEnum.Number) {
+            val = simpleNumber(cell.value)
+        } else if (format === KPIMetadataFormatEnum.Money) {
+            val = simpleMoney(cell.value)
+        }
     }
 
     return (
@@ -21,7 +35,7 @@ export function KPICard({item, kpiContext: {kpis}}: { item: Item, kpiContext: KP
             <p className="text-sm text-blueGray-300">
                 {description ?? name}
             </p>
-            <p>{val}</p>
+            <p>{val ?? '-'}</p>
         </div>
     );
 }

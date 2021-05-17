@@ -1,12 +1,11 @@
 import React from 'react'
 import {KPICard} from "./KPICard";
 import {Arrow} from "./Arrow";
-import {Item, ItemTypeEnum} from "../../client";
-import {KPIContext} from "./KPIContext";
+import {CompanyKPIs, Item, ItemTypeEnum} from "../../client";
 import {Operator} from "./Operator";
 
 export interface Props {
-    kpiContext: KPIContext
+    companyKPIs: CompanyKPIs
     item: Item
     root?: boolean
     lastChild?: boolean
@@ -15,13 +14,13 @@ export interface Props {
 
 export function KPIReact(props: Props) {
     const {
-        kpiContext: {
+        companyKPIs,
+        companyKPIs: {
             kpis, items
         },
         item,
         lastChild,
         parentOperator,
-        kpiContext,
     } = props;
 
     const kpi = kpis.find(it => it.itemName === item.name)
@@ -50,7 +49,7 @@ export function KPIReact(props: Props) {
     const selfCard =
         <div className="flex flex-col self-end">
             <div className="flex items-center w-full">
-                <KPICard item={item} kpiContext={kpiContext}/>
+                <KPICard item={item} companyKPIs={companyKPIs} period={0}/>
                 {!lastChild ? <Operator itemType={parentOperator}/> : null}
             </div>
         </div>
@@ -79,7 +78,7 @@ export function KPIReact(props: Props) {
         ].map((child, idx) => (
             <KPIReact
                 parentOperator={item.type}
-                kpiContext={kpiContext}
+                companyKPIs={companyKPIs}
                 item={child}
                 lastChild={idx === children.length - 1}
             />

@@ -252,10 +252,10 @@ export interface CompanyKPIs {
     cik: string;
     /**
      * 
-     * @type {Array<KPI>}
+     * @type {Array<KPIMetadata>}
      * @memberof CompanyKPIs
      */
-    kpis: Array<KPI>;
+    kpis: Array<KPIMetadata>;
     /**
      * 
      * @type {string}
@@ -268,6 +268,18 @@ export interface CompanyKPIs {
      * @memberof CompanyKPIs
      */
     items: Array<Item>;
+    /**
+     * 
+     * @type {Array<Cell>}
+     * @memberof CompanyKPIs
+     */
+    cells: Array<Cell>;
+    /**
+     * 
+     * @type {number}
+     * @memberof CompanyKPIs
+     */
+    projectionPeriods: number;
 }
 /**
  * 
@@ -1272,43 +1284,31 @@ export enum ItemTypeEnum {
 /**
  * 
  * @export
- * @interface KPI
+ * @interface KPIMetadata
  */
-export interface KPI {
+export interface KPIMetadata {
     /**
      * 
      * @type {string}
-     * @memberof KPI
+     * @memberof KPIMetadata
      */
     itemName: string;
     /**
      * 
      * @type {string}
-     * @memberof KPI
+     * @memberof KPIMetadata
      */
     description?: string;
     /**
      * 
      * @type {string}
-     * @memberof KPI
+     * @memberof KPIMetadata
      */
-    format: KPIFormatEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof KPI
-     */
-    value: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof KPI
-     */
-    date: string;
+    format: KPIMetadataFormatEnum;
     /**
      * 
      * @type {boolean}
-     * @memberof KPI
+     * @memberof KPIMetadata
      */
     collapse?: boolean;
 }
@@ -1317,7 +1317,7 @@ export interface KPI {
     * @export
     * @enum {string}
     */
-export enum KPIFormatEnum {
+export enum KPIMetadataFormatEnum {
     Money = 'MONEY',
     Percent = 'PERCENT',
     Number = 'NUMBER'
@@ -2186,11 +2186,13 @@ export const CompanyKpIsControllerApiAxiosParamCreator = function (configuration
         },
         /**
          * 
-         * @param {CompanyKPIs} [companyKPIs] 
+         * @param {CompanyKPIs} companyKPIs 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        saveCompanyKPIs: async (companyKPIs?: CompanyKPIs, options: any = {}): Promise<RequestArgs> => {
+        saveCompanyKPIs: async (companyKPIs: CompanyKPIs, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'companyKPIs' is not null or undefined
+            assertParamExists('saveCompanyKPIs', 'companyKPIs', companyKPIs)
             const localVarPath = `/api/company-kpis`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2239,11 +2241,11 @@ export const CompanyKpIsControllerApiFp = function(configuration?: Configuration
         },
         /**
          * 
-         * @param {CompanyKPIs} [companyKPIs] 
+         * @param {CompanyKPIs} companyKPIs 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async saveCompanyKPIs(companyKPIs?: CompanyKPIs, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async saveCompanyKPIs(companyKPIs: CompanyKPIs, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.saveCompanyKPIs(companyKPIs, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2268,11 +2270,11 @@ export const CompanyKpIsControllerApiFactory = function (configuration?: Configu
         },
         /**
          * 
-         * @param {CompanyKPIs} [companyKPIs] 
+         * @param {CompanyKPIs} companyKPIs 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        saveCompanyKPIs(companyKPIs?: CompanyKPIs, options?: any): AxiosPromise<void> {
+        saveCompanyKPIs(companyKPIs: CompanyKPIs, options?: any): AxiosPromise<void> {
             return localVarFp.saveCompanyKPIs(companyKPIs, options).then((request) => request(axios, basePath));
         },
     };
@@ -2298,12 +2300,12 @@ export class CompanyKpIsControllerApi extends BaseAPI {
 
     /**
      * 
-     * @param {CompanyKPIs} [companyKPIs] 
+     * @param {CompanyKPIs} companyKPIs 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CompanyKpIsControllerApi
      */
-    public saveCompanyKPIs(companyKPIs?: CompanyKPIs, options?: any) {
+    public saveCompanyKPIs(companyKPIs: CompanyKPIs, options?: any) {
         return CompanyKpIsControllerApiFp(this.configuration).saveCompanyKPIs(companyKPIs, options).then((request) => request(this.axios, this.basePath));
     }
 }
