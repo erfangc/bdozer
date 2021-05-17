@@ -29,9 +29,13 @@ export function KPIReact(props: Props) {
      */
     function childrenOf(item: Item): Item[] {
         if (item.type === ItemTypeEnum.ProductOfOtherItems) {
-            return item.productOfOtherItems.components.map(component => items.find(it => it.name === component.itemName));
+            const productOfOtherItems = item.productOfOtherItems;
+            const productComponents = productOfOtherItems.components;
+            return productComponents.map(component => items.find(it => it.name === component.itemName));
         } else if (item.type === ItemTypeEnum.SumOfOtherItems) {
-            return item.sumOfOtherItems.components.map(component => items.find(it => it.name === component.itemName));
+            const sumOfOtherItems = item.sumOfOtherItems;
+            const components = sumOfOtherItems.components;
+            return components.map(component => items.find(it => it.name === component.itemName));
         } else {
             return [];
         }
@@ -43,7 +47,7 @@ export function KPIReact(props: Props) {
     This is a recursive component
     the stopping condition: this item is either collapsed or have no more children
      */
-    const operator = !lastChild && !item
+    const operator = !lastChild
         ?
         <div className="ml-4 text-xl font-extrabold">
             {
@@ -59,7 +63,6 @@ export function KPIReact(props: Props) {
                 <KPICard item={item} kpiContext={kpiContext}/>
                 {operator}
             </div>
-            {!root ? <Arrow className="place-self-center text-blueGray-500"/> : null}
         </div>
 
     if (children.length === 0 || kpi.collapse) {
@@ -95,6 +98,10 @@ export function KPIReact(props: Props) {
         return (
             <div>
                 <div className="flex space-x-4">{childrenCard}</div>
+                <div className="text-center">
+                    {/* draw the arrow that connects the layers */}
+                    <Arrow className="inline text-blueGray-400"/>
+                </div>
                 {selfCard}
             </div>
         )

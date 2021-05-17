@@ -23,6 +23,7 @@ export const items: Item[] = [
     },
     {
         name: 'Vehicle_Revenue',
+        description: 'Vehicle Revenue',
         type: ItemTypeEnum.ProductOfOtherItems,
         productOfOtherItems: {
             components: [
@@ -34,11 +35,13 @@ export const items: Item[] = [
     },
     {
         name: 'Vehicle_Sales',
+        description: 'Vehicle Sales',
         type: ItemTypeEnum.Custom,
         formula: '0.0',
     },
     {
         name: 'Average_Selling_Price',
+        description: 'Average Selling Price',
         type: ItemTypeEnum.Custom,
         formula: '0.0',
     },
