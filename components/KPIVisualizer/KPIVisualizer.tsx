@@ -3,9 +3,9 @@ import {KPIReact} from "./KPIReact";
 import {useCompanyKPIs} from "../../api-hooks";
 import {PrimaryButton} from "../Common/PrimaryButton";
 import {useRouter} from "next/router";
-import {CompanyKPIs, Item} from "../../client";
 import {GhostButton} from "../Common/GhostButton";
 import {EditorDialog} from "./EditorDialog";
+import {State, StateManager} from "./StateManager";
 
 /**
  *
@@ -13,97 +13,73 @@ import {EditorDialog} from "./EditorDialog";
  */
 export function KPIVisualizer() {
 
-    const router = useRouter()
-    const {id} = router.query
+    const {id} = useRouter().query
     const companyKPIsApi = useCompanyKPIs();
-    const [loading, setLoading] = useState(false)
-    const [companyKPIs, setCompanyKPIs] = useState<CompanyKPIs>()
 
-    async function getCompanyKPIs(id: string) {
-        setLoading(true)
-        const {data} = await companyKPIsApi.getCompanyKPIs(id)
-        setCompanyKPIs(data)
-        setLoading(false)
-    }
+    const [stateMgr] = useState(new StateManager())
+    const [state, setState] = useState<State>(stateMgr.state)
 
-    async function saveCompanyKPIs() {
-        setLoading(true)
-        try {
-            await companyKPIsApi.saveCompanyKPIs(companyKPIs);
-        } catch (e) {
-        }
-        setLoading(false)
-    }
-
-    async function evaluate() {
-        setLoading(true);
-        try {
-            const {data} = await companyKPIsApi.evaluateCompanyKPIs(companyKPIs)
-            setCompanyKPIs(data);
-        } catch (e) {
-        }
-        setLoading(false);
-    }
-
-    /*
-    This is a temporary state that is used to trigger
-    dialogs, once the dialogs are complete these states
-    are used in the next steps
-     */
-    const [addSiblingScratchPad, setAddSibilingScratchPad] = useState<[Item, Item?]>()
-    /**
-     * Triggers the process to add a new Item and do the following:
-     *  (completed via the [completeAddSibling] function
-     * - Create the corresponding KPI entry
-     * - Create the corresponding Item entry
-     * - Add the Item to the final companyKPIs instance
-     * - Modify the parent Item and ensure the ordering of display is correct
-     *
-     * @param self
-     * @param parent
-     */
-    function attemptToAddSibling(self: Item, parent?: Item) {
-        setAddSibilingScratchPad([self, parent]);
-    }
-
-    function completeAddSibling(newItem: Item) {
-        // TODO
-    }
-
-    function dismissAddSibling() {
-        setAddSibilingScratchPad(undefined)
+    async function fetchCompanyKPIs(id: string) {
+        stateMgr.startLoading();
+        const {data} = await companyKPIsApi.getCompanyKPIs(id);
+        stateMgr.setCompanyKPIs(data);
+        stateMgr.stopLoading();
     }
 
     useEffect(() => {
-        if (id) {
-            getCompanyKPIs(id as string)
-        }
-    }, [id]);
+        stateMgr.register(newState => setState(newState))
+    }, []);
 
-    if (!companyKPIs) {
+    useEffect(() => {
+        if (id) {
+            fetchCompanyKPIs(id as string)
+        }
+    }, [id])
+
+    async function saveCompanyKPIs() {
+        stateMgr.startLoading();
+        try {
+            await companyKPIsApi.saveCompanyKPIs(state.companyKPIs);
+        } catch (e) {
+        }
+        stateMgr.stopLoading();
+    }
+
+    async function evaluate() {
+        stateMgr.startLoading()
+        try {
+            const {data} = await companyKPIsApi.evaluateCompanyKPIs(state.companyKPIs)
+            stateMgr.setCompanyKPIs(data);
+        } catch (e) {
+        }
+        stateMgr.stopLoading();
+    }
+
+    if (!state.companyKPIs) {
         return null;
     }
 
-    const {items, revenueItemName} = companyKPIs;
-    const [leftSibling] = addSiblingScratchPad || []
+    const {companyKPIs} = state;
+    const {items, revenueItemName} = state.companyKPIs;
+
     return (
         <main className="max-w-prose container mx-auto pt-24 px-4">
             <KPIReact
                 companyKPIs={companyKPIs}
                 item={items.find(it => it.name === revenueItemName)}
-                onAttemptToAddSibling={attemptToAddSibling}
+                onAttemptToAddSibling={stateMgr.attemptToAddSibling}
             />
             <EditorDialog
                 companyKPIs={companyKPIs}
                 onSubmit={console.log}
-                onDismiss={dismissAddSibling}
-                open={leftSibling !== undefined}
+                onDismiss={stateMgr.dismiss}
+                open={state?.editorOpen ?? false}
             />
             <div className="mt-6 space-x-2">
-                <PrimaryButton disabled={loading} onClick={evaluate}>
+                <PrimaryButton disabled={state.loading} onClick={evaluate}>
                     Evaluate
                 </PrimaryButton>
-                <GhostButton disabled={loading} onClick={saveCompanyKPIs}>
+                <GhostButton disabled={state.loading} onClick={saveCompanyKPIs}>
                     Save
                 </GhostButton>
             </div>

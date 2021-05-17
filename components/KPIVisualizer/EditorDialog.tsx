@@ -5,7 +5,7 @@ import {ItemEditor} from "./ItemEditor";
 
 interface Props {
     companyKPIs: CompanyKPIs
-    open?: boolean
+    open: boolean
     onSubmit: (newKpi: KPIMetadata, newItem: Item) => void
     onDismiss: () => void
 }
