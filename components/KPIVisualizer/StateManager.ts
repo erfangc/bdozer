@@ -145,17 +145,21 @@ export class StateManager {
         };
         const updatedParent: Item = {
             ...currentParent,
+            type: ItemTypeEnum.SumOfOtherItems,
             productOfOtherItems,
             sumOfOtherItems,
         };
+        /*
+
+         */
         const updatedCompanyKPIs: CompanyKPIs = {
             ...companyKPIs,
             items: [
                 ...companyKPIs.items.map(it => {
                     if (it.name === parent.name) {
-                        return updatedParent
+                        return updatedParent;
                     } else {
-                        return it
+                        return it;
                     }
                 }),
                 newItem,

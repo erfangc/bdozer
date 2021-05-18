@@ -103,6 +103,7 @@ export function KPIReact(props: Props) {
             Pass onAttemptToAddSibling on the call to children, as invocation of this will bubble with the correct self, parent
             */
             <KPIReact
+                key={child.name}
                 parent={item}
                 companyKPIs={companyKPIs}
                 item={child}
