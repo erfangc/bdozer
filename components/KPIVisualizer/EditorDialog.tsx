@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Dialog, Transition} from "@headlessui/react";
 import {CompanyKPIs, Item, KPIMetadata} from "../../client";
 import {ItemEditor} from "./ItemEditor";
@@ -6,13 +6,19 @@ import {ItemEditor} from "./ItemEditor";
 interface Props {
     companyKPIs: CompanyKPIs
     open: boolean
-    onSubmit: (newKpi: KPIMetadata, newItem: Item) => void
+    onSubmit: (
+        newKPI: KPIMetadata, newItem: Item,
+        kpi?: KPIMetadata, item?: Item,
+    ) => void
     onDismiss: () => void
+    item?: Item
+    kpi?: KPIMetadata
 }
 
-export function EditorDialog(
-    {onSubmit, open, onDismiss}: Props
-) {
+export function EditorDialog(props: Props) {
+
+    const {onSubmit, open, onDismiss} = props;
+
     return (
         <Transition show={open}>
             <Dialog
@@ -34,10 +40,16 @@ export function EditorDialog(
                 >
                     <Dialog.Title className="text-xl font-bold">Add a New KPI</Dialog.Title>
                     <Dialog.Description className="text-blueGray-300">
-                        <ItemEditor onSubmit={onSubmit} onDismiss={onDismiss}/>
+                        <ItemEditor
+                            onSubmit={onSubmit}
+                            onDismiss={onDismiss}
+                            item={props.item}
+                            kpi={props.kpi}
+                        />
                     </Dialog.Description>
                 </Transition.Child>
             </Dialog>
         </Transition>
-    )
+    );
+
 }

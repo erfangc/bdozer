@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {simpleMoney, simpleNumber, simplePercent} from "../../simple-number";
-import {CompanyKPIs, Item, KPIMetadataFormatEnum} from "../../client";
-import {Plus} from "../Common/Svgs";
+import {simpleMoney, simpleNumber, simplePercent} from "../../../simple-number";
+import {CompanyKPIs, Item, KPIMetadataFormatEnum} from "../../../client";
+import {Plus} from "../../Common/Svgs";
 
 interface Props {
     companyKPIs: CompanyKPIs
@@ -52,7 +52,7 @@ export function KPICard({period, onAttemptToAddSibling, item, companyKPIs: { kpi
             </p>
             <p>{val ?? '-'}</p>
             <button
-                className={`absolute focus:outline-none left-full ml-0.5 top-0 bg-blueGray-600 transition cursor-pointer ${hovering ? 'opacity-70' : 'opacity-0'} hover:opacity-100`}
+                className={`absolute focus:outline-none left-full ml-0.5 top-0 bg-blueGray-600 transition cursor-pointer ${hovering ? 'opacity-80' : 'opacity-0'} hover:opacity-100 rounded`}
                 onClick={onAttemptToAddSibling}
             >
                 <Plus size={32}/>

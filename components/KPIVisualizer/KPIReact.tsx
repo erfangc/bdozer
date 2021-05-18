@@ -1,8 +1,8 @@
 import React from 'react'
-import {KPICard} from "./KPICard";
-import {Arrow} from "./Arrow";
+import {KPICard} from "./SupportComponents/KPICard";
+import {Arrow} from "./SupportComponents/Arrow";
 import {CompanyKPIs, Item, ItemTypeEnum} from "../../client";
-import {Operator} from "./Operator";
+import {Operator} from "./SupportComponents/Operator";
 
 export interface Props {
     companyKPIs: CompanyKPIs

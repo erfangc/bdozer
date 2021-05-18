@@ -71,7 +71,7 @@ export function KPIVisualizer() {
             />
             <EditorDialog
                 companyKPIs={companyKPIs}
-                onSubmit={console.log}
+                onSubmit={stateMgr.handleItemEdit}
                 onDismiss={stateMgr.dismiss}
                 open={state?.editorOpen ?? false}
             />

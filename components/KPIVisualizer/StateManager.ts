@@ -32,21 +32,32 @@ export class StateManager {
         };
     }
 
+    private setState(newState: Partial<State>) {
+        this.state = {...this.state, ...newState};
+        this.callback(this.state);
+    }
+
+    handleItemEdit = (
+        newKPI: KPIMetadata, newItem: Item,
+        kpi?: KPIMetadata, item?: Item,
+    ) => {
+        this.setState({
+            editorOpen: false,
+            currentLeftSibling: undefined,
+            currentParent: undefined
+        });
+    }
+
     startLoading = () => {
-        this.setState({...this.state, loading: true});
+        this.setState({loading: true});
     }
 
     stopLoading = () => {
-        this.setState({...this.state, loading: false});
-    }
-
-    private setState(newState: State) {
-        this.state = newState;
-        this.callback(newState);
+        this.setState({loading: false});
     }
 
     setCompanyKPIs = (companyKPIs: CompanyKPIs) => {
-        this.setState({...this.state, companyKPIs});
+        this.setState({companyKPIs});
     }
 
     register = (callback: (newState: State) => void) => {
@@ -55,7 +66,6 @@ export class StateManager {
 
     attemptToAddSibling = (self: Item, parent?: Item) => {
         this.setState({
-            ...this.state,
             currentLeftSibling: self,
             currentParent: parent,
             editorOpen: true,
@@ -131,7 +141,6 @@ export class StateManager {
         };
 
         this.setState({
-            ...this.state,
             companyKPIs: updatedCompanyKPIs,
             editorOpen: false,
         });
@@ -139,7 +148,6 @@ export class StateManager {
 
     dismiss = () => {
         this.setState({
-            ...this.state,
             editorOpen: false
         });
     }

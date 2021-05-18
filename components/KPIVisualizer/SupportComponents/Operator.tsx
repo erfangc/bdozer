@@ -1,5 +1,5 @@
 import React from 'react';
-import {ItemTypeEnum} from "../../client";
+import {ItemTypeEnum} from "../../../client";
 
 interface Props {
     itemType: ItemTypeEnum

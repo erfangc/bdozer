@@ -1,5 +1,5 @@
-import React, {ChangeEvent, useState} from "react";
-import {Item, KPIMetadata} from "../../client";
+import React, {ChangeEvent, useEffect, useState} from "react";
+import {Item, ItemTypeEnum, KPIMetadata, KPIMetadataFormatEnum} from "../../client";
 import {TextInput} from "../Common/TextInput";
 import {NumberInput} from "../Common/NumberInput";
 import {NumberFormatValues} from "react-number-format";
@@ -10,31 +10,79 @@ import {Delete} from "../Common/Svgs";
 interface Props {
     kpi?: KPIMetadata
     item?: Item
-    onSubmit: (kpi: KPIMetadata, item: Item) => void
+    onSubmit: (
+        newKPI: KPIMetadata, newItem: Item,
+        kpi?: KPIMetadata, item?: Item,
+    ) => void
     onDismiss: () => void
 }
 
-export function ItemEditor({item, kpi, onSubmit, onDismiss}: Props) {
-    const [kpiName, setKPIName] = useState('')
-    const [kpiValue, setKPIValue] = useState<number>()
+const initItem: Item = {
+    name: '',
+    type: ItemTypeEnum.Custom,
+    formula: '0.0',
+}
 
-    function handleKPINameChange({currentTarget, preventDefault}: ChangeEvent<HTMLInputElement>) {
-        preventDefault();
-        setKPIName(currentTarget.value);
+const initKPI: KPIMetadata = {
+    itemName: '',
+    format: KPIMetadataFormatEnum.Money,
+}
+
+export function ItemEditor(props: Props) {
+
+    const {onSubmit, onDismiss} = props;
+
+    const [item, setItem] = useState<Item>(props.item ?? initItem);
+    const [kpi, setKPI] = useState<KPIMetadata>(props.kpi ?? initKPI);
+
+    useEffect(() => {
+        setItem(props.item);
+        setKPI(props.kpi);
+    }, [props.item, props.kpi]);
+
+    function handleKPINameChange({currentTarget}: ChangeEvent<HTMLInputElement>) {
+        const updatedItem: Item = {
+            ...item,
+            name: currentTarget.value,
+        };
+        const updatedKPI: KPIMetadata = {
+            ...kpi,
+            itemName: currentTarget.value,
+        };
+        setKPI(updatedKPI);
+        setItem(updatedItem);
     }
 
     function handleKPIValueChange({floatValue}: NumberFormatValues) {
-        setKPIValue(floatValue);
+        const updatedItem: Item = {
+            ...item,
+            historicalValue: {
+                ...item.historicalValue,
+                value: floatValue,
+            }
+        };
+        setItem(updatedItem);
+    }
+
+    function handleSubmit() {
+        onSubmit(kpi, item, props.kpi, props.item);
     }
 
     return (
         <div className="space-y-4">
-            <TextInput label="KPI Name" value={kpiName} onChange={handleKPINameChange}/>
-            <NumberInput label="KPI Value" value={kpiValue} onValueChange={handleKPIValueChange}/>
+            <TextInput
+                label="KPI Name"
+                value={item?.name}
+                onChange={handleKPINameChange}
+            />
+            <NumberInput
+                label="KPI Value" value={item?.historicalValue?.value}
+                onValueChange={handleKPIValueChange}
+            />
             <div className="flex space-x-2">
-                <PrimaryButton>Save</PrimaryButton>
+                <PrimaryButton onClick={handleSubmit}>Save</PrimaryButton>
                 <DangerButton onClick={onDismiss}><Delete/> Cancel</DangerButton>
             </div>
         </div>
-    )
+    );
 }
