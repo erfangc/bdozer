@@ -8,6 +8,7 @@ import {DangerButton} from "../Common/DangerButton";
 import {CheckedCircle, Delete} from "../Common/Svgs";
 import {RadioGroup} from "@headlessui/react";
 import {Nothing} from "../Pages/StockAnalysisItemEditor/Svgs";
+import {OperatorRadioGroup} from "./OperatorRadioGroup";
 
 interface Props {
     kpi?: KPIMetadata
@@ -121,37 +122,6 @@ export function ItemEditor(props: Props) {
                 <PrimaryButton onClick={handleSubmit}>Save</PrimaryButton>
                 <DangerButton onClick={onDismiss}><Delete/> Cancel</DangerButton>
             </div>
-        </div>
-    );
-}
-
-interface MyProps {
-    value: ItemTypeEnum
-    onChange: (type: ItemTypeEnum) => void
-}
-
-function OperatorRadioGroup({onChange, value}: MyProps) {
-    return (
-        <div className="my-8">
-            <label className="mb-2 text-sm">Operator</label>
-            <RadioGroup value={value} onChange={onChange} className="cursor-pointer flex space-x-1">
-                <RadioGroup.Option as={Fragment} value={ItemTypeEnum.SumOfOtherItems}>
-                    {({checked, active}) => (
-                        <div className={`px-4 py-2 flex items-center space-x-2 rounded ${checked ? 'bg-blue-600' : 'bg-blueGray-900'}`}>
-                            <span>Addition</span>
-                            {checked ? <CheckedCircle/> : <Nothing/>}
-                        </div>
-                    )}
-                </RadioGroup.Option>
-                <RadioGroup.Option as={Fragment} value={ItemTypeEnum.ProductOfOtherItems}>
-                    {({checked, active}) => (
-                        <div className={`px-4 py-2 flex items-center space-x-2 rounded ${checked ? 'bg-blue-600' : 'bg-blueGray-900'}`}>
-                            <span>Multiplication</span>
-                            {checked ? <CheckedCircle/> : <Nothing/>}
-                        </div>
-                    )}
-                </RadioGroup.Option>
-            </RadioGroup>
         </div>
     );
 }
