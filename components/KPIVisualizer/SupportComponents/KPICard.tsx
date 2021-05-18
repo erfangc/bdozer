@@ -77,7 +77,7 @@ export function KPICard(
         >
             <div
                 onClick={handleOnAttemptToAddChild}
-                className={`absolute bottom-full left-0 px-4 py-1 bg-blueGray-800 transition ease-in ${hovering ? 'opacity-70' : 'opacity-0'}`}
+                className={`absolute bottom-full left-0 cursor-pointer mb-1 px-4 py-1 bg-blueGray-800 transition ease-in ${hovering ? 'opacity-80' : 'opacity-0'}`}
             >
                 <Plus/> <span>Children</span>
             </div>
@@ -91,7 +91,7 @@ export function KPICard(
                 <p>{val ?? '-'}</p>
             </div>
             <div
-                className={`absolute space-y-1 text-white left-full top-0 transition ease-in ${hovering ? 'opacity-70' : 'opacity-0'}`}>
+                className={`absolute space-y-1 text-white left-full ml-1 mt-1 top-0 transition ease-in ${hovering ? 'opacity-80' : 'opacity-0'}`}>
                 <button
                     className={`focus:outline-none bg-blueGray-800 cursor-pointer rounded`}
                     onClick={onAttemptToAddSibling}
