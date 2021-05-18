@@ -51,7 +51,7 @@ export class StateManager {
             this.addSibling(newKPI, newItem);
         } else if (!currentLeftSibling && currentParent) {
             // Case 2
-            this.addItemAsFirstChild(newKPI, newItem);
+            this.addChild(newKPI, newItem);
         } else {
             // Case 3
             this.mutateItem(newKPI, newItem, kpi, item);
@@ -135,7 +135,7 @@ export class StateManager {
      * @param newKPI
      * @param newItem
      */
-    addItemAsFirstChild = (newKPI: KPIMetadata, newItem: Item) => {
+    addChild = (newKPI: KPIMetadata, newItem: Item) => {
         const {currentParent, companyKPIs} = this.state;
         const sumOfOtherItems: SumOfOtherItems = {
             components: [{itemName: newItem.name, weight: 1}],
@@ -198,6 +198,13 @@ export class StateManager {
             kpis: updatedKpis,
         };
         this.setState({companyKPIs: updatedCompanyKPIs});
+    }
+
+    attemptToAddChild = (parent?: Item) => {
+        this.setState({
+            currentParent: parent,
+            editorOpen: true,
+        });
     }
 
     attemptToAddSibling = (self: Item, parent?: Item) => {

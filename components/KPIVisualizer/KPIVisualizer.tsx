@@ -65,6 +65,7 @@ export function KPIVisualizer() {
             <KPIReact
                 companyKPIs={companyKPIs}
                 item={items.find(it => it.name === revenueItemName)}
+                onAttemptToAddChild={stateMgr.attemptToAddChild}
                 onAttemptToAddSibling={stateMgr.attemptToAddSibling}
                 onAttemptToEdit={stateMgr.attemptToEdit}
                 deleteItem={stateMgr.deleteItem}

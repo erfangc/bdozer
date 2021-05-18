@@ -10,6 +10,7 @@ export interface Props {
     parent?: Item
     lastChild?: boolean
     onAttemptToAddSibling: (self: Item, parent?: Item) => void
+    onAttemptToAddChild: (parent: Item) => void
     onAttemptToEdit: (item: Item, kpi: KPIMetadata) => void
     deleteItem: (item: Item) => void
 }
@@ -31,6 +32,7 @@ export function KPIReact(props: Props) {
         item,
         deleteItem,
         lastChild,
+        onAttemptToAddChild,
         onAttemptToAddSibling,
         onAttemptToEdit,
     } = props;
@@ -66,6 +68,7 @@ export function KPIReact(props: Props) {
                     companyKPIs={companyKPIs}
                     period={0}
                     deleteItem={deleteItem}
+                    onAttemptToAddChild={onAttemptToAddChild}
                     onAttemptToEdit={onAttemptToEdit}
                     onAttemptToAddSibling={() => onAttemptToAddSibling(item, parent)}
                 />
@@ -104,6 +107,7 @@ export function KPIReact(props: Props) {
                 companyKPIs={companyKPIs}
                 item={child}
                 deleteItem={deleteItem}
+                onAttemptToAddChild={onAttemptToAddChild}
                 lastChild={idx === children.length - 1}
                 onAttemptToEdit={onAttemptToEdit}
                 onAttemptToAddSibling={onAttemptToAddSibling}

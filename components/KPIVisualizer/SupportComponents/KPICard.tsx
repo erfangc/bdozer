@@ -7,6 +7,7 @@ interface Props {
     companyKPIs: CompanyKPIs
     period: number
     item: Item
+    onAttemptToAddChild: (parent: Item) => void
     onAttemptToAddSibling: () => void
     onAttemptToEdit: (item: Item, kpi: KPIMetadata) => void
     deleteItem: (item: Item) => void
@@ -15,6 +16,7 @@ interface Props {
 export function KPICard(
     {
         period,
+        onAttemptToAddChild,
         onAttemptToAddSibling,
         onAttemptToEdit,
         deleteItem,
@@ -56,6 +58,10 @@ export function KPICard(
         deleteItem(item);
     }
 
+    function handleOnAttemptToAddChild() {
+        onAttemptToAddChild(item)
+    }
+
     function handleClick(event: MouseEvent<HTMLDivElement>) {
         event.stopPropagation();
         event.preventDefault();
@@ -70,7 +76,10 @@ export function KPICard(
             onMouseEnter={setHoverngTrue}
             onClick={handleClick}
         >
-            <div className={`absolute bottom-full left-0 px-4 py-1 bg-blueGray-800 transition ease-in ${hovering ? 'opacity-70' : 'opacity-0'}`}>
+            <div
+                onClick={handleOnAttemptToAddChild}
+                className={`absolute bottom-full left-0 px-4 py-1 bg-blueGray-800 transition ease-in ${hovering ? 'opacity-70' : 'opacity-0'}`}
+            >
                 <Plus/> <span>Children</span>
             </div>
             <p className="text-sm text-blueGray-300">
