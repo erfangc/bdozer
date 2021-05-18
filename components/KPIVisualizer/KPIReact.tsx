@@ -1,7 +1,7 @@
 import React from 'react'
 import {KPICard} from "./SupportComponents/KPICard";
 import {Arrow} from "./SupportComponents/Arrow";
-import {CompanyKPIs, Item, ItemTypeEnum} from "../../client";
+import {CompanyKPIs, Item, ItemTypeEnum, KPIMetadata} from "../../client";
 import {Operator} from "./SupportComponents/Operator";
 
 export interface Props {
@@ -9,7 +9,9 @@ export interface Props {
     item: Item
     parent?: Item
     lastChild?: boolean
-    onAttemptToAddSibling: (self: Item, parent?:Item) => void
+    onAttemptToAddSibling: (self: Item, parent?: Item) => void
+    onAttemptToEdit: (item: Item, kpi: KPIMetadata) => void
+    deleteItem: (item: Item) => void
 }
 
 /**
@@ -25,12 +27,12 @@ export function KPIReact(props: Props) {
     const {
         parent,
         companyKPIs,
-        companyKPIs: {
-            kpis, items
-        },
+        companyKPIs: {kpis, items},
         item,
+        deleteItem,
         lastChild,
         onAttemptToAddSibling,
+        onAttemptToEdit,
     } = props;
 
     const kpi = kpis.find(it => it.itemName === item.name)
@@ -59,7 +61,14 @@ export function KPIReact(props: Props) {
     const selfCard =
         <div className="flex flex-col self-end">
             <div className="flex items-center w-full">
-                <KPICard item={item} companyKPIs={companyKPIs} period={0} onAttemptToAddSibling={() => onAttemptToAddSibling(item, parent)}/>
+                <KPICard
+                    item={item}
+                    companyKPIs={companyKPIs}
+                    period={0}
+                    deleteItem={deleteItem}
+                    onAttemptToEdit={onAttemptToEdit}
+                    onAttemptToAddSibling={() => onAttemptToAddSibling(item, parent)}
+                />
                 {!lastChild ? <Operator itemType={parent?.type}/> : null}
             </div>
         </div>
@@ -94,7 +103,9 @@ export function KPIReact(props: Props) {
                 parent={item}
                 companyKPIs={companyKPIs}
                 item={child}
+                deleteItem={deleteItem}
                 lastChild={idx === children.length - 1}
+                onAttemptToEdit={onAttemptToEdit}
                 onAttemptToAddSibling={onAttemptToAddSibling}
             />
         ));

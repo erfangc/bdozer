@@ -1,16 +1,27 @@
-import React, {useState} from 'react';
+import React, {useState, MouseEvent} from 'react';
 import {simpleMoney, simpleNumber, simplePercent} from "../../../simple-number";
-import {CompanyKPIs, Item, KPIMetadataFormatEnum} from "../../../client";
-import {Plus} from "../../Common/Svgs";
+import {CompanyKPIs, Item, KPIMetadata, KPIMetadataFormatEnum} from "../../../client";
+import {Delete, Plus} from "../../Common/Svgs";
 
 interface Props {
     companyKPIs: CompanyKPIs
     period: number
     item: Item
     onAttemptToAddSibling: () => void
+    onAttemptToEdit: (item: Item, kpi: KPIMetadata) => void
+    deleteItem: (item: Item) => void
 }
 
-export function KPICard({period, onAttemptToAddSibling, item, companyKPIs: { kpis, cells }}: Props) {
+export function KPICard(
+    {
+        period,
+        onAttemptToAddSibling,
+        onAttemptToEdit,
+        deleteItem,
+        item,
+        companyKPIs: {kpis, cells},
+    }: Props
+) {
 
     /*
     Find the KPI to display
@@ -41,22 +52,43 @@ export function KPICard({period, onAttemptToAddSibling, item, companyKPIs: { kpi
         }
     }
 
+    function handleDelete() {
+        deleteItem(item);
+    }
+
+    function handleClick(event: MouseEvent<HTMLDivElement>) {
+        event.stopPropagation();
+        event.preventDefault();
+        const kpi = kpis.find(it => it.itemName === item.name);
+        onAttemptToEdit(item, kpi);
+    }
+
     return (
         <div
-            className="px-4 py-2 shadow rounded bg-blueGray-800 space-y-1 my-2 w-full relative"
+            className="px-4 py-2 shadow rounded bg-blueGray-800 space-y-1 my-2 w-full relative cursor-pointer"
             onMouseLeave={setHoveringFalse}
             onMouseEnter={setHoverngTrue}
+            onClick={handleClick}
         >
             <p className="text-sm text-blueGray-300">
                 {description ?? name}
             </p>
             <p>{val ?? '-'}</p>
-            <button
-                className={`absolute focus:outline-none left-full ml-0.5 top-0 bg-blueGray-600 transition cursor-pointer ${hovering ? 'opacity-80' : 'opacity-0'} hover:opacity-100 rounded`}
-                onClick={onAttemptToAddSibling}
-            >
-                <Plus size={32}/>
-            </button>
+            <div
+                className={`absolute space-y-1 text-blueGray-300 left-full ml-0.5 top-0 transition  ease-in ${hovering ? 'opacity-100' : 'opacity-0'}`}>
+                <button
+                    className={`focus:outline-none bg-blueGray-600 cursor-pointer rounded`}
+                    onClick={onAttemptToAddSibling}
+                >
+                    <Plus/>
+                </button>
+                <button
+                    className={`focus:outline-none bg-rose-500 cursor-pointer rounded`}
+                    onClick={handleDelete}
+                >
+                    <Delete/>
+                </button>
+            </div>
         </div>
     );
 }

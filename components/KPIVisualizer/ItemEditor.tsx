@@ -68,6 +68,14 @@ export function ItemEditor(props: Props) {
         onSubmit(kpi, item, props.kpi, props.item);
     }
 
+    function toggleCollapse() {
+        const updatedKPI: KPIMetadata = {
+            ...kpi,
+            collapse: !kpi.collapse
+        };
+        setKPI(updatedKPI);
+    }
+
     return (
         <div className="space-y-4">
             <TextInput
@@ -79,6 +87,10 @@ export function ItemEditor(props: Props) {
                 label="KPI Value" value={item?.historicalValue?.value}
                 onValueChange={handleKPIValueChange}
             />
+            <div className="flex items-center space-x-2">
+                <input type="checkbox" checked={kpi.collapse} onClick={toggleCollapse}/>
+                <label htmlFor="">Collapsed</label>
+            </div>
             <div className="flex space-x-2">
                 <PrimaryButton onClick={handleSubmit}>Save</PrimaryButton>
                 <DangerButton onClick={onDismiss}><Delete/> Cancel</DangerButton>
