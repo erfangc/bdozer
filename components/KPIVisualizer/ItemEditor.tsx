@@ -88,7 +88,7 @@ export function ItemEditor(props: Props) {
                 onValueChange={handleKPIValueChange}
             />
             <div className="flex items-center space-x-2">
-                <input type="checkbox" checked={kpi.collapse} onClick={toggleCollapse}/>
+                <input type="checkbox" checked={kpi?.collapse} onClick={toggleCollapse}/>
                 <label htmlFor="">Collapsed</label>
             </div>
             <div className="flex space-x-2">

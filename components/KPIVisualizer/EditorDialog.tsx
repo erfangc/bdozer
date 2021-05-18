@@ -38,7 +38,7 @@ export function EditorDialog(props: Props) {
                     leaveFrom="opacity-100 scale-100"
                     leaveTo="opacity-0 scale-90"
                 >
-                    <Dialog.Title className="text-xl font-bold">Add a New KPI</Dialog.Title>
+                    <Dialog.Title className="text-xl font-bold">{props.item ? 'Edit KPI' : 'Add a New KPI'}</Dialog.Title>
                     <Dialog.Description className="text-blueGray-300">
                         <ItemEditor
                             onSubmit={onSubmit}

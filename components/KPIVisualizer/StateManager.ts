@@ -282,7 +282,11 @@ export class StateManager {
 
     dismiss = () => {
         this.setState({
-            editorOpen: false
+            editorOpen: false,
+            currentKPI: undefined,
+            currentParent: undefined,
+            currentItem: undefined,
+            currentLeftSibling: undefined,
         });
     }
 

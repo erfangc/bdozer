@@ -71,10 +71,9 @@ export function KPICard(
 
     return (
         <div
-            className="px-4 py-2 shadow rounded bg-blueGray-800 space-y-1 my-2 w-full relative cursor-pointer"
+            className="relative w-full my-2"
             onMouseLeave={setHoveringFalse}
             onMouseEnter={setHoverngTrue}
-            onClick={handleClick}
         >
             <div
                 onClick={handleOnAttemptToAddChild}
@@ -82,12 +81,17 @@ export function KPICard(
             >
                 <Plus/> <span>Children</span>
             </div>
-            <p className="text-sm text-blueGray-300">
-                {description ?? name}
-            </p>
-            <p>{val ?? '-'}</p>
             <div
-                className={`absolute space-y-1 text-white left-full ml-0.5 top-0 transition  ease-in ${hovering ? 'opacity-70' : 'opacity-0'}`}>
+                className="px-4 py-2 shadow rounded bg-blueGray-800 space-y-1 w-full cursor-pointer"
+                onClick={handleClick}
+            >
+                <p className="text-sm text-blueGray-300">
+                    {description ?? name}
+                </p>
+                <p>{val ?? '-'}</p>
+            </div>
+            <div
+                className={`absolute space-y-1 text-white left-full top-0 transition ease-in ${hovering ? 'opacity-70' : 'opacity-0'}`}>
                 <button
                     className={`focus:outline-none bg-blueGray-800 cursor-pointer rounded`}
                     onClick={onAttemptToAddSibling}
