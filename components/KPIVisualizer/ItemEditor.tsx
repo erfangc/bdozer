@@ -1,11 +1,13 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, Fragment, useEffect, useState} from "react";
 import {Item, ItemTypeEnum, KPIMetadata, KPIMetadataFormatEnum} from "../../client";
 import {TextInput} from "../Common/TextInput";
 import {NumberInput} from "../Common/NumberInput";
 import {NumberFormatValues} from "react-number-format";
 import {PrimaryButton} from "../Common/PrimaryButton";
 import {DangerButton} from "../Common/DangerButton";
-import {Delete} from "../Common/Svgs";
+import {CheckedCircle, Delete} from "../Common/Svgs";
+import {RadioGroup} from "@headlessui/react";
+import {Nothing} from "../Pages/StockAnalysisItemEditor/Svgs";
 
 interface Props {
     kpi?: KPIMetadata
@@ -53,6 +55,14 @@ export function ItemEditor(props: Props) {
         setItem(updatedItem);
     }
 
+    function handleKPIDescriptionChange({currentTarget}: ChangeEvent<HTMLInputElement>) {
+        const updatedItem: Item = {
+            ...item,
+            description: currentTarget.value,
+        };
+        setItem(updatedItem);
+    }
+
     function handleKPIValueChange({floatValue}: NumberFormatValues) {
         const updatedItem: Item = {
             ...item,
@@ -76,25 +86,72 @@ export function ItemEditor(props: Props) {
         setKPI(updatedKPI);
     }
 
+    function setOperator(itemType: ItemTypeEnum) {
+        const updatedItem: Item = {
+            ...item,
+            type: itemType,
+        };
+        setItem(updatedItem);
+    }
+
     return (
         <div className="space-y-4">
             <TextInput
-                label="KPI Name"
+                label="Name"
                 value={item?.name}
                 onChange={handleKPINameChange}
             />
+            <TextInput
+                label="Description"
+                value={item?.description}
+                onChange={handleKPIDescriptionChange}
+            />
             <NumberInput
-                label="KPI Value" value={item?.historicalValue?.value}
+                label="FY0 Value" value={item?.historicalValue?.value}
                 onValueChange={handleKPIValueChange}
             />
             <div className="flex items-center space-x-2">
                 <input type="checkbox" checked={kpi?.collapse} onClick={toggleCollapse}/>
                 <label htmlFor="">Collapsed</label>
             </div>
+            <div>
+                <OperatorRadioGroup value={item?.type} onChange={setOperator}/>
+            </div>
             <div className="flex space-x-2">
                 <PrimaryButton onClick={handleSubmit}>Save</PrimaryButton>
                 <DangerButton onClick={onDismiss}><Delete/> Cancel</DangerButton>
             </div>
+        </div>
+    );
+}
+
+interface MyProps {
+    value: ItemTypeEnum
+    onChange: (type: ItemTypeEnum) => void
+}
+
+function OperatorRadioGroup({onChange, value}: MyProps) {
+    return (
+        <div className="my-8">
+            <label className="mb-2 text-sm">Operator</label>
+            <RadioGroup value={value} onChange={onChange} className="cursor-pointer flex space-x-1">
+                <RadioGroup.Option as={Fragment} value={ItemTypeEnum.SumOfOtherItems}>
+                    {({checked, active}) => (
+                        <div className={`px-4 py-2 flex items-center space-x-2 rounded ${checked ? 'bg-blue-600' : 'bg-blueGray-900'}`}>
+                            <span>Addition</span>
+                            {checked ? <CheckedCircle/> : <Nothing/>}
+                        </div>
+                    )}
+                </RadioGroup.Option>
+                <RadioGroup.Option as={Fragment} value={ItemTypeEnum.ProductOfOtherItems}>
+                    {({checked, active}) => (
+                        <div className={`px-4 py-2 flex items-center space-x-2 rounded ${checked ? 'bg-blue-600' : 'bg-blueGray-900'}`}>
+                            <span>Multiplication</span>
+                            {checked ? <CheckedCircle/> : <Nothing/>}
+                        </div>
+                    )}
+                </RadioGroup.Option>
+            </RadioGroup>
         </div>
     );
 }

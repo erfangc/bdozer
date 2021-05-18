@@ -32,7 +32,7 @@ export function KPICard(
     const {name, description} = item
     const [hovering, setHovering] = useState(false)
 
-    function setHoverngTrue() {
+    function setHoveringTrue() {
         setHovering(true)
     }
 
@@ -73,11 +73,11 @@ export function KPICard(
         <div
             className="relative w-full my-2"
             onMouseLeave={setHoveringFalse}
-            onMouseEnter={setHoverngTrue}
+            onMouseEnter={setHoveringTrue}
         >
             <div
                 onClick={handleOnAttemptToAddChild}
-                className={`absolute bottom-full left-0 cursor-pointer mb-1 px-4 py-1 bg-blueGray-800 transition ease-in ${hovering ? 'opacity-80' : 'opacity-0'}`}
+                className={`absolute bottom-full left-0 w-32 cursor-pointer mb-1 px-4 py-1 bg-blueGray-800 transition ease-in ${hovering ? 'opacity-80' : 'opacity-0'}`}
             >
                 <Plus/> <span>Children</span>
             </div>

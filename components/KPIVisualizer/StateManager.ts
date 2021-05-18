@@ -149,14 +149,11 @@ export class StateManager {
             productOfOtherItems,
             sumOfOtherItems,
         };
-        /*
-
-         */
         const updatedCompanyKPIs: CompanyKPIs = {
             ...companyKPIs,
             items: [
                 ...companyKPIs.items.map(it => {
-                    if (it.name === parent.name) {
+                    if (it.name === currentParent.name) {
                         return updatedParent;
                     } else {
                         return it;
@@ -166,11 +163,12 @@ export class StateManager {
             ],
             kpis: [...companyKPIs.kpis, newKPI]
         }
+
         this.setState({
             currentParent: undefined,
             editorOpen: false,
             companyKPIs: updatedCompanyKPIs,
-        })
+        });
     }
 
     startLoading = () => {
