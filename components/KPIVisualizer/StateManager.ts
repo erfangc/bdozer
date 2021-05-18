@@ -100,8 +100,6 @@ export class StateManager {
 
     /**
      * Just mutate the item without performing any changes
-     * @param newKPI
-     * @param newItem
      */
     mutateItem = (
         newKPI: KPIMetadata, newItem: Item,
@@ -199,7 +197,6 @@ export class StateManager {
             items: updatedItems,
             kpis: updatedKpis,
         };
-        console.log(updatedCompanyKPIs)
         this.setState({companyKPIs: updatedCompanyKPIs});
     }
 
@@ -211,7 +208,7 @@ export class StateManager {
         });
     }
 
-    attemptToEdit = (item: Item, kpi:KPIMetadata) => {
+    attemptToEdit = (item: Item, kpi: KPIMetadata) => {
         this.setState({
             currentItem: item,
             currentKPI: kpi,

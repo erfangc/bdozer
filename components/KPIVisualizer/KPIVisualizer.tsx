@@ -43,7 +43,6 @@ export function KPIVisualizer() {
 
     useEffect(() => {
         stateMgr.register(newState => {
-            console.log(newState);
             setState(newState);
         });
     }, []);

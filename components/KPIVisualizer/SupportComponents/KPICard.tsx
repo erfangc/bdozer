@@ -70,14 +70,17 @@ export function KPICard(
             onMouseEnter={setHoverngTrue}
             onClick={handleClick}
         >
+            <div className={`absolute bottom-full left-0 px-4 py-1 bg-blueGray-800 transition ease-in ${hovering ? 'opacity-70' : 'opacity-0'}`}>
+                <Plus/> <span>Children</span>
+            </div>
             <p className="text-sm text-blueGray-300">
                 {description ?? name}
             </p>
             <p>{val ?? '-'}</p>
             <div
-                className={`absolute space-y-1 text-blueGray-300 left-full ml-0.5 top-0 transition  ease-in ${hovering ? 'opacity-100' : 'opacity-0'}`}>
+                className={`absolute space-y-1 text-white left-full ml-0.5 top-0 transition  ease-in ${hovering ? 'opacity-70' : 'opacity-0'}`}>
                 <button
-                    className={`focus:outline-none bg-blueGray-600 cursor-pointer rounded`}
+                    className={`focus:outline-none bg-blueGray-800 cursor-pointer rounded`}
                     onClick={onAttemptToAddSibling}
                 >
                     <Plus/>
