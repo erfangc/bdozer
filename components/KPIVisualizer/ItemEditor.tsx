@@ -1,13 +1,11 @@
-import React, {ChangeEvent, Fragment, useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {Item, ItemTypeEnum, KPIMetadata, KPIMetadataFormatEnum} from "../../client";
 import {TextInput} from "../Common/TextInput";
 import {NumberInput} from "../Common/NumberInput";
 import {NumberFormatValues} from "react-number-format";
 import {PrimaryButton} from "../Common/PrimaryButton";
 import {DangerButton} from "../Common/DangerButton";
-import {CheckedCircle, Delete} from "../Common/Svgs";
-import {RadioGroup} from "@headlessui/react";
-import {Nothing} from "../Pages/StockAnalysisItemEditor/Svgs";
+import {Delete} from "../Common/Svgs";
 import {OperatorRadioGroup} from "./OperatorRadioGroup";
 
 interface Props {
@@ -31,6 +29,11 @@ const initKPI: KPIMetadata = {
     format: KPIMetadataFormatEnum.Money,
 }
 
+/**
+ *
+ * @param props
+ * @constructor
+ */
 export function ItemEditor(props: Props) {
 
     const {onSubmit, onDismiss} = props;
@@ -87,12 +90,38 @@ export function ItemEditor(props: Props) {
         setKPI(updatedKPI);
     }
 
-    function setOperator(itemType: ItemTypeEnum) {
-        const updatedItem: Item = {
-            ...item,
-            type: itemType,
-        };
-        setItem(updatedItem);
+    function setOperator(newItemType: ItemTypeEnum) {
+        // depending on the new itemType, we will have to transform
+        // the old children to new children
+        let newItem: Item
+        if (newItemType === ItemTypeEnum.ProductOfOtherItems) {
+            const components = item.sumOfOtherItems.components.map(component => {
+                return {itemName: component.itemName};
+            });
+            newItem = {
+                ...item,
+                type: newItemType,
+                productOfOtherItems: {
+                    components
+                }
+            };
+        } else if (newItemType === ItemTypeEnum.SumOfOtherItems) {
+            const components = item.productOfOtherItems.components.map(component => {
+                return {itemName: component.itemName, weight: 1};
+            });
+            newItem = {
+                ...item,
+                type: newItemType,
+                sumOfOtherItems: {
+                    components
+                }
+            };
+        } else {
+            // this should never happen
+            return;
+        }
+
+        setItem(newItem);
     }
 
     return (
@@ -111,12 +140,12 @@ export function ItemEditor(props: Props) {
                 label="FY0 Value" value={item?.historicalValue?.value}
                 onValueChange={handleKPIValueChange}
             />
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 text-sm">
                 <input type="checkbox" checked={kpi?.collapse} onClick={toggleCollapse}/>
-                <label htmlFor="">Collapsed</label>
+                <label htmlFor="">Collapse Children</label>
             </div>
             <div>
-                <OperatorRadioGroup value={item?.type} onChange={setOperator}/>
+                <OperatorRadioGroup item={item} onChange={setOperator}/>
             </div>
             <div className="flex space-x-2">
                 <PrimaryButton onClick={handleSubmit}>Save</PrimaryButton>

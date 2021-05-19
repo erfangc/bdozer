@@ -141,6 +141,13 @@ export function CheckedCircle(props: Props) {
     )
 }
 
+export function Nothing(props: Props) {
+    return (
+        <Base {...props}>
+        </Base>
+    )
+}
+
 export function RadioButtonUnchecked(props: Props) {
     return (
         <Base {...props}>
