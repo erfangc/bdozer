@@ -6,8 +6,20 @@ import {DangerButton} from "../../Common/DangerButton";
 import {GhostButton} from "../../Common/GhostButton";
 import {Delete, Plus} from "../../Common/Svgs";
 
+/**
+ * [ManualProjectionsEditor]
+ *
+ * @param item
+ * @param onChange
+ * @constructor
+ */
 export function ManualProjectionsEditor({item, onChange}: EditorProps) {
 
+    /**
+     * Edit fiscal year
+     * @param oldYear
+     * @param newYear
+     */
     function editFiscalYear(oldYear: number, newYear: number) {
         const manualProjections = item.manualProjections?.manualProjections?.map(manualProjection => {
             if (manualProjection.fiscalYear === oldYear) {
@@ -16,7 +28,10 @@ export function ManualProjectionsEditor({item, onChange}: EditorProps) {
                 return manualProjection;
             }
         });
-        onChange({...item, manualProjections: {manualProjections}});
+        onChange({
+            ...item,
+            manualProjections: {manualProjections}
+        });
     }
 
     function editValue(fiscalYear: number, newValue: number) {
@@ -27,7 +42,10 @@ export function ManualProjectionsEditor({item, onChange}: EditorProps) {
                 return manualProjection;
             }
         });
-        onChange({...item, manualProjections: {manualProjections}});
+        onChange({
+            ...item,
+            manualProjections: {manualProjections}
+        });
     }
 
     function addManualProjection() {
@@ -83,10 +101,10 @@ export function ManualProjectionsEditor({item, onChange}: EditorProps) {
     return (
         <div>
             <p className="text-sm mb-2">Projections by Year:</p>
-            <div className="flex flex-col space-y-2">
-                {projectionComponents}
-            </div>
-            <GhostButton className="mt-2" onClick={addManualProjection}><Plus/></GhostButton>
+            <div className="flex flex-col space-y-2">{projectionComponents}</div>
+            <GhostButton className="mt-2" onClick={addManualProjection}>
+                <Plus/>
+            </GhostButton>
         </div>
     );
 }

@@ -1978,6 +1978,205 @@ export interface XbrlExplicitMember {
      */
     value: string;
 }
+/**
+ * 
+ * @export
+ * @interface ZacksSalesEstimates
+ */
+export interface ZacksSalesEstimates {
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksSalesEstimates
+     */
+    file_prod_date?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksSalesEstimates
+     */
+    m_ticker?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksSalesEstimates
+     */
+    ticker?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksSalesEstimates
+     */
+    comp_name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksSalesEstimates
+     */
+    comp_name_2?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksSalesEstimates
+     */
+    exchange?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksSalesEstimates
+     */
+    currency_code?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksSalesEstimates
+     */
+    per_end_date?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksSalesEstimates
+     */
+    per_type?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksSalesEstimates
+     */
+    per_code?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    per_fisc_year?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    per_fisc_qtr?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    per_cal_year?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    per_cal_qtr?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    ann_rpt_flag?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    qtr_rpt_flag?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksSalesEstimates
+     */
+    last_rev_date?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_mean_est?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_median_est?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_cnt_est?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_high_est?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_low_est?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_std_dev_est?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_pct_chg_est_1w?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_cnt_est_rev_up_1w?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_cnt_est_rev_down_1w?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_pct_chg_est_1m?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_cnt_est_rev_up_1m?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_cnt_est_rev_down_1m?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_pct_chg_est_3m?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_cnt_est_rev_up_3m?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksSalesEstimates
+     */
+    sales_cnt_est_rev_down_3m?: number;
+}
 
 /**
  * CommentsControllerApi - axios parameter creator
@@ -6160,6 +6359,39 @@ export const ZacksEstimatesControllerApiAxiosParamCreator = function (configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getZacksSaleEstimates: async (ticker: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ticker' is not null or undefined
+            assertParamExists('getZacksSaleEstimates', 'ticker', ticker)
+            const localVarPath = `/api/zacks-estimates/{ticker}`
+                .replace(`{${"ticker"}}`, encodeURIComponent(String(ticker)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         revenueProjections: async (ticker: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'ticker' is not null or undefined
             assertParamExists('revenueProjections', 'ticker', ticker)
@@ -6206,6 +6438,16 @@ export const ZacksEstimatesControllerApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async getZacksSaleEstimates(ticker: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ZacksSalesEstimates>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getZacksSaleEstimates(ticker, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async revenueProjections(ticker: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ManualProjections>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.revenueProjections(ticker, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -6226,6 +6468,15 @@ export const ZacksEstimatesControllerApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getZacksSaleEstimates(ticker: string, options?: any): AxiosPromise<Array<ZacksSalesEstimates>> {
+            return localVarFp.getZacksSaleEstimates(ticker, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         revenueProjections(ticker: string, options?: any): AxiosPromise<ManualProjections> {
             return localVarFp.revenueProjections(ticker, options).then((request) => request(axios, basePath));
         },
@@ -6239,6 +6490,17 @@ export const ZacksEstimatesControllerApiFactory = function (configuration?: Conf
  * @extends {BaseAPI}
  */
 export class ZacksEstimatesControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} ticker 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ZacksEstimatesControllerApi
+     */
+    public getZacksSaleEstimates(ticker: string, options?: any) {
+        return ZacksEstimatesControllerApiFp(this.configuration).getZacksSaleEstimates(ticker, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {string} ticker 
