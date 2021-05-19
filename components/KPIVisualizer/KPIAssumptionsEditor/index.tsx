@@ -1,8 +1,10 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import {Item, ItemTypeEnum} from "../../../client";
 import {ItemTypeChooser} from "./ItemTypeChooser";
-import {NumberInput} from "../../Common/NumberInput";
-import {NumberFormatValues} from "react-number-format";
+import {FixedCostEditor} from "./FixedCostEditor";
+import {FormulaEditor} from "./FormulaEditor";
+import {CompoundedGrowthEditor} from "./CompoundedGrowthEditor";
+import {ManualProjectionsEditor} from "./ManualProjectionsEditor";
 
 interface Props {
     item?: Item
@@ -19,13 +21,16 @@ export function KPIAssumptionsEditor({item, onChange}: Props) {
     let editorComponent = null
     switch (itemType) {
         case ItemTypeEnum.FixedCost:
-            editorComponent = <FixedCostEditor onChange={onChange}/>;
+            editorComponent = <FixedCostEditor item={item} onChange={onChange}/>;
             break;
         case ItemTypeEnum.CompoundedGrowth:
-            editorComponent = <CompoundedGrowthEditor onChange={onChange}/>;
+            editorComponent = <CompoundedGrowthEditor item={item} onChange={onChange}/>;
             break;
         case ItemTypeEnum.Custom:
-            editorComponent = <FormulaEditor onChange={onChange}/>;
+            editorComponent = <FormulaEditor item={item} onChange={onChange}/>;
+            break;
+        case ItemTypeEnum.ManualProjections:
+            editorComponent = <ManualProjectionsEditor item={item} onChange={onChange}/>;
             break;
     }
 
@@ -37,61 +42,3 @@ export function KPIAssumptionsEditor({item, onChange}: Props) {
     );
 }
 
-interface EditorProps {
-    item?: Item
-    onChange: (newItem: Item) => void
-}
-
-export function FixedCostEditor({item, onChange}: EditorProps) {
-
-    function handleValueChange(newValue: NumberFormatValues) {
-        onChange({...item, fixedCost: {cost: newValue.floatValue}});
-    }
-
-    return (
-        <NumberInput
-            label="Fixed Cost"
-            value={item?.fixedCost?.cost}
-            onValueChange={handleValueChange}
-        />
-    );
-
-}
-
-export function FormulaEditor({item, onChange}: EditorProps) {
-
-    function handleChange({currentTarget: {value}}: ChangeEvent<HTMLTextAreaElement>) {
-        onChange({...item, formula: value});
-    }
-
-    return (
-        <div className="space-y-2">
-            <p className="text-sm">Formula</p>
-            <textarea
-                autoFocus
-                name="expression"
-                value={item?.formula}
-                onFocus={focus}
-                onChange={handleChange}
-                className="cursor-pointer w-full rounded-sm bg-blueGray-900 border-blueGray-500 px-4 py-4"
-                placeholder="Enter formula"
-            >
-            </textarea>
-        </div>
-    )
-}
-
-export function CompoundedGrowthEditor({item, onChange}: EditorProps) {
-
-    function handleValueChange(newValue: NumberFormatValues) {
-        onChange({...item, compoundedGrowth: {growthRate: newValue.floatValue}});
-    }
-
-    return (
-        <NumberInput
-            label="Growth Rate"
-            value={item?.compoundedGrowth?.growthRate}
-            onValueChange={handleValueChange}
-        />
-    );
-}
