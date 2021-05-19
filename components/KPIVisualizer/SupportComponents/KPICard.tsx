@@ -1,9 +1,10 @@
-import React, {useState, MouseEvent} from 'react';
+import React, {MouseEvent, useState} from 'react';
 import {simpleMoney, simpleNumber, simplePercent} from "../../../simple-number";
-import {CompanyKPIs, Item, KPIMetadata, KPIMetadataFormatEnum} from "../../../client";
+import {CompanyKPIs, Item, ItemTypeEnum, KPIMetadata, KPIMetadataFormatEnum} from "../../../client";
 import {Delete, Plus} from "../../Common/Svgs";
 
 interface Props {
+    parent?: Item
     companyKPIs: CompanyKPIs
     period: number
     item: Item
@@ -15,6 +16,7 @@ interface Props {
 
 export function KPICard(
     {
+        parent,
         period,
         onAttemptToAddChild,
         onAttemptToAddSibling,
@@ -69,18 +71,29 @@ export function KPICard(
         onAttemptToEdit(item, kpi);
     }
 
+    const hasChildren = (
+        (item.type === ItemTypeEnum.SumOfOtherItems && item.sumOfOtherItems)
+        ||
+        (item.type === ItemTypeEnum.ProductOfOtherItems && item.productOfOtherItems)
+    );
+
     return (
         <div
             className="relative w-full my-2"
             onMouseLeave={setHoveringFalse}
             onMouseEnter={setHoveringTrue}
         >
-            <div
-                onClick={handleOnAttemptToAddChild}
-                className={`absolute bottom-full left-0 w-32 cursor-pointer mb-1 px-4 py-1 bg-blueGray-800 transition ease-in ${hovering ? 'opacity-80' : 'opacity-0'}`}
-            >
-                <Plus/> <span>Children</span>
-            </div>
+            {
+                hasChildren
+                    ? null
+                    :
+                    <div
+                        onClick={handleOnAttemptToAddChild}
+                        className={`absolute bottom-full left-0 w-32 cursor-pointer mb-1 px-4 py-1 bg-blueGray-800 transition ease-in ${hovering ? 'opacity-80' : 'opacity-0'}`}
+                    >
+                        <Plus/> <span>Children</span>
+                    </div>
+            }
             <div
                 className="px-4 py-2 shadow rounded bg-blueGray-800 space-y-1 w-full cursor-pointer"
                 onClick={handleClick}
@@ -90,21 +103,26 @@ export function KPICard(
                 </p>
                 <p>{val ?? '-'}</p>
             </div>
-            <div
-                className={`absolute space-y-1 text-white left-full ml-1 mt-1 top-0 transition ease-in ${hovering ? 'opacity-80' : 'opacity-0'}`}>
-                <button
-                    className={`focus:outline-none bg-blueGray-800 cursor-pointer rounded`}
-                    onClick={onAttemptToAddSibling}
-                >
-                    <Plus/>
-                </button>
-                <button
-                    className={`focus:outline-none bg-rose-500 cursor-pointer rounded`}
-                    onClick={handleDelete}
-                >
-                    <Delete/>
-                </button>
-            </div>
+            {
+                parent
+                    ?
+                    <div
+                        className={`absolute space-y-1 z-10 text-white left-full ml-1 mt-1 top-0 transition ease-in ${hovering ? 'opacity-80' : 'opacity-0'}`}>
+                        <button
+                            className={`focus:outline-none bg-blueGray-800 cursor-pointer rounded`}
+                            onClick={onAttemptToAddSibling}
+                        >
+                            <Plus/>
+                        </button>
+                        <button
+                            className={`focus:outline-none bg-rose-500 cursor-pointer rounded`}
+                            onClick={handleDelete}
+                        >
+                            <Delete/>
+                        </button>
+                    </div>
+                    : null
+            }
         </div>
     );
 }

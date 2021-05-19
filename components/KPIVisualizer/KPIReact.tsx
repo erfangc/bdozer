@@ -64,6 +64,7 @@ export function KPIReact(props: Props) {
         <div className="flex flex-col self-end">
             <div className="flex items-center w-full">
                 <KPICard
+                    parent={parent}
                     item={item}
                     companyKPIs={companyKPIs}
                     period={0}
