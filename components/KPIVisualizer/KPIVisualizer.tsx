@@ -6,6 +6,8 @@ import {useRouter} from "next/router";
 import {GhostButton} from "../Common/GhostButton";
 import {EditorDialog} from "./EditorDialog";
 import {State, StateManager} from "./StateManager";
+import {SubTitle} from "../Common/Title";
+import {BlockQuote} from "../Common/BlockQuote";
 
 export function KPIVisualizer() {
 
@@ -62,6 +64,9 @@ export function KPIVisualizer() {
 
     return (
         <main className="max-w-prose container mx-auto pt-24 px-4">
+            {/* This is the root KPI element, from which a tree will be rendered recursively */}
+            <SubTitle className="">KPI Visualizer</SubTitle>
+            <BlockQuote className="mb-12">Click on the KPIs to edit them or add subcomponents</BlockQuote>
             <KPIReact
                 companyKPIs={companyKPIs}
                 item={items.find(it => it.name === revenueItemName)}

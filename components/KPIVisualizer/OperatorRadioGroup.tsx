@@ -10,8 +10,8 @@ interface OperatorRadioGroupProps {
 
 export function OperatorRadioGroup({onChange, item}: OperatorRadioGroupProps) {
     return (
-        <div className="my-8">
-            <label className="mb-2 block text-sm">Operator</label>
+        <div className="py-4">
+            <label className="mb-2 block text-sm">Operator Applied to Children</label>
             <RadioGroup value={item?.type} onChange={onChange} className="cursor-pointer flex space-x-1">
                 <RadioGroup.Option as={Fragment} value={ItemTypeEnum.SumOfOtherItems}>
                     {({checked}) => (

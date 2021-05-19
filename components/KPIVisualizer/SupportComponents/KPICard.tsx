@@ -30,19 +30,19 @@ export function KPICard(
     /*
     Find the KPI to display
      */
-    const {format} = kpis.find(it => it.itemName === item.name)
-    const {name, description} = item
-    const [hovering, setHovering] = useState(false)
+    const {format} = kpis.find(it => it.itemName === item.name);
+    const {name, description} = item;
+    const [hovering, setHovering] = useState(false);
 
     function setHoveringTrue() {
-        setHovering(true)
+        setHovering(true);
     }
 
     function setHoveringFalse() {
-        setHovering(false)
+        setHovering(false);
     }
 
-    const cell = cells.find(cell => cell.item.name === item.name && cell.period === period)
+    const cell = cells.find(cell => cell.item.name === item.name && cell.period === period);
 
     let val = null;
 

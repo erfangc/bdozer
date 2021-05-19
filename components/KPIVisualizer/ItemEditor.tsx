@@ -7,6 +7,7 @@ import {PrimaryButton} from "../Common/PrimaryButton";
 import {DangerButton} from "../Common/DangerButton";
 import {Delete} from "../Common/Svgs";
 import {OperatorRadioGroup} from "./OperatorRadioGroup";
+import {KPIAssumptionsEditor} from "./KPIAssumptionsEditor";
 
 interface Props {
     kpi?: KPIMetadata
@@ -124,6 +125,12 @@ export function ItemEditor(props: Props) {
         setItem(newItem);
     }
 
+    const hasChildren = (
+        (item?.type === ItemTypeEnum.SumOfOtherItems && item?.sumOfOtherItems)
+        ||
+        (item?.type === ItemTypeEnum.ProductOfOtherItems && item?.productOfOtherItems)
+    )
+
     return (
         <div className="space-y-4">
             <TextInput
@@ -140,13 +147,17 @@ export function ItemEditor(props: Props) {
                 label="FY0 Value" value={item?.historicalValue?.value}
                 onValueChange={handleKPIValueChange}
             />
-            <div className="flex items-center space-x-2 text-sm">
+            <div className="flex items-center space-x-2 text-sm select-none" onClick={toggleCollapse}>
                 <input type="checkbox" checked={kpi?.collapse} onClick={toggleCollapse}/>
                 <label htmlFor="">Collapse Children</label>
             </div>
-            <div>
-                <OperatorRadioGroup item={item} onChange={setOperator}/>
-            </div>
+            {
+                hasChildren
+                    ?
+                    <OperatorRadioGroup item={item} onChange={setOperator}/>
+                    :
+                    <KPIAssumptionsEditor onChange={setItem} item={item}/>
+            }
             <div className="flex space-x-2">
                 <PrimaryButton onClick={handleSubmit}>Save</PrimaryButton>
                 <DangerButton onClick={onDismiss}><Delete/> Cancel</DangerButton>

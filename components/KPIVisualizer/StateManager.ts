@@ -11,7 +11,17 @@ export interface State {
 }
 
 /**
- * [StateManager] manages the state of CompanyKPIs
+ * [StateManager] manages the state of CompanyKPIs and it's mutation
+ * in the UI
+ *
+ * This class offers methods to update the correct Item and KPIMetadata based on user actions
+ *
+ * For example:
+ *  - Adding a child item requires we keep as temporary state the immediate sibling as well as the parent
+ *  - Upon completion, we must mutate the correct parent
+ *  - If an action is dismissed, state must be reset
+ *
+ * This class handles all of this and more so the display layer React components do not have to handle this business logic
  */
 export class StateManager {
 
@@ -188,11 +198,13 @@ export class StateManager {
     }
 
     deleteItem = (tgt: Item) => {
-        // remove all references
+        /*
+        Remove all references
+         */
         const {companyKPIs, companyKPIs: {items, kpis}} = this.state
         const updatedItems = items
             .filter(it => it.name !== tgt.name)
-            .map(from => this.removeComponent(from, tgt))
+            .map(from => this.removeChild(from, tgt))
         const updatedKpis = kpis.filter(kpi => kpi.itemName !== tgt.name);
         const updatedCompanyKPIs: CompanyKPIs = {
             ...companyKPIs,
@@ -225,25 +237,60 @@ export class StateManager {
         })
     }
 
-    private removeComponent(from: Item, tgt: Item): Item {
-        if (from.type === ItemTypeEnum.SumOfOtherItems) {
-            return {
-                ...from,
-                sumOfOtherItems: {
-                    ...from.sumOfOtherItems,
-                    components: from.sumOfOtherItems.components.filter(it => it.itemName !== tgt.name)
-                }
+    /**
+     * This method removes the [child] Item parent the [parent] Item
+     * if [child] is a dependency of [parent]. This dependency may take the form
+     * of being a component
+     *
+     * As a corner case side-effect, this method is responsible for correctly updating
+     * the [parent] Item into a type Custom item if all of it's dependents (children) are removed
+     * as a result of this remove action
+     *
+     * @param parent
+     * @param child
+     * @private
+     */
+    private removeChild(parent: Item, child: Item): Item {
+        if (parent.type === ItemTypeEnum.SumOfOtherItems) {
+            const sumOfOtherItems = {
+                ...parent.sumOfOtherItems,
+                components: parent.sumOfOtherItems.components.filter(it => it.itemName !== child.name)
+            };
+            if (sumOfOtherItems.components.length === 0) {
+                // update the parent to become a type = Custom Item
+                return {
+                    ...parent,
+                    type: ItemTypeEnum.Custom,
+                    formula: `${parent.historicalValue?.value ?? '0.0'}`,
+                };
+            } else {
+                // simply return the parent with the child removed
+                return {
+                    ...parent,
+                    sumOfOtherItems,
+                };
             }
-        } else if (from.type === ItemTypeEnum.ProductOfOtherItems) {
-            return {
-                ...from,
-                productOfOtherItems: {
-                    ...from.productOfOtherItems,
-                    components: from.productOfOtherItems.components.filter(it => it.itemName !== tgt.name)
-                }
+        } else if (parent.type === ItemTypeEnum.ProductOfOtherItems) {
+            const productOfOtherItems = {
+                ...parent.productOfOtherItems,
+                components: parent.productOfOtherItems.components.filter(it => it.itemName !== child.name)
+            };
+            if (productOfOtherItems.components.length === 0) {
+                // update the parent to become a type = Custom Item
+                return {
+                    ...parent,
+                    type: ItemTypeEnum.Custom,
+                    formula: `${parent.historicalValue?.value ?? '0.0'}`,
+                };
+            } else {
+                // simply return parent with child removed
+                return {
+                    ...parent,
+                    productOfOtherItems
+                };
             }
         } else {
-            return from;
+            return parent;
         }
     }
 
