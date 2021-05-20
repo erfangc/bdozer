@@ -43,7 +43,7 @@ export function KPIAssumptionsEditor({item, onChange}: Props) {
                 <span>Assumptions</span><ChevronDown/>
             </Disclosure.Button>
             <Disclosure.Panel className="space-y-4 px-3 py-1">
-                <div className="py-4 space-y-6">
+                <div className="space-y-6">
                     <ItemTypeChooser itemType={item?.type} onChange={handleItemTypeChange}/>
                     {editorComponent}
                 </div>

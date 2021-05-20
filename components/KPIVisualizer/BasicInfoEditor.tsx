@@ -62,7 +62,7 @@ export function BasicInfoEditor({item, setItem, kpi, setKPI}: BasicInfoEditorPro
             >
                 <span>Basic Info</span><ChevronDown/>
             </Disclosure.Button>
-            <Disclosure.Panel className="space-y-4 pt-4 px-3 py-1">
+            <Disclosure.Panel className="space-y-4 px-3 py-1">
                 <TextInput
                     label="Name"
                     value={item?.name}
