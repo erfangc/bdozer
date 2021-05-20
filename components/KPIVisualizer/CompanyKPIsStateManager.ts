@@ -23,7 +23,7 @@ export interface State {
  *
  * This class handles all of this and more so the display layer React components do not have to handle this business logic
  */
-export class StateManager {
+export class CompanyKPIsStateManager {
 
     public state: State;
     private callback: (newState: State) => void

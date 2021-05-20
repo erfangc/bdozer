@@ -30,7 +30,7 @@ export function EditorDialog(props: Props) {
                 <Dialog.Overlay className="fixed h-screen inset-0 opacity-75 bg-blueGray-800"/>
                 <Transition.Child
                     as="div"
-                    className="p-6 rounded shadow bg-blueGray-700 text-blueGray-100 z-10 flex flex-col space-y-6"
+                    className="p-6 rounded shadow bg-blueGray-700 text-blueGray-100 z-10 flex flex-col space-y-6 container max-w-prose"
                     enter="ease-out duration-300"
                     enterFrom="opacity-0 scale-90"
                     enterTo="opacity-100 scale-100"

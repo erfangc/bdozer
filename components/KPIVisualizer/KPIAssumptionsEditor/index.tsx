@@ -5,6 +5,8 @@ import {FixedCostEditor} from "./FixedCostEditor";
 import {FormulaEditor} from "./FormulaEditor";
 import {CompoundedGrowthEditor} from "./CompoundedGrowthEditor";
 import {ManualProjectionsEditor} from "./ManualProjectionsEditor";
+import { Disclosure } from "@headlessui/react";
+import {ChevronDown} from "../../Common/Svgs";
 
 interface Props {
     item?: Item
@@ -35,10 +37,18 @@ export function KPIAssumptionsEditor({item, onChange}: Props) {
     }
 
     return (
-        <div className="py-4 space-y-6">
-            <ItemTypeChooser itemType={item?.type} onChange={handleItemTypeChange}/>
-            {editorComponent}
-        </div>
+        <Disclosure>
+            <Disclosure.Button
+                className="flex justify-between w-full py-1 rounded bg-blueGray-800 px-3 py-2 focus:outline-none">
+                <span>Assumptions</span><ChevronDown/>
+            </Disclosure.Button>
+            <Disclosure.Panel className="space-y-4 px-3 py-1">
+                <div className="py-4 space-y-6">
+                    <ItemTypeChooser itemType={item?.type} onChange={handleItemTypeChange}/>
+                    {editorComponent}
+                </div>
+            </Disclosure.Panel>
+        </Disclosure>
     );
 }
 

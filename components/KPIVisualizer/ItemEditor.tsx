@@ -1,13 +1,12 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Item, ItemTypeEnum, KPIMetadata, KPIMetadataFormatEnum} from "../../client";
-import {TextInput} from "../Common/TextInput";
-import {NumberInput} from "../Common/NumberInput";
-import {NumberFormatValues} from "react-number-format";
 import {PrimaryButton} from "../Common/PrimaryButton";
 import {DangerButton} from "../Common/DangerButton";
 import {Delete} from "../Common/Svgs";
 import {OperatorRadioGroup} from "./OperatorRadioGroup";
 import {KPIAssumptionsEditor} from "./KPIAssumptionsEditor";
+import {KPIFormatChooser} from "./KPIAssumptionsEditor/KPIFormatChooser";
+import {BasicInfoEditor} from "./BasicInfoEditor";
 
 interface Props {
     kpi?: KPIMetadata
@@ -47,48 +46,8 @@ export function ItemEditor(props: Props) {
         setKPI(props.kpi);
     }, [props.item, props.kpi]);
 
-    function handleKPINameChange({currentTarget}: ChangeEvent<HTMLInputElement>) {
-        const updatedItem: Item = {
-            ...item,
-            name: currentTarget.value,
-        };
-        const updatedKPI: KPIMetadata = {
-            ...kpi,
-            itemName: currentTarget.value,
-        };
-        setKPI(updatedKPI);
-        setItem(updatedItem);
-    }
-
-    function handleKPIDescriptionChange({currentTarget}: ChangeEvent<HTMLInputElement>) {
-        const updatedItem: Item = {
-            ...item,
-            description: currentTarget.value,
-        };
-        setItem(updatedItem);
-    }
-
-    function handleKPIValueChange({floatValue}: NumberFormatValues) {
-        const updatedItem: Item = {
-            ...item,
-            historicalValue: {
-                ...item.historicalValue,
-                value: floatValue,
-            }
-        };
-        setItem(updatedItem);
-    }
-
     function handleSubmit() {
         onSubmit(kpi, item, props.kpi, props.item);
-    }
-
-    function toggleCollapse() {
-        const updatedKPI: KPIMetadata = {
-            ...kpi,
-            collapse: !kpi.collapse
-        };
-        setKPI(updatedKPI);
     }
 
     function setOperator(newItemType: ItemTypeEnum) {
@@ -125,6 +84,10 @@ export function ItemEditor(props: Props) {
         setItem(newItem);
     }
 
+    function setFormat(newKPIFormat: KPIMetadataFormatEnum) {
+        setKPI({...kpi, format: newKPIFormat});
+    }
+
     const hasChildren = (
         (item?.type === ItemTypeEnum.SumOfOtherItems && item?.sumOfOtherItems)
         ||
@@ -133,28 +96,12 @@ export function ItemEditor(props: Props) {
 
     return (
         <div className="space-y-4">
-            <TextInput
-                label="Name"
-                value={item?.name}
-                onChange={handleKPINameChange}
-            />
-            <TextInput
-                label="Description"
-                value={item?.description}
-                onChange={handleKPIDescriptionChange}
-            />
-            <NumberInput
-                label="FY0 Value" value={item?.historicalValue?.value}
-                onValueChange={handleKPIValueChange}
-            />
-            <div className="flex items-center space-x-2 text-sm select-none" onClick={toggleCollapse}>
-                <input type="checkbox" checked={kpi?.collapse} onClick={toggleCollapse}/>
-                <label htmlFor="">Collapse Children</label>
-            </div>
+            <BasicInfoEditor setItem={setItem} setKPI={setKPI} item={item} kpi={kpi}/>
+            <KPIFormatChooser kpiFormat={kpi?.format} onChange={setFormat}/>
             {
                 hasChildren
                     ?
-                    <OperatorRadioGroup item={item} onChange={setOperator}/>
+                    <OperatorRadioGroup onChange={setOperator} item={item}/>
                     :
                     <KPIAssumptionsEditor onChange={setItem} item={item}/>
             }
@@ -165,3 +112,4 @@ export function ItemEditor(props: Props) {
         </div>
     );
 }
+

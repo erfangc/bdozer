@@ -5,7 +5,7 @@ import {PrimaryButton} from "../Common/PrimaryButton";
 import {useRouter} from "next/router";
 import {GhostButton} from "../Common/GhostButton";
 import {EditorDialog} from "./EditorDialog";
-import {State, StateManager} from "./StateManager";
+import {State, CompanyKPIsStateManager} from "./CompanyKPIsStateManager";
 import {SubTitle} from "../Common/Title";
 import {BlockQuote} from "../Common/BlockQuote";
 import {CompanyKPIs, ItemTypeEnum, KPIMetadataFormatEnum} from "../../client";
@@ -16,7 +16,7 @@ export function KPIBuilder() {
     const companyKPIsApi = useCompanyKPIs();
     const stockAnalysesApi = useStockAnalysis();
 
-    const [stateMgr] = useState(new StateManager());
+    const [stateMgr] = useState(new CompanyKPIsStateManager());
     const [state, setState] = useState<State>(stateMgr.state);
 
     async function init(id: string) {
