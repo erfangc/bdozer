@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {Item, ItemTypeEnum, KPIMetadata, KPIMetadataFormatEnum} from "../../client";
-import {PrimaryButton} from "../Common/PrimaryButton";
-import {DangerButton} from "../Common/DangerButton";
-import {Delete} from "../Common/Svgs";
+import {Item, ItemTypeEnum, KPIMetadata, KPIMetadataFormatEnum} from "../../../client";
+import {PrimaryButton} from "../../Common/PrimaryButton";
+import {DangerButton} from "../../Common/DangerButton";
+import {Delete} from "../../Common/Svgs";
 import {OperatorRadioGroup} from "./OperatorRadioGroup";
-import {KPIAssumptionsEditor} from "./KPIAssumptionsEditor";
-import {KPIFormatChooser} from "./KPIAssumptionsEditor/KPIFormatChooser";
+import {KPIAssumptionsEditor} from "../index";
+import {KPIFormatChooser} from "./KPIFormatChooser";
 import {BasicInfoEditor} from "./BasicInfoEditor";
 
 interface Props {
@@ -100,10 +100,8 @@ export function ItemEditor(props: Props) {
             <KPIFormatChooser kpiFormat={kpi?.format} onChange={setFormat}/>
             {
                 hasChildren
-                    ?
-                    <OperatorRadioGroup onChange={setOperator} item={item}/>
-                    :
-                    <KPIAssumptionsEditor onChange={setItem} item={item}/>
+                    ? <OperatorRadioGroup onChange={setOperator} item={item}/>
+                    : <KPIAssumptionsEditor onChange={setItem} item={item}/>
             }
             <div className="flex space-x-2">
                 <PrimaryButton onClick={handleSubmit}>Save</PrimaryButton>

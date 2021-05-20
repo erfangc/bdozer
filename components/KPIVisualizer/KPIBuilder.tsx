@@ -4,7 +4,7 @@ import {useCompanyKPIs, useStockAnalysis} from "../../api-hooks";
 import {PrimaryButton} from "../Common/PrimaryButton";
 import {useRouter} from "next/router";
 import {GhostButton} from "../Common/GhostButton";
-import {EditorDialog} from "./EditorDialog";
+import {EditorDialog} from "./ItemEditor/EditorDialog";
 import {State, CompanyKPIsStateManager} from "./CompanyKPIsStateManager";
 import {SubTitle} from "../Common/Title";
 import {BlockQuote} from "../Common/BlockQuote";

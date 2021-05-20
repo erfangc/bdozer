@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Dialog, Transition} from "@headlessui/react";
-import {CompanyKPIs, Item, KPIMetadata} from "../../client";
+import {CompanyKPIs, Item, KPIMetadata} from "../../../client";
 import {ItemEditor} from "./ItemEditor";
 
 interface Props {

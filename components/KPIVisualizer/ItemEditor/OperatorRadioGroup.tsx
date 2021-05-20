@@ -1,7 +1,7 @@
 import React, {Fragment} from "react";
-import {Item, ItemTypeEnum} from "../../client";
+import {Item, ItemTypeEnum} from "../../../client";
 import {RadioGroup} from "@headlessui/react";
-import {CheckedCircle, Nothing} from "../Common/Svgs";
+import {CheckedCircle, Nothing} from "../../Common/Svgs";
 
 interface OperatorRadioGroupProps {
     item: Item

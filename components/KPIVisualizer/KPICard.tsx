@@ -1,7 +1,7 @@
 import React, {MouseEvent, useState} from 'react';
-import {simpleMoney, simpleNumber, simplePercent} from "../../../simple-number";
-import {CompanyKPIs, Item, ItemTypeEnum, KPIMetadata, KPIMetadataFormatEnum} from "../../../client";
-import {Delete, Plus} from "../../Common/Svgs";
+import {simpleMoney, simpleNumber, simplePercent} from "../../simple-number";
+import {CompanyKPIs, Item, ItemTypeEnum, KPIMetadata, KPIMetadataFormatEnum} from "../../client";
+import {Delete, Plus} from "../Common/Svgs";
 
 interface Props {
     parent?: Item

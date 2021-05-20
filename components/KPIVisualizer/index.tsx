@@ -1,12 +1,12 @@
 import React from "react";
-import {Item, ItemTypeEnum} from "../../../client";
-import {ItemTypeChooser} from "./ItemTypeChooser";
-import {FixedCostEditor} from "./FixedCostEditor";
-import {FormulaEditor} from "./FormulaEditor";
-import {CompoundedGrowthEditor} from "./CompoundedGrowthEditor";
-import {ManualProjectionsEditor} from "./ManualProjectionsEditor";
+import {Item, ItemTypeEnum} from "../../client";
+import {ItemTypeChooser} from "./ItemEditor/ItemTypeChooser";
+import {FixedCostEditor} from "./ItemEditor/FixedCostEditor";
+import {FormulaEditor} from "./ItemEditor/FormulaEditor";
+import {CompoundedGrowthEditor} from "./ItemEditor/CompoundedGrowthEditor";
+import {ManualProjectionsEditor} from "./ItemEditor/ManualProjectionsEditor";
 import { Disclosure } from "@headlessui/react";
-import {ChevronDown} from "../../Common/Svgs";
+import {ChevronDown} from "../Common/Svgs";
 
 interface Props {
     item?: Item

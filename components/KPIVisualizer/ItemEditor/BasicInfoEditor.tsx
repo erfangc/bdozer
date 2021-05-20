@@ -1,10 +1,10 @@
-import {Item, KPIMetadata} from "../../client";
+import {Item, KPIMetadata} from "../../../client";
 import React, {ChangeEvent} from "react";
 import {NumberFormatValues} from "react-number-format";
 import {Disclosure} from "@headlessui/react";
-import {ChevronDown} from "../Common/Svgs";
-import {TextInput} from "../Common/TextInput";
-import {NumberInput} from "../Common/NumberInput";
+import {ChevronDown} from "../../Common/Svgs";
+import {TextInput} from "../../Common/TextInput";
+import {NumberInput} from "../../Common/NumberInput";
 
 interface BasicInfoEditorProps {
     item?: Item
