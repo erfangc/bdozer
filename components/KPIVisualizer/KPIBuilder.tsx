@@ -52,9 +52,9 @@ export function KPIBuilder() {
                 } as any;
                 await companyKPIsApi.saveCompanyKPIs(companyKPIs);
                 stateMgr.setCompanyKPIs(companyKPIs);
-            } else {
-                stateMgr.setCompanyKPIs(data);
             }
+        } else {
+            stateMgr.setCompanyKPIs(data);
         }
         stateMgr.stopLoading();
     }
