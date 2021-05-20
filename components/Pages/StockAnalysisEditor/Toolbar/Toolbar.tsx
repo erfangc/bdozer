@@ -7,6 +7,7 @@ import {ExcelDownloading, ExcelIcon} from '../../../Common/DownloadToExcel'
 import {Notification, notificationStore} from '../../../Notifications/NotificationStore'
 import {ToolButton} from './ToolButton'
 import {
+    AccountTree,
     Loading,
     ModelTraining,
     Play,
@@ -126,6 +127,10 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
         router.push(`/control-panel/stock-analyses/${stockAnalysis['_id']}/filing-chooser`)
     }
 
+    function navigateToKPIBuilder() {
+        router.push(`/control-panel/stock-analyses/${stockAnalysis['_id']}/kpi-builder`)
+    }
+
     useEffect(() => {
         init()
     }, [])
@@ -157,8 +162,7 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
                             className="relative">
                     {
                         noIssues
-                            ?
-                            null
+                            ? null
                             :
                             <span className="absolute -top-2 -right-2 rounded-full bg-amber-600 w-6 h-6">
                                 {issues?.length}
@@ -169,11 +173,14 @@ export default function Toolbar({loading, setLoading, stockAnalysis, setStockAna
                 <ToolButton onClick={downloadModel} loading={downloading} label="Download">
                     {downloading ? <ExcelDownloading/> : <ExcelIcon/>}
                 </ToolButton>
+                <ToolButton onClick={navigateToKPIBuilder} loading={loading} label="KPIs">
+                    <AccountTree />
+                </ToolButton>
                 <ToolButton
                     label="Reboot"
                     loading={loading}
-                    tooltip="Rebuild the whole model from another SEC filing"
                     onClick={navigateToFilingChooser}
+                    tooltip="Rebuild the whole model from another SEC filing"
                 >
                     <ModelTraining/>
                 </ToolButton>
