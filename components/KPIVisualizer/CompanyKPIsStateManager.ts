@@ -40,6 +40,14 @@ export class CompanyKPIsStateManager {
         };
     }
 
+    hasChildren = (item: Item) => {
+        return (
+            (item.type === ItemTypeEnum.ProductOfOtherItems && item.productOfOtherItems)
+            ||
+            (item.type === ItemTypeEnum.SumOfOtherItems && item.sumOfOtherItems)
+        );
+    }
+
     handleItemEdit = (
         newKPI: KPIMetadata, newItem: Item,
         kpi?: KPIMetadata, item?: Item,
