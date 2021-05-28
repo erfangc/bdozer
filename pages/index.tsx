@@ -41,7 +41,7 @@ function Home() {
                 <div>
                     <div className="flex space-x-2 items-center pt-4 lg:mt-10">
                         <Logo />
-                        <div className="text-blueGray-200 font-extrabold text-2xl">bdzoer</div>
+                        <div className="text-blueGray-200 font-extrabold text-2xl">bdozer</div>
                     </div>
                     <div className="lg:flex">
                         {/* Tag line + subtext */}
