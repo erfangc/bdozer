@@ -4,7 +4,7 @@ import {FixedCostAutoFill, Item, ItemTypeEnum, Model} from "../../../../client";
 import {NumberFormatValues} from "react-number-format";
 import {NumberInput} from "../../../Common/NumberInput";
 import {GhostButton} from "../../../Common/GhostButton";
-import {simpleMoney} from "../../../../simple-number";
+import {readableMoney} from "../../../../number-formatters";
 
 interface Props {
     item: Item
@@ -70,7 +70,7 @@ export function FixedCostEditor({item, model, onSubmit}: Props) {
                                         key={autoFillOption.label}
                                         onClick={() => autoFill(autoFillOption)}
                                     >
-                                        {autoFillOption.label} {simpleMoney(cost.toFixed(0))}
+                                        {autoFillOption.label} {readableMoney(cost.toFixed(0))}
                                     </GhostButton>
                                 );
                             })

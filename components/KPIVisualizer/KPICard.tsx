@@ -1,5 +1,5 @@
 import React, {MouseEvent, useState} from 'react';
-import {simpleMoney, simpleNumber, simplePercent} from "../../simple-number";
+import {readableMoney, readableNumber, readablePercent} from "../../number-formatters";
 import {CompanyKPIs, Item, ItemTypeEnum, KPIMetadata, KPIMetadataFormatEnum} from "../../client";
 import {Delete, Plus} from "../Common/Svgs";
 
@@ -48,11 +48,11 @@ export function KPICard(
 
     if (cell) {
         if (format === KPIMetadataFormatEnum.Percent) {
-            val = simplePercent(cell.value)
+            val = readablePercent(cell.value)
         } else if (format === KPIMetadataFormatEnum.Number) {
-            val = simpleNumber(cell.value)
+            val = readableNumber(cell.value)
         } else if (format === KPIMetadataFormatEnum.Money) {
-            val = simpleMoney(cell.value)
+            val = readableMoney(cell.value)
         }
     }
 

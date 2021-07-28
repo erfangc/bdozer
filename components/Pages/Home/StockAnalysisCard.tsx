@@ -1,6 +1,6 @@
 import React from 'react'
 import {StockAnalysisProjection} from "../../../client";
-import {simpleMoney, simplePercent} from "../../../simple-number";
+import {readableMoney, readablePercent} from "../../../number-formatters";
 
 interface Props {
     stockAnalysis: StockAnalysisProjection
@@ -24,17 +24,21 @@ export function StockAnalysisCard({stockAnalysis}: Props) {
                 <div className="flex space-x-8">
                     <div>
                         <label className="label-micro text-lightGreen-25">Fair Value</label>
-                        <p className="numbers-bold text-lightGreen-25">{simpleMoney(targetPrice)}</p>
+                        <p className="numbers-bold text-lightGreen-25">
+                            ${targetPrice.toLocaleString('US', {currency: 'USD', maximumSignificantDigits: 4})}
+                        </p>
                     </div>
                     <div>
                         <label className="label-micro text-lightGreen-25">Current Price</label>
-                        <p className="numbers-bold text-lightGreen-25">{simpleMoney(currentPrice)}</p>
+                        <p className="numbers-bold text-lightGreen-25">
+                            ${currentPrice.toLocaleString('US', {currency: 'USD', maximumSignificantDigits: 4})}
+                        </p>
                     </div>
                 </div>
                 <hr className="border-navy-75" />
             </div>
             <p className="text-lime-100">
-                {simplePercent(targetPrice/currentPrice - 1)} Upside
+                {readablePercent(targetPrice/currentPrice - 1)} Upside
             </p>
         </div>
     );

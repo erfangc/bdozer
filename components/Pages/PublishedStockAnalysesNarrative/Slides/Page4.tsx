@@ -5,7 +5,7 @@ import React, {useEffect, useState} from 'react';
 import {useFactBase} from '../../../../api-hooks';
 import {StockAnalysis2} from '../../../../client';
 import {blueGray50, highcharts} from '../../../../highcharts';
-import {simpleNumber} from '../../../../simple-number';
+import {readableNumber} from '../../../../number-formatters';
 import {year} from '../../../../year';
 import {Navigation} from '../Navigation';
 import {PageTitle} from '../PageTitle';
@@ -74,7 +74,7 @@ export function Page4({ result }: Props) {
                             color: blueGray50,
                         },
                         formatter: function () {
-                            return `<div class="text-white z-0">${simpleNumber(this.y, true)}</div>`;
+                            return `<div class="text-white z-0">${readableNumber(this.y, true)}</div>`;
                         },
                     },
                 },
@@ -97,7 +97,7 @@ export function Page4({ result }: Props) {
             <div className="w-full space-y-12 mt-20">
                 <PageTitle>Revenue Past and Future</PageTitle>
                 <p>
-                    Our analysis relies on revenue growing from ${simpleNumber(revenueFy0)} to ${simpleNumber(revenueFinal)}.
+                    Our analysis relies on revenue growing from ${readableNumber(revenueFy0)} to ${readableNumber(revenueFinal)}.
                     Below shows historical and projected revenues year by year.
                 </p>
                 <div className="w-full">

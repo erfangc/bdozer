@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useFactBase} from "../../../../api-hooks";
 import {year} from "../../../../year";
-import {simpleNumber} from "../../../../simple-number";
+import {readableNumber} from "../../../../number-formatters";
 import {StockAnalysis2} from "../../../../client";
 import HighchartsReact from "highcharts-react-official";
 import {highcharts} from "../../../../highcharts";
@@ -89,7 +89,7 @@ export function StockAnalysisCharts({stockAnalysis}: Props) {
                 title: { text: null, },
                 labels: {
                     formatter: function () {
-                        return `${simpleNumber(this.value)}`
+                        return `${readableNumber(this.value)}`
                     }
                 }
             },

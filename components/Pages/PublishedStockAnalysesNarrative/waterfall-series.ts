@@ -1,6 +1,6 @@
 import {Item, Waterfall} from "../../../client";
 import {blueGray900, lime700, rose500} from "../../../highcharts";
-import {simpleNumber} from "../../../simple-number";
+import {readableNumber} from "../../../number-formatters";
 
 export const baseOptions: Highcharts.Options = {
     chart: { type: 'waterfall', },
@@ -61,7 +61,7 @@ export function waterfallSeries(waterfall: Waterfall) {
             enabled: true,
             useHTML: false,
             formatter: function () {
-                return `<div class="z-0">${simpleNumber(this.y.toFixed(0), true)}</div>`;
+                return `<div class="z-0">${readableNumber(this.y.toFixed(0), true)}</div>`;
             },
         },
     }];

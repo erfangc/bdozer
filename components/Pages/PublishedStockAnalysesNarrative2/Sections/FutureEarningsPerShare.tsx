@@ -2,7 +2,7 @@ import HighchartsReact from "highcharts-react-official";
 import React, {useEffect, useState} from "react";
 import {StockAnalysis2} from "../../../../client";
 import {highcharts, lime500, rose500} from "../../../../highcharts";
-import {simpleMoney, simpleNumber} from "../../../../simple-number";
+import {readableMoney, readableNumber} from "../../../../number-formatters";
 import {year} from "../../../../year";
 import {SubTitle} from "../../../Common/Title";
 
@@ -108,11 +108,11 @@ export function FutureEarningsPerShare(props: Props) {
                     return (
                         <tr key={period}>
                             <td className="font-light text-left text-blueGray-300 px-2 py-1">{year(period)}</td>
-                            <td className="text-right px-2 py-1">{simpleMoney(netIncomeLoss)}</td>
+                            <td className="text-right px-2 py-1">{readableMoney(netIncomeLoss)}</td>
                             <td className="text-right px-2 py-1"><span className="font-semibold text-lg">÷</span></td>
-                            <td className="text-right px-2 py-1">{simpleNumber(sharesOutstanding)}</td>
+                            <td className="text-right px-2 py-1">{readableNumber(sharesOutstanding)}</td>
                             <td className="text-right px-2 py-1"><span className="font-semibold text-lg">=</span></td>
-                            <td className="text-right px-2 py-1">{simpleMoney(eps)}</td>
+                            <td className="text-right px-2 py-1">{readableMoney(eps)}</td>
                         </tr>
                     )
                 })}

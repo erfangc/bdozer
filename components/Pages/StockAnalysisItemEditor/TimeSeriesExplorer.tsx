@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Item, StockAnalysis2} from "../../../client";
 import {useTimeSeries} from "../../../api-hooks";
-import {simpleNumber} from "../../../simple-number";
+import {readableNumber} from "../../../number-formatters";
 import {blueGray700, highcharts} from "../../../highcharts";
 import HighchartsReact from "highcharts-react-official";
 import {Loading} from "../../Common/Svgs";
@@ -67,7 +67,7 @@ export function TimeSeriesExplorer({stockAnalysis, item}: Props) {
                     title: {text: null,},
                     labels: {
                         formatter: function () {
-                            return `${simpleNumber(this.value)}`
+                            return `${readableNumber(this.value)}`
                         }
                     }
                 },

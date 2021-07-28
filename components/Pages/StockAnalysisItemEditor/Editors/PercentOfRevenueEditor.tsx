@@ -4,7 +4,7 @@ import {Item, ItemTypeEnum, Model, PercentOfRevenueAutoFill} from "../../../../c
 import {NumberFormatValues} from "react-number-format";
 import {NumberInput} from "../../../Common/NumberInput";
 import {GhostButton} from "../../../Common/GhostButton";
-import {simplePercent} from "../../../../simple-number";
+import {readablePercent} from "../../../../number-formatters";
 
 interface Props {
     item: Item
@@ -68,7 +68,7 @@ export function PercentOfRevenueEditor({item, model, onSubmit}: Props) {
                                     const percentOfRevenue = autoFillOption.percentOfRevenue.percentOfRevenue;
                                     return (
                                         <GhostButton key={autoFillOption.label} onClick={() => autoFill(autoFillOption)}>
-                                            {autoFillOption.label} {simplePercent(percentOfRevenue)}
+                                            {autoFillOption.label} {readablePercent(percentOfRevenue)}
                                         </GhostButton>
                                     );
                                 })
