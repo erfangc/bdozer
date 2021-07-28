@@ -94,8 +94,7 @@ module.exports = {
   },
   variants: {
     extend: {
-      width: ['hover']
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [],
 };

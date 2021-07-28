@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Search } from '../../Common2/Search';
+import React from 'react'
+import { StockSearch} from '../../Common2/Search';
 
 
 export function AlreadyResearching() {
@@ -11,7 +11,7 @@ export function AlreadyResearching() {
                 whether or not to invest.
             </p>
             <div className="w-1/3">
-                <Search />
+                <StockSearch />
             </div>
         </section>
     );

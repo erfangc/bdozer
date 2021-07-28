@@ -1,7 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react"
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
-import { SecondaryButton } from "../components/Common2/SecondaryButton"
+import React from 'react'
 import { AlreadyResearching } from "../components/Pages/Home/AlreadyResearching"
 import { Footer } from "../components/Pages/Home/Footer"
 import { Hero } from "../components/Pages/Home/Hero"
@@ -22,7 +21,7 @@ function Home() {
     }
 
     return (
-        <main className="antialiased">
+        <main className="antialiased relative">
             <Nav />
             <Hero />
             <OurUndervaluedPicks />
