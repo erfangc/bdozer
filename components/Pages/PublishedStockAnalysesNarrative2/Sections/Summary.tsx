@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {RevenueModel, RevenueModelRevenueDriverTypeEnum, StockAnalysis2} from "../../../../client";
-import {simpleMoney, simpleNumber, simplePercent} from "../../../../simple-number";
+import {readableMoney, readableNumber, readablePercent} from "../../../../number-formatters";
 import {AnchorPopover} from "../../../Popover";
 import {SubTitle} from "../../../Common/Title";
 import {RevenueTimeSeries} from "./RevenueTimeSeries";
@@ -45,13 +45,13 @@ export function Summary(props: Props) {
             <div className="text-lg text-blueGray-400 font-bold mt-8 mb-2">Current Business Situation</div>
             <ul className="list-disc list-inside space-y-2">
                 <li>
-                    Last year, {name} made {simpleMoney(revenue.value)} revenue
+                    Last year, {name} made {readableMoney(revenue.value)} revenue
                 </li>
                 <li>
-                    The company spent {simpleMoney(totalExpense)}, leading to {simpleMoney(profit.value)} in {profit.value > 0 ? 'profit' : 'losses'}
+                    The company spent {readableMoney(totalExpense)}, leading to {readableMoney(profit.value)} in {profit.value > 0 ? 'profit' : 'losses'}
                 </li>
                 <li>
-                    As a result, investors {eps > 0 ? 'made' : 'lost'} <b>{simpleMoney(eps)}</b> per share
+                    As a result, investors {eps > 0 ? 'made' : 'lost'} <b>{readableMoney(eps)}</b> per share
                 </li>
             </ul>
             <div className="text-lg text-blueGray-400 font-bold mt-8 mb-2">Future Projections</div>
@@ -83,11 +83,11 @@ function FutureProjectionTalkingPoint({revenueModel, stockAnalysis}: FutureProje
         return (
             <>
                 <li>
-                    By <b>{revenueModel.terminalFiscalYear}</b>, forecast expect {name} to reach <b>{simpleNumber(revenueModel.terminalYearActiveUser)} </b>
-                    active users, earning <b>{simpleMoney(revenueModel.terminalYearAverageRevenuePerUser)}</b> on average per user
+                    By <b>{revenueModel.terminalFiscalYear}</b>, forecast expect {name} to reach <b>{readableNumber(revenueModel.terminalYearActiveUser)} </b>
+                    active users, earning <b>{readableMoney(revenueModel.terminalYearAverageRevenuePerUser)}</b> on average per user
                 </li>
                 <li>
-                    As such, {name}'s fair value is {simpleMoney(targetPrice)}, which represents
+                    As such, {name}'s fair value is {readableMoney(targetPrice)}, which represents
                     <span className={`font-bold ${upside > 0 ? 'text-lime-400' : 'text-rose-500'}`}> {upside.toFixed(1)}% </span>
                     {upside > 0 ? 'upside' : 'downside'} from current price
                 </li>
@@ -97,10 +97,10 @@ function FutureProjectionTalkingPoint({revenueModel, stockAnalysis}: FutureProje
         return (
             <>
                 <li>
-                    Based on Wall Street forecasts, the company will grow {simplePercent(revenueCAGR)}% a year for the next {periods} years
+                    Based on Wall Street forecasts, the company will grow {readablePercent(revenueCAGR)}% a year for the next {periods} years
                 </li>
                 <li>
-                    Given this, {name}'s value fair today is {simpleMoney(targetPrice)}, which represents
+                    Given this, {name}'s value fair today is {readableMoney(targetPrice)}, which represents
                     <span className={`font-bold ${upside > 0 ? 'text-lime-400' : 'text-rose-500'}`}> {upside.toFixed(1)}% </span>
                     {upside > 0 ? 'upside' : 'downside'} from current price
                 </li>

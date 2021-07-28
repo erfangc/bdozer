@@ -4907,6 +4907,35 @@ export const PublishedStockAnalysisControllerApiAxiosParamCreator = function (co
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        top4StockAnalyses: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/public/published-stock-analyses/top4`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4943,6 +4972,15 @@ export const PublishedStockAnalysisControllerApiFp = function(configuration?: Co
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPublishedStockAnalysis(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async top4StockAnalyses(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindStockAnalysisResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.top4StockAnalyses(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -4976,6 +5014,14 @@ export const PublishedStockAnalysisControllerApiFactory = function (configuratio
          */
         getPublishedStockAnalysis(id: string, options?: any): AxiosPromise<StockAnalysis2> {
             return localVarFp.getPublishedStockAnalysis(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        top4StockAnalyses(options?: any): AxiosPromise<FindStockAnalysisResponse> {
+            return localVarFp.top4StockAnalyses(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5013,6 +5059,16 @@ export class PublishedStockAnalysisControllerApi extends BaseAPI {
      */
     public getPublishedStockAnalysis(id: string, options?: any) {
         return PublishedStockAnalysisControllerApiFp(this.configuration).getPublishedStockAnalysis(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublishedStockAnalysisControllerApi
+     */
+    public top4StockAnalyses(options?: any) {
+        return PublishedStockAnalysisControllerApiFp(this.configuration).top4StockAnalyses(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

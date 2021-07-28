@@ -1,7 +1,7 @@
 import Highcharts from "highcharts";
 import HC_more from 'highcharts/highcharts-more';
 import HighchartsSankey from 'highcharts/modules/sankey';
-import {simpleNumber} from "./simple-number";
+import {readableNumber} from "./number-formatters";
 
 export const blueGray50 = "#F8FAFC"
 export const blueGray100 = "#F1F5F9"
@@ -133,7 +133,7 @@ export const numericTooltip: Highcharts.TooltipOptions = {
         return `
       <div class="p-1 flex space-x-2 text-blueGray-50">
         <b class="font-semibold">${this.series.name}:</b>
-        <span>${isNaN(y) ? y.toLocaleString() : simpleNumber(y)}</span>
+        <span>${isNaN(y) ? y.toLocaleString() : readableNumber(y)}</span>
       </div>`;
     },
     borderWidth: 0,

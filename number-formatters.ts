@@ -1,5 +1,11 @@
-export function simpleNumber(input1: number | string, short?: boolean): string {
-    const input = typeof input1 === 'string' ? parseFloat(input1) : input1
+/**
+ * Formats a number into something more readable
+ *
+ * @param origInput the original number that you wish to format
+ * @param short abbreviate the output from "million" to "M" and "billion" to "B" etc.
+ */
+export function readableNumber(origInput: number | string, short?: boolean): string {
+    const input = typeof origInput === 'string' ? parseFloat(origInput) : origInput
     const suffix = short ? ["K", "MM", "B", "T"] : ["Thousand", "Million", "Billion", "Trillion"];
     /*
     split between decimal and non-decimal portions
@@ -28,8 +34,8 @@ export function simpleNumber(input1: number | string, short?: boolean): string {
 
 }
 
-export function simpleMoney(input: number | string, short?: boolean) {
-    const number = simpleNumber(input, short)
+export function readableMoney(input: number | string, short?: boolean) {
+    const number = readableNumber(input, short);
     const value = typeof input === 'string' ? parseFloat(input) : input
     if (value < 0) {
         return `-$${number.substr(1, number.length)}`;
@@ -39,6 +45,6 @@ export function simpleMoney(input: number | string, short?: boolean) {
 
 }
 
-export function simplePercent(number: number, decimals: number = 1) {
+export function readablePercent(number: number, decimals: number = 1) {
     return `${(number * 100).toFixed(decimals)}%`
 }

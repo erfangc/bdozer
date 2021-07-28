@@ -2,7 +2,7 @@ import React from 'react'
 import {StockAnalysis2} from "../../../../client";
 import {Label, SubTitle} from "../../../Common/Title";
 import {year} from "../../../../year";
-import {simpleMoney, simpleNumber, simplePercent} from "../../../../simple-number";
+import {readableMoney, readableNumber, readablePercent} from "../../../../number-formatters";
 import {Emphasis} from "../Emphasis";
 
 interface Props {
@@ -19,10 +19,10 @@ export function TerminalValueCalculation2({stockAnalysis}: Props) {
     Prepare calcualtions
      */
     const finalFiscalYear = year(periods);
-    const finalEps = simpleMoney(cells.find(cell => cell.item?.name === epsConceptName && cell.period == model.periods)?.value)
+    const finalEps = readableMoney(cells.find(cell => cell.item?.name === epsConceptName && cell.period == model.periods)?.value)
     const fy0Eps = cells.find(cell => cell.item?.name === epsConceptName && cell.period == 0)?.value
     const finalTvps = cells.find(cell => cell.item?.name === "TerminalValuePerShare" && cell.period == model.periods)?.value
-    const finalPe = simpleNumber(1 / (discountRate - terminalGrowthRate))
+    const finalPe = readableNumber(1 / (discountRate - terminalGrowthRate))
     const fy0Pe = currentPrice / fy0Eps;
 
     /*
@@ -44,7 +44,7 @@ export function TerminalValueCalculation2({stockAnalysis}: Props) {
      */
     let growthRateBullet = (
         <>
-            We expect the company to grow by {simplePercent(revenueCAGR)} per year for the next {periods} years, then grow steadily at {simplePercent(terminalGrowthRate)} thereafter
+            We expect the company to grow by {readablePercent(revenueCAGR)} per year for the next {periods} years, then grow steadily at {readablePercent(terminalGrowthRate)} thereafter
         </>
     )
 
@@ -58,15 +58,15 @@ export function TerminalValueCalculation2({stockAnalysis}: Props) {
                 <div className="space-y-4">
                     <p>
                         If {name} earns <Emphasis>{finalEps}</Emphasis> / share in {finalFiscalYear}, it will be
-                        worth <Emphasis>{simpleMoney(finalTvps)}</Emphasis> at that time
+                        worth <Emphasis>{readableMoney(finalTvps)}</Emphasis> at that time
                     </p>
                     <p>
-                        At that price, you would have earned <Emphasis>{simplePercent(annualizedReturn)}</Emphasis> per year on this investment,
-                        or <Emphasis>{simplePercent(totalReturn)}</Emphasis> in total, not including dividends
+                        At that price, you would have earned <Emphasis>{readablePercent(annualizedReturn)}</Emphasis> per year on this investment,
+                        or <Emphasis>{readablePercent(totalReturn)}</Emphasis> in total, not including dividends
                     </p>
                 </div>
                 <div className="space-y-4">
-                    <Label>How to Derive {simpleMoney(finalTvps)}</Label>
+                    <Label>How to Derive {readableMoney(finalTvps)}</Label>
                     <div className="p-2 bg-blueGray-800 flex justify-center">
                         <table>
                             <thead>
@@ -78,7 +78,7 @@ export function TerminalValueCalculation2({stockAnalysis}: Props) {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td className="text-right px-2">{simpleMoney(finalTvps)}</td>
+                                    <td className="text-right px-2">{readableMoney(finalTvps)}</td>
                                     <td className="text-right px-2"><span className="font-semibold text-lg">=</span></td>
                                     <td className="text-right px-2">{finalEps}</td>
                                     <td className="text-right px-2"><span className="font-semibold text-lg">x</span> </td>
@@ -93,7 +93,7 @@ export function TerminalValueCalculation2({stockAnalysis}: Props) {
                     </p>
                     {
                         fy0Eps > 0
-                        ? <p>As a reference, the P/E ratio for {ticker} today is <Emphasis>{simpleNumber(fy0Pe)}</Emphasis></p>
+                        ? <p>As a reference, the P/E ratio for {ticker} today is <Emphasis>{readableNumber(fy0Pe)}</Emphasis></p>
                         : <p>Since {ticker} is losing money right now, it's current P/E ratio cannot be computed</p>
                     }
                 </div>
@@ -109,7 +109,7 @@ export function TerminalValueCalculation2({stockAnalysis}: Props) {
                     <Label>In {ticker}'s Case</Label>
                     <ol className="list-decimal list-inside space-y-1">
                         <li>{businessRiskBullet}</li>
-                        <li>We expect the stock market to return {simplePercent(equityRiskPremium)} on average</li>
+                        <li>We expect the stock market to return {readablePercent(equityRiskPremium)} on average</li>
                         <li>{growthRateBullet}</li>
                     </ol>
                 </div>

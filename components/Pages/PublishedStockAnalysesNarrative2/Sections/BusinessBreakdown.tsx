@@ -2,7 +2,7 @@ import HighchartsReact from "highcharts-react-official";
 import React, {useEffect, useState} from "react";
 import {Item, StockAnalysis2} from "../../../../client";
 import {blueGray900, highcharts, lime500, rose500} from "../../../../highcharts";
-import {simpleNumber} from "../../../../simple-number";
+import {readableNumber} from "../../../../number-formatters";
 import {year} from "../../../../year";
 import {SubTitle} from "../../../Common/Title";
 import {Pill} from "../Pill";
@@ -86,7 +86,7 @@ export function BusinessBreakdown(props: Props) {
                     enabled: true,
                     useHTML: false,
                     formatter: function () {
-                        return `<div class="z-0">${simpleNumber(this.y.toFixed(0))}</div>`;
+                        return `<div class="z-0">${readableNumber(this.y.toFixed(0))}</div>`;
                     },
                     zIndex: 0,
                 },

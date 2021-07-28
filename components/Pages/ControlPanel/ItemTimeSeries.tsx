@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
 import {useFactBase} from '../../../api-hooks'
 import {Item, StockAnalysis2} from '../../../client'
 import {highcharts} from '../../../highcharts'
-import {simpleNumber} from '../../../simple-number'
+import {readableNumber} from '../../../number-formatters'
 import {year} from '../../../year'
 import {Loading} from "../../Common/Svgs";
 
@@ -56,7 +56,7 @@ export function ItemTimeSeries({ result, item }: Props) {
                     title: { text: null, },
                     labels: {
                         formatter: function () {
-                            return `${simpleNumber(this.value)}`
+                            return `${readableNumber(this.value)}`
                         }
                     }
                 },

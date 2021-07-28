@@ -2,7 +2,7 @@ import React from 'react'
 import {ManualProjections} from "../../../../client";
 import {Title} from "../../../Common/Title";
 import {PrimaryButton} from "../../../Common/PrimaryButton";
-import {simpleMoney} from "../../../../simple-number";
+import {readableMoney} from "../../../../number-formatters";
 import {useRouter} from "next/router";
 import {SecondaryButton} from "../../../Common/SecondaryButton";
 
@@ -40,7 +40,7 @@ export function ManualProjectionsPreview({manualProjections, onConfirm, back, cl
                                 return (
                                     <div key={fiscalYear}>
                                         <h3 className="font-extrabold">{fiscalYear}</h3>
-                                        <p>{simpleMoney(value)}</p>
+                                        <p>{readableMoney(value)}</p>
                                     </div>
                                 )
                             })}
