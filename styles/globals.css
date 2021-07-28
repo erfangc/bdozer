@@ -1,33 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.slides {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+/* Typography styles */
+
+.display {
+  @apply text-display font-thin leading-8;
 }
 
-.slides::-webkit-scrollbar {
-  width: 0px;
-  height: 0px;
+.heading1 {
+  @apply text-5xl font-normal leading-7;
 }
 
-.slides::-webkit-scrollbar-thumb {
-  background: transparent;
-  border-radius: 10px;
+.heading2 {
+  @apply text-3xl font-thin leading-5;
 }
 
-.slides::-webkit-scrollbar-track {
-  background: transparent;
+.heading3 {
+  @apply text-2xl font-normal leading-4;
 }
 
-.slide {
-  scroll-snap-align: start;
-  flex-shrink: 0;
-  height: fit-content;
-  transform-origin: center center;
-  transform: scale(1);
-  transition: transform 0.5s;
+.heading4 {
+  @apply text-lg font-normal leading-2;
+}
+
+.heading5 {
+  @apply text-lg font-bold leading-2;
+}
+
+.paragraph-regular {
+  @apply text-base font-thin leading-3;
+}
+
+.paragraph-medium {
+  @apply text-base font-normal leading-3;
+}
+
+.paragraph-bold {
+  @apply text-base font-bold leading-3;
+}
+
+.paragraph-emphasis {
+  @apply text-base font-normal leading-3;
+}
+
+.numbers-regular {
+  @apply font-mono text-base font-thin leading-3;
+}
+
+.numbers-bold {
+  @apply font-mono text-base font-bold leading-3;
+}
+
+.numbers-medium {
+  @apply font-mono text-lg font-normal leading-3;
+}
+
+.numbers-large {
+  @apply font-mono text-4xl font-bold leading-6;
+}
+
+.small-text-regular {
+  @apply text-sm font-thin leading-3;
+}
+
+.small-text-medium {
+  @apply text-sm font-normal leading-3;
+}
+
+.small-text-bold {
+  @apply text-sm font-bold leading-3;
+}
+
+.label-micro {
+  @apply text-xxs font-normal leading-1;
+}
+
+.label-small {
+  @apply text-sm font-normal leading-2;
+}
+
+.label-regular {
+  @apply text-base font-bold leading-3;
+}
+
+.label-large {
+  @apply text-lg font-bold leading-3;
 }

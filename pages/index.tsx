@@ -1,28 +1,11 @@
-import Head from 'next/head'
-import {useRouter} from 'next/router'
-import React from 'react'
-import {LegalDisclaimer} from '../components/LegalDisclaimer'
-import {Logo} from '../components/Nav/Logo'
-import {PrimaryButton} from '../components/Common/PrimaryButton'
-import {SecondaryButton} from '../components/Common/SecondaryButton'
-import {useAuth0} from "@auth0/auth0-react";
-import {usePublishedStockAnalysis} from "../api-hooks";
+import { useAuth0 } from "@auth0/auth0-react"
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
 
 function Home() {
 
     const router = useRouter()
     const auth0 = useAuth0()
-    const stockAnalysisApi = usePublishedStockAnalysis()
-
-    async function seeSampleReport() {
-        const {data: response} = await stockAnalysisApi.findPublishedStockAnalyses()
-        const id = response.stockAnalyses[0]['_id']
-        router.push(`/published-stock-analyses/${id}/narrative2`)
-    }
-
-    function browse() {
-        router.push(`/browse`)
-    }
 
     if (auth0.isAuthenticated && localStorage.getItem('redirectUri')) {
         router.push(localStorage.getItem('redirectUri'))
@@ -31,108 +14,229 @@ function Home() {
     }
 
     return (
-        <main className="bg-blueGray-900 min-h-screen antialiased text-blueGray-50">
-            <Head>
-                <title>Bulldozer | Home</title>
-                <link rel="icon" href="/favicon.ico"/>
-                <script type="text/javascript" src="/fullstory.js"/>
-            </Head>
-            <div className="flex flex-col justify-between min-h-screen container mx-auto px-4">
-                <div>
-                    <div className="flex space-x-2 items-center pt-4 lg:mt-10">
-                        <Logo />
-                        <div className="text-blueGray-200 font-extrabold text-2xl">bdozer</div>
-                    </div>
-                    <div className="lg:flex">
-                        {/* Tag line + subtext */}
-                        <div className="mt-14 space-y-16 flex flex-col lg:w-1/2 xl:w-1/3 lg:space-y-8 lg:mt-24">
-                            <h1 className="text-4xl font-bold tracking-tighter">Save Time <br/>Finding Your Next Trade
-                            </h1>
-                            <p className="leading-relaxed">
-                                Take the guessing out of buying stocks.
-                                Discover what stocks
-                                <span className="border-b-2 pb-0.5 border-rose-500 leading-snug font-extrabold"> should be</span> worth
-                                in <span className="text-orange-400 font-extrabold"> under 3 minutes</span> with
-                                step-by-step explanations
-                            </p>
-                            <div className="flex flex-col space-y-4 lg:w-64">
-                                <PrimaryButton onClick={seeSampleReport} className="justify-center">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-6 w-6"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <path
-                                            d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z"
-                                        />
-                                    </svg>
-                                    <span className="pl-2">See a Sample Report</span>
-                                </PrimaryButton>
-                                <SecondaryButton onClick={browse} className="text-blueGray-300 justify-center">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="h-6 w-6"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                                        />
-                                    </svg>
-                                    <span className="pl-2">
-                                        Browse All Research
-                                    </span>
-                                </SecondaryButton>
-                            </div>
-                        </div>
-                        {/* end tag line */}
-                        <div className="hidden xl:w-2/3 lg:w-1/2 lg:flex lg:justify-center">
-                            <Diamond/>
-                        </div>
-                    </div>
-                </div>
-                <LegalDisclaimer className="mt-36 lg:mt-0" />
-            </div>
+        <main className="antialiased">
+            <Nav />
+            <Hero />
+            <OurUndervaluedPicks />
+            <KnowBeforeYouInvest />
+            <AlreadyResearching />
+            <ValueIsWhatYouGet />
+            <Footer />
         </main>
     )
 }
 
-function Diamond() {
+function AlreadyResearching() {
     return (
-        <svg
-            width="636"
-            height="636"
-            viewBox="0 0 636 636"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="transition ease-out duration-700 transform hover:-rotate-12 hover:scale-105"
-        >
-            <g clipPath="url(#clip0)">
-                <path d="M441.38 266.492L257.706 525.701L587.23 308.832L441.38 266.492Z" fill="#FBBF24"/>
-                <path d="M234.175 68.4617L95.5287 166.094L241.379 208.433L234.175 68.4617Z" fill="#FBBF24"/>
-                <path d="M441.38 266.492L587.23 308.832L522.414 152.135L441.38 266.492Z" fill="#FEF08A"/>
-                <path d="M441.38 266.492L378.294 110.299L241.379 208.433L441.38 266.492Z" fill="#FBBF24"/>
-                <path d="M378.294 110.299L234.175 68.4617L241.379 208.433L378.294 110.299Z" fill="#F59E0B"/>
-                <path d="M522.414 152.135L378.294 110.298L441.38 266.492L522.414 152.135Z" fill="#FBBF24"/>
-                <path d="M241.379 208.433L257.706 525.701L441.38 266.492L241.379 208.433Z" fill="#F59E0B"/>
-                <path d="M95.5287 166.094L257.706 525.701L241.379 208.433L95.5287 166.094Z" fill="#D97706"/>
-            </g>
-            <defs>
-                <clipPath id="clip0">
-                    <rect
-                        width="512"
-                        height="512"
-                        fill="white"
-                        transform="translate(143.518 0.780701) rotate(16.1876)"
-                    />
-                </clipPath>
-            </defs>
-        </svg>
+        <section className="bg-lime-75 py-16 flex flex-col items-center space-y-6 text-center">
+            <h3 className="heading3">Already Reasearching? See an Analysis.</h3>
+            <p className="paragraph-regular">
+                Search a company to see our analysis and determine<br />
+                whether or not to invest.
+            </p>
+            <div className="w-1/3">
+                <Search />
+            </div>
+        </section>
+    );
+}
+
+function KnowBeforeYouInvest() {
+    return (
+        <section className="py-16 flex flex-col items-center text-center text-chili-100">
+            <h1 className="heading1 ">Know before you invest</h1>
+            <p className="paragraph-emphasis mt-4">
+                Don’t just take someone’s word for it. We show you <br /> every step of the way how we determine our forecast <br /> with easy to understand explanations.
+            </p>
+            <ul className="mt-16 flex space-x-16">
+                <li className="flex flex-col space-y-6">
+                    <img src="./Valuation.svg" alt="" className="h-32" />
+                    <h4 className="heading4">Real Valuation</h4>
+                    <p className="paragraph-regular">
+                        Find out what a stock is <br /> actually worth, using our <br /> expert analysis.
+                    </p>
+                </li>
+                <li className="flex flex-col space-y-6">
+                    <img src="./Business_Breakdown.svg" alt="" className="h-32" />
+                    <h4 className="heading4">Business Breakdown</h4>
+                    <p className="paragraph-regular">
+                        Understand how a <br /> company makes and <br /> spends its money.
+                    </p>
+                </li>
+                <li className="flex flex-col space-y-6">
+                    <img src="./Future_Earnings.svg" alt="" className="h-32" />
+                    <h4 className="heading4">Future Earnings per Share</h4>
+                    <p className="paragraph-regular">
+                        See how much a share can <br /> make in the furture.
+                    </p>
+                </li>
+                <li className="flex flex-col space-y-6">
+                    <img src="./Forecast.svg" alt="" className="h-32" />
+                    <h4 className="heading4">10 Year Forecast</h4>
+                    <p className="paragraph-regular">
+                        Know the future forecast of <br /> a company’s valuation <br /> based on expert analysis
+                    </p>
+                </li>
+            </ul>
+            <div className="mt-20">
+                <SecondaryButton width={24}>Register for Free and See for Yourself</SecondaryButton>
+            </div>
+        </section>
+    )
+}
+
+function Footer() {
+    return (
+        <footer className="bg-chili-100 text-white">
+            <div className="container flex justify-center py-16">
+                <Logo />
+                <div className="ml-20 w-1/2">
+                    <h5 className="label-small">LEGAL DISCLAIMER</h5>
+                    <p className="label-micro">
+                        The information contained on this website and the resources available for download through this website is not intended as, and shall not be understood or construed as, financial advice. The information contained on this website is not a substitute for financial advice from a professional who is aware of the facts and circumstances of your individual situation We have done our best to ensure that the information provided on this website and the resources available for download are accurate and provide valuable information. We expressly recommend that you conduct your own due diligence and analysis or seek advice from a professional
+                    </p>
+                </div>
+            </div>
+        </footer>
+    )
+}
+
+function ValueIsWhatYouGet() {
+    return (
+        <section className="flex w-2/3 mx-auto py-16">
+            <div className="space-y-6 w-1/2">
+                <h3 className="heading3">Price is what you pay. <br /> Value is what you get.</h3>
+                <p className="paragraph-regular">
+                    When investing, the hardest work should be deciding which wonderful companies are most worth your money. Once that decision is made, time is your best friend while interference is the enemy. Experts make these long-term decisions through value investing; the measurement of financial and economic factors to determine a stock’s intrinsic value. Using  then assess whether a stock is over or under valued at its current price.
+                    The end goal is to arrive at a number that an investor can compare with a security's current price in order to see whether the security is undervalued or overvalued.
+                </p>
+                <SecondaryButton width={20}>
+                    Sign Up and See For Yourself
+                </SecondaryButton>
+            </div>
+            <div className="flex-grow pl-32">
+                <img src="./stock-image.png" alt="..." className="w-full" />
+            </div>
+        </section>
+    );
+}
+
+function SecondaryButton({ children, width, ...props }: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & { width?: number }) {
+
+    const [hovering, setHovering] = useState(false);
+
+    const childrenAsStr = children.toString()
+
+    function hoverTrue() {
+        setHovering(true);
+    }
+
+    function hoverFalse() {
+        setHovering(false);
+    }
+
+    return (
+        <button className={`relative h-12`} style={{ width: `${width}rem` }} {...props} onMouseEnter={hoverTrue} onMouseLeave={hoverFalse}>
+            <span className={`absolute text-white flex items-center inset-0 bg-lime-100 rounded-full shadow-md h-12 ${hovering ? 'w-full' : 'w-12'} transition-all ease-linear`}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="fill-current w-12 h-12"><path d="M0 0h24v24H0z" fill="none" /><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" /></svg>
+            </span>
+            <span className={`absolute inset-0 pl-14 flex items-center`}>
+                {children}
+            </span>
+        </button>
+    )
+}
+
+function OurUndervaluedPicks() {
+    return (
+        <section className="bg-dashboardGray-100 px-32 py-16 flex flex-col justify-center items-center">
+            <h3 className="heading3 text-white">Our Undervalued Picks</h3>
+            {/* Card */}
+            <div className="flex space-x-5 mt-8">
+                <StockAnalysisCard />
+                <StockAnalysisCard />
+                <StockAnalysisCard />
+                <StockAnalysisCard />
+            </div>
+        </section>
+    );
+}
+
+function StockAnalysisCard() {
+    return (
+        <div className="bg-navy-100 rounded-lg px-5 py-4 space-y-2 w-72">
+            <div className="flex items-center space-x-2">
+                <span className="text-lime-100 heading5">TGT</span>
+                <span className="label-small text-lightGreen-25">Target Corp</span>
+            </div>
+            <div>
+                <div className="flex space-x-8">
+                    <div>
+                        <label className="label-micro text-lightGreen-25">Fair Value</label>
+                        <p className="numbers-bold text-lightGreen-25">$162.20</p>
+                    </div>
+                    <div>
+                        <label className="label-micro text-lightGreen-25">Current Price</label>
+                        <p className="numbers-bold text-lightGreen-25">$100.20</p>
+                    </div>
+                </div>
+                <hr className="border-navy-75" />
+            </div>
+            <p className="text-lime-100">
+                +95.8% Upside
+            </p>
+        </div>
+    );
+}
+
+function Hero() {
+    return (
+        <section className="bg-lightGreen-100 text-chili-100 flex">
+            <div className="space-y-12 p-32">
+                <h1 className="display">Better investments <br /> in less time</h1>
+                <h4 className="heading4">Discover what stocks are <span className="heading5">actually</span> worth in under <br /> 3 minutes with step-by-step explanations</h4>
+                <Search />
+            </div>
+            <img src="./hero-image.svg" alt="..." />
+        </section>
+    );
+}
+
+function Search() {
+    return (
+        <div className="h-16  border-chili-100 rounded flex items-center bg-white w-full">
+            <input type="text" className="pl-4 h-full border-0 rounded flex-grow" placeholder="Search a stock to analyse for free ..." />
+            <button className="bg-lime-100 h-10 px-6 mr-4 rounded">Search</button>
+        </div>
+    )
+}
+
+function Nav() {
+    return (
+        <nav className="bg-chili-100 h-24 text-white items-center flex justify-between sticky">
+            <Logo />
+            <div className="space-x-4 pr-12">
+                <PrimaryButton>Register Today</PrimaryButton>
+                <button className="text-lime-100">Log In</button>
+            </div>
+        </nav>
+    )
+}
+
+function PrimaryButton({ className, children, ...props }: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) {
+    return (
+        <button className={`bg-lime-100 rounded-3xl paragraph-medium text-chili-100 shadow-md px-6 py-2 hover:bg-avocado-75 hover:text-lightGreen-25 ${className}`}>
+            {children}
+        </button>
+    )
+}
+
+function Logo() {
+    return (
+        <div className="font-bold pl-12 flex items-center space-x-2">
+            <img className="h-4 w-4 bg-lime-100 border-0"></img>
+            <span style={{ fontSize: '26px' }} className="font-bold">BDozer</span>
+        </div>
     )
 }
 
