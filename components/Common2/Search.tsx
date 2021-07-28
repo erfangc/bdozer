@@ -44,15 +44,8 @@ export function Search<T = any>({search, renderEntity}: Props<T>) {
             />
             <button className="bg-lime-100 h-10 px-6 mr-4 rounded">Search</button>
             {/* the results section */}
-            <div
-                className="absolute top-full bg-white w-full shadow-md rounded-b-lg"
-                style={{
-                    height: rows.length > 0 ? `${(rows.length + 1) * 52 + 24}px` : 0
-                }}
-            >
-                <ul className="">
-                    {rows}
-                </ul>
+            <div className="absolute top-full bg-white w-full shadow-md rounded-b-lg">
+                <ul>{rows}</ul>
             </div>
         </div>
     )
