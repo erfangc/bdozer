@@ -22,7 +22,7 @@ export function Nav(props: NavProps) {
         <nav className="hidden fixed inset-0 w-20 bg-blueGray-800 flex-col lg:flex items-center pt-8 justify-between">
             <div className="flex-col space-y-8">
                 <Logo />
-                <div className="h-px w-full border-b border-blueGray-700"></div>
+                <div className="h-px w-full border-b border-blueGray-700"/>
                 <div className="flex-col space-y-6">
                     <NavButton active={router.pathname.endsWith('/browse')} linkTo="/browse" />
                     <NavButton active={router.pathname.endsWith("/narrative2")} icon={<ModelIcon />} linkTo="/browse" />
