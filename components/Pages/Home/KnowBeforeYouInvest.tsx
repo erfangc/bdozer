@@ -4,11 +4,14 @@ import { SecondaryButton } from '../../Common2/SecondaryButton';
 export function KnowBeforeYouInvest() {
     return (
         <section className="py-16 flex flex-col items-center text-center text-chili-100">
-            <h1 className="heading1 ">Know before you invest</h1>
-            <p className="paragraph-emphasis mt-4">
+            <h1 className="lg:heading1 heading2">Know before you invest</h1>
+            <p className="hidden lg:block paragraph-emphasis mt-4">
                 Don’t just take someone’s word for it. We show you <br /> every step of the way how we determine our forecast <br /> with easy to understand explanations.
             </p>
-            <ul className="mt-16 flex space-x-16">
+            <p className="lg:hidden paragraph-emphasis mt-4">
+                Don’t just take someone’s word for it. We show you every step of the way how we determine our forecast with easy to understand explanations.
+            </p>
+            <ul className="mt-16 flex flex-col space-y-6 lg:space-x-16 lg:space-y-0 lg:flex-row">
                 <li className="flex flex-col space-y-6">
                     <img src="./Valuation.svg" alt="" className="h-32" />
                     <h4 className="heading4">Real Valuation</h4>
@@ -39,7 +42,7 @@ export function KnowBeforeYouInvest() {
                 </li>
             </ul>
             <div className="mt-20">
-                <SecondaryButton width={24}>Register for Free and See for Yourself</SecondaryButton>
+                <SecondaryButton width={23}>Register for Free and See for Yourself</SecondaryButton>
             </div>
         </section>
     )
