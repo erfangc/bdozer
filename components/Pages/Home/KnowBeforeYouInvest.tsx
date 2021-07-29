@@ -3,7 +3,7 @@ import { SecondaryButton } from '../../Common2/SecondaryButton';
 
 export function KnowBeforeYouInvest() {
     return (
-        <section className="py-16 flex flex-col items-center text-center text-chili-100">
+        <section className="py-16 px-8 lg:px-0 flex flex-col items-center text-center text-chili-100">
             <h1 className="lg:heading1 heading2">Know before you invest</h1>
             <p className="hidden lg:block paragraph-emphasis mt-4">
                 Don’t just take someone’s word for it. We show you <br /> every step of the way how we determine our forecast <br /> with easy to understand explanations.

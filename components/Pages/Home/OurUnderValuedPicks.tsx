@@ -17,8 +17,9 @@ export function OurUndervaluedPicks() {
     }, []);
 
     return (
-        <section className="bg-dashboardGray-100 px-32 py-16 flex flex-col justify-center items-center">
-            <h3 className="heading3 text-white">Our Undervalued Picks</h3>
+        <section className="bg-dashboardGray-100 px-8 py-16 flex flex-col justify-center items-center">
+            <h3 className="lg:hidden heading4 text-white">Our Undervalued Picks</h3>
+            <h3 className="hidden lg:block heading3 text-white">Our Undervalued Picks</h3>
             {/* Card */}
             <div className="flex-col flex space-y-5 lg:space-x-5 lg:space-y-0 lg:flex-row mt-8">
                 {stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis} key={stockAnalysis['_id']}/>)}
