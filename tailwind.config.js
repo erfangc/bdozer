@@ -5,7 +5,8 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
-        card: '687px'
+        card: '687px',
+        mobileCard: '382px',
       },
     },
     fontFamily: {

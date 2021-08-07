@@ -1,9 +1,10 @@
 import React from "react";
 import {StockAnalysis2} from "../../../../client";
-import {commafy, readablePercent} from "../../../../number-formatters";
+import {commafy} from "../../../../number-formatters";
 import HighchartsReact from "highcharts-react-official";
 import {highcharts, theme} from '../../../../highcharts';
 import {tvps} from "../tvps";
+import {Statistic} from "./Statistic";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -51,38 +52,14 @@ export function ReturnForecast({stockAnalysis}: Props) {
     }
 
     return (
-        <section className="bg-navy-100 p-6 rounded-lg w-card" id="return-forecast">
-            {/* Row 1 */}
+        <section className="bg-navy-100 p-6 space-y-6 rounded-lg w-mobileCard lg:w-card" id="return-forecast">
             <h3 className="heading3">Return Forecast</h3>
-
-            {/* Row 2 */}
-            <div className="justify-evenly items-center flex pt-10 pb-4">
-                <div className="text-lime-100">
-                    <span className="label-small">Estimated {periods} Year Returns</span>
-                    <h1 className="font-mono numbers-large">{readablePercent(finalPrice / currentPrice - 1)}</h1>
-                </div>
-                <span className="w-px h-8 border-l"/>
-                <div>
-                    <span className="label-small">Purchase Price</span>
-                    <h1 className="font-mono numbers-medium">
-                        ${commafy(currentPrice)}
-                    </h1>
-                </div>
-                <span className="w-px h-8 border-l"/>
-                <div>
-                    <span className="label-small">Estimated {periods} Year Sale Price</span>
-                    <h1 className="font-mono numbers-medium">
-                        ${commafy(finalPrice)}
-                    </h1>
-                </div>
-            </div>
-
-            <p className="paragraph-regular my-6">
-                In {periods} years,
-                you could earn an estimated ${commafy(finalPrice - currentPrice)} on
-                a single stock purchased at ${commafy(currentPrice)}.
+            <Statistic stockAnalysis={stockAnalysis}/>
+            <p className="paragraph-regular">
+                In {periods} years, you could earn an estimated
+                ${commafy(finalPrice - currentPrice)} on a
+                single stock purchased at ${commafy(currentPrice)}.
             </p>
-
             <HighchartsReact
                 highcharts={highcharts}
                 options={options}

@@ -6,7 +6,7 @@ import {tvps} from "./tvps";
  */
 export function upside(stockAnalysis: StockAnalysis2): number {
     const {
-        derivedStockAnalytics: { currentPrice },
+        derivedStockAnalytics: {currentPrice},
     } = stockAnalysis;
     const finalPrice = tvps(stockAnalysis);
     return finalPrice / currentPrice - 1;

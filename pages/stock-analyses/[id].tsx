@@ -27,7 +27,7 @@ export default function StockAnalysis({stockAnalysis}: Props) {
             </nav>
 
             <main className="bg-dashboardGray-100 min-h-screen text-gray-2">
-                <div className="flex justify-center py-32 space-x-8">
+                <div className="flex justify-center py-32 lg:space-x-8">
                     <TableOfContent stockAnalysis={stockAnalysis}/>
                     <div className="space-y-6">
                         <Summary stockAnalysis={stockAnalysis}/>

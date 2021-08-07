@@ -32,7 +32,7 @@
 }
 
 .paragraph-regular {
-  @apply text-base font-thin leading-3;
+  @apply text-base font-thin leading-2;
 }
 
 .paragraph-medium {
@@ -57,6 +57,10 @@
 
 .numbers-medium {
   @apply font-mono text-lg font-normal leading-3;
+}
+
+.numbers-micro {
+  @apply font-mono text-sm font-normal leading-1;
 }
 
 .numbers-large {

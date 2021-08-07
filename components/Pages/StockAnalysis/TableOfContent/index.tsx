@@ -17,7 +17,7 @@ export function TableOfContent(props: Props) {
     ];
 
     return (
-        <aside className="relative">
+        <aside className="hidden lg:block relative">
             <div className="sticky -mt-16 top-10">
                 <h2 className="heading2 pb-4">Analysis</h2>
                 <Scrollspy items={items} currentClassName="bg-lime-100 text-navy-100 rounded">

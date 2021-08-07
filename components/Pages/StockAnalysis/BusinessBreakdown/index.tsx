@@ -101,7 +101,7 @@ export function BusinessBreakdown(props: Props) {
     }
 
     return (
-        <section className="bg-navy-100 p-6 rounded-lg w-card" id="business-breakdown">
+        <section className="bg-navy-100 p-6 rounded-lg w-mobileCard lg:w-card" id="business-breakdown">
             <div className="mb-8">
                 <h3 className="heading3">Business Breakdown</h3>
                 <p className="paragraph-regular">{name}'s revenues, costs, and net profit</p>

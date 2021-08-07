@@ -3,6 +3,7 @@ import {StockAnalysis2} from "../../../../client";
 import {commafy, readableNumber, readablePercent} from "../../../../number-formatters";
 import {year} from "../../../../year";
 import {tvps} from "../tvps";
+import {Statistic} from "./Statistic";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -21,8 +22,6 @@ export function PriceForecast({stockAnalysis}: Props) {
         cells,
         derivedStockAnalytics: {
             revenueCAGR,
-            currentPrice,
-            irr,
             discountRate,
         },
     } = stockAnalysis;
@@ -56,7 +55,7 @@ export function PriceForecast({stockAnalysis}: Props) {
     )
 
     return (
-        <section className="bg-navy-100 p-6 rounded-lg w-card space-y-8" id="price-forecast">
+        <section className="bg-navy-100 p-6 rounded-lg space-y-8 w-mobileCard lg:w-card" id="price-forecast">
             {/* Section 1 */}
             <div>
                 <h3 className="heading3 mb-1">Price Forecast</h3>
@@ -66,27 +65,7 @@ export function PriceForecast({stockAnalysis}: Props) {
             </div>
 
             {/* Section 2 */}
-            <div className="justify-evenly items-center flex pb-4">
-                <div className="text-lime-100">
-                    <span className="label-small">Estimated {year(periods)}</span>
-                    <h1 className="font-mono numbers-large">${commafy(finalTvps)}</h1>
-                </div>
-                <span className="w-px h-8 border-l"/>
-                <div>
-                    <span className="label-small">Earnings per Year</span>
-                    <h1 className="font-mono numbers-medium">
-                        {readablePercent(irr)}
-                    </h1>
-                </div>
-                <span className="w-px h-8 border-l"/>
-                <div>
-                    <span className="label-small">Total Earnings</span>
-                    <h1 className="font-mono numbers-medium">
-                        {readablePercent(finalTvps / currentPrice - 1)}
-                    </h1>
-                    <p className="label-micro">*Does not include dividends</p>
-                </div>
-            </div>
+            <Statistic stockAnalysis={stockAnalysis}/>
 
             {/* Section 3 */}
             <div>
