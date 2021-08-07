@@ -2,6 +2,7 @@ import React from 'react';
 import {StockAnalysis2} from "../../../../client";
 import {commafy, readableNumber, readablePercent} from "../../../../number-formatters";
 import {year} from "../../../../year";
+import {tvps} from "../tvps";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -26,7 +27,7 @@ export function PriceForecast({stockAnalysis}: Props) {
         },
     } = stockAnalysis;
 
-    const finalTvps = cells.find(cell => cell.item?.name === "TerminalValuePerShare" && cell.period == periods)?.value;
+    const finalTvps = tvps(stockAnalysis);
     const finalEps = cells.find(cell => cell.item?.name === epsConceptName && cell.period == periods)?.value;
     const finalPe = readableNumber(1 / (discountRate - terminalGrowthRate));
 

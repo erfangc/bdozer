@@ -324,7 +324,7 @@ export interface DerivedStockAnalytics {
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    zeroGrowthPrice: number;
+    zeroGrowthPrice?: number;
     /**
      * 
      * @type {{ [key: string]: Waterfall; }}
@@ -349,6 +349,12 @@ export interface DerivedStockAnalytics {
      * @memberof DerivedStockAnalytics
      */
     targetPrice: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DerivedStockAnalytics
+     */
+    finalPrice?: number;
     /**
      * 
      * @type {number}
@@ -1846,6 +1852,12 @@ export interface StockAnalysisProjection {
      * @memberof StockAnalysisProjection
      */
     targetPrice?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StockAnalysisProjection
+     */
+    finalPrice?: number;
     /**
      * 
      * @type {boolean}

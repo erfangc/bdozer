@@ -9,9 +9,9 @@ interface Props {
 export function StockAnalysisCard({stockAnalysis}: Props) {
     const {
         currentPrice,
+        finalPrice,
         name,
-        targetPrice,
-        ticker
+        ticker,
     } = stockAnalysis;
 
     return (
@@ -23,9 +23,9 @@ export function StockAnalysisCard({stockAnalysis}: Props) {
             <div>
                 <div className="flex space-x-8">
                     <div>
-                        <label className="label-micro text-lightGreen-25">Fair Value</label>
+                        <label className="label-micro text-lightGreen-25">Estimated Value</label>
                         <p className="numbers-bold text-lightGreen-25">
-                            ${targetPrice.toLocaleString('US', {currency: 'USD', maximumSignificantDigits: 4})}
+                            ${finalPrice?.toLocaleString('US', {currency: 'USD', maximumSignificantDigits: 4})}
                         </p>
                     </div>
                     <div>
@@ -38,7 +38,7 @@ export function StockAnalysisCard({stockAnalysis}: Props) {
                 <hr className="border-navy-75"/>
             </div>
             <p className="text-lime-100">
-                {readablePercent(targetPrice / currentPrice - 1)} Upside
+                {readablePercent((finalPrice ?? 0) / currentPrice - 1)} Upside
             </p>
         </div>
     );

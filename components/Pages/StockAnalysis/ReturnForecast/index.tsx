@@ -3,6 +3,7 @@ import {StockAnalysis2} from "../../../../client";
 import {commafy, readablePercent} from "../../../../number-formatters";
 import HighchartsReact from "highcharts-react-official";
 import {highcharts, theme} from '../../../../highcharts';
+import {tvps} from "../tvps";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -15,11 +16,10 @@ export function ReturnForecast({stockAnalysis}: Props) {
             currentPrice,
         },
         model,
-        cells,
     } = stockAnalysis;
 
     const periods = model.periods
-    const finalTvps = cells.find(cell => cell.item?.name === "TerminalValuePerShare" && cell.period == periods)?.value
+    const finalPrice = tvps(stockAnalysis);
 
     const options: Highcharts.Options = {
         yAxis: {
@@ -35,7 +35,7 @@ export function ReturnForecast({stockAnalysis}: Props) {
                 color: theme.colors.lime["100"],
                 data: [{name: 'Pay today', y: currentPrice, color: theme.colors.chili['50']}, {
                     name: 'Get in 5 years',
-                    y: finalTvps
+                    y: finalPrice
                 }],
                 stacking: "normal",
                 type: 'bar',
@@ -59,7 +59,7 @@ export function ReturnForecast({stockAnalysis}: Props) {
             <div className="justify-evenly items-center flex pt-10 pb-4">
                 <div className="text-lime-100">
                     <span className="label-small">Estimated {periods} Year Returns</span>
-                    <h1 className="font-mono numbers-large">{readablePercent(finalTvps / currentPrice - 1)}</h1>
+                    <h1 className="font-mono numbers-large">{readablePercent(finalPrice / currentPrice - 1)}</h1>
                 </div>
                 <span className="w-px h-8 border-l"/>
                 <div>
@@ -72,14 +72,14 @@ export function ReturnForecast({stockAnalysis}: Props) {
                 <div>
                     <span className="label-small">Estimated {periods} Year Sale Price</span>
                     <h1 className="font-mono numbers-medium">
-                        ${commafy(finalTvps)}
+                        ${commafy(finalPrice)}
                     </h1>
                 </div>
             </div>
 
             <p className="paragraph-regular my-6">
                 In {periods} years,
-                you could earn an estimated ${commafy(finalTvps - currentPrice)} on
+                you could earn an estimated ${commafy(finalPrice - currentPrice)} on
                 a single stock purchased at ${commafy(currentPrice)}.
             </p>
 
