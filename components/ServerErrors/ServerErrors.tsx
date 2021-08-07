@@ -12,12 +12,12 @@ export class ServerErrors extends Component<{}, State> {
 
     constructor(props) {
         super(props)
-        this.state = { errors: [] }
+        this.state = {errors: []}
     }
 
     componentDidMount() {
         this.subscriptionHandle = serverErrorStore.subscribe(
-            newErrors => this.setState({ errors: newErrors })
+            newErrors => this.setState({errors: newErrors})
         )
     }
 
@@ -30,7 +30,7 @@ export class ServerErrors extends Component<{}, State> {
     }
 
     render() {
-        const { errors } = this.state
+        const {errors} = this.state
         return errors.length
             ?
             <div

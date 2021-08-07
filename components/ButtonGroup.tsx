@@ -14,7 +14,7 @@ interface ButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes
     active?: boolean
 }
 
-export function ButtonGroupMember({active, children, className,...props}: ButtonProps) {
+export function ButtonGroupMember({active, children, className, ...props}: ButtonProps) {
     return (
         <button
             {...props}

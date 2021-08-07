@@ -3,6 +3,11 @@ module.exports = {
   purge: false,
   darkMode: false, // or 'media' or 'class'
   theme: {
+    extend: {
+      spacing: {
+        card: '687px'
+      },
+    },
     fontFamily: {
       'sans': ['Poppins', 'sans-serif', 'system-ui'],
       'mono': ['"JetBrains Mono"', 'ui-monospace']
@@ -60,6 +65,9 @@ module.exports = {
         75: '#5B6546',
         50: '#929884',
         25: '#C8CCC1',
+      },
+      deepNavy: {
+        100: '#081827',
       },
       navy: {
         100: '#0B1E33',

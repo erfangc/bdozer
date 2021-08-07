@@ -23,6 +23,8 @@ interface State {
  */
 export class ItemAutocomplete extends React.Component<Props, State> {
 
+    ref = React.createRef<HTMLInputElement>();
+
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -32,8 +34,6 @@ export class ItemAutocomplete extends React.Component<Props, State> {
             term: props.initialValue || '',
         }
     }
-
-    ref = React.createRef<HTMLInputElement>();
 
     handleChange = ({currentTarget}: ChangeEvent<HTMLInputElement>) => {
         const term = currentTarget.value

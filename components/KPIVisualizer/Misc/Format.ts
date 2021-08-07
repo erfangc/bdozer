@@ -1,1 +1,0 @@
-export type Format = 'money' | 'number' | 'percent'

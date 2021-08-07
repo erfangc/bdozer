@@ -12,13 +12,13 @@ export class Notifications extends Component<{}, State> {
 
     constructor(props) {
         super(props)
-        this.state = { notifications: [] }
+        this.state = {notifications: []}
     }
 
     componentDidMount() {
         this.subscriptionHandle = notificationStore.subscribe(
             newNotifications => {
-                this.setState({ notifications: newNotifications })
+                this.setState({notifications: newNotifications})
             }
         )
     }
@@ -32,7 +32,7 @@ export class Notifications extends Component<{}, State> {
     }
 
     render() {
-        const { notifications } = this.state
+        const {notifications} = this.state
         return notifications.length
             ?
             <ul className="fixed top-2 right-2 z-10 mt-2 text-gray-700 flex-col space-y-4 whitespace-nowrap">

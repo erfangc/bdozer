@@ -84,7 +84,7 @@
 }
 
 .label-regular {
-  @apply text-base font-bold leading-3;
+  @apply text-base font-normal leading-3;
 }
 
 .label-large {

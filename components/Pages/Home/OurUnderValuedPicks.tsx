@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { StockAnalysisCard } from './StockAnalysisCard';
+import {StockAnalysisCard} from './StockAnalysisCard';
 import {usePublishedStockAnalysis} from "../../../api-hooks";
 import {StockAnalysisProjection} from "../../../client";
 
@@ -22,7 +22,8 @@ export function OurUndervaluedPicks() {
             <h3 className="hidden lg:block heading3 text-white">Our Undervalued Picks</h3>
             {/* Card */}
             <div className="flex-col flex space-y-5 lg:space-x-5 lg:space-y-0 lg:flex-row mt-8">
-                {stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis} key={stockAnalysis['_id']}/>)}
+                {stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis}
+                                                                       key={stockAnalysis['_id']}/>)}
             </div>
         </section>
     );

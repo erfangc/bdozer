@@ -1,6 +1,6 @@
 import React from 'react'
 import {StockAnalysisProjection} from "../../../client";
-import {readableMoney, readablePercent} from "../../../number-formatters";
+import {readablePercent} from "../../../number-formatters";
 
 interface Props {
     stockAnalysis: StockAnalysisProjection
@@ -35,10 +35,10 @@ export function StockAnalysisCard({stockAnalysis}: Props) {
                         </p>
                     </div>
                 </div>
-                <hr className="border-navy-75" />
+                <hr className="border-navy-75"/>
             </div>
             <p className="text-lime-100">
-                {readablePercent(targetPrice/currentPrice - 1)} Upside
+                {readablePercent(targetPrice / currentPrice - 1)} Upside
             </p>
         </div>
     );

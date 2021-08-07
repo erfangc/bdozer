@@ -1,5 +1,5 @@
 import React from 'react';
-import {Search, StockSearch} from '../../Common2/Search';
+import {StockSearch} from '../../Common2/Search';
 
 export function Hero() {
     return (
