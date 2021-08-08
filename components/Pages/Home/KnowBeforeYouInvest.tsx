@@ -1,7 +1,12 @@
 import React from 'react';
 import {SecondaryButton} from '../../Common/SecondaryButton';
+import {useAuth0} from "@auth0/auth0-react";
 
 export function KnowBeforeYouInvest() {
+    const {loginWithRedirect} = useAuth0();
+    function signup() {
+        loginWithRedirect({screen_hint: 'signup'});
+    }
     return (
         <section className="py-16 px-8 lg:px-0 flex flex-col items-center text-center text-chili-100">
             <h1 className="lg:heading1 heading2">Know before you invest</h1>
@@ -44,7 +49,7 @@ export function KnowBeforeYouInvest() {
                 </li>
             </ul>
             <div className="mt-20">
-                <SecondaryButton width={23}>Register for Free and See for Yourself</SecondaryButton>
+                <SecondaryButton width={23} onClick={signup}>Register for Free and See for Yourself</SecondaryButton>
             </div>
         </section>
     )

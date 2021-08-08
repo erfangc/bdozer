@@ -12,9 +12,9 @@ import {Nav} from "../components/Nav";
 function Home() {
 
     const router = useRouter();
-    const auth0 = useAuth0();
+    const {isAuthenticated} = useAuth0();
 
-    if (auth0.isAuthenticated && localStorage.getItem('redirectUri')) {
+    if (isAuthenticated && localStorage.getItem('redirectUri')) {
         router.push(localStorage.getItem('redirectUri'))
         localStorage.removeItem('redirectUri')
         return null

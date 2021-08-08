@@ -1,14 +1,23 @@
 import {
-    CommentsControllerApi, CompanyKpIsControllerApi,
+    CommentsControllerApi,
+    CompanyKpIsControllerApi,
     EdgarExplorerControllerApi,
-    FactAutoFillerControllerApi, FactBaseControllerApi, FactTimeSeriesControllerApi,
+    FactAutoFillerControllerApi,
+    FactBaseControllerApi,
+    FactTimeSeriesControllerApi,
     FilingEntityManagerControllerApi,
-    FilingEntityManagerUnsecuredControllerApi, IssuesControllerApi,
-    MarketingControllerApi, ModelBuilderFactoryControllerApi,
-    MxParserControllerApi, OrphanedItemsFinderControllerApi,
-    PublishedStockAnalysisControllerApi, RevenueModelerControllerApi,
+    FilingEntityManagerUnsecuredControllerApi,
+    IssuesControllerApi,
+    MarketingControllerApi,
+    ModelBuilderFactoryControllerApi,
+    MxParserControllerApi,
+    OrphanedItemsFinderControllerApi,
+    PublishedStockAnalysisControllerApi,
+    RevenueModelerControllerApi,
     StockAnalysisControllerApi,
-    TagControllerApi, ZacksEstimatesControllerApi,
+    TagControllerApi,
+    WatchListsControllerApi,
+    ZacksEstimatesControllerApi,
 } from "./client";
 import {useAuth0} from "@auth0/auth0-react";
 import axios from "axios";
@@ -29,20 +38,30 @@ axiosInstance.interceptors.response.use(null, (error) => {
 });
 
 function useAxios() {
-    const {getIdTokenClaims} = useAuth0();
+    const {getAccessTokenSilently} = useAuth0();
 
     useEffect(() => {
-        axiosInstance.interceptors.request.use(async (cfg) => {
-            // TODO are we accidentally attaching a gazillion of these?
-            const idToken = await getIdTokenClaims();
-            return {
-                ...cfg,
-                headers: {
-                    ...cfg.headers,
-                    Authorization: `Bearer ${idToken?.__raw ?? "-"}`,
-                },
-            };
-        });
+
+        axiosInstance
+            .interceptors
+            .request
+            .use(async (cfg) => {
+                let accessToken = null;
+                try {
+                    accessToken = await getAccessTokenSilently();
+                } catch (e) {
+                    console.error(e);
+                    // Failed to get access token
+                }
+
+                return {
+                    ...cfg,
+                    headers: {
+                        ...cfg.headers,
+                        Authorization: `Bearer ${accessToken ?? "-"}`,
+                    },
+                };
+            });
     }, []);
     return axiosInstance;
 }
@@ -60,6 +79,11 @@ export function useFactAutoFiller() {
 export function useCompanyKPIs() {
     const axiosInstance = useAxios();
     return new CompanyKpIsControllerApi(null, basePath, axiosInstance);
+}
+
+export function useWatchLists() {
+    const axiosInstance = useAxios();
+    return new WatchListsControllerApi(null, basePath, axiosInstance);
 }
 
 export function useTimeSeries() {

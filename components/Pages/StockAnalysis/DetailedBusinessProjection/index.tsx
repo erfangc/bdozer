@@ -4,12 +4,13 @@ import {highcharts, theme} from "../../../../highcharts";
 import {readableNumber} from "../../../../number-formatters";
 import HighchartsReact from "highcharts-react-official";
 import {year} from "../../../../year";
+import {Pill} from "./Pill";
 
 interface Props {
     stockAnalysis: StockAnalysis2
 }
 
-export function BusinessBreakdown(props: Props) {
+export function DetailedBusinessProjection(props: Props) {
     const {stockAnalysis: {name, derivedStockAnalytics: {businessWaterfall}}} = props;
 
     const [options, setOptions] = useState<Highcharts.Options>()
@@ -101,11 +102,9 @@ export function BusinessBreakdown(props: Props) {
     }
 
     return (
-        <section className="bg-navy-100 p-6 rounded-lg w-mobileCard lg:w-card" id="business-breakdown">
-            <div className="mb-8">
-                <h3 className="heading3">Business Breakdown</h3>
-                <p className="paragraph-regular">{name}'s revenues, costs, and net profit</p>
-            </div>
+        <section className="bg-navy-100 p-6 space-y-6 rounded-lg w-mobileCard lg:w-card" id="detailed-business-projection">
+            <h3 className="heading3">Detailed Business Projection</h3>
+            <p className="paragraph-regular">{name}'s projected revenues, costs, and profit</p>
             <div className="flex space-x-1 my-4 overflow-hidden">
                 {Object
                     .keys(businessWaterfall)
@@ -127,16 +126,3 @@ export function BusinessBreakdown(props: Props) {
 }
 
 
-export function Pill(props: { label: string, active: boolean, onClick: () => void }) {
-    const {active, onClick, label} = props;
-    return (
-        <button
-            className={
-                `font-mono numbers-medium focus:outline-none ${active ? 'bg-lime-100 text-navy-100' : 'hover:bg-lime-100 hover:text-navy-100 text-lime-100'} rounded-lg px-2`
-            }
-            onClick={onClick}
-        >
-            {label}
-        </button>
-    )
-}

@@ -1949,6 +1949,31 @@ export interface Tag {
 /**
  * 
  * @export
+ * @interface WatchList
+ */
+export interface WatchList {
+    /**
+     * 
+     * @type {string}
+     * @memberof WatchList
+     */
+    get_id: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof WatchList
+     */
+    stockAnalysisIds: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof WatchList
+     */
+    lastUpdated: string;
+}
+/**
+ * 
+ * @export
  * @interface Waterfall
  */
 export interface Waterfall {
@@ -6411,6 +6436,232 @@ export class TagControllerApi extends BaseAPI {
      */
     public saveTag(tag: Tag, options?: any) {
         return TagControllerApiFp(this.configuration).saveTag(tag, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * WatchListsControllerApi - axios parameter creator
+ * @export
+ */
+export const WatchListsControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWatchList: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/watch-lists`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} stockAnalysisId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unwatch: async (stockAnalysisId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'stockAnalysisId' is not null or undefined
+            assertParamExists('unwatch', 'stockAnalysisId', stockAnalysisId)
+            const localVarPath = `/api/watch-lists`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (stockAnalysisId !== undefined) {
+                localVarQueryParameter['stockAnalysisId'] = stockAnalysisId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} stockAnalysisId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        watch: async (stockAnalysisId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'stockAnalysisId' is not null or undefined
+            assertParamExists('watch', 'stockAnalysisId', stockAnalysisId)
+            const localVarPath = `/api/watch-lists`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (stockAnalysisId !== undefined) {
+                localVarQueryParameter['stockAnalysisId'] = stockAnalysisId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * WatchListsControllerApi - functional programming interface
+ * @export
+ */
+export const WatchListsControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = WatchListsControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getWatchList(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WatchList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWatchList(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} stockAnalysisId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async unwatch(stockAnalysisId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WatchList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.unwatch(stockAnalysisId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} stockAnalysisId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async watch(stockAnalysisId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WatchList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.watch(stockAnalysisId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * WatchListsControllerApi - factory interface
+ * @export
+ */
+export const WatchListsControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = WatchListsControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWatchList(options?: any): AxiosPromise<WatchList> {
+            return localVarFp.getWatchList(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} stockAnalysisId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unwatch(stockAnalysisId: string, options?: any): AxiosPromise<WatchList> {
+            return localVarFp.unwatch(stockAnalysisId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} stockAnalysisId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        watch(stockAnalysisId: string, options?: any): AxiosPromise<WatchList> {
+            return localVarFp.watch(stockAnalysisId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * WatchListsControllerApi - object-oriented interface
+ * @export
+ * @class WatchListsControllerApi
+ * @extends {BaseAPI}
+ */
+export class WatchListsControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WatchListsControllerApi
+     */
+    public getWatchList(options?: any) {
+        return WatchListsControllerApiFp(this.configuration).getWatchList(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} stockAnalysisId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WatchListsControllerApi
+     */
+    public unwatch(stockAnalysisId: string, options?: any) {
+        return WatchListsControllerApiFp(this.configuration).unwatch(stockAnalysisId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} stockAnalysisId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WatchListsControllerApi
+     */
+    public watch(stockAnalysisId: string, options?: any) {
+        return WatchListsControllerApiFp(this.configuration).watch(stockAnalysisId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -29,7 +29,7 @@ function Desktop({stockAnalysis}: Props) {
     return (
         <div className="hidden lg:flex justify-between items-center">
             <div className="flex flex-col text-lime-100">
-                <span className="label-small">Estimated {periods}</span>
+                <span className="label-small">Forecasted {periods}</span>
                 <h1 className="numbers-large">${commafy(finalPrice)}</h1>
             </div>
             <div className="w-px border-l h-16"/>
@@ -57,7 +57,7 @@ function Mobile({stockAnalysis}: Props) {
     return (
         <div className="lg:hidden space-y-6">
             <div className="flex justify-between items-center text-lime-100">
-                <span className="label-regular">Estimated {periods}</span>
+                <span className="label-regular">Forecasted {periods}</span>
                 <h1 className="numbers-large">${commafy(finalPrice)}</h1>
             </div>
             <div className="flex justify-between">

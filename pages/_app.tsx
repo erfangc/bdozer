@@ -14,6 +14,8 @@ function MyApp({Component, pageProps}) {
             domain="bdozer.us.auth0.com"
             clientId="JL3lqp6KSxPpqWJFZLY620Vn8M1FWfkR"
             redirectUri={origin}
+            audience="https://bdozer-api.herokuapp.com"
+            scope="view:watchlist edit:watchlist"
         >
             <Component {...pageProps} />
         </Auth0Provider>

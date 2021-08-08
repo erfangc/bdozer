@@ -1,25 +1,27 @@
+import {tvps} from "../tvps";
+import {highcharts, theme} from "../../../../highcharts";
+import HighchartsReact from "highcharts-react-official";
 import React from "react";
 import {StockAnalysis2} from "../../../../client";
-import {commafy} from "../../../../number-formatters";
-import HighchartsReact from "highcharts-react-official";
-import {highcharts, theme} from '../../../../highcharts';
-import {tvps} from "../tvps";
-import {Statistic} from "./Statistic";
 
 interface Props {
     stockAnalysis: StockAnalysis2
 }
 
-export function ReturnForecast({stockAnalysis}: Props) {
+export function ReturnForecastChart({stockAnalysis}: Props) {
+
+    const {
+        model: {
+            periods,
+        },
+    } = stockAnalysis;
+
 
     const {
         derivedStockAnalytics: {
             currentPrice,
         },
-        model,
     } = stockAnalysis;
-
-    const periods = model.periods
     const finalPrice = tvps(stockAnalysis);
 
     const options: Highcharts.Options = {
@@ -43,7 +45,7 @@ export function ReturnForecast({stockAnalysis}: Props) {
             },
             {
                 name: 'Dividends',
-                data: [{y: 0}, {y: 20}],
+                data: [{y: 0}, {y: 0}],
                 color: theme.colors.lime["25"],
                 stacking: "normal",
                 type: 'column',
@@ -52,18 +54,10 @@ export function ReturnForecast({stockAnalysis}: Props) {
     }
 
     return (
-        <section className="bg-navy-100 p-6 space-y-6 rounded-lg w-mobileCard lg:w-card" id="return-forecast">
-            <h3 className="heading3">Return Forecast</h3>
-            <Statistic stockAnalysis={stockAnalysis}/>
-            <p className="paragraph-regular">
-                In {periods} years, you could earn an estimated
-                ${commafy(finalPrice - currentPrice)} on a
-                single stock purchased at ${commafy(currentPrice)}.
-            </p>
-            <HighchartsReact
-                highcharts={highcharts}
-                options={options}
-            />
-        </section>
+        <HighchartsReact
+            highcharts={highcharts}
+            options={options}
+        />
     )
+
 }

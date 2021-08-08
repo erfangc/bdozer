@@ -90,7 +90,7 @@ export function FutureGrowthPerShare(props: Props) {
             <HighchartsReact highcharts={highcharts} options={options}/>
             <h5 className="heading5 pb-2 border-b">Our Calculations</h5>
             <p className="paragraph-regular">
-                To compute a target price, we calculate future earnings per share (EPS).
+                To compute our price forecast in {year(periods)}, we calculate future earnings per share (EPS).
                 Let's take projected net income from above ({readableNumber(finalNetIncome)})
                 and for each future period, divide net income by shares outstanding
             </p>
