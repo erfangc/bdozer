@@ -39,14 +39,14 @@ export function ReturnForecast({stockAnalysis}: Props) {
                     y: finalPrice
                 }],
                 stacking: "normal",
-                type: 'bar',
+                type: 'column',
             },
             {
                 name: 'Dividends',
                 data: [{y: 0}, {y: 20}],
-                color: theme.colors.avocado["75"],
+                color: theme.colors.lime["25"],
                 stacking: "normal",
-                type: 'bar',
+                type: 'column',
             },
         ]
     }
