@@ -1,5 +1,5 @@
 import React from 'react'
-import {StockSearch} from '../../Common2/Search';
+import {StockSearch} from "../../StockSearch";
 
 
 export function AlreadyResearching() {

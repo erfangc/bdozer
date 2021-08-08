@@ -1,15 +1,14 @@
 import React from 'react';
-import {UnsecuredApp} from "../../components/App";
 import {PublishedStockAnalysisControllerApi, StockAnalysis2} from "../../client";
 import {basePath} from "../../api-hooks";
-import {Logo} from "../../components/Pages/Home/Logo";
-import {PrimaryButton} from "../../components/Common2/PrimaryButton";
 import {Summary} from "../../components/Pages/StockAnalysis/Summary";
 import {ReturnForecast} from "../../components/Pages/StockAnalysis/ReturnForecast";
 import {BusinessBreakdown} from "../../components/Pages/StockAnalysis/BusinessBreakdown";
 import {FutureGrowthPerShare} from "../../components/Pages/StockAnalysis/FutureGrowthPerShare";
 import {PriceForecast} from "../../components/Pages/StockAnalysis/PriceForecast";
 import {TableOfContent} from "../../components/Pages/StockAnalysis/TableOfContent";
+import {Page} from "../../components/Page";
+import {Nav} from "../../components/Nav";
 
 interface Props {
     stockAnalysis: StockAnalysis2
@@ -17,15 +16,8 @@ interface Props {
 
 export default function StockAnalysis({stockAnalysis}: Props) {
     return (
-        <UnsecuredApp>
-            <nav className="bg-chili-100 h-12 text-white items-center flex justify-between antialiased">
-                <Logo/>
-                <div className="space-x-4 pr-12 hidden">
-                    <PrimaryButton>Register Today</PrimaryButton>
-                    <button className="text-lime-100">Log In</button>
-                </div>
-            </nav>
-
+        <Page>
+            <Nav/>
             <main className="bg-dashboardGray-100 min-h-screen text-gray-2">
                 <div className="flex justify-center py-32 lg:space-x-8">
                     <TableOfContent stockAnalysis={stockAnalysis}/>
@@ -38,7 +30,7 @@ export default function StockAnalysis({stockAnalysis}: Props) {
                     </div>
                 </div>
             </main>
-        </UnsecuredApp>
+        </Page>
     );
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {SecondaryButton} from '../../Common2/SecondaryButton';
+import {SecondaryButton} from '../../Common/SecondaryButton';
 
 export function KnowBeforeYouInvest() {
     return (

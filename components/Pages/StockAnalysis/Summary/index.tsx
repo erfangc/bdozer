@@ -1,7 +1,7 @@
-import {Button} from "../../../Common2/Button";
+import {Button} from "../../../Common/Button";
 import React from "react";
 import {StockAnalysis2} from "../../../../client";
-import {PrimaryButton} from "../../../Common2/PrimaryButton";
+import {PrimaryButton} from "../../../Common/PrimaryButton";
 import {readableMoney, readablePercent} from "../../../../number-formatters";
 import {ShareAnalysisButton} from "./ShareAnalysisButton";
 import {tvps} from "../tvps";
@@ -19,7 +19,6 @@ export function Summary({stockAnalysis}: Props) {
         name,
         cells,
         derivedStockAnalytics: {
-            currentPrice,
             businessWaterfall,
             revenueCAGR,
         },
@@ -100,4 +99,3 @@ export function Summary({stockAnalysis}: Props) {
         </section>
     )
 }
-

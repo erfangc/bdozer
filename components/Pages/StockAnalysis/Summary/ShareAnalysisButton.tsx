@@ -1,4 +1,4 @@
-import {Button} from "../../../Common2/Button";
+import {Button} from "../../../Common/Button";
 import React from "react";
 
 // TODO make this work

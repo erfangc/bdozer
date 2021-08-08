@@ -4,14 +4,15 @@ import "tailwindcss/tailwind.css";
 import '../styles/globals.css';
 
 function MyApp({Component, pageProps}) {
+    // this block is needed b/c the page may render on the server where window is not defined
     let origin = null
     if (typeof window !== 'undefined') {
         origin = window.location.origin
     }
     return (
         <Auth0Provider
-            domain="ease-wealth.us.auth0.com"
-            clientId="UbQVqsIomMhckPO1UHXc8OUf5dJxz5yR"
+            domain="bdozer.us.auth0.com"
+            clientId="JL3lqp6KSxPpqWJFZLY620Vn8M1FWfkR"
             redirectUri={origin}
         >
             <Component {...pageProps} />

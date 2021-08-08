@@ -5,14 +5,14 @@ import {AlreadyResearching} from "../components/Pages/Home/AlreadyResearching"
 import {Footer} from "../components/Pages/Home/Footer"
 import {Hero} from "../components/Pages/Home/Hero"
 import {KnowBeforeYouInvest} from "../components/Pages/Home/KnowBeforeYouInvest"
-import {Nav} from "../components/Pages/Home/Nav"
 import {OurUndervaluedPicks} from "../components/Pages/Home/OurUnderValuedPicks"
 import {ValueIsWhatYouGet} from "../components/Pages/Home/ValueIsWhatYouGet"
+import {Nav} from "../components/Nav";
 
 function Home() {
 
-    const router = useRouter()
-    const auth0 = useAuth0()
+    const router = useRouter();
+    const auth0 = useAuth0();
 
     if (auth0.isAuthenticated && localStorage.getItem('redirectUri')) {
         router.push(localStorage.getItem('redirectUri'))
