@@ -4,37 +4,26 @@ import {Nav} from "../components/Nav";
 import {StockSearch} from "../components/Pages/Search/StockSearch";
 import {usePublishedStockAnalysis} from "../api-hooks";
 import {StockAnalysisProjection} from "../client";
-import {commafy} from "../number-formatters";
+import {commafy, readablePercent} from "../number-formatters";
+import {useRouter} from "next/router";
 
 export default function Search() {
 
     const [stockAnalyses, setStockAnalyses] = useState<StockAnalysisProjection[]>([]);
     const stockAnalysisApi = usePublishedStockAnalysis();
+    const router = useRouter();
 
     async function search(term: string) {
-        if (term) {
-            const {data} = await stockAnalysisApi.findPublishedStockAnalyses(
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                term,
-                undefined,
-            );
-            setStockAnalyses(data.stockAnalyses);
-        } else {
-            const {data} = await stockAnalysisApi.findPublishedStockAnalyses(
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-            );
-            setStockAnalyses(data.stockAnalyses);
-        }
+        const {data} = await stockAnalysisApi.findPublishedStockAnalyses(
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            term ?? undefined,
+            undefined,
+        );
+        setStockAnalyses(data.stockAnalyses);
     }
 
     useEffect(() => {
@@ -48,11 +37,19 @@ export default function Search() {
             name,
             ticker
         } = stockAnalysis;
+
+        function navigate() {
+            router.push(`/stock-analyses/${stockAnalysis['_id']}`);
+        }
+
         return (
-            <tr>
+            <tr
+                className="cursor-pointer transition ease-in hover:bg-lightGreen-50 hover:text-chili-100"
+                onClick={navigate}
+            >
                 <td className="font-mono p-5 text-left">{name}</td>
                 <td className="font-mono p-5 text-left">{ticker}</td>
-                <td className="font-mono p-5 text-left">32.02%</td>
+                <td className="font-mono p-5 text-left">{readablePercent(finalPrice/currentPrice - 1)}</td>
                 <td className="font-mono p-5 text-left">${commafy(currentPrice)}</td>
                 <td className="font-mono p-5 text-left">${commafy(finalPrice)}</td>
                 <td className="font-mono p-5 text-left">
@@ -82,9 +79,7 @@ export default function Search() {
                             <th className="p-5 text-left"/>
                         </tr>
                         </thead>
-                        <tbody>
-                        {rows}
-                        </tbody>
+                        <tbody>{rows}</tbody>
                     </table>
                 </div>
             </main>

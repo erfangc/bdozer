@@ -54,10 +54,9 @@ export function Overview({stockAnalysis}: Props) {
                 </div>
             </div>
             <p>
-                Amazon.com, Inc. engages in the retail sale of consumer products and subscriptions in North America and
-                internationally.
-                The company operates through three segments: North America, International, and Amazon Web Services
-                (AWS).
+                Insert a brief description of the company here. Source the data from a reputable vendor. This
+                paragraph should not exceed three or four sentences. The idea is to introduce the reader
+                to the core business activities of a given stock
             </p>
             <h3 className="heading3">Return Forecast</h3>
             <Statistic stockAnalysis={stockAnalysis}/>
