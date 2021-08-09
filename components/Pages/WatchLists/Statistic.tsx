@@ -9,6 +9,9 @@ interface Props {
 }
 
 export function Statistic({stockAnalysis}: Props) {
+    if (!stockAnalysis) {
+        return null;
+    }
     return (
         <>
             <Desktop stockAnalysis={stockAnalysis}/>

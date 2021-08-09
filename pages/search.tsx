@@ -6,6 +6,8 @@ import {usePublishedStockAnalysis} from "../api-hooks";
 import {StockAnalysisProjection} from "../client";
 import {commafy, readablePercent} from "../number-formatters";
 import {useRouter} from "next/router";
+import {AscIcon, DescIcon, UnsortedIcon} from "../components/Pages/Search/Icons";
+import {upsideP} from "../components/Pages/StockAnalysis/upside";
 
 export default function Search() {
 
@@ -39,7 +41,7 @@ export default function Search() {
             undefined,
             undefined,
             undefined,
-            undefined,
+            15,
             term ?? undefined,
             undefined,
             sort,
@@ -63,6 +65,7 @@ export default function Search() {
             router.push(`/stock-analyses/${stockAnalysis['_id']}`);
         }
 
+        const upside = upsideP(stockAnalysis);
         return (
             <tr
                 className="cursor-pointer transition ease-in hover:bg-lightGreen-50 hover:text-chili-100"
@@ -70,10 +73,10 @@ export default function Search() {
             >
                 <td className="font-mono p-5 text-left">{name}</td>
                 <td className="font-mono p-5 text-left">{ticker}</td>
-                <td className="font-mono p-5 text-left">{readablePercent(finalPrice / currentPrice - 1)}</td>
-                <td className="font-mono p-5 text-left">${commafy(currentPrice)}</td>
-                <td className="font-mono p-5 text-left">${commafy(finalPrice)}</td>
-                <td className="font-mono p-5 text-left">
+                <td className={`font-mono p-5 text-left ${upside > 0 ? 'text-lime-100' : 'text-red-100'}`}>{readablePercent(upside)}</td>
+                <td className="font-mono p-5 text-left hidden lg:table-cell">${commafy(currentPrice)}</td>
+                <td className="font-mono p-5 text-left hidden lg:table-cell">${commafy(finalPrice)}</td>
+                <td className="font-mono p-5 text-left hidden lg:table-cell">
                     <button>Watching</button>
                 </td>
             </tr>
@@ -85,11 +88,13 @@ export default function Search() {
             <Nav/>
             <main className="bg-dashboardGray-100 min-h-screen">
                 <div className="mx-auto py-24 container text-lightGreen-25">
-                    <h2 className="heading2">Stock Overview</h2>
-                    <br/>
-                    <StockSearch onChange={search}/>
-                    <br/>
-                    <table className="w-full">
+                    <div className="px-2 lg:px-0 ">
+                        <h2 className="heading2">Stock Overview</h2>
+                        <br/>
+                        <StockSearch onChange={search}/>
+                        <br/>
+                    </div>
+                    <table className="label-small lg:label-regular w-full">
                         <thead>
                         <tr className="pb-2 border-b">
                             <th className="p-5 text-left">Company</th>
@@ -98,9 +103,9 @@ export default function Search() {
                                 Over/Under Valued
                                 {sort == undefined ? <UnsortedIcon/> : sort === 'descending' ? <DescIcon/> : <AscIcon/>}
                             </th>
-                            <th className="p-5 text-left">Current Share Price</th>
-                            <th className="p-5 text-left">Forecasted Price</th>
-                            <th className="p-5 text-left"/>
+                            <th className="p-5 text-left hidden lg:table-cell">Current Share Price</th>
+                            <th className="p-5 text-left hidden lg:table-cell">Forecasted Price</th>
+                            <th className="p-5 text-left hidden lg:table-cell"/>
                         </tr>
                         </thead>
                         <tbody>{rows}</tbody>
@@ -109,32 +114,4 @@ export default function Search() {
             </main>
         </Page>
     );
-}
-
-function DescIcon() {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" className="fill-current">
-            <path d="M24 24H0V0h24v24z" fill="none" opacity=".87"/>
-            <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"/>
-        </svg>
-    )
-}
-
-function AscIcon() {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" className="fill-current">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z"/>
-        </svg>
-    )
-}
-
-function UnsortedIcon() {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" className="fill-current">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path
-                d="M12 5.83L15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"/>
-        </svg>
-    )
 }
