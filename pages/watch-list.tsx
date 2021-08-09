@@ -34,9 +34,7 @@ export default function WatchList() {
             <Nav/>
             <main className="min-h-screen bg-dashboardGray-100 flex p-32 justify-center">
                 <div className="flex flex-col space-y-4">
-                    <h5 className="heading5 text-lightGreen-25">
-                        My WatchList
-                    </h5>
+                    <h5 className="heading5 text-lightGreen-25">My WatchList</h5>
                     {cards}
                 </div>
             </main>

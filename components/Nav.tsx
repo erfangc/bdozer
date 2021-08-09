@@ -24,7 +24,7 @@ export function Nav() {
                     isAuthenticated ?
                         <ul className="hidden lg:flex items-center space-x-12 text-lime-100">
                             <li><Link href='/watch-list'>Watch List</Link></li>
-                            <li><Link href='/stocks'>Stocks</Link></li>
+                            <li><Link href='/search'>Stocks</Link></li>
                         </ul> : null
                 }
             </div>

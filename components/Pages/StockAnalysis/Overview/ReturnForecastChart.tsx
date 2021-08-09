@@ -26,7 +26,14 @@ export function ReturnForecastChart({stockAnalysis}: Props) {
 
     const options: Highcharts.Options = {
         yAxis: {
-            title: {text: null},
+            title: {
+                text: null
+            },
+            labels: {
+                formatter: function () {
+                    return `$${this.value}`
+                },
+            }
         },
         xAxis: {
             categories: ['Purchase Price', `In ${periods} years`],
@@ -46,7 +53,7 @@ export function ReturnForecastChart({stockAnalysis}: Props) {
             {
                 name: 'Dividends',
                 data: [{y: 0}, {y: 0}],
-                color: theme.colors.lime["25"],
+                color: theme.colors.avocado["100"],
                 stacking: "normal",
                 type: 'column',
             },

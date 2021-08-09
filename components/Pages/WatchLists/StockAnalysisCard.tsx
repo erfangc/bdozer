@@ -22,7 +22,7 @@ export function StockAnalysisCard({stockAnalysis}: Props) {
     }
 
     return (
-        <div className="p-6 rounded-lg bg-navy-100 w-card text-lightGreen-25 cursor-pointer" onClick={navigate}>
+        <div className="p-6 rounded-lg bg-navy-100 w-mobileCard lg:w-card text-lightGreen-25 cursor-pointer" onClick={navigate}>
             <div className="flex justify-between">
                 <div>
                     <div className="flex items-center flex-col lg:flex-row">

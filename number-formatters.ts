@@ -45,8 +45,12 @@ export function readableMoney(input: number | string, short?: boolean) {
 
 }
 
-export function commafy(number: number | string) {
-    return number.toLocaleString('US', {currency: 'USD', maximumSignificantDigits: 4});
+export function commafy(number: number | string | undefined) {
+    if (!number) {
+        return '-';
+    } else {
+        return number.toLocaleString('US', {currency: 'USD', maximumSignificantDigits: 4});
+    }
 }
 
 export function readablePercent(number: number, decimals: number = 1) {
