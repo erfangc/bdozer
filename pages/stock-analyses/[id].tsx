@@ -7,8 +7,8 @@ import {FutureGrowthPerShare} from "../../components/Pages/StockAnalysis/FutureG
 import {PriceForecast} from "../../components/Pages/StockAnalysis/PriceForecast";
 import {TableOfContent} from "../../components/Pages/StockAnalysis/TableOfContent";
 import {Page} from "../../components/Page";
-import {Nav} from "../../components/Nav";
 import {BusinessSummary} from "../../components/Pages/StockAnalysis/BusinessSummary";
+import {Nav} from "../../components/Nav";
 
 interface Props {
     stockAnalysis: StockAnalysis2

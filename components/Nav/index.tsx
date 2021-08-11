@@ -1,8 +1,10 @@
-import {Logo} from "./Pages/Home/Logo";
-import {PrimaryButton} from "./Common/PrimaryButton";
 import React, {useState} from "react";
 import {useAuth0} from "@auth0/auth0-react";
-import Link from 'next/link';
+import {Logo} from "../Pages/Home/Logo";
+import Link from "next/link";
+import {PrimaryButton} from "../Common/PrimaryButton";
+import {NavSearch} from "./NavSearch";
+import {MenuIcon} from "./MenuIcon";
 
 export function Nav() {
     return (
@@ -39,12 +41,14 @@ export function Desktop() {
             </div>
             {
                 isAuthenticated ?
-                    <div className="space-x-4 pr-12 hidden lg:block">
+                    <div className="space-x-4 pr-12 flex">
+                        <NavSearch/>
                         <button className="text-lime-100" onClick={() => logout()}>Log Out</button>
                     </div>
                     :
-                    <div className="space-x-4 pr-12 hidden lg:block">
+                    <div className="space-x-4 pr-12 flex">
                         <PrimaryButton onClick={signup}>Register Today</PrimaryButton>
+                        <NavSearch/>
                         <button className="text-lime-100" onClick={login}>Log In</button>
                     </div>
             }
@@ -79,24 +83,10 @@ function Mobile() {
                             <li className="py-4 w-full text-center" onClick={signup}>Sign Up</li>
                             <li className="py-4 w-full text-center" onClick={login}>Login</li>
                         </>
-                    : <li className="py-4 w-full text-center" onClick={() => logout()}>Logout</li>
+                        : <li className="py-4 w-full text-center" onClick={() => logout()}>Logout</li>
                 }
             </ul>
 
         </nav>
     );
-}
-
-interface Props {
-    onClick: () => void
-}
-
-function MenuIcon({onClick}:Props) {
-    return (
-        <button className="pr-4" onClick={onClick}>
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 36H42V32H6V36ZM6 26H42V22H6V26ZM6 12V16H42V12H6Z" fill="#B4DD62"/>
-            </svg>
-        </button>
-    )
 }

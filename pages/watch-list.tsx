@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {AuthenticatedPage} from "../components/AuthenticatedPage";
-import {Nav} from "../components/Nav";
 import {usePublishedStockAnalysis, useWatchLists} from "../api-hooks";
 import {StockAnalysis2} from "../client";
 import {StockAnalysisCard, StockAnalysisCardSkeleton} from "../components/Pages/WatchLists/StockAnalysisCard";

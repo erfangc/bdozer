@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {Page} from "../components/Page";
-import {Nav} from "../components/Nav";
 import {StockSearch} from "../components/Pages/Search/StockSearch";
 import {usePublishedStockAnalysis} from "../api-hooks";
 import {StockAnalysisProjection} from "../client";

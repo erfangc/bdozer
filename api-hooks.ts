@@ -30,10 +30,8 @@ function useAxios() {
                 try {
                     accessToken = await getAccessTokenSilently();
                 } catch (e) {
-                    console.error(e);
-                    // Failed to get access token
+                    // failed to get access token
                 }
-
                 return {
                     ...cfg,
                     headers: {
@@ -42,6 +40,7 @@ function useAxios() {
                     },
                 };
             });
+
     }, []);
     return axiosInstance;
 }
@@ -52,6 +51,5 @@ export function useWatchLists() {
 }
 
 export function usePublishedStockAnalysis() {
-    const axiosInstance = useAxios();
-    return new PublishedStockAnalysisControllerApi(null, basePath, axiosInstance);
+    return new PublishedStockAnalysisControllerApi(null, basePath);
 }
