@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {AuthenticatedPage} from "../components/AuthenticatedPage";
-import {usePublishedStockAnalysis, useWatchLists} from "../api-hooks";
+import {useWatchLists} from "../api-hooks";
 import {StockAnalysis2} from "../client";
 import {StockAnalysisCard, StockAnalysisCardSkeleton} from "../components/Pages/WatchLists/StockAnalysisCard";
 import {Nav} from "../components/Nav";
@@ -8,22 +8,15 @@ import {Nav} from "../components/Nav";
 export default function WatchList() {
 
     const watchListsApi = useWatchLists();
-    const stockAnalysisApi = usePublishedStockAnalysis();
     const [loading, setLoading] = useState(true);
     const [stockAnalyses, setStockAnalyses] = useState<StockAnalysis2[]>([]);
 
     async function init() {
         setLoading(true);
-        const {data: watchList} = await watchListsApi.getWatchList()
-        const stockAnalysisIds = watchList?.stockAnalysisIds;
-        if (!stockAnalysisIds) {
-        } else {
-            const results = await Promise.all(
-                stockAnalysisIds.map(id => stockAnalysisApi.getPublishedStockAnalysis(id))
-            );
-            setLoading(false);
-            setStockAnalyses(results.map(result => result.data))
-        }
+        const {data: watchList} = await watchListsApi.getWatchedStockAnalyses();
+        const stockAnalyses = watchList?.stockAnalyses;
+        setStockAnalyses(stockAnalyses);
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -32,7 +25,7 @@ export default function WatchList() {
 
     const cards = loading
         ? <StockAnalysisCardSkeleton/>
-        : stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis}/>);
+        : stockAnalyses.map(stockAnalysis => <StockAnalysisCard stockAnalysis={stockAnalysis} watching/>);
 
     return (
         <AuthenticatedPage>

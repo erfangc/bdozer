@@ -6,9 +6,10 @@ import {useRouter} from "next/router";
 
 interface Props {
     stockAnalysis: StockAnalysis2
+    watching?: boolean
 }
 
-export function StockAnalysisCard({stockAnalysis}: Props) {
+export function StockAnalysisCard({stockAnalysis, watching}: Props) {
     const {
         ticker,
         name,
@@ -34,7 +35,7 @@ export function StockAnalysisCard({stockAnalysis}: Props) {
                     </div>
                 </div>
                 <div className="flex flex-col justify-between">
-                    <WatchingButton stockAnalysis={stockAnalysis}/>
+                    <WatchingButton stockAnalysis={stockAnalysis} watching/>
                 </div>
             </div>
             <Statistic stockAnalysis={stockAnalysis}/>

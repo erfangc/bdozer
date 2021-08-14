@@ -116,49 +116,6 @@ export interface Cell {
 /**
  * 
  * @export
- * @interface Comment
- */
-export interface Comment {
-    /**
-     * 
-     * @type {string}
-     * @memberof Comment
-     */
-    get_id: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Comment
-     */
-    stockAnalysisId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Comment
-     */
-    text: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Comment
-     */
-    lastUpdated: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Comment
-     */
-    userId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Comment
-     */
-    name?: string;
-}
-/**
- * 
- * @export
  * @interface Commentary
  */
 export interface Commentary {
@@ -337,6 +294,25 @@ export interface FixedCost {
      * @memberof FixedCost
      */
     cost: number;
+}
+/**
+ * 
+ * @export
+ * @interface GetWatchedStockAnalysesResponse
+ */
+export interface GetWatchedStockAnalysesResponse {
+    /**
+     * 
+     * @type {WatchList}
+     * @memberof GetWatchedStockAnalysesResponse
+     */
+    watchList: WatchList;
+    /**
+     * 
+     * @type {Array<StockAnalysis2>}
+     * @memberof GetWatchedStockAnalysesResponse
+     */
+    stockAnalyses: Array<StockAnalysis2>;
 }
 /**
  * 
@@ -947,22 +923,22 @@ export interface Waterfall {
 }
 
 /**
- * CommentsControllerApi - axios parameter creator
+ * PublishedStockAnalysisControllerApi - axios parameter creator
  * @export
  */
-export const CommentsControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const PublishedStockAnalysisControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {string} stockAnalysisId 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getComments: async (stockAnalysisId: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'stockAnalysisId' is not null or undefined
-            assertParamExists('getComments', 'stockAnalysisId', stockAnalysisId)
-            const localVarPath = `/public/comments/{stockAnalysisId}`
-                .replace(`{${"stockAnalysisId"}}`, encodeURIComponent(String(stockAnalysisId)));
+        download: async (id: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('download', 'id', id)
+            const localVarPath = `/public/published-stock-analyses/{id}/excel-download`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -985,139 +961,6 @@ export const CommentsControllerApiAxiosParamCreator = function (configuration?: 
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {Comment} comment 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postComment: async (comment: Comment, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'comment' is not null or undefined
-            assertParamExists('postComment', 'comment', comment)
-            const localVarPath = `/public/comments`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(comment, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * CommentsControllerApi - functional programming interface
- * @export
- */
-export const CommentsControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = CommentsControllerApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {string} stockAnalysisId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getComments(stockAnalysisId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Comment>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getComments(stockAnalysisId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {Comment} comment 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async postComment(comment: Comment, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postComment(comment, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * CommentsControllerApi - factory interface
- * @export
- */
-export const CommentsControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = CommentsControllerApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {string} stockAnalysisId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getComments(stockAnalysisId: string, options?: any): AxiosPromise<Array<Comment>> {
-            return localVarFp.getComments(stockAnalysisId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {Comment} comment 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        postComment(comment: Comment, options?: any): AxiosPromise<void> {
-            return localVarFp.postComment(comment, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * CommentsControllerApi - object-oriented interface
- * @export
- * @class CommentsControllerApi
- * @extends {BaseAPI}
- */
-export class CommentsControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} stockAnalysisId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CommentsControllerApi
-     */
-    public getComments(stockAnalysisId: string, options?: any) {
-        return CommentsControllerApiFp(this.configuration).getComments(stockAnalysisId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {Comment} comment 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CommentsControllerApi
-     */
-    public postComment(comment: Comment, options?: any) {
-        return CommentsControllerApiFp(this.configuration).postComment(comment, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * PublishedStockAnalysisControllerApi - axios parameter creator
- * @export
- */
-export const PublishedStockAnalysisControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
         /**
          * 
          * @param {string} [userId] 
@@ -1261,6 +1104,16 @@ export const PublishedStockAnalysisControllerApiFp = function(configuration?: Co
     return {
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async download(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.download(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @param {string} [userId] 
          * @param {string} [cik] 
          * @param {string} [ticker] 
@@ -1307,6 +1160,15 @@ export const PublishedStockAnalysisControllerApiFactory = function (configuratio
     return {
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        download(id: string, options?: any): AxiosPromise<Array<string>> {
+            return localVarFp.download(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} [userId] 
          * @param {string} [cik] 
          * @param {string} [ticker] 
@@ -1348,6 +1210,17 @@ export const PublishedStockAnalysisControllerApiFactory = function (configuratio
  * @extends {BaseAPI}
  */
 export class PublishedStockAnalysisControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublishedStockAnalysisControllerApi
+     */
+    public download(id: string, options?: any) {
+        return PublishedStockAnalysisControllerApiFp(this.configuration).download(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {string} [userId] 
@@ -2111,8 +1984,41 @@ export const WatchListsControllerApiAxiosParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWatchList: async (options: any = {}): Promise<RequestArgs> => {
+        getWatchedStockAnalyses: async (options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/watch-lists`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} stockAnalysisId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        isWatching: async (stockAnalysisId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'stockAnalysisId' is not null or undefined
+            assertParamExists('isWatching', 'stockAnalysisId', stockAnalysisId)
+            const localVarPath = `/api/watch-lists/{stockAnalysisId}`
+                .replace(`{${"stockAnalysisId"}}`, encodeURIComponent(String(stockAnalysisId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2222,8 +2128,18 @@ export const WatchListsControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getWatchList(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WatchList>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getWatchList(options);
+        async getWatchedStockAnalyses(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetWatchedStockAnalysesResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWatchedStockAnalyses(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} stockAnalysisId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async isWatching(stockAnalysisId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.isWatching(stockAnalysisId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2261,8 +2177,17 @@ export const WatchListsControllerApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWatchList(options?: any): AxiosPromise<WatchList> {
-            return localVarFp.getWatchList(options).then((request) => request(axios, basePath));
+        getWatchedStockAnalyses(options?: any): AxiosPromise<GetWatchedStockAnalysesResponse> {
+            return localVarFp.getWatchedStockAnalyses(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} stockAnalysisId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        isWatching(stockAnalysisId: string, options?: any): AxiosPromise<boolean> {
+            return localVarFp.isWatching(stockAnalysisId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2298,8 +2223,19 @@ export class WatchListsControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WatchListsControllerApi
      */
-    public getWatchList(options?: any) {
-        return WatchListsControllerApiFp(this.configuration).getWatchList(options).then((request) => request(this.axios, this.basePath));
+    public getWatchedStockAnalyses(options?: any) {
+        return WatchListsControllerApiFp(this.configuration).getWatchedStockAnalyses(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} stockAnalysisId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WatchListsControllerApi
+     */
+    public isWatching(stockAnalysisId: string, options?: any) {
+        return WatchListsControllerApiFp(this.configuration).isWatching(stockAnalysisId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

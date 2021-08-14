@@ -6,27 +6,23 @@ import {StockAnalysis2} from "../../../../../client";
 
 interface Props {
     stockAnalysis: StockAnalysis2
+    watching?: boolean
 }
 
-export function WatchingButton({stockAnalysis}: Props) {
+export function WatchingButton(props: Props) {
+    const {stockAnalysis} = props;
 
     const {isAuthenticated, loginWithRedirect} = useAuth0();
     const watchListApi = useWatchLists();
     const stockAnalysisId = stockAnalysis['_id']
 
-    const [watching, setWatching] = useState(false);
+    const [watching, setWatching] = useState(props.watching);
 
     useEffect(() => {
-        if (isAuthenticated) {
+        if (isAuthenticated && props.watching === undefined) {
             watchListApi
-                .getWatchList()
-                .then(({data}) => {
-                    if (data.stockAnalysisIds.indexOf(stockAnalysisId) !== -1) {
-                        setWatching(true);
-                    } else {
-                        setWatching(false);
-                    }
-                });
+                .isWatching(stockAnalysisId)
+                .then(resp => setWatching(resp.data));
         }
     }, [isAuthenticated]);
 
