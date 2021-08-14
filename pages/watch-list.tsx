@@ -3,6 +3,7 @@ import {AuthenticatedPage} from "../components/AuthenticatedPage";
 import {usePublishedStockAnalysis, useWatchLists} from "../api-hooks";
 import {StockAnalysis2} from "../client";
 import {StockAnalysisCard, StockAnalysisCardSkeleton} from "../components/Pages/WatchLists/StockAnalysisCard";
+import {Nav} from "../components/Nav";
 
 export default function WatchList() {
 

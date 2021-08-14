@@ -7,6 +7,7 @@ import {commafy, readablePercent} from "../number-formatters";
 import {useRouter} from "next/router";
 import {AscIcon, DescIcon, UnsortedIcon} from "../components/Pages/Search/Icons";
 import {upsideP} from "../components/Pages/StockAnalysis/upside";
+import {Nav} from "../components/Nav";
 
 export default function Search() {
 

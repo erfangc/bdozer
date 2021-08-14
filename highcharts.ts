@@ -20,7 +20,7 @@ export const numericTooltip: Highcharts.TooltipOptions = {
     backgroundColor: colors.gray["2"],
     borderRadius: 8,
 }
-
+// @ts-ignore
 Highcharts.theme = {
     colors: [colors.gray["2"]],
     credits: {
@@ -85,6 +85,7 @@ Highcharts.theme = {
 };
 
 if (typeof Highcharts === 'object') {
+    // @ts-ignore
     Highcharts.setOptions(Highcharts.theme);
     HC_more(Highcharts);
     HighchartsSankey(Highcharts)
