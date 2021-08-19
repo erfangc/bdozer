@@ -15,32 +15,37 @@ export default function Search() {
     const stockAnalysisApi = usePublishedStockAnalysis();
     const [term, setTerm] = useState('')
     const [sort, setSort] = useState<'ascending' | 'descending' | undefined>(undefined)
+    const [page, setPage] = useState(0);
     const router = useRouter();
 
     function search(term: string) {
         setTerm(term);
-        refresh(term, sort)
+        refresh(term, sort, page);
     }
 
     function toggleSort() {
         if (sort == undefined) {
             setSort('descending');
-            refresh(term, 'descending')
+            refresh(term, 'descending', page);
         } else if (sort == 'descending') {
             setSort('ascending');
-            refresh(term, 'ascending')
+            refresh(term, 'ascending', page);
         } else {
             setSort(undefined);
-            refresh(term, undefined);
+            refresh(term, undefined, page);
         }
     }
 
-    async function refresh(term: string, sort: 'ascending' | 'descending' | undefined) {
+    async function refresh(
+        term: string,
+        sort: 'ascending' | 'descending' | undefined,
+        page: number,
+    ) {
         const {data} = await stockAnalysisApi.findPublishedStockAnalyses(
             undefined,
             undefined,
             undefined,
-            undefined,
+            page * 15,
             15,
             term ?? undefined,
             undefined,
@@ -52,6 +57,19 @@ export default function Search() {
     useEffect(() => {
         search(undefined);
     }, []);
+
+    function nextPage() {
+        setPage(page + 1);
+        refresh(term, sort, page + 1);
+    }
+
+    function previousPage() {
+        if (page == 0) {
+            return;
+        }
+        setPage(page - 1);
+        refresh(term, sort, page - 1);
+    }
 
     const rows = stockAnalyses.map(stockAnalysis => {
         const {
@@ -66,6 +84,7 @@ export default function Search() {
         }
 
         const upside = upsideP(stockAnalysis);
+
         return (
             <tr
                 className="cursor-pointer transition ease-in hover:bg-lightGreen-50 hover:text-chili-100"
@@ -77,7 +96,7 @@ export default function Search() {
                 <td className="font-mono p-5 text-left hidden lg:table-cell">${commafy(currentPrice)}</td>
                 <td className="font-mono p-5 text-left hidden lg:table-cell">${commafy(finalPrice)}</td>
                 <td className="font-mono p-5 text-left hidden lg:table-cell">
-                    <button>Watching</button>
+                    <button>-</button>
                 </td>
             </tr>
         );
@@ -94,6 +113,7 @@ export default function Search() {
                         <StockSearch onChange={search}/>
                         <br/>
                     </div>
+                    <Pagination previousPage={previousPage} nextPage={nextPage}/>
                     <table className="label-small lg:label-regular w-full">
                         <thead>
                         <tr className="pb-2 border-b">
@@ -114,4 +134,25 @@ export default function Search() {
             </main>
         </Page>
     );
+}
+
+function Pagination({previousPage, nextPage}: { previousPage: () => void, nextPage: () => void }) {
+    return <div className="flex space-x-2">
+        <button className="rounded bg-lime-100 text-chili-100 w-8 h-8 flex items-center justify-center"
+                onClick={previousPage}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                 className="fill-current">
+                <path d="M0 0h24v24H0V0z" fill="none"/>
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12l4.58-4.59z"/>
+            </svg>
+        </button>
+        <button className="rounded bg-lime-100 text-chili-100 w-8 h-8 flex items-center justify-center"
+                onClick={nextPage}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                 className="fill-current">
+                <path d="M0 0h24v24H0V0z" fill="none"/>
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"/>
+            </svg>
+        </button>
+    </div>;
 }

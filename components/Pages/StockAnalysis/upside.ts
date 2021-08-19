@@ -13,6 +13,10 @@ export function upside(stockAnalysis: StockAnalysis2): number {
 }
 
 
+/**
+ * Computes the upside from final price
+ * @param stockAnalysis
+ */
 export function upsideP(stockAnalysis: StockAnalysisProjection): number {
     const {
         currentPrice,

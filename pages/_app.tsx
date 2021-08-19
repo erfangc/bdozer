@@ -10,12 +10,13 @@ function MyApp({Component, pageProps}) {
         origin = window.location.origin
     }
     return (
-        <Auth0Provider
+         <Auth0Provider
             domain="bdozer.us.auth0.com"
             clientId="JL3lqp6KSxPpqWJFZLY620Vn8M1FWfkR"
             redirectUri={origin}
             audience="https://bdozer-api.herokuapp.com"
             scope="view:watchlist edit:watchlist"
+            useRefreshTokens
         >
             <Component {...pageProps} />
         </Auth0Provider>
