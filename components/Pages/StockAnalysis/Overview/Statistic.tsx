@@ -27,7 +27,9 @@ function Desktop({stockAnalysis}: Props) {
     const upside1 = upside(stockAnalysis);
 
     return (
-        <div className="hidden lg:flex justify-between items-center">
+        // we give this wrapper DIV element an Id so that TableOfContent can retrieve its offSetHeight to
+        // render a side panel - not sure if there is a better way to do it
+        <div className="hidden lg:flex justify-between items-center" id="top-level-stats">
             <div className="flex flex-col text-lime-100">
                 <span className="label-small">Forecasted {periods} Yr Return</span>
                 <h1 className="numbers-large">{readablePercent(upside1)}</h1>

@@ -63,7 +63,6 @@ export function Overview({stockAnalysis}: Props) {
                 single stock purchased at <span className="text-lime-100">${commafy(currentPrice)}</span> / share today.
             </p>
             <ReturnForecastChart stockAnalysis={stockAnalysis}/>
-
         </section>
-    )
+    );
 }

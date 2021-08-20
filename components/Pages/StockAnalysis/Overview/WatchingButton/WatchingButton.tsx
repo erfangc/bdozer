@@ -117,3 +117,56 @@ function Mobile({isAuthenticated, watching, watch, unwatch, loginWithRedirect}: 
     );
 }
 
+
+export function MobileWatchButton(props: Props) {
+
+    const {stockAnalysis} = props;
+
+    const {isAuthenticated, loginWithRedirect} = useAuth0();
+    const watchListApi = useWatchLists();
+    const stockAnalysisId = stockAnalysis['_id']
+
+    const [watching, setWatching] = useState(props.watching);
+
+    useEffect(() => {
+        if (isAuthenticated && props.watching === undefined) {
+            watchListApi
+                .isWatching(stockAnalysisId)
+                .then(resp => setWatching(resp.data));
+        }
+    }, [isAuthenticated]);
+
+    function watch() {
+        watchListApi
+            .watch(stockAnalysisId)
+            .then(() => setWatching(true));
+    }
+
+    function unwatch() {
+        watchListApi
+            .unwatch(stockAnalysisId)
+            .then(() => setWatching(false));
+    }
+
+    function onClick(event: React.MouseEvent<HTMLButtonElement>) {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!isAuthenticated) {
+            loginWithRedirect();
+        } else if (watching) {
+            unwatch();
+        } else {
+            watch();
+        }
+    }
+
+    return (
+        <button
+            onClick={onClick}
+            className={`${watching ? "text-navy-100 bg-lime-100" : "text-lime-100 border border-lime-100"} rounded-full p-2`}
+        >
+            <Star/>
+        </button>
+    );
+}
+
