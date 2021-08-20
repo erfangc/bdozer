@@ -43,7 +43,12 @@ export function Desktop() {
                 isAuthenticated ?
                     <div className="space-x-4 pr-12 flex">
                         <NavSearch/>
-                        <button className="text-lime-100" onClick={() => logout({returnTo: window.location.href})}>Log Out</button>
+                        <button
+                            className="text-lime-100"
+                            onClick={() => logout({returnTo: window.location.origin})}
+                        >
+                            Log Out
+                        </button>
                     </div>
                     :
                     <div className="space-x-4 pr-12 flex">
@@ -83,7 +88,13 @@ function Mobile() {
                             <li className="py-4 w-full text-center" onClick={signup}>Sign Up</li>
                             <li className="py-4 w-full text-center" onClick={login}>Login</li>
                         </>
-                        : <li className="py-4 w-full text-center" onClick={() => logout({returnTo: window.location.href})}>Logout</li>
+                        :
+                        <li
+                            className="py-4 w-full text-center"
+                            onClick={() => logout({returnTo: window.location.origin})}
+                        >
+                            Logout
+                        </li>
                 }
             </ul>
 
