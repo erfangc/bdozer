@@ -17,6 +17,7 @@ export function Overview({stockAnalysis}: Props) {
     const {
         ticker,
         name,
+        description,
         model: {
             periods,
         },
@@ -50,11 +51,7 @@ export function Overview({stockAnalysis}: Props) {
                     </div>
                 </div>
             </div>
-            <p>
-                Insert a brief description of the company here. Source the data from a reputable vendor. This
-                paragraph should not exceed three or four sentences. The idea is to introduce the reader
-                to the core business activities of a given stock
-            </p>
+            <p>{description}</p>
             <h3 className="heading3">Return Forecast</h3>
             <Statistic stockAnalysis={stockAnalysis}/>
             <p className="paragraph-regular">
