@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function DetailedBusinessProjection(props: Props) {
-    const {stockAnalysis: {name, derivedStockAnalytics: {businessWaterfall}}} = props;
+    const {stockAnalysis: {name, model, derivedStockAnalytics: {businessWaterfall}}} = props;
 
     const [options, setOptions] = useState<Highcharts.Options>()
     const [period, setPeriod] = useState<number>(0)
@@ -114,7 +114,7 @@ export function DetailedBusinessProjection(props: Props) {
                             <Pill
                                 key={currentPeriod}
                                 active={currPeriod === period}
-                                label={year(currPeriod).toString()}
+                                label={year(model, currPeriod).toString()}
                                 onClick={() => updatePeriod(currPeriod)}
                             />
                         )

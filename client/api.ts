@@ -172,16 +172,22 @@ export interface CompoundedGrowth {
 export interface DerivedStockAnalytics {
     /**
      * 
-     * @type {number}
-     * @memberof DerivedStockAnalytics
-     */
-    zeroGrowthPrice?: number;
-    /**
-     * 
      * @type {{ [key: string]: Waterfall; }}
      * @memberof DerivedStockAnalytics
      */
     businessWaterfall: { [key: string]: Waterfall; };
+    /**
+     * 
+     * @type {number}
+     * @memberof DerivedStockAnalytics
+     */
+    marketCap?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DerivedStockAnalytics
+     */
+    employees?: number;
     /**
      * 
      * @type {Item}
@@ -211,63 +217,25 @@ export interface DerivedStockAnalytics {
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    discountRate: number;
+    discountRate?: number;
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    revenueCAGR: number;
+    revenueCAGR?: number;
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    currentPrice: number;
+    currentPrice?: number;
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
     irr?: number;
-}
-/**
- * 
- * @export
- * @interface EvaluateModelRequest
- */
-export interface EvaluateModelRequest {
-    /**
-     * 
-     * @type {Model}
-     * @memberof EvaluateModelRequest
-     */
-    model: Model;
-}
-/**
- * 
- * @export
- * @interface EvaluateModelResponse
- */
-export interface EvaluateModelResponse {
-    /**
-     * 
-     * @type {Model}
-     * @memberof EvaluateModelResponse
-     */
-    model: Model;
-    /**
-     * 
-     * @type {Array<Cell>}
-     * @memberof EvaluateModelResponse
-     */
-    cells: Array<Cell>;
-    /**
-     * 
-     * @type {DerivedStockAnalytics}
-     * @memberof EvaluateModelResponse
-     */
-    derivedStockAnalytics: DerivedStockAnalytics;
 }
 /**
  * 
@@ -547,6 +515,12 @@ export interface Model {
     name?: string;
     /**
      * 
+     * @type {string}
+     * @memberof Model
+     */
+    mostRecentReportDate?: string;
+    /**
+     * 
      * @type {Array<Item>}
      * @memberof Model
      */
@@ -760,6 +734,42 @@ export interface StockAnalysis2 {
      * @memberof StockAnalysis2
      */
     derivedStockAnalytics?: DerivedStockAnalytics;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis2
+     */
+    industry?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis2
+     */
+    sector?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis2
+     */
+    url?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StockAnalysis2
+     */
+    similar?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis2
+     */
+    ceo?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysis2
+     */
+    country?: string;
     /**
      * 
      * @type {string}
@@ -1302,14 +1312,17 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
             };
         },
         /**
-         *          This API evaluates a model you\'ve assembled and return a stock analysis object                   The passed in Model represents high level relationship between the various financial statement items of underlying a stock          Calling this method evaluates those relationships and turn them into real numbers                  This API does not persist (save) the stock analysis. Please call the stock analysis service API to save the analysis                  This is a stateless calculator         
-         * @param {EvaluateModelRequest} evaluateModelRequest 
+         * 
+         * @param {Model} model 
+         * @param {string} [saveAs] 
+         * @param {boolean} [published] 
+         * @param {Array<string>} [tags] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        evaluateStockAnalysis: async (evaluateModelRequest: EvaluateModelRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'evaluateModelRequest' is not null or undefined
-            assertParamExists('evaluateStockAnalysis', 'evaluateModelRequest', evaluateModelRequest)
+        evaluateStockAnalysis: async (model: Model, saveAs?: string, published?: boolean, tags?: Array<string>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'model' is not null or undefined
+            assertParamExists('evaluateStockAnalysis', 'model', model)
             const localVarPath = `/api/stock-analyzer/stock-analyses/evaluate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1322,6 +1335,18 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            if (saveAs !== undefined) {
+                localVarQueryParameter['saveAs'] = saveAs;
+            }
+
+            if (published !== undefined) {
+                localVarQueryParameter['published'] = published;
+            }
+
+            if (tags) {
+                localVarQueryParameter['tags'] = tags;
+            }
+
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -1329,7 +1354,7 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(evaluateModelRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(model, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1477,77 +1502,6 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
             };
         },
         /**
-         *          This API refreshes an existing stock analysis and re-evaluate         the model attached to it to produce renewed outputs. Call this API          when you are in possession of a previously run stock analysis                  The returned refreshed stock analysis preserve all the metadata, model overrides         of the original analysis                  This API does not persist (save) the new analysis. This API is a stateless calculator         
-         * @summary Refresh a stock analysis by rerunning the model
-         * @param {StockAnalysis2} stockAnalysis2 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        refreshStockAnalysis: async (stockAnalysis2: StockAnalysis2, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'stockAnalysis2' is not null or undefined
-            assertParamExists('refreshStockAnalysis', 'stockAnalysis2', stockAnalysis2)
-            const localVarPath = `/api/stock-analyzer/stock-analyses/refresh`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(stockAnalysis2, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {StockAnalysis2} stockAnalysis2 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        saveStockAnalysis: async (stockAnalysis2: StockAnalysis2, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'stockAnalysis2' is not null or undefined
-            assertParamExists('saveStockAnalysis', 'stockAnalysis2', stockAnalysis2)
-            const localVarPath = `/api/stock-analyzer/stock-analyses`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(stockAnalysis2, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -1601,13 +1555,16 @@ export const StockAnalysisControllerApiFp = function(configuration?: Configurati
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *          This API evaluates a model you\'ve assembled and return a stock analysis object                   The passed in Model represents high level relationship between the various financial statement items of underlying a stock          Calling this method evaluates those relationships and turn them into real numbers                  This API does not persist (save) the stock analysis. Please call the stock analysis service API to save the analysis                  This is a stateless calculator         
-         * @param {EvaluateModelRequest} evaluateModelRequest 
+         * 
+         * @param {Model} model 
+         * @param {string} [saveAs] 
+         * @param {boolean} [published] 
+         * @param {Array<string>} [tags] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async evaluateStockAnalysis(evaluateModelRequest: EvaluateModelRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvaluateModelResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.evaluateStockAnalysis(evaluateModelRequest, options);
+        async evaluateStockAnalysis(model: Model, saveAs?: string, published?: boolean, tags?: Array<string>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.evaluateStockAnalysis(model, saveAs, published, tags, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1649,27 +1606,6 @@ export const StockAnalysisControllerApiFp = function(configuration?: Configurati
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         *          This API refreshes an existing stock analysis and re-evaluate         the model attached to it to produce renewed outputs. Call this API          when you are in possession of a previously run stock analysis                  The returned refreshed stock analysis preserve all the metadata, model overrides         of the original analysis                  This API does not persist (save) the new analysis. This API is a stateless calculator         
-         * @summary Refresh a stock analysis by rerunning the model
-         * @param {StockAnalysis2} stockAnalysis2 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async refreshStockAnalysis(stockAnalysis2: StockAnalysis2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.refreshStockAnalysis(stockAnalysis2, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {StockAnalysis2} stockAnalysis2 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async saveStockAnalysis(stockAnalysis2: StockAnalysis2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.saveStockAnalysis(stockAnalysis2, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -1699,13 +1635,16 @@ export const StockAnalysisControllerApiFactory = function (configuration?: Confi
             return localVarFp.deleteStockAnalysis(id, options).then((request) => request(axios, basePath));
         },
         /**
-         *          This API evaluates a model you\'ve assembled and return a stock analysis object                   The passed in Model represents high level relationship between the various financial statement items of underlying a stock          Calling this method evaluates those relationships and turn them into real numbers                  This API does not persist (save) the stock analysis. Please call the stock analysis service API to save the analysis                  This is a stateless calculator         
-         * @param {EvaluateModelRequest} evaluateModelRequest 
+         * 
+         * @param {Model} model 
+         * @param {string} [saveAs] 
+         * @param {boolean} [published] 
+         * @param {Array<string>} [tags] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        evaluateStockAnalysis(evaluateModelRequest: EvaluateModelRequest, options?: any): AxiosPromise<EvaluateModelResponse> {
-            return localVarFp.evaluateStockAnalysis(evaluateModelRequest, options).then((request) => request(axios, basePath));
+        evaluateStockAnalysis(model: Model, saveAs?: string, published?: boolean, tags?: Array<string>, options?: any): AxiosPromise<StockAnalysis2> {
+            return localVarFp.evaluateStockAnalysis(model, saveAs, published, tags, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1743,25 +1682,6 @@ export const StockAnalysisControllerApiFactory = function (configuration?: Confi
             return localVarFp.publish(id, options).then((request) => request(axios, basePath));
         },
         /**
-         *          This API refreshes an existing stock analysis and re-evaluate         the model attached to it to produce renewed outputs. Call this API          when you are in possession of a previously run stock analysis                  The returned refreshed stock analysis preserve all the metadata, model overrides         of the original analysis                  This API does not persist (save) the new analysis. This API is a stateless calculator         
-         * @summary Refresh a stock analysis by rerunning the model
-         * @param {StockAnalysis2} stockAnalysis2 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        refreshStockAnalysis(stockAnalysis2: StockAnalysis2, options?: any): AxiosPromise<StockAnalysis2> {
-            return localVarFp.refreshStockAnalysis(stockAnalysis2, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {StockAnalysis2} stockAnalysis2 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        saveStockAnalysis(stockAnalysis2: StockAnalysis2, options?: any): AxiosPromise<void> {
-            return localVarFp.saveStockAnalysis(stockAnalysis2, options).then((request) => request(axios, basePath));
-        },
-        /**
          * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -1792,14 +1712,17 @@ export class StockAnalysisControllerApi extends BaseAPI {
     }
 
     /**
-     *          This API evaluates a model you\'ve assembled and return a stock analysis object                   The passed in Model represents high level relationship between the various financial statement items of underlying a stock          Calling this method evaluates those relationships and turn them into real numbers                  This API does not persist (save) the stock analysis. Please call the stock analysis service API to save the analysis                  This is a stateless calculator         
-     * @param {EvaluateModelRequest} evaluateModelRequest 
+     * 
+     * @param {Model} model 
+     * @param {string} [saveAs] 
+     * @param {boolean} [published] 
+     * @param {Array<string>} [tags] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StockAnalysisControllerApi
      */
-    public evaluateStockAnalysis(evaluateModelRequest: EvaluateModelRequest, options?: any) {
-        return StockAnalysisControllerApiFp(this.configuration).evaluateStockAnalysis(evaluateModelRequest, options).then((request) => request(this.axios, this.basePath));
+    public evaluateStockAnalysis(model: Model, saveAs?: string, published?: boolean, tags?: Array<string>, options?: any) {
+        return StockAnalysisControllerApiFp(this.configuration).evaluateStockAnalysis(model, saveAs, published, tags, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1841,29 +1764,6 @@ export class StockAnalysisControllerApi extends BaseAPI {
      */
     public publish(id: string, options?: any) {
         return StockAnalysisControllerApiFp(this.configuration).publish(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     *          This API refreshes an existing stock analysis and re-evaluate         the model attached to it to produce renewed outputs. Call this API          when you are in possession of a previously run stock analysis                  The returned refreshed stock analysis preserve all the metadata, model overrides         of the original analysis                  This API does not persist (save) the new analysis. This API is a stateless calculator         
-     * @summary Refresh a stock analysis by rerunning the model
-     * @param {StockAnalysis2} stockAnalysis2 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StockAnalysisControllerApi
-     */
-    public refreshStockAnalysis(stockAnalysis2: StockAnalysis2, options?: any) {
-        return StockAnalysisControllerApiFp(this.configuration).refreshStockAnalysis(stockAnalysis2, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {StockAnalysis2} stockAnalysis2 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StockAnalysisControllerApi
-     */
-    public saveStockAnalysis(stockAnalysis2: StockAnalysis2, options?: any) {
-        return StockAnalysisControllerApiFp(this.configuration).saveStockAnalysis(stockAnalysis2, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -17,6 +17,7 @@ export function BusinessSummary({stockAnalysis}: Props) {
             businessWaterfall,
             revenueCAGR,
         },
+        model,
         model: {
             periods,
             epsConceptName,
@@ -59,7 +60,7 @@ export function BusinessSummary({stockAnalysis}: Props) {
                         for the next {periods} years
                     </li>
                     <li>
-                        Given this, we project {name}'s to be worth {readableMoney(finalPrice)} per share in {year(periods)}, which represents <span
+                        Given this, we project {name}'s to be worth {readableMoney(finalPrice)} per share in {year(model, periods)}, which represents <span
                         className={`${upside1 > 0 ? 'text-lime-100' : 'text-red-100'}`}>
                                 {readablePercent(upside1)}
                             </span> {upside1 > 0 ? 'upside' : 'downside'} from current price

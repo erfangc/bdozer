@@ -14,6 +14,7 @@ export function FutureGrowthPerShare(props: Props) {
 
     const {
         stockAnalysis: {
+            model,
             model: {
                 periods,
                 epsConceptName,
@@ -32,7 +33,7 @@ export function FutureGrowthPerShare(props: Props) {
         .map(cell => {
             const {value, period} = cell
             return {
-                x: year(period),
+                x: year(model, period),
                 y: value,
                 color: value < 0 ? theme.colors.red["100"] : theme.colors.lime["100"],
             }
@@ -90,7 +91,7 @@ export function FutureGrowthPerShare(props: Props) {
             <HighchartsReact highcharts={highcharts} options={options}/>
             <h5 className="heading5 pb-2 border-b">Our Calculations</h5>
             <p className="paragraph-regular">
-                To compute our price forecast in {year(periods)}, we calculate future earnings per share (EPS).
+                To compute our price forecast in {year(model, periods)}, we calculate future earnings per share (EPS).
                 Let's take projected net income from above ({readableNumber(finalNetIncome)})
                 and for each future period, divide net income by shares outstanding
             </p>

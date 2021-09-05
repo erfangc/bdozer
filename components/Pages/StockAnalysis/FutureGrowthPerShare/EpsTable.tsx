@@ -20,6 +20,7 @@ function Desktop(props: Props) {
 
     const {
         stockAnalysis: {
+            model,
             model: {
                 epsConceptName,
                 netIncomeConceptName,
@@ -49,7 +50,7 @@ function Desktop(props: Props) {
                     const eps = cells.find(cell => cell.period == period && cell.item?.name === epsConceptName)?.value
                     return (
                         <tr key={period}>
-                            <td className="text-left px-2 py-2">{year(period)}</td>
+                            <td className="text-left px-2 py-2">{year(model, period)}</td>
                             <td className="text-left px-2 py-2">{readableMoney(netIncomeLoss)}</td>
                             <td className="text-left px-2">÷</td>
                             <td className="text-left px-2">{readableNumber(sharesOutstanding)}</td>
@@ -68,6 +69,7 @@ function Mobile(props: Props) {
 
     const {
         stockAnalysis: {
+            model,
             model: {
                 epsConceptName,
                 netIncomeConceptName,
@@ -97,7 +99,7 @@ function Mobile(props: Props) {
                     const eps = cells.find(cell => cell.period == period && cell.item?.name === epsConceptName)?.value
                     return (
                         <tr key={period}>
-                            <td className="text-left px-2 py-2">{year(period)}</td>
+                            <td className="text-left px-2 py-2">{year(model, period)}</td>
                             <td className="text-left px-2 py-2">{readableMoney(netIncomeLoss)}</td>
                             <td className="text-left px-2">÷</td>
                             <td className="text-left px-2">{readableNumber(sharesOutstanding)}</td>

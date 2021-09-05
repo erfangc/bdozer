@@ -12,6 +12,7 @@ interface Props {
 export function PriceForecast({stockAnalysis}: Props) {
     const {
         name,
+        model,
         model: {
             periods,
             epsConceptName,
@@ -83,7 +84,7 @@ export function PriceForecast({stockAnalysis}: Props) {
                             <th/>
                             <th className="text-left pb-4 px-2">P/E</th>
                             <th/>
-                            <th className="text-left pb-4 px-2">{year(periods)} Price Estimate</th>
+                            <th className="text-left pb-4 px-2">{year(model, periods)} Price Estimate</th>
                         </tr>
                         </thead>
                         <tbody className="font-mono numbers-regular">
