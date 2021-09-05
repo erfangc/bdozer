@@ -1,4 +1,8 @@
-import {PublishedStockAnalysisControllerApi, WatchListsControllerApi,} from "./client";
+import {
+    PublishedStockAnalysisControllerApi,
+    StockAnalysisRequestControllerApi,
+    WatchListsControllerApi,
+} from "./client";
 import {useAuth0} from "@auth0/auth0-react";
 import axios from "axios";
 import {useEffect} from "react";
@@ -18,6 +22,7 @@ axiosInstance.interceptors.response.use(null, (error) => {
 });
 
 function useAxios() {
+
     const {getAccessTokenSilently} = useAuth0();
 
     useEffect(() => {
@@ -42,12 +47,17 @@ function useAxios() {
             });
 
     }, []);
+
     return axiosInstance;
 }
 
 export function useWatchLists() {
     const axiosInstance = useAxios();
     return new WatchListsControllerApi(null, basePath, axiosInstance);
+}
+
+export function useStockAnalysisRequest() {
+    return new StockAnalysisRequestControllerApi(null, basePath);
 }
 
 export function usePublishedStockAnalysis() {

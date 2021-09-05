@@ -1874,6 +1874,120 @@ export class StockAnalysisCronJobsControllerApi extends BaseAPI {
 
 
 /**
+ * StockAnalysisRequestControllerApi - axios parameter creator
+ * @export
+ */
+export const StockAnalysisRequestControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveStockAnalysisRequest: async (ticker: string, email: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ticker' is not null or undefined
+            assertParamExists('saveStockAnalysisRequest', 'ticker', ticker)
+            // verify required parameter 'email' is not null or undefined
+            assertParamExists('saveStockAnalysisRequest', 'email', email)
+            const localVarPath = `/public/stock-analysis-request`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (ticker !== undefined) {
+                localVarQueryParameter['ticker'] = ticker;
+            }
+
+            if (email !== undefined) {
+                localVarQueryParameter['email'] = email;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * StockAnalysisRequestControllerApi - functional programming interface
+ * @export
+ */
+export const StockAnalysisRequestControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = StockAnalysisRequestControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveStockAnalysisRequest(ticker: string, email: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveStockAnalysisRequest(ticker, email, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * StockAnalysisRequestControllerApi - factory interface
+ * @export
+ */
+export const StockAnalysisRequestControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = StockAnalysisRequestControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveStockAnalysisRequest(ticker: string, email: string, options?: any): AxiosPromise<void> {
+            return localVarFp.saveStockAnalysisRequest(ticker, email, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * StockAnalysisRequestControllerApi - object-oriented interface
+ * @export
+ * @class StockAnalysisRequestControllerApi
+ * @extends {BaseAPI}
+ */
+export class StockAnalysisRequestControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} ticker 
+     * @param {string} email 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StockAnalysisRequestControllerApi
+     */
+    public saveStockAnalysisRequest(ticker: string, email: string, options?: any) {
+        return StockAnalysisRequestControllerApiFp(this.configuration).saveStockAnalysisRequest(ticker, email, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * WatchListsControllerApi - axios parameter creator
  * @export
  */

@@ -4,18 +4,14 @@ import {StockAnalysisProjection} from "../client";
 import React from "react";
 import {Search} from "./Common/Search";
 
-interface StockSearchProps {
-    autoFocus?: boolean
-}
-
-export function StockSearch({autoFocus}: StockSearchProps) {
+export function StockSearch() {
 
     const stockAnalysisApi = usePublishedStockAnalysis();
     const router = useRouter();
 
     function renderRow(stockAnalysis: StockAnalysisProjection) {
         return (
-            <span className="py-4 px-10 items-center cursor-pointer flex justify-between hover:bg-lime-50">
+            <span className="py-4 px-4 items-center cursor-pointer flex justify-between hover:bg-lime-50">
                 <span className="label-medium">{stockAnalysis.name}</span>
                 <span className="px-2 py-1 bg-chili-100 rounded text-lightGreen-25">
                     {stockAnalysis.ticker}
@@ -47,6 +43,10 @@ export function StockSearch({autoFocus}: StockSearchProps) {
     }
 
     return (
-        <Search search={search} renderEntity={renderRow} onSelect={navigateToAnalysis} autoFocus={autoFocus}/>
+        <Search
+            search={search}
+            renderEntity={renderRow}
+            onSelect={navigateToAnalysis}
+        />
     );
 }
