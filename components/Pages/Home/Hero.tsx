@@ -15,7 +15,7 @@ export function Hero() {
                     className="heading5">actually</span> worth in
                     under 3 minutes with step-by-step explanations
                 </h4>
-                <StockSearch/>
+                <StockSearch autoFocus/>
             </div>
             <img className="hidden lg:block" src="./hero-image.svg" alt="..."/>
         </section>

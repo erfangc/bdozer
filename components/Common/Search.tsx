@@ -4,9 +4,10 @@ interface Props<T> {
     search: (term: string) => Promise<T[]>
     renderEntity: (entity: T) => ReactNode
     onSelect: (entity: T) => void
+    autoFocus?: boolean
 }
 
-export function Search<T = any>({search, renderEntity, onSelect}: Props<T>) {
+export function Search<T = any>({search, renderEntity, onSelect, autoFocus}: Props<T>) {
 
     const [focus, setFocus] = useState(false);
     const [term, setTerm] = useState('')
@@ -41,7 +42,6 @@ export function Search<T = any>({search, renderEntity, onSelect}: Props<T>) {
             </a>
         );
     });
-
     return (
         <div
             className={`h-16 transition ease-linear border-chili-100 rounded flex items-center bg-white w-full ${focus ? 'ring-2 ring-lime-100' : ''} relative`}>
@@ -53,6 +53,7 @@ export function Search<T = any>({search, renderEntity, onSelect}: Props<T>) {
                 onFocus={focusOn}
                 onBlur={focusOff}
                 onChange={onChange}
+                autoFocus={autoFocus}
             />
             <button className="hidden lg:inline bg-lime-100 h-10 px-6 mr-4 rounded">Search</button>
             <button className="lg:hidden h-12 w-12 mr-4 rounded bg-lime-100 flex items-center justify-center">
