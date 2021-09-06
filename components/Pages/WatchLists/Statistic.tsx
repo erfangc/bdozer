@@ -33,7 +33,13 @@ function Desktop({stockAnalysis}: Props) {
         <div className="hidden lg:flex justify-between items-center">
             <div className="flex flex-col text-lime-100">
                 <span className="label-small">Forecasted {periods} Yr Return</span>
-                <h1 className="numbers-large">{readablePercent(upside1)}</h1>
+                {
+                    upside1 > 0
+                    ?
+                        <h1 className="numbers-large">{readablePercent(upside1)}</h1>
+                    :
+                        <h1 className="numbers-large text-red-100">{readablePercent(upside1)}</h1>
+                }
             </div>
             <div className="w-px border-l h-16"/>
             <div className="flex flex-col">

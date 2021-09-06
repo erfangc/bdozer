@@ -16,6 +16,7 @@ export function StockAnalysisCard({stockAnalysis}: Props) {
 
     const stockAnalysisId = stockAnalysis['_id'];
 
+    const upside = (finalPrice ?? 0) / currentPrice - 1;
     return (
         <Link href={`/stock-analyses/${stockAnalysisId}`}>
             <div className="bg-navy-100 rounded-lg px-5 py-4 space-y-2 w-72 cursor-pointer">
@@ -40,9 +41,17 @@ export function StockAnalysisCard({stockAnalysis}: Props) {
                     </div>
                     <hr className="border-navy-75"/>
                 </div>
-                <p className="text-lime-100">
-                    {readablePercent((finalPrice ?? 0) / currentPrice - 1)} Upside
-                </p>
+                {
+                    upside > 0
+                    ?
+                        <p className="text-lime-100">
+                            {readablePercent(upside)} Upside
+                        </p>
+                    :
+                        <p className="text-red-100">
+                            {readablePercent(upside)} Downside
+                        </p>
+                }
             </div>
         </Link>
     );

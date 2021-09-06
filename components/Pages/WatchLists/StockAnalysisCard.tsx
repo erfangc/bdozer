@@ -9,7 +9,7 @@ interface Props {
     watching?: boolean
 }
 
-export function StockAnalysisCard({stockAnalysis, watching}: Props) {
+export function StockAnalysisCard({stockAnalysis}: Props) {
     const {
         ticker,
         name,
