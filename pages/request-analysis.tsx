@@ -36,8 +36,9 @@ export default function RequestAnalysis() {
                     <label>
                         <div className="label-small">Ticker</div>
                         <input
-                            className="px-4 py-2 rounded w-48"
+                            className="px-4 py-2 rounded w-48 focus:outline-none focus:ring"
                             type="text"
+                            autoFocus
                             value={ticker}
                             onChange={handleTickerChange}
                             placeholder="ex: IBM"

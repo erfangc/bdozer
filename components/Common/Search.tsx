@@ -24,7 +24,7 @@ export function Search<T = any>({search, renderEntity, onSelect, autoFocus}: Pro
     function focusOff() {
         setFocus(false);
         setTerm('');
-        setTimeout(() => setEntities([]), 100);
+        setTimeout(() => setEntities([]), 500);
     }
 
     function focusOn() {
@@ -33,16 +33,16 @@ export function Search<T = any>({search, renderEntity, onSelect, autoFocus}: Pro
 
     const rows = entities.map(entity => {
 
-        function handleClick(event: React.MouseEvent<HTMLAnchorElement>) {
+        function handleClick(event: React.MouseEvent<HTMLDivElement>) {
             event.preventDefault();
             event.stopPropagation();
             onSelect(entity);
         }
 
         return (
-            <a className="block w-full" onClick={handleClick} href='#'>
+            <div className="block w-full" onClick={handleClick}>
                 {renderEntity(entity)}
-            </a>
+            </div>
         );
     });
 
