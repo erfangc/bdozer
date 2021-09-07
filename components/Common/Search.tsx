@@ -11,7 +11,7 @@ interface Props<T> {
 
 export function Search<T = any>({search, renderEntity, onSelect, autoFocus}: Props<T>) {
 
-    const [focus, setFocus] = useState(false);
+    const [focus, setFocus] = useState(autoFocus);
     const [term, setTerm] = useState('')
     const [entities, setEntities] = useState<T[]>([])
 
@@ -53,12 +53,12 @@ export function Search<T = any>({search, renderEntity, onSelect, autoFocus}: Pro
             <input
                 type="text"
                 className="pl-4 h-full border-0 rounded flex-grow focus:outline-none"
-                placeholder="Search a stock to analyse for free ..."
+                placeholder="Search a stock to analyze for free ..."
+                autoFocus={autoFocus}
                 value={term}
                 onFocus={focusOn}
                 onBlur={focusOff}
                 onChange={onChange}
-                autoFocus={autoFocus}
             />
             <button className="hidden lg:inline bg-lime-100 h-10 px-6 mr-4 rounded">Search</button>
             <button className="lg:hidden h-12 w-12 mr-4 rounded bg-lime-100 flex items-center justify-center">

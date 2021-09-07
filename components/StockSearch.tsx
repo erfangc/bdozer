@@ -4,7 +4,7 @@ import {StockAnalysisProjection} from "../client";
 import React from "react";
 import {Search} from "./Common/Search";
 
-export function StockSearch() {
+export function StockSearch({autoFocus}: {autoFocus?: boolean}) {
 
     const stockAnalysisApi = usePublishedStockAnalysis();
     const router = useRouter();
@@ -44,6 +44,7 @@ export function StockSearch() {
 
     return (
         <Search
+            autoFocus={autoFocus}
             search={search}
             renderEntity={renderRow}
             onSelect={navigateToAnalysis}
