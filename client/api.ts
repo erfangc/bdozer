@@ -14,7 +14,7 @@
 
 
 import { Configuration } from './configuration';
-import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
+import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
@@ -32,31 +32,31 @@ export interface Address {
      * @type {number}
      * @memberof Address
      */
-    sheet: number;
+    'sheet'?: number;
     /**
      * 
      * @type {string}
      * @memberof Address
      */
-    sheetName: string;
+    'sheetName'?: string;
     /**
      * 
      * @type {number}
      * @memberof Address
      */
-    row: number;
+    'row'?: number;
     /**
      * 
      * @type {number}
      * @memberof Address
      */
-    column: number;
+    'column'?: number;
     /**
      * 
      * @type {string}
      * @memberof Address
      */
-    columnLetter: string;
+    'columnLetter'?: string;
 }
 /**
  * 
@@ -69,49 +69,49 @@ export interface Cell {
      * @type {number}
      * @memberof Cell
      */
-    period: number;
+    'period'?: number;
     /**
      * 
      * @type {string}
      * @memberof Cell
      */
-    name: string;
+    'name'?: string;
     /**
      * 
      * @type {Item}
      * @memberof Cell
      */
-    item: Item;
+    'item'?: Item;
     /**
      * 
      * @type {number}
      * @memberof Cell
      */
-    value?: number;
+    'value'?: number;
     /**
      * 
      * @type {string}
      * @memberof Cell
      */
-    formula?: string;
+    'formula'?: string;
     /**
      * 
      * @type {string}
      * @memberof Cell
      */
-    excelFormula?: string;
+    'excelFormula'?: string;
     /**
      * 
      * @type {Address}
      * @memberof Cell
      */
-    address?: Address;
+    'address'?: Address;
     /**
      * 
      * @type {Array<string>}
      * @memberof Cell
      */
-    dependentCellNames: Array<string>;
+    'dependentCellNames'?: Array<string>;
 }
 /**
  * 
@@ -124,13 +124,13 @@ export interface Commentary {
      * @type {string}
      * @memberof Commentary
      */
-    commentary?: string;
+    'commentary'?: string;
     /**
      * 
      * @type {string}
      * @memberof Commentary
      */
-    generatorClass?: string;
+    'generatorClass'?: string;
 }
 /**
  * 
@@ -143,13 +143,13 @@ export interface Component {
      * @type {number}
      * @memberof Component
      */
-    weight: number;
+    'weight'?: number;
     /**
      * 
      * @type {string}
      * @memberof Component
      */
-    itemName: string;
+    'itemName'?: string;
 }
 /**
  * 
@@ -162,7 +162,7 @@ export interface CompoundedGrowth {
      * @type {number}
      * @memberof CompoundedGrowth
      */
-    growthRate: number;
+    'growthRate'?: number;
 }
 /**
  * 
@@ -175,67 +175,67 @@ export interface DerivedStockAnalytics {
      * @type {{ [key: string]: Waterfall; }}
      * @memberof DerivedStockAnalytics
      */
-    businessWaterfall: { [key: string]: Waterfall; };
+    'businessWaterfall'?: { [key: string]: Waterfall; };
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    marketCap?: number;
+    'marketCap'?: number;
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    employees?: number;
+    'employees'?: number;
     /**
      * 
      * @type {Item}
      * @memberof DerivedStockAnalytics
      */
-    shareOutstanding: Item;
+    'shareOutstanding'?: Item;
     /**
      * 
      * @type {Item}
      * @memberof DerivedStockAnalytics
      */
-    profitPerShare: Item;
+    'profitPerShare'?: Item;
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    targetPrice: number;
+    'targetPrice'?: number;
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    finalPrice?: number;
+    'finalPrice'?: number;
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    discountRate?: number;
+    'discountRate'?: number;
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    revenueCAGR?: number;
+    'revenueCAGR'?: number;
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    currentPrice?: number;
+    'currentPrice'?: number;
     /**
      * 
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
-    irr?: number;
+    'irr'?: number;
 }
 /**
  * 
@@ -248,7 +248,7 @@ export interface FindStockAnalysisResponse {
      * @type {Array<StockAnalysisProjection>}
      * @memberof FindStockAnalysisResponse
      */
-    stockAnalyses: Array<StockAnalysisProjection>;
+    'stockAnalyses'?: Array<StockAnalysisProjection>;
 }
 /**
  * 
@@ -261,7 +261,7 @@ export interface FixedCost {
      * @type {number}
      * @memberof FixedCost
      */
-    cost: number;
+    'cost'?: number;
 }
 /**
  * 
@@ -274,13 +274,13 @@ export interface GetWatchedStockAnalysesResponse {
      * @type {WatchList}
      * @memberof GetWatchedStockAnalysesResponse
      */
-    watchList: WatchList;
+    'watchList'?: WatchList;
     /**
      * 
      * @type {Array<StockAnalysis2>}
      * @memberof GetWatchedStockAnalysesResponse
      */
-    stockAnalyses: Array<StockAnalysis2>;
+    'stockAnalyses'?: Array<StockAnalysis2>;
 }
 /**
  * 
@@ -293,61 +293,61 @@ export interface HistoricalValue {
      * @type {string}
      * @memberof HistoricalValue
      */
-    factId?: string;
+    'factId'?: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof HistoricalValue
      */
-    factIds: Array<string>;
+    'factIds'?: Array<string>;
     /**
      * 
      * @type {string}
      * @memberof HistoricalValue
      */
-    conceptName?: string;
+    'conceptName'?: string;
     /**
      * 
      * @type {string}
      * @memberof HistoricalValue
      */
-    documentFiscalPeriodFocus?: string;
+    'documentFiscalPeriodFocus'?: string;
     /**
      * 
      * @type {number}
      * @memberof HistoricalValue
      */
-    documentFiscalYearFocus?: number;
+    'documentFiscalYearFocus'?: number;
     /**
      * 
      * @type {string}
      * @memberof HistoricalValue
      */
-    documentPeriodEndDate?: string;
+    'documentPeriodEndDate'?: string;
     /**
      * 
      * @type {number}
      * @memberof HistoricalValue
      */
-    value?: number;
+    'value'?: number;
     /**
      * 
      * @type {string}
      * @memberof HistoricalValue
      */
-    startDate?: string;
+    'startDate'?: string;
     /**
      * 
      * @type {string}
      * @memberof HistoricalValue
      */
-    endDate?: string;
+    'endDate'?: string;
     /**
      * 
      * @type {string}
      * @memberof HistoricalValue
      */
-    instant?: string;
+    'instant'?: string;
 }
 /**
  * 
@@ -360,79 +360,79 @@ export interface Item {
      * @type {string}
      * @memberof Item
      */
-    name: string;
+    'name'?: string;
     /**
      * 
      * @type {string}
      * @memberof Item
      */
-    description?: string;
+    'description'?: string;
     /**
      * 
      * @type {string}
      * @memberof Item
      */
-    type: ItemTypeEnum;
+    'type'?: ItemTypeEnum;
     /**
      * 
      * @type {HistoricalValue}
      * @memberof Item
      */
-    historicalValue?: HistoricalValue;
+    'historicalValue'?: HistoricalValue;
     /**
      * 
      * @type {string}
      * @memberof Item
      */
-    formula: string;
+    'formula'?: string;
     /**
      * 
      * @type {SumOfOtherItems}
      * @memberof Item
      */
-    sumOfOtherItems?: SumOfOtherItems;
+    'sumOfOtherItems'?: SumOfOtherItems;
     /**
      * 
      * @type {ProductOfOtherItems}
      * @memberof Item
      */
-    productOfOtherItems?: ProductOfOtherItems;
+    'productOfOtherItems'?: ProductOfOtherItems;
     /**
      * 
      * @type {ManualProjections}
      * @memberof Item
      */
-    manualProjections?: ManualProjections;
+    'manualProjections'?: ManualProjections;
     /**
      * 
      * @type {PercentOfRevenue}
      * @memberof Item
      */
-    percentOfRevenue?: PercentOfRevenue;
+    'percentOfRevenue'?: PercentOfRevenue;
     /**
      * 
      * @type {PercentOfAnotherItem}
      * @memberof Item
      */
-    percentOfAnotherItem?: PercentOfAnotherItem;
+    'percentOfAnotherItem'?: PercentOfAnotherItem;
     /**
      * 
      * @type {CompoundedGrowth}
      * @memberof Item
      */
-    compoundedGrowth?: CompoundedGrowth;
+    'compoundedGrowth'?: CompoundedGrowth;
     /**
      * 
      * @type {FixedCost}
      * @memberof Item
      */
-    fixedCost?: FixedCost;
+    'fixedCost'?: FixedCost;
     /**
      * 
      * @type {Commentary}
      * @memberof Item
      */
-    commentaries?: Commentary;
+    'commentaries'?: Commentary;
 }
 
 /**
@@ -454,6 +454,97 @@ export enum ItemTypeEnum {
 /**
  * 
  * @export
+ * @interface LatestMetrics
+ */
+export interface LatestMetrics {
+    /**
+     * 
+     * @type {number}
+     * @memberof LatestMetrics
+     */
+    'revenue'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LatestMetrics
+     */
+    'ebitda'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LatestMetrics
+     */
+    'ebit'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LatestMetrics
+     */
+    'netIncome'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LatestMetrics
+     */
+    'grossMargin'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LatestMetrics
+     */
+    'ebitdaMargin'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LatestMetrics
+     */
+    'ebitMargin'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LatestMetrics
+     */
+    'daMargin'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LatestMetrics
+     */
+    'debtToEquity'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LatestMetrics
+     */
+    'debtToAsset'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LatestMetrics
+     */
+    'totalAsset'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LatestMetrics
+     */
+    'totalLiability'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LatestMetrics
+     */
+    'longTermDebt'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof LatestMetrics
+     */
+    'longTermDebtToAsset'?: number;
+}
+/**
+ * 
+ * @export
  * @interface ManualProjection
  */
 export interface ManualProjection {
@@ -462,13 +553,13 @@ export interface ManualProjection {
      * @type {number}
      * @memberof ManualProjection
      */
-    fiscalYear: number;
+    'fiscalYear'?: number;
     /**
      * 
      * @type {number}
      * @memberof ManualProjection
      */
-    value: number;
+    'value'?: number;
 }
 /**
  * 
@@ -481,7 +572,7 @@ export interface ManualProjections {
      * @type {Array<ManualProjection>}
      * @memberof ManualProjections
      */
-    manualProjections: Array<ManualProjection>;
+    'manualProjections'?: Array<ManualProjection>;
 }
 /**
  * 
@@ -494,133 +585,272 @@ export interface Model {
      * @type {string}
      * @memberof Model
      */
-    ticker?: string;
+    'ticker'?: string;
     /**
      * 
      * @type {string}
      * @memberof Model
      */
-    cik?: string;
+    'cik'?: string;
     /**
      * 
      * @type {string}
      * @memberof Model
      */
-    adsh?: string;
+    'adsh'?: string;
     /**
      * 
      * @type {string}
      * @memberof Model
      */
-    name?: string;
+    'name'?: string;
     /**
      * 
      * @type {string}
      * @memberof Model
      */
-    mostRecentReportDate?: string;
+    'mostRecentReportDate'?: string;
     /**
      * 
      * @type {Array<Item>}
      * @memberof Model
      */
-    itemOverrides: Array<Item>;
+    'itemOverrides'?: Array<Item>;
     /**
      * 
      * @type {Array<string>}
      * @memberof Model
      */
-    suppressedItems: Array<string>;
+    'suppressedItems'?: Array<string>;
     /**
      * 
      * @type {string}
      * @memberof Model
      */
-    totalRevenueConceptName?: string;
+    'totalRevenueConceptName'?: string;
     /**
      * 
      * @type {string}
      * @memberof Model
      */
-    epsConceptName?: string;
+    'epsConceptName'?: string;
     /**
      * 
      * @type {string}
      * @memberof Model
      */
-    netIncomeConceptName?: string;
+    'netIncomeConceptName'?: string;
     /**
      * 
      * @type {string}
      * @memberof Model
      */
-    sharesOutstandingConceptName?: string;
+    'sharesOutstandingConceptName'?: string;
     /**
      * 
      * @type {Array<Item>}
      * @memberof Model
      */
-    incomeStatementItems: Array<Item>;
+    'incomeStatementItems'?: Array<Item>;
     /**
      * 
      * @type {Array<Item>}
      * @memberof Model
      */
-    balanceSheetItems: Array<Item>;
+    'balanceSheetItems'?: Array<Item>;
     /**
      * 
      * @type {Array<Item>}
      * @memberof Model
      */
-    cashFlowStatementItems: Array<Item>;
+    'cashFlowStatementItems'?: Array<Item>;
     /**
      * 
      * @type {Array<Item>}
      * @memberof Model
      */
-    otherItems: Array<Item>;
+    'otherItems'?: Array<Item>;
     /**
      * 
      * @type {number}
      * @memberof Model
      */
-    beta: number;
+    'beta'?: number;
     /**
      * 
      * @type {number}
      * @memberof Model
      */
-    riskFreeRate: number;
+    'riskFreeRate'?: number;
     /**
      * 
      * @type {number}
      * @memberof Model
      */
-    equityRiskPremium: number;
+    'equityRiskPremium'?: number;
     /**
      * 
      * @type {number}
      * @memberof Model
      */
-    terminalGrowthRate: number;
+    'terminalGrowthRate'?: number;
     /**
      * 
      * @type {number}
      * @memberof Model
      */
-    periods: number;
+    'periods'?: number;
     /**
      * 
      * @type {number}
      * @memberof Model
      */
-    excelColumnOffset: number;
+    'excelColumnOffset'?: number;
     /**
      * 
      * @type {number}
      * @memberof Model
      */
-    excelRowOffset: number;
+    'excelRowOffset'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface PerShareMetrics
+ */
+export interface PerShareMetrics {
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'epsBasicNet'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'epsBasicContOper'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'epsBasicDiscontOper'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'epsBasicExtra'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'priceToEpsBasicNet'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'priceToEpsBasicContOper'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'priceToEpsBasicDiscontOper'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'priceToEpsBasicExtra'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'epsDilutedNet'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'epsDilutedContOper'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'epsDilutedDiscontOper'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'epsDilutedExtra'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'priceToEpsDilutedNet'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'priceToEpsDilutedContOper'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'priceToEpsDilutedDiscontOper'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'priceToEpsDilutedExtra'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'freeCashFlowPerShare'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'priceToFreeCashFlowPerShare'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'operCashFlowPerShare'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'priceToOperCashFlowPerShare'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'bookValPerShare'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PerShareMetrics
+     */
+    'priceToBookValPerShare'?: number;
 }
 /**
  * 
@@ -633,13 +863,13 @@ export interface PercentOfAnotherItem {
      * @type {string}
      * @memberof PercentOfAnotherItem
      */
-    itemName: string;
+    'itemName'?: string;
     /**
      * 
      * @type {number}
      * @memberof PercentOfAnotherItem
      */
-    percent: number;
+    'percent'?: number;
 }
 /**
  * 
@@ -652,7 +882,7 @@ export interface PercentOfRevenue {
      * @type {number}
      * @memberof PercentOfRevenue
      */
-    percentOfRevenue: number;
+    'percentOfRevenue'?: number;
 }
 /**
  * 
@@ -665,7 +895,7 @@ export interface ProductComponent {
      * @type {string}
      * @memberof ProductComponent
      */
-    itemName: string;
+    'itemName'?: string;
 }
 /**
  * 
@@ -678,7 +908,7 @@ export interface ProductOfOtherItems {
      * @type {Array<ProductComponent>}
      * @memberof ProductOfOtherItems
      */
-    components: Array<ProductComponent>;
+    'components'?: Array<ProductComponent>;
 }
 /**
  * 
@@ -691,109 +921,115 @@ export interface StockAnalysis2 {
      * @type {string}
      * @memberof StockAnalysis2
      */
-    get_id: string;
+    'get_id'?: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysis2
      */
-    name?: string;
+    'name'?: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysis2
      */
-    description?: string;
+    'description'?: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysis2
      */
-    cik?: string;
+    'cik'?: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysis2
      */
-    ticker?: string;
+    'ticker'?: string;
     /**
      * 
      * @type {Model}
      * @memberof StockAnalysis2
      */
-    model: Model;
+    'model'?: Model;
     /**
      * 
      * @type {Array<Cell>}
      * @memberof StockAnalysis2
      */
-    cells: Array<Cell>;
+    'cells'?: Array<Cell>;
     /**
      * 
      * @type {DerivedStockAnalytics}
      * @memberof StockAnalysis2
      */
-    derivedStockAnalytics?: DerivedStockAnalytics;
+    'derivedStockAnalytics'?: DerivedStockAnalytics;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysis2
      */
-    industry?: string;
+    'industry'?: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysis2
      */
-    sector?: string;
+    'sector'?: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysis2
      */
-    url?: string;
+    'url'?: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof StockAnalysis2
      */
-    similar?: Array<string>;
+    'similar'?: Array<string>;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysis2
      */
-    ceo?: string;
+    'ceo'?: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysis2
      */
-    country?: string;
+    'country'?: string;
+    /**
+     * 
+     * @type {ZacksDerivedAnalytics}
+     * @memberof StockAnalysis2
+     */
+    'zacksDerivedAnalytics'?: ZacksDerivedAnalytics;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysis2
      */
-    userId?: string;
+    'userId'?: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof StockAnalysis2
      */
-    tags: Array<string>;
+    'tags'?: Array<string>;
     /**
      * 
      * @type {boolean}
      * @memberof StockAnalysis2
      */
-    published: boolean;
+    'published'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysis2
      */
-    lastUpdated: string;
+    'lastUpdated'?: string;
 }
 /**
  * 
@@ -806,67 +1042,79 @@ export interface StockAnalysisProjection {
      * @type {string}
      * @memberof StockAnalysisProjection
      */
-    get_id: string;
+    'get_id'?: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysisProjection
      */
-    name?: string;
+    'userId'?: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysisProjection
      */
-    description?: string;
+    'name'?: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysisProjection
      */
-    cik?: string;
+    'description'?: string;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysisProjection
      */
-    ticker?: string;
+    'cik'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StockAnalysisProjection
+     */
+    'ticker'?: string;
     /**
      * 
      * @type {number}
      * @memberof StockAnalysisProjection
      */
-    currentPrice?: number;
+    'currentPrice'?: number;
     /**
      * 
      * @type {number}
      * @memberof StockAnalysisProjection
      */
-    targetPrice?: number;
+    'targetPrice'?: number;
     /**
      * 
      * @type {number}
      * @memberof StockAnalysisProjection
      */
-    finalPrice?: number;
+    'finalPrice'?: number;
     /**
      * 
      * @type {boolean}
      * @memberof StockAnalysisProjection
      */
-    published?: boolean;
+    'published'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof StockAnalysisProjection
      */
-    lastUpdated?: string;
+    'lastUpdated'?: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof StockAnalysisProjection
      */
-    tags: Array<string>;
+    'tags'?: Array<string>;
+    /**
+     * 
+     * @type {ZacksDerivedAnalytics}
+     * @memberof StockAnalysisProjection
+     */
+    'zacksDerivedAnalytics'?: ZacksDerivedAnalytics;
 }
 /**
  * 
@@ -879,7 +1127,86 @@ export interface SumOfOtherItems {
      * @type {Array<Component>}
      * @memberof SumOfOtherItems
      */
-    components: Array<Component>;
+    'components'?: Array<Component>;
+}
+/**
+ * 
+ * @export
+ * @interface Trend
+ */
+export interface Trend {
+    /**
+     * 
+     * @type {number}
+     * @memberof Trend
+     */
+    'thisQuarter'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Trend
+     */
+    'oneQuarterAgo'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Trend
+     */
+    'twoQuartersAgo'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Trend
+     */
+    'threeQuartersAgo'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Trend
+     */
+    'fourQuartersAgo'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Trend
+     */
+    'thisQuarterPctChange'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Trend
+     */
+    'oneQuarterAgoPctChange'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Trend
+     */
+    'twoQuartersAgoPctChange'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Trend
+     */
+    'threeQuartersAgoPctChange'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Trend
+     */
+    'fourQuartersAgoPctChange'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Trend
+     */
+    'increasing'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Trend
+     */
+    'erratic'?: boolean;
 }
 /**
  * 
@@ -892,19 +1219,19 @@ export interface WatchList {
      * @type {string}
      * @memberof WatchList
      */
-    get_id: string;
+    'get_id'?: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof WatchList
      */
-    stockAnalysisIds: Array<string>;
+    'stockAnalysisIds'?: Array<string>;
     /**
      * 
      * @type {string}
      * @memberof WatchList
      */
-    lastUpdated: string;
+    'lastUpdated'?: string;
 }
 /**
  * 
@@ -917,19 +1244,110 @@ export interface Waterfall {
      * @type {Cell}
      * @memberof Waterfall
      */
-    revenue: Cell;
+    'revenue'?: Cell;
     /**
      * 
      * @type {Array<Cell>}
      * @memberof Waterfall
      */
-    expenses: Array<Cell>;
+    'expenses'?: Array<Cell>;
     /**
      * 
      * @type {Cell}
      * @memberof Waterfall
      */
-    profit: Cell;
+    'profit'?: Cell;
+}
+/**
+ * 
+ * @export
+ * @interface ZacksDerivedAnalytics
+ */
+export interface ZacksDerivedAnalytics {
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksDerivedAnalytics
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksDerivedAnalytics
+     */
+    'ticker'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksDerivedAnalytics
+     */
+    'cik'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksDerivedAnalytics
+     */
+    'exchange'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksDerivedAnalytics
+     */
+    'companyUrl'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ZacksDerivedAnalytics
+     */
+    'companyName'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksDerivedAnalytics
+     */
+    'price'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksDerivedAnalytics
+     */
+    'marketCap'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ZacksDerivedAnalytics
+     */
+    'enterpriseValue'?: number;
+    /**
+     * 
+     * @type {PerShareMetrics}
+     * @memberof ZacksDerivedAnalytics
+     */
+    'perShareMetrics'?: PerShareMetrics;
+    /**
+     * 
+     * @type {LatestMetrics}
+     * @memberof ZacksDerivedAnalytics
+     */
+    'latestMetrics'?: LatestMetrics;
+    /**
+     * 
+     * @type {Trend}
+     * @memberof ZacksDerivedAnalytics
+     */
+    'sales'?: Trend;
+    /**
+     * 
+     * @type {Trend}
+     * @memberof ZacksDerivedAnalytics
+     */
+    'earnings'?: Trend;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ZacksDerivedAnalytics
+     */
+    'tags'?: Array<string>;
 }
 
 /**
@@ -944,7 +1362,7 @@ export const PublishedStockAnalysisControllerApiAxiosParamCreator = function (co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        download: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        download: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('download', 'id', id)
             const localVarPath = `/public/published-stock-analyses/{id}/excel-download`
@@ -962,7 +1380,7 @@ export const PublishedStockAnalysisControllerApiAxiosParamCreator = function (co
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -984,7 +1402,7 @@ export const PublishedStockAnalysisControllerApiAxiosParamCreator = function (co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findPublishedStockAnalyses: async (userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options: any = {}): Promise<RequestArgs> => {
+        findPublishedStockAnalyses: async (userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/public/published-stock-analyses`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1031,7 +1449,7 @@ export const PublishedStockAnalysisControllerApiAxiosParamCreator = function (co
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1046,7 +1464,7 @@ export const PublishedStockAnalysisControllerApiAxiosParamCreator = function (co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPublishedStockAnalysis: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        getPublishedStockAnalysis: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getPublishedStockAnalysis', 'id', id)
             const localVarPath = `/public/published-stock-analyses/{id}`
@@ -1064,7 +1482,7 @@ export const PublishedStockAnalysisControllerApiAxiosParamCreator = function (co
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1078,7 +1496,7 @@ export const PublishedStockAnalysisControllerApiAxiosParamCreator = function (co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        top4StockAnalyses: async (options: any = {}): Promise<RequestArgs> => {
+        top4StockAnalyses: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/public/published-stock-analyses/top4`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1093,7 +1511,7 @@ export const PublishedStockAnalysisControllerApiAxiosParamCreator = function (co
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1118,7 +1536,7 @@ export const PublishedStockAnalysisControllerApiFp = function(configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async download(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+        async download(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.download(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1135,7 +1553,7 @@ export const PublishedStockAnalysisControllerApiFp = function(configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async findPublishedStockAnalyses(userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindStockAnalysisResponse>> {
+        async findPublishedStockAnalyses(userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindStockAnalysisResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.findPublishedStockAnalyses(userId, cik, ticker, skip, limit, term, tags, sort, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1145,7 +1563,7 @@ export const PublishedStockAnalysisControllerApiFp = function(configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPublishedStockAnalysis(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
+        async getPublishedStockAnalysis(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPublishedStockAnalysis(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1154,7 +1572,7 @@ export const PublishedStockAnalysisControllerApiFp = function(configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async top4StockAnalyses(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindStockAnalysisResponse>> {
+        async top4StockAnalyses(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindStockAnalysisResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.top4StockAnalyses(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1227,7 +1645,7 @@ export class PublishedStockAnalysisControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PublishedStockAnalysisControllerApi
      */
-    public download(id: string, options?: any) {
+    public download(id: string, options?: AxiosRequestConfig) {
         return PublishedStockAnalysisControllerApiFp(this.configuration).download(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1245,7 +1663,7 @@ export class PublishedStockAnalysisControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PublishedStockAnalysisControllerApi
      */
-    public findPublishedStockAnalyses(userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options?: any) {
+    public findPublishedStockAnalyses(userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options?: AxiosRequestConfig) {
         return PublishedStockAnalysisControllerApiFp(this.configuration).findPublishedStockAnalyses(userId, cik, ticker, skip, limit, term, tags, sort, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1256,7 +1674,7 @@ export class PublishedStockAnalysisControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PublishedStockAnalysisControllerApi
      */
-    public getPublishedStockAnalysis(id: string, options?: any) {
+    public getPublishedStockAnalysis(id: string, options?: AxiosRequestConfig) {
         return PublishedStockAnalysisControllerApiFp(this.configuration).getPublishedStockAnalysis(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1266,7 +1684,7 @@ export class PublishedStockAnalysisControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PublishedStockAnalysisControllerApi
      */
-    public top4StockAnalyses(options?: any) {
+    public top4StockAnalyses(options?: AxiosRequestConfig) {
         return PublishedStockAnalysisControllerApiFp(this.configuration).top4StockAnalyses(options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1284,7 +1702,7 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteStockAnalysis: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        deleteStockAnalysis: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('deleteStockAnalysis', 'id', id)
             const localVarPath = `/api/stock-analyzer/stock-analyses/{id}`
@@ -1302,7 +1720,7 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1320,7 +1738,7 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        evaluateStockAnalysis: async (model: Model, saveAs?: string, published?: boolean, tags?: Array<string>, options: any = {}): Promise<RequestArgs> => {
+        evaluateStockAnalysis: async (model: Model, saveAs?: string, published?: boolean, tags?: Array<string>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'model' is not null or undefined
             assertParamExists('evaluateStockAnalysis', 'model', model)
             const localVarPath = `/api/stock-analyzer/stock-analyses/evaluate`;
@@ -1351,7 +1769,7 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(model, localVarRequestOptions, configuration)
@@ -1375,7 +1793,7 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findStockAnalyses: async (published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options: any = {}): Promise<RequestArgs> => {
+        findStockAnalyses: async (published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/stock-analyzer/stock-analyses`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1426,7 +1844,7 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1441,7 +1859,7 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getStockAnalysis: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        getStockAnalysis: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('getStockAnalysis', 'id', id)
             const localVarPath = `/api/stock-analyzer/stock-analyses/{id}`
@@ -1459,7 +1877,7 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1474,7 +1892,7 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        publish: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        publish: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('publish', 'id', id)
             const localVarPath = `/api/stock-analyzer/stock-analyses/{id}/publish`
@@ -1492,9 +1910,48 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveStockAnalysis: async (id: string, stockAnalysis2: StockAnalysis2, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('saveStockAnalysis', 'id', id)
+            // verify required parameter 'stockAnalysis2' is not null or undefined
+            assertParamExists('saveStockAnalysis', 'stockAnalysis2', stockAnalysis2)
+            const localVarPath = `/api/stock-analyzer/stock-analyses/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(stockAnalysis2, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1507,7 +1964,7 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unpublish: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        unpublish: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('unpublish', 'id', id)
             const localVarPath = `/api/stock-analyzer/stock-analyses/{id}/unpublish`
@@ -1525,7 +1982,7 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1550,7 +2007,7 @@ export const StockAnalysisControllerApiFp = function(configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteStockAnalysis(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteStockAnalysis(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteStockAnalysis(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1563,7 +2020,7 @@ export const StockAnalysisControllerApiFp = function(configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async evaluateStockAnalysis(model: Model, saveAs?: string, published?: boolean, tags?: Array<string>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
+        async evaluateStockAnalysis(model: Model, saveAs?: string, published?: boolean, tags?: Array<string>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.evaluateStockAnalysis(model, saveAs, published, tags, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1581,7 +2038,7 @@ export const StockAnalysisControllerApiFp = function(configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async findStockAnalyses(published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindStockAnalysisResponse>> {
+        async findStockAnalyses(published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindStockAnalysisResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.findStockAnalyses(published, userId, cik, ticker, skip, limit, term, tags, sort, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1591,7 +2048,7 @@ export const StockAnalysisControllerApiFp = function(configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getStockAnalysis(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
+        async getStockAnalysis(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getStockAnalysis(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1601,8 +2058,19 @@ export const StockAnalysisControllerApiFp = function(configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async publish(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
+        async publish(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.publish(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveStockAnalysis(id: string, stockAnalysis2: StockAnalysis2, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveStockAnalysis(id, stockAnalysis2, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1611,7 +2079,7 @@ export const StockAnalysisControllerApiFp = function(configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async unpublish(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
+        async unpublish(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StockAnalysis2>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.unpublish(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1684,6 +2152,16 @@ export const StockAnalysisControllerApiFactory = function (configuration?: Confi
         /**
          * 
          * @param {string} id 
+         * @param {StockAnalysis2} stockAnalysis2 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveStockAnalysis(id: string, stockAnalysis2: StockAnalysis2, options?: any): AxiosPromise<void> {
+            return localVarFp.saveStockAnalysis(id, stockAnalysis2, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1707,7 +2185,7 @@ export class StockAnalysisControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StockAnalysisControllerApi
      */
-    public deleteStockAnalysis(id: string, options?: any) {
+    public deleteStockAnalysis(id: string, options?: AxiosRequestConfig) {
         return StockAnalysisControllerApiFp(this.configuration).deleteStockAnalysis(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1721,7 +2199,7 @@ export class StockAnalysisControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StockAnalysisControllerApi
      */
-    public evaluateStockAnalysis(model: Model, saveAs?: string, published?: boolean, tags?: Array<string>, options?: any) {
+    public evaluateStockAnalysis(model: Model, saveAs?: string, published?: boolean, tags?: Array<string>, options?: AxiosRequestConfig) {
         return StockAnalysisControllerApiFp(this.configuration).evaluateStockAnalysis(model, saveAs, published, tags, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1740,7 +2218,7 @@ export class StockAnalysisControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StockAnalysisControllerApi
      */
-    public findStockAnalyses(published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options?: any) {
+    public findStockAnalyses(published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options?: AxiosRequestConfig) {
         return StockAnalysisControllerApiFp(this.configuration).findStockAnalyses(published, userId, cik, ticker, skip, limit, term, tags, sort, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1751,7 +2229,7 @@ export class StockAnalysisControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StockAnalysisControllerApi
      */
-    public getStockAnalysis(id: string, options?: any) {
+    public getStockAnalysis(id: string, options?: AxiosRequestConfig) {
         return StockAnalysisControllerApiFp(this.configuration).getStockAnalysis(id, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1762,8 +2240,20 @@ export class StockAnalysisControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StockAnalysisControllerApi
      */
-    public publish(id: string, options?: any) {
+    public publish(id: string, options?: AxiosRequestConfig) {
         return StockAnalysisControllerApiFp(this.configuration).publish(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {StockAnalysis2} stockAnalysis2 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StockAnalysisControllerApi
+     */
+    public saveStockAnalysis(id: string, stockAnalysis2: StockAnalysis2, options?: AxiosRequestConfig) {
+        return StockAnalysisControllerApiFp(this.configuration).saveStockAnalysis(id, stockAnalysis2, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1773,7 +2263,7 @@ export class StockAnalysisControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StockAnalysisControllerApi
      */
-    public unpublish(id: string, options?: any) {
+    public unpublish(id: string, options?: AxiosRequestConfig) {
         return StockAnalysisControllerApiFp(this.configuration).unpublish(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1790,7 +2280,7 @@ export const StockAnalysisCronJobsControllerApiAxiosParamCreator = function (con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatePrices: async (options: any = {}): Promise<RequestArgs> => {
+        updatePrices: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/stock-analysis-cron-jobs/update-prices`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1805,7 +2295,7 @@ export const StockAnalysisCronJobsControllerApiAxiosParamCreator = function (con
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1829,7 +2319,7 @@ export const StockAnalysisCronJobsControllerApiFp = function(configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updatePrices(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updatePrices(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updatePrices(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1867,7 +2357,7 @@ export class StockAnalysisCronJobsControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StockAnalysisCronJobsControllerApi
      */
-    public updatePrices(options?: any) {
+    public updatePrices(options?: AxiosRequestConfig) {
         return StockAnalysisCronJobsControllerApiFp(this.configuration).updatePrices(options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1886,7 +2376,7 @@ export const StockAnalysisRequestControllerApiAxiosParamCreator = function (conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        saveStockAnalysisRequest: async (ticker: string, email: string, options: any = {}): Promise<RequestArgs> => {
+        saveStockAnalysisRequest: async (ticker: string, email: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'ticker' is not null or undefined
             assertParamExists('saveStockAnalysisRequest', 'ticker', ticker)
             // verify required parameter 'email' is not null or undefined
@@ -1913,7 +2403,7 @@ export const StockAnalysisRequestControllerApiAxiosParamCreator = function (conf
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1939,7 +2429,7 @@ export const StockAnalysisRequestControllerApiFp = function(configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async saveStockAnalysisRequest(ticker: string, email: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async saveStockAnalysisRequest(ticker: string, email: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.saveStockAnalysisRequest(ticker, email, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1981,7 +2471,7 @@ export class StockAnalysisRequestControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StockAnalysisRequestControllerApi
      */
-    public saveStockAnalysisRequest(ticker: string, email: string, options?: any) {
+    public saveStockAnalysisRequest(ticker: string, email: string, options?: AxiosRequestConfig) {
         return StockAnalysisRequestControllerApiFp(this.configuration).saveStockAnalysisRequest(ticker, email, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1998,7 +2488,7 @@ export const WatchListsControllerApiAxiosParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWatchedStockAnalyses: async (options: any = {}): Promise<RequestArgs> => {
+        getWatchedStockAnalyses: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/watch-lists`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2013,7 +2503,7 @@ export const WatchListsControllerApiAxiosParamCreator = function (configuration?
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -2028,7 +2518,7 @@ export const WatchListsControllerApiAxiosParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        isWatching: async (stockAnalysisId: string, options: any = {}): Promise<RequestArgs> => {
+        isWatching: async (stockAnalysisId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stockAnalysisId' is not null or undefined
             assertParamExists('isWatching', 'stockAnalysisId', stockAnalysisId)
             const localVarPath = `/api/watch-lists/{stockAnalysisId}`
@@ -2046,7 +2536,7 @@ export const WatchListsControllerApiAxiosParamCreator = function (configuration?
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -2061,7 +2551,7 @@ export const WatchListsControllerApiAxiosParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unwatch: async (stockAnalysisId: string, options: any = {}): Promise<RequestArgs> => {
+        unwatch: async (stockAnalysisId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stockAnalysisId' is not null or undefined
             assertParamExists('unwatch', 'stockAnalysisId', stockAnalysisId)
             const localVarPath = `/api/watch-lists`;
@@ -2082,7 +2572,7 @@ export const WatchListsControllerApiAxiosParamCreator = function (configuration?
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -2097,7 +2587,7 @@ export const WatchListsControllerApiAxiosParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        watch: async (stockAnalysisId: string, options: any = {}): Promise<RequestArgs> => {
+        watch: async (stockAnalysisId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'stockAnalysisId' is not null or undefined
             assertParamExists('watch', 'stockAnalysisId', stockAnalysisId)
             const localVarPath = `/api/watch-lists`;
@@ -2118,7 +2608,7 @@ export const WatchListsControllerApiAxiosParamCreator = function (configuration?
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -2142,7 +2632,7 @@ export const WatchListsControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getWatchedStockAnalyses(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetWatchedStockAnalysesResponse>> {
+        async getWatchedStockAnalyses(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetWatchedStockAnalysesResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getWatchedStockAnalyses(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2152,7 +2642,7 @@ export const WatchListsControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async isWatching(stockAnalysisId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
+        async isWatching(stockAnalysisId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.isWatching(stockAnalysisId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2162,7 +2652,7 @@ export const WatchListsControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async unwatch(stockAnalysisId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WatchList>> {
+        async unwatch(stockAnalysisId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WatchList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.unwatch(stockAnalysisId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2172,7 +2662,7 @@ export const WatchListsControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async watch(stockAnalysisId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WatchList>> {
+        async watch(stockAnalysisId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WatchList>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.watch(stockAnalysisId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2237,7 +2727,7 @@ export class WatchListsControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WatchListsControllerApi
      */
-    public getWatchedStockAnalyses(options?: any) {
+    public getWatchedStockAnalyses(options?: AxiosRequestConfig) {
         return WatchListsControllerApiFp(this.configuration).getWatchedStockAnalyses(options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2248,7 +2738,7 @@ export class WatchListsControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WatchListsControllerApi
      */
-    public isWatching(stockAnalysisId: string, options?: any) {
+    public isWatching(stockAnalysisId: string, options?: AxiosRequestConfig) {
         return WatchListsControllerApiFp(this.configuration).isWatching(stockAnalysisId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2259,7 +2749,7 @@ export class WatchListsControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WatchListsControllerApi
      */
-    public unwatch(stockAnalysisId: string, options?: any) {
+    public unwatch(stockAnalysisId: string, options?: AxiosRequestConfig) {
         return WatchListsControllerApiFp(this.configuration).unwatch(stockAnalysisId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2270,7 +2760,7 @@ export class WatchListsControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WatchListsControllerApi
      */
-    public watch(stockAnalysisId: string, options?: any) {
+    public watch(stockAnalysisId: string, options?: AxiosRequestConfig) {
         return WatchListsControllerApiFp(this.configuration).watch(stockAnalysisId, options).then((request) => request(this.axios, this.basePath));
     }
 }
