@@ -1,7 +1,5 @@
 module.exports = {
-    // purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-    purge: false,
-    darkMode: false, // or 'media' or 'class'
+    content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
     theme: {
         transitionProperty: {
             'height': 'height'
@@ -45,6 +43,7 @@ module.exports = {
             1: '16px',
         },
         colors: {
+            current: 'currentColor',
             white: '#fff',
             lightGreen: {
                 100: '#ECF6E3',
@@ -103,9 +102,6 @@ module.exports = {
                 9: '#1F2824',
             }
         },
-    },
-    variants: {
-        extend: {},
     },
     plugins: [],
 };
