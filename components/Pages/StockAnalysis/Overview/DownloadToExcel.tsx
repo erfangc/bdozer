@@ -23,8 +23,8 @@ export function DownloadToExcel({ stockAnalysis }: DownloadToExcelProps) {
             .then(res => res.blob()
                 .then(blob => {
                     const filename = `${id}.xlsx`
-                    if (window.navigator.msSaveOrOpenBlob) {
-                        navigator.msSaveBlob(blob, filename)
+                    if ((window.navigator as any).msSaveOrOpenBlob) {
+                        (navigator as any).msSaveBlob(blob, filename)
                     } else {
                         const a = document.createElement('a')
                         document.body.appendChild(a)
