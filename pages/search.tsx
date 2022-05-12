@@ -8,6 +8,7 @@ import {useRouter} from "next/router";
 import {AscIcon, DescIcon, UnsortedIcon} from "../components/Pages/Search/Icons";
 import {upsideP} from "../components/Pages/StockAnalysis/upside";
 import {Nav} from "../components/Nav";
+import {FilterButton} from "../components/FilterButton";
 
 export default function Search() {
 
@@ -113,7 +114,10 @@ export default function Search() {
                         <StockSearch onChange={search}/>
                         <br/>
                     </div>
-                    <Pagination previousPage={previousPage} nextPage={nextPage}/>
+                    <div className="flex justify-between">
+                        <Pagination previousPage={previousPage} nextPage={nextPage}/>
+                        {/*<FilterButton/>*/}
+                    </div>
                     <table className="label-small lg:label-regular w-full">
                         <thead>
                         <tr className="pb-2 border-b">
