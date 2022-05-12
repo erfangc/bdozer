@@ -8,7 +8,6 @@ import {useRouter} from "next/router";
 import {AscIcon, DescIcon, UnsortedIcon} from "../components/Pages/Search/Icons";
 import {upsideP} from "../components/Pages/StockAnalysis/upside";
 import {Nav} from "../components/Nav";
-import {FilterButton} from "../components/FilterButton";
 
 export default function Search() {
 
@@ -50,6 +49,7 @@ export default function Search() {
             15,
             term ?? undefined,
             undefined,
+            [],
             sort,
         );
         setStockAnalyses(data.stockAnalyses);
