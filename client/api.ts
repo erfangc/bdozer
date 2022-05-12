@@ -1347,8 +1347,25 @@ export interface ZacksDerivedAnalytics {
      * @type {Array<string>}
      * @memberof ZacksDerivedAnalytics
      */
-    'tags'?: Array<string>;
+    'tags'?: Array<ZacksDerivedAnalyticsTagsEnum>;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ZacksDerivedAnalyticsTagsEnum {
+    EarningsImproving = 'EARNINGS_IMPROVING',
+    RevenueGrowing = 'REVENUE_GROWING',
+    PositiveEarnings = 'POSITIVE_EARNINGS',
+    HighlyLevered = 'HIGHLY_LEVERED',
+    BelowBookValue = 'BELOW_BOOK_VALUE',
+    HighGrossMargin = 'HIGH_GROSS_MARGIN',
+    HighNetMargin = 'HIGH_NET_MARGIN',
+    FundamentalsStable = 'FUNDAMENTALS_STABLE',
+    RecentlyCrashed = 'RECENTLY_CRASHED'
+}
+
 
 /**
  * PublishedStockAnalysisControllerApi - axios parameter creator
@@ -1398,11 +1415,12 @@ export const PublishedStockAnalysisControllerApiAxiosParamCreator = function (co
          * @param {number} [limit] 
          * @param {string} [term] 
          * @param {Array<string>} [tags] 
+         * @param {Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>} [zacksDerivedTags] 
          * @param {'ascending' | 'descending'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findPublishedStockAnalyses: async (userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        findPublishedStockAnalyses: async (userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, zacksDerivedTags?: Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>, sort?: 'ascending' | 'descending', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/public/published-stock-analyses`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1441,6 +1459,10 @@ export const PublishedStockAnalysisControllerApiAxiosParamCreator = function (co
 
             if (tags) {
                 localVarQueryParameter['tags'] = tags;
+            }
+
+            if (zacksDerivedTags) {
+                localVarQueryParameter['zacksDerivedTags'] = zacksDerivedTags;
             }
 
             if (sort !== undefined) {
@@ -1549,12 +1571,13 @@ export const PublishedStockAnalysisControllerApiFp = function(configuration?: Co
          * @param {number} [limit] 
          * @param {string} [term] 
          * @param {Array<string>} [tags] 
+         * @param {Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>} [zacksDerivedTags] 
          * @param {'ascending' | 'descending'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async findPublishedStockAnalyses(userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindStockAnalysisResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.findPublishedStockAnalyses(userId, cik, ticker, skip, limit, term, tags, sort, options);
+        async findPublishedStockAnalyses(userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, zacksDerivedTags?: Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>, sort?: 'ascending' | 'descending', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindStockAnalysisResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.findPublishedStockAnalyses(userId, cik, ticker, skip, limit, term, tags, zacksDerivedTags, sort, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1604,12 +1627,13 @@ export const PublishedStockAnalysisControllerApiFactory = function (configuratio
          * @param {number} [limit] 
          * @param {string} [term] 
          * @param {Array<string>} [tags] 
+         * @param {Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>} [zacksDerivedTags] 
          * @param {'ascending' | 'descending'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findPublishedStockAnalyses(userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options?: any): AxiosPromise<FindStockAnalysisResponse> {
-            return localVarFp.findPublishedStockAnalyses(userId, cik, ticker, skip, limit, term, tags, sort, options).then((request) => request(axios, basePath));
+        findPublishedStockAnalyses(userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, zacksDerivedTags?: Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>, sort?: 'ascending' | 'descending', options?: any): AxiosPromise<FindStockAnalysisResponse> {
+            return localVarFp.findPublishedStockAnalyses(userId, cik, ticker, skip, limit, term, tags, zacksDerivedTags, sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1658,13 +1682,14 @@ export class PublishedStockAnalysisControllerApi extends BaseAPI {
      * @param {number} [limit] 
      * @param {string} [term] 
      * @param {Array<string>} [tags] 
+     * @param {Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>} [zacksDerivedTags] 
      * @param {'ascending' | 'descending'} [sort] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublishedStockAnalysisControllerApi
      */
-    public findPublishedStockAnalyses(userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options?: AxiosRequestConfig) {
-        return PublishedStockAnalysisControllerApiFp(this.configuration).findPublishedStockAnalyses(userId, cik, ticker, skip, limit, term, tags, sort, options).then((request) => request(this.axios, this.basePath));
+    public findPublishedStockAnalyses(userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, zacksDerivedTags?: Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>, sort?: 'ascending' | 'descending', options?: AxiosRequestConfig) {
+        return PublishedStockAnalysisControllerApiFp(this.configuration).findPublishedStockAnalyses(userId, cik, ticker, skip, limit, term, tags, zacksDerivedTags, sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1789,11 +1814,12 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
          * @param {number} [limit] 
          * @param {string} [term] 
          * @param {Array<string>} [tags] 
+         * @param {Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>} [zacksDerivedTags] 
          * @param {'ascending' | 'descending'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findStockAnalyses: async (published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        findStockAnalyses: async (published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, zacksDerivedTags?: Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>, sort?: 'ascending' | 'descending', options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/stock-analyzer/stock-analyses`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1836,6 +1862,10 @@ export const StockAnalysisControllerApiAxiosParamCreator = function (configurati
 
             if (tags) {
                 localVarQueryParameter['tags'] = tags;
+            }
+
+            if (zacksDerivedTags) {
+                localVarQueryParameter['zacksDerivedTags'] = zacksDerivedTags;
             }
 
             if (sort !== undefined) {
@@ -2034,12 +2064,13 @@ export const StockAnalysisControllerApiFp = function(configuration?: Configurati
          * @param {number} [limit] 
          * @param {string} [term] 
          * @param {Array<string>} [tags] 
+         * @param {Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>} [zacksDerivedTags] 
          * @param {'ascending' | 'descending'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async findStockAnalyses(published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindStockAnalysisResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.findStockAnalyses(published, userId, cik, ticker, skip, limit, term, tags, sort, options);
+        async findStockAnalyses(published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, zacksDerivedTags?: Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>, sort?: 'ascending' | 'descending', options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindStockAnalysisResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.findStockAnalyses(published, userId, cik, ticker, skip, limit, term, tags, zacksDerivedTags, sort, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2124,12 +2155,13 @@ export const StockAnalysisControllerApiFactory = function (configuration?: Confi
          * @param {number} [limit] 
          * @param {string} [term] 
          * @param {Array<string>} [tags] 
+         * @param {Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>} [zacksDerivedTags] 
          * @param {'ascending' | 'descending'} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        findStockAnalyses(published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options?: any): AxiosPromise<FindStockAnalysisResponse> {
-            return localVarFp.findStockAnalyses(published, userId, cik, ticker, skip, limit, term, tags, sort, options).then((request) => request(axios, basePath));
+        findStockAnalyses(published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, zacksDerivedTags?: Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>, sort?: 'ascending' | 'descending', options?: any): AxiosPromise<FindStockAnalysisResponse> {
+            return localVarFp.findStockAnalyses(published, userId, cik, ticker, skip, limit, term, tags, zacksDerivedTags, sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2213,13 +2245,14 @@ export class StockAnalysisControllerApi extends BaseAPI {
      * @param {number} [limit] 
      * @param {string} [term] 
      * @param {Array<string>} [tags] 
+     * @param {Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>} [zacksDerivedTags] 
      * @param {'ascending' | 'descending'} [sort] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StockAnalysisControllerApi
      */
-    public findStockAnalyses(published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, sort?: 'ascending' | 'descending', options?: AxiosRequestConfig) {
-        return StockAnalysisControllerApiFp(this.configuration).findStockAnalyses(published, userId, cik, ticker, skip, limit, term, tags, sort, options).then((request) => request(this.axios, this.basePath));
+    public findStockAnalyses(published?: boolean, userId?: string, cik?: string, ticker?: string, skip?: number, limit?: number, term?: string, tags?: Array<string>, zacksDerivedTags?: Array<'EARNINGS_IMPROVING' | 'REVENUE_GROWING' | 'POSITIVE_EARNINGS' | 'HIGHLY_LEVERED' | 'BELOW_BOOK_VALUE' | 'HIGH_GROSS_MARGIN' | 'HIGH_NET_MARGIN' | 'FUNDAMENTALS_STABLE' | 'RECENTLY_CRASHED'>, sort?: 'ascending' | 'descending', options?: AxiosRequestConfig) {
+        return StockAnalysisControllerApiFp(this.configuration).findStockAnalyses(published, userId, cik, ticker, skip, limit, term, tags, zacksDerivedTags, sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
