@@ -2,12 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {Page} from "../components/Page";
 import {StockSearch} from "../components/Pages/Search/StockSearch";
 import {usePublishedStockAnalysis} from "../api-hooks";
-import {StockAnalysisProjection} from "../client";
+import {StockAnalysisProjection, ZacksDerivedAnalyticsTagsEnum} from "../client";
 import {commafy, readablePercent} from "../number-formatters";
 import {useRouter} from "next/router";
 import {AscIcon, DescIcon, UnsortedIcon} from "../components/Pages/Search/Icons";
 import {upsideP} from "../components/Pages/StockAnalysis/upside";
 import {Nav} from "../components/Nav";
+import {FilterButton} from '../components/FilterButton';
+import {FilterPill} from "../components/FilterPill";
 
 export default function Search() {
 
@@ -16,11 +18,16 @@ export default function Search() {
     const [term, setTerm] = useState('')
     const [sort, setSort] = useState<'ascending' | 'descending' | undefined>(undefined)
     const [page, setPage] = useState(0);
+    const [selected, setSelected] = useState<ZacksDerivedAnalyticsTagsEnum[]>([]);
     const router = useRouter();
 
     function search(term: string) {
         setTerm(term);
         refresh(term, sort, page);
+    }
+
+    function removeTag(tag: ZacksDerivedAnalyticsTagsEnum) {
+        setSelected(selected.filter(it => it !== tag));
     }
 
     function toggleSort() {
@@ -116,7 +123,10 @@ export default function Search() {
                     </div>
                     <div className="flex justify-between">
                         <Pagination previousPage={previousPage} nextPage={nextPage}/>
-                        {/*<FilterButton/>*/}
+                        <FilterButton selected={selected} onChange={newValues => setSelected(newValues)}/>
+                    </div>
+                    <div className="flex space-x-4">
+                        {selected.map(tag => <FilterPill tag={tag} onRemove={removeTag}/>)}
                     </div>
                     <table className="label-small lg:label-regular w-full">
                         <thead>

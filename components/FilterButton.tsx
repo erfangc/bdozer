@@ -1,11 +1,27 @@
 import React, {useCallback, useState} from "react";
+import {ZacksDerivedAnalyticsTagsEnum} from "../client";
+import {pillLabel} from "./filter-pill-labels";
 
-export function FilterButton() {
+interface FilterButtonProps {
+    selected: ZacksDerivedAnalyticsTagsEnum[];
+    onChange: (selected: ZacksDerivedAnalyticsTagsEnum[]) => void;
+}
+
+export function FilterButton({selected, onChange}: FilterButtonProps) {
 
     const [open, setOpen] = useState(false);
     const toggleOpen = useCallback(() => {
         setOpen(!open);
     }, [setOpen, open]);
+
+    const toggle = useCallback((tag: ZacksDerivedAnalyticsTagsEnum) => {
+        // if already selected then remove, or else add
+        if (selected.includes(tag)) {
+            onChange(selected.filter(it => it !== tag));
+        } else {
+            onChange([...selected, tag]);
+        }
+    }, [selected, onChange]);
 
     return (
         <div className="relative">
@@ -23,11 +39,31 @@ export function FilterButton() {
             {open && <div className={`absolute right-0 bg-white border-t-lime-100 border-4 p-4`}>
                 <h4 className="label-small text-navy-100">Filter for</h4>
                 <div className="flex space-x-4 mt-4">
-                    <Pill text={'Profit Growing'} onClick={null}/>
-                    <Pill text={'Sales Increasing'} onClick={null}/>
-                    <Pill text={'Making Money'} onClick={null}/>
-                    <Pill text={'Borrows a Lot'} onClick={null} active/>
-                    <Pill text={'Below Book Value'} onClick={null}/>
+                    <Pill
+                        tag={ZacksDerivedAnalyticsTagsEnum.EarningsImproving}
+                        onClick={toggle}
+                        active={selected.includes(ZacksDerivedAnalyticsTagsEnum.EarningsImproving)}
+                    />
+                    <Pill
+                        tag={ZacksDerivedAnalyticsTagsEnum.RevenueGrowing}    
+                        onClick={toggle}
+                        active={selected.includes(ZacksDerivedAnalyticsTagsEnum.RevenueGrowing)}
+                    />
+                    <Pill
+                        tag={ZacksDerivedAnalyticsTagsEnum.PositiveEarnings}    
+                        onClick={toggle}
+                        active={selected.includes(ZacksDerivedAnalyticsTagsEnum.PositiveEarnings)}
+                    />
+                    <Pill
+                        tag={ZacksDerivedAnalyticsTagsEnum.HighlyLevered}    
+                        onClick={toggle}
+                        active={selected.includes(ZacksDerivedAnalyticsTagsEnum.HighlyLevered)}
+                    />
+                    <Pill
+                        tag={ZacksDerivedAnalyticsTagsEnum.BelowBookValue}    
+                        onClick={toggle}
+                        active={selected.includes(ZacksDerivedAnalyticsTagsEnum.BelowBookValue)}
+                    />
                 </div>
             </div>}
         </div>
@@ -35,15 +71,16 @@ export function FilterButton() {
 }
 
 interface PillProps {
-    text: string;
     active?: boolean;
-    onClick: () => void
+    tag: ZacksDerivedAnalyticsTagsEnum;
+    onClick: (tag: ZacksDerivedAnalyticsTagsEnum) => void;
 }
 
-function Pill({text, active, onClick}: PillProps) {
+function Pill({active, tag, onClick}: PillProps) {
+    const text = pillLabel(tag);
     return (
         <button
-            onClick={onClick}
+            onClick={() => onClick(tag)}
             className={
                 `rounded-2xl border-navy-100 label-small w-36 py-1 ${active ? 'text-navy-100 bg-lime-100' : 'border text-navy-100 hover:bg-lime-100'}`
             }
