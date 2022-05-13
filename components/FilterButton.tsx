@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {ZacksDerivedAnalyticsTagsEnum} from "../client";
 import {pillLabel} from "./filter-pill-labels";
 
@@ -13,6 +13,7 @@ export function FilterButton({selected, onChange}: FilterButtonProps) {
     const toggleOpen = useCallback(() => {
         setOpen(!open);
     }, [setOpen, open]);
+    const ref = useRef<HTMLDivElement>(null);
 
     const toggle = useCallback((tag: ZacksDerivedAnalyticsTagsEnum) => {
         // if already selected then remove, or else add
@@ -23,8 +24,31 @@ export function FilterButton({selected, onChange}: FilterButtonProps) {
         }
     }, [selected, onChange]);
 
+    // register a click outside handler
+    useEffect(() => {
+        const body = document.body;
+        const clickOutsideHandler = ev => {
+            if (!ref?.current.contains(ev.target) && open) {
+                setOpen(false);
+            }
+        };
+        body.addEventListener('click', clickOutsideHandler);
+        return () => body.removeEventListener('click', clickOutsideHandler);
+    }, [setOpen, ref, open]);
+    
+    // register the escape key to close the button
+    useEffect(() => {
+        const escapeKeyListener = (ev: KeyboardEvent) =>{
+            if (ev.key === 'Escape' && open) {
+                setOpen(false);
+            }
+        };
+        document.addEventListener('keyup', escapeKeyListener);
+        return () => document.removeEventListener('keyup', escapeKeyListener);
+    }, [open, setOpen])
+
     return (
-        <div className="relative">
+        <div className="relative" ref={ref}>
             <button
                 onClick={toggleOpen}
                 className={`rounded-t-lg bg-lime-100 text-navy-100 flex space-x-2 items-center py-2 px-6 ${open ? '' : 'rounded-b-lg'}`}

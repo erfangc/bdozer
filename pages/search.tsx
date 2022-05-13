@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Page} from "../components/Page";
 import {StockSearch} from "../components/Pages/Search/StockSearch";
 import {usePublishedStockAnalysis} from "../api-hooks";
@@ -21,11 +21,6 @@ export default function Search() {
     const [selected, setSelected] = useState<ZacksDerivedAnalyticsTagsEnum[]>([]);
     const router = useRouter();
 
-    function search(term: string) {
-        setTerm(term);
-        refresh(term, sort, page);
-    }
-
     function removeTag(tag: ZacksDerivedAnalyticsTagsEnum) {
         setSelected(selected.filter(it => it !== tag));
     }
@@ -33,42 +28,32 @@ export default function Search() {
     function toggleSort() {
         if (sort == undefined) {
             setSort('descending');
-            refresh(term, 'descending', page);
         } else if (sort == 'descending') {
             setSort('ascending');
-            refresh(term, 'ascending', page);
         } else {
             setSort(undefined);
-            refresh(term, undefined, page);
         }
     }
-
-    async function refresh(
-        term: string,
-        sort: 'ascending' | 'descending' | undefined,
-        page: number,
-    ) {
-        const {data} = await stockAnalysisApi.findPublishedStockAnalyses(
-            undefined,
-            undefined,
-            undefined,
-            page * 15,
-            15,
-            term ?? undefined,
-            undefined,
-            [],
-            sort,
-        );
-        setStockAnalyses(data.stockAnalyses);
-    }
-
+    
     useEffect(() => {
-        search(undefined);
-    }, []);
+        (async () => {
+            const {data} = await stockAnalysisApi.findPublishedStockAnalyses(
+                undefined,
+                undefined,
+                undefined,
+                page * 15,
+                15,
+                term ?? undefined,
+                undefined,
+                selected,
+                sort,
+            );
+            setStockAnalyses(data.stockAnalyses);
+        })();
+    }, [setStockAnalyses, page, term, sort, selected]);
 
     function nextPage() {
         setPage(page + 1);
-        refresh(term, sort, page + 1);
     }
 
     function previousPage() {
@@ -76,7 +61,6 @@ export default function Search() {
             return;
         }
         setPage(page - 1);
-        refresh(term, sort, page - 1);
     }
 
     const rows = stockAnalyses.map(stockAnalysis => {
@@ -118,7 +102,7 @@ export default function Search() {
                     <div className="px-2 lg:px-0 ">
                         <h2 className="heading2">Stock Overview</h2>
                         <br/>
-                        <StockSearch onChange={search}/>
+                        <StockSearch onChange={setTerm}/>
                         <br/>
                     </div>
                     <div className="flex justify-between">
