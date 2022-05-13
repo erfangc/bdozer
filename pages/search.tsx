@@ -109,7 +109,7 @@ export default function Search() {
                         <Pagination previousPage={previousPage} nextPage={nextPage}/>
                         <FilterButton selected={selected} onChange={newValues => setSelected(newValues)}/>
                     </div>
-                    <div className="flex space-x-4">
+                    <div className="flex space-x-4 h-10">
                         {selected.map(tag => <FilterPill tag={tag} onRemove={removeTag}/>)}
                     </div>
                     <table className="label-small lg:label-regular w-full">
