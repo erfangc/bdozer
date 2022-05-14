@@ -60,7 +60,7 @@ export function FilterButton({selected, onChange}: FilterButtonProps) {
                 </svg>
                 Filter
             </button>
-            {open && <div className={`absolute right-0 bg-white border-t-lime-100 border-4 p-4`}>
+            {open && <div className={`absolute right-0 bg-white border-t-lime-100 border-t-4 p-4`}>
                 <h4 className="label-small text-navy-100">Filter for</h4>
                 <div className="flex space-x-4 mt-4">
                     <Pill
