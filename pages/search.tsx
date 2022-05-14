@@ -82,12 +82,16 @@ export default function Search() {
                 className="cursor-pointer transition ease-in hover:bg-lightGreen-50 hover:text-chili-100"
                 onClick={navigate}
             >
-                <td className="font-mono p-5 text-left">{name}</td>
-                <td className="font-mono p-5 text-left">{ticker}</td>
-                <td className={`font-mono p-5 text-left ${upside > 0 ? 'text-lime-100' : 'text-red-100'}`}>{readablePercent(upside)}</td>
-                <td className="font-mono p-5 text-left hidden lg:table-cell">${commafy(currentPrice)}</td>
-                <td className="font-mono p-5 text-left hidden lg:table-cell">${commafy(finalPrice)}</td>
-                <td className="font-mono p-5 text-left hidden lg:table-cell">
+                <td className="font-mono p-2 text-left">{name}</td>
+                <td className="font-mono p-2 text-left">{ticker}</td>
+                <td
+                    className={`font-mono p-2 text-left ${upside > 0 ? 'text-lime-100' : 'text-red-100'} hover:text-chili-100`}
+                >
+                    {readablePercent(upside)}
+                </td>
+                <td className="font-mono p-2 text-left hidden lg:table-cell">${commafy(currentPrice)}</td>
+                <td className="font-mono p-2 text-left hidden lg:table-cell">${commafy(finalPrice)}</td>
+                <td className="font-mono p-2 text-left hidden lg:table-cell">
                     <button>-</button>
                 </td>
             </tr>
@@ -98,7 +102,7 @@ export default function Search() {
         <Page>
             <Nav/>
             <main className="bg-dashboardGray-100 min-h-screen">
-                <div className="mx-auto py-24 container text-lightGreen-25">
+                <div className="mx-auto pt-12 container text-lightGreen-25">
                     <div className="px-2 lg:px-0 ">
                         <h2 className="heading2">Stock Overview</h2>
                         <br/>
@@ -115,15 +119,15 @@ export default function Search() {
                     <table className="label-small lg:label-regular w-full">
                         <thead>
                         <tr className="pb-2 border-b">
-                            <th className="p-5 text-left">Company</th>
-                            <th className="p-5 text-left">Symbol</th>
-                            <th className="p-5 text-left cursor-pointer flex" onClick={toggleSort}>
+                            <th className="p-2 text-left">Company</th>
+                            <th className="p-2 text-left">Symbol</th>
+                            <th className="p-2 text-left cursor-pointer flex" onClick={toggleSort}>
                                 Over/Under Valued
                                 {sort == undefined ? <UnsortedIcon/> : sort === 'descending' ? <DescIcon/> : <AscIcon/>}
                             </th>
-                            <th className="p-5 text-left hidden lg:table-cell">Current Share Price</th>
-                            <th className="p-5 text-left hidden lg:table-cell">Forecasted Price</th>
-                            <th className="p-5 text-left hidden lg:table-cell"/>
+                            <th className="p-2 text-left hidden lg:table-cell">Current Share Price</th>
+                            <th className="p-2 text-left hidden lg:table-cell">Forecasted Price</th>
+                            <th className="p-2 text-left hidden lg:table-cell"/>
                         </tr>
                         </thead>
                         <tbody>{rows}</tbody>
