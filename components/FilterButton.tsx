@@ -51,7 +51,7 @@ export function FilterButton({selected, onChange}: FilterButtonProps) {
         <div className="relative" ref={ref}>
             <button
                 onClick={toggleOpen}
-                className={`rounded-t-lg bg-lime-100 text-navy-100 flex space-x-2 items-center py-1 px-3 ${open ? '' : 'rounded-b-lg'}`}
+                className={`rounded-t-lg bg-lime-100 text-navy-100 flex space-x-2 items-center focus:outline-none py-1 px-3 ${open ? '' : 'rounded-b-lg'}`}
             >
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path

@@ -2,7 +2,6 @@ import React from 'react';
 import {StockAnalysis2} from "../../../../client";
 import {readableMoney, readablePercent} from "../../../../number-formatters";
 import {tvps} from "../tvps";
-import {upside} from "../upside";
 import {year} from "../../../../year";
 
 interface Props {
@@ -16,6 +15,7 @@ export function BusinessSummary({stockAnalysis}: Props) {
         derivedStockAnalytics: {
             businessWaterfall,
             revenueCAGR,
+            percentUpside,
         },
         model,
         model: {
@@ -25,7 +25,6 @@ export function BusinessSummary({stockAnalysis}: Props) {
     } = stockAnalysis;
 
     const finalPrice = tvps(stockAnalysis);
-    const upside1 = upside(stockAnalysis);
     const {profit, expenses, revenue,} = businessWaterfall[0]
     const totalExpense = expenses.map(expense => expense.value).reduce((a, b) => a + b, 0)
     const eps = cells.find(cell => cell.item.name === epsConceptName && cell.period === 0)?.value;
@@ -61,9 +60,9 @@ export function BusinessSummary({stockAnalysis}: Props) {
                     </li>
                     <li>
                         Given this, we project {name}'s to be worth {readableMoney(finalPrice)} per share in {year(model, periods)}, which represents <span
-                        className={`${upside1 > 0 ? 'text-lime-100' : 'text-red-100'}`}>
-                                {readablePercent(upside1)}
-                            </span> {upside1 > 0 ? 'upside' : 'downside'} from current price
+                        className={`${percentUpside > 0 ? 'text-lime-100' : 'text-red-100'}`}>
+                                {readablePercent(percentUpside)}
+                            </span> {percentUpside > 0 ? 'upside' : 'downside'} from current price
                     </li>
                 </ul>
             </p>

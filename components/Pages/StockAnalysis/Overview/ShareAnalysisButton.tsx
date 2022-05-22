@@ -1,5 +1,5 @@
 import {Button} from "../../../Common/Button";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {
     EmailIcon,
     EmailShareButton,
@@ -23,18 +23,47 @@ interface Props {
 export function ShareAnalysisButton({stockAnalysis}: Props) {
 
     const {ticker} = stockAnalysis;
-    const [href, setHref] = useState('')
-    const [open, setOpen] = useState(false)
+    const [href, setHref] = useState('');
+    const [open, setOpen] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setHref(window.location.href);
     }, []);
 
+    // register a click outside handler
+    useEffect(() => {
+        const body = document.body;
+        const clickOutsideHandler = ev => {
+            if (!ref?.current.contains(ev.target) && open) {
+                setOpen(false);
+            }
+        };
+        body.addEventListener('click', clickOutsideHandler);
+        return () => body.removeEventListener('click', clickOutsideHandler);
+    }, [setOpen, ref, open]);
+
+    // register the escape key to close the button
+    useEffect(() => {
+        const escapeKeyListener = (ev: KeyboardEvent) => {
+            if (ev.key === 'Escape' && open) {
+                setOpen(false);
+            }
+        };
+        document.addEventListener('keyup', escapeKeyListener);
+        return () => document.removeEventListener('keyup', escapeKeyListener);
+    }, [open, setOpen]);
+
     return (
-        <Button className="w-8 flex justify-center items-center relative" onClick={() => setOpen(!open)}>
+        <Button
+            className="w-8 flex justify-center items-center relative focus:outline-none"
+            onClick={() => setOpen(!open)}
+            ref={ref}
+        >
             <ShareIcon/>
             <div
-                className={`absolute top-9 bg-dashboardGray-25 p-2 shadow-lg rounded flex-col space-y-2 items-center justify-center ${open ? 'flex' : 'hidden'}`}>
+                className={`absolute top-9 bg-dashboardGray-25 p-2 shadow-lg rounded flex-col space-y-2 items-center justify-center ${open ? 'flex' : 'hidden'}`}
+            >
                 <FacebookShareButton
                     className="focus:outline-none"
                     url={href}

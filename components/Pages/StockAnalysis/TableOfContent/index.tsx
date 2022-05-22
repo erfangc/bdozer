@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {StockAnalysis2} from "../../../../client";
 import Scrollspy from "react-scrollspy";
 import {MobileWatchButton} from "../Overview/WatchingButton/WatchingButton";
-import {upside} from "../upside";
 import {commafy, readablePercent} from "../../../../number-formatters";
 import {DownloadToExcel} from "../Overview/DownloadToExcel";
 import {ShareAnalysisButton} from "../Overview/ShareAnalysisButton";
@@ -13,8 +12,7 @@ interface Props {
 
 export function StatsPanel({stockAnalysis}: Props) {
 
-    const {ticker, name, lastUpdated, derivedStockAnalytics: {currentPrice, finalPrice}} = stockAnalysis;
-    const upsideP = upside(stockAnalysis);
+    const {ticker, name, lastUpdated, derivedStockAnalytics: {currentPrice, finalPrice, percentUpside}} = stockAnalysis;
 
     // once we've scrolled pass the div with id = 'top-level-stats' render a stats panel
     const [showStatsPanel, setShowStatsPanel] = useState(false);
@@ -39,7 +37,7 @@ export function StatsPanel({stockAnalysis}: Props) {
 
     return (
         <div
-            className={`overflow-hidden transition-all duration-500 ease-linear ${showStatsPanel ? 'max-h-screen' : 'max-h-0'}`}>
+            className={`transition-all duration-500 ease-linear ${showStatsPanel ? 'max-h-screen' : 'max-h-0 overflow-hidden'}`}>
             <div className="bg-navy-100 rounded p-4 mb-4">
                 <div className="flex justify-between items-start">
                     <div>
@@ -54,7 +52,7 @@ export function StatsPanel({stockAnalysis}: Props) {
                     </div>
                 </div>
                 <div className="mt-6">
-                    <h1 className="numbers-large text-lime-100">{readablePercent(upsideP)}</h1>
+                    <h1 className="numbers-large text-lime-100">{readablePercent(percentUpside)}</h1>
                     <div className="flex justify-between text-gray-2 mt-4">
                         <div>
                             <span className="label-small">Forecast Price</span>

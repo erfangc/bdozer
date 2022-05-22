@@ -8,10 +8,3 @@ export function tvps({model: {periods}, cells}: StockAnalysis2): number {
         .find(cell => cell.item?.name === "TerminalValuePerShare" && cell.period == periods)
         ?.value
 }
-
-/**
- * Utility function to find the share price at the final year given a StockAnalysis
- */
-export function ForecastedPrice(stockAnalysis: StockAnalysis2): number {
-    return tvps(stockAnalysis);
-}

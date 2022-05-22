@@ -1,7 +1,6 @@
 import React from 'react';
 import {StockAnalysis2} from "../../../../client";
 import {tvps} from "../tvps";
-import {upside} from "../upside";
 import {commafy, readablePercent} from "../../../../number-formatters";
 
 interface Props {
@@ -20,11 +19,10 @@ export function Statistic({stockAnalysis}: Props) {
 function Desktop({stockAnalysis}: Props) {
     const {
         model: {periods},
-        derivedStockAnalytics: {irr},
+        derivedStockAnalytics: {irr, percentUpside},
     } = stockAnalysis;
 
     const finalPrice = tvps(stockAnalysis);
-    const upside1 = upside(stockAnalysis);
 
     return (
         <div className="hidden lg:flex justify-between items-center">
@@ -40,7 +38,7 @@ function Desktop({stockAnalysis}: Props) {
             <div className="w-px border-l h-16"/>
             <div className="flex flex-col">
                 <span className="label-small">Total Return</span>
-                <h1 className="numbers-medium">{readablePercent(upside1)}</h1>
+                <h1 className="numbers-medium">{readablePercent(percentUpside)}</h1>
                 <p className="label-micro">*Does not include dividends</p>
             </div>
         </div>
@@ -50,10 +48,9 @@ function Desktop({stockAnalysis}: Props) {
 function Mobile({stockAnalysis}: Props) {
     const {
         model: {periods},
-        derivedStockAnalytics: {irr},
+        derivedStockAnalytics: {irr, percentUpside},
     } = stockAnalysis;
     const finalPrice = tvps(stockAnalysis);
-    const upside1 = upside(stockAnalysis);
     return (
         <div className="lg:hidden space-y-6">
             <div className="flex justify-between items-center text-lime-100">
@@ -66,7 +63,7 @@ function Mobile({stockAnalysis}: Props) {
             </div>
             <div className="flex justify-between">
                 <span className="label-regular">Total Return</span>
-                <h1 className="numbers-medium">{readablePercent(upside1)}</h1>
+                <h1 className="numbers-medium">{readablePercent(percentUpside)}</h1>
             </div>
         </div>
     );

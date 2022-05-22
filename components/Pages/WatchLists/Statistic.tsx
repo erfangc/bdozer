@@ -1,7 +1,6 @@
 import React from 'react';
 import {StockAnalysis2} from "../../../client";
 import {tvps} from "../StockAnalysis/tvps";
-import {upside} from "../StockAnalysis/upside";
 import {commafy, readablePercent} from "../../../number-formatters";
 
 interface Props {
@@ -23,22 +22,21 @@ export function Statistic({stockAnalysis}: Props) {
 function Desktop({stockAnalysis}: Props) {
     const {
         model: {periods},
-        derivedStockAnalytics: {currentPrice}
+        derivedStockAnalytics: {currentPrice, percentUpside}
     } = stockAnalysis;
 
     const finalPrice = tvps(stockAnalysis);
-    const upside1 = upside(stockAnalysis);
 
     return (
         <div className="hidden lg:flex justify-between items-center">
             <div className="flex flex-col text-lime-100">
                 <span className="label-small">Forecasted {periods} Yr Return</span>
                 {
-                    upside1 > 0
+                    percentUpside > 0
                     ?
-                        <h1 className="numbers-large">{readablePercent(upside1)}</h1>
+                        <h1 className="numbers-large">{readablePercent(percentUpside)}</h1>
                     :
-                        <h1 className="numbers-large text-red-100">{readablePercent(upside1)}</h1>
+                        <h1 className="numbers-large text-red-100">{readablePercent(percentUpside)}</h1>
                 }
             </div>
             <div className="w-px border-l h-16"/>
@@ -58,15 +56,14 @@ function Desktop({stockAnalysis}: Props) {
 function Mobile({stockAnalysis}: Props) {
     const {
         model: {periods},
-        derivedStockAnalytics: {currentPrice}
+        derivedStockAnalytics: {currentPrice, percentUpside}
     } = stockAnalysis;
     const finalPrice = tvps(stockAnalysis);
-    const upside1 = upside(stockAnalysis);
     return (
         <div className="lg:hidden space-y-6">
             <div className="flex justify-between items-center text-lime-100">
                 <span className="label-regular">Forecasted {periods} Yr Return</span>
-                <h1 className="numbers-large">{readablePercent(upside1)}</h1>
+                <h1 className="numbers-large">{readablePercent(percentUpside)}</h1>
             </div>
             <div className="flex justify-between">
                 <span className="label-regular">Current Price</span>
