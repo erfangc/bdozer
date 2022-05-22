@@ -61,6 +61,92 @@ export interface Address {
 /**
  * 
  * @export
+ * @interface AnswerQuestionResponse
+ */
+export interface AnswerQuestionResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof AnswerQuestionResponse
+     */
+    'answer_text'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AnswerQuestionResponse
+     */
+    'answer_highlighted'?: string;
+    /**
+     * 
+     * @type {Document}
+     * @memberof AnswerQuestionResponse
+     */
+    'document'?: Document;
+    /**
+     * 
+     * @type {number}
+     * @memberof AnswerQuestionResponse
+     */
+    'score'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface BuildZacksModelResponse
+ */
+export interface BuildZacksModelResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildZacksModelResponse
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildZacksModelResponse
+     */
+    'cik'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildZacksModelResponse
+     */
+    'ticker'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildZacksModelResponse
+     */
+    'status'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildZacksModelResponse
+     */
+    'message'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildZacksModelResponse
+     */
+    'targetPrice'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof BuildZacksModelResponse
+     */
+    'finalPrice'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BuildZacksModelResponse
+     */
+    'timestamp'?: string;
+}
+/**
+ * 
+ * @export
  * @interface Cell
  */
 export interface Cell {
@@ -217,6 +303,12 @@ export interface DerivedStockAnalytics {
      * @type {number}
      * @memberof DerivedStockAnalytics
      */
+    'percentUpside'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DerivedStockAnalytics
+     */
     'discountRate'?: number;
     /**
      * 
@@ -236,6 +328,31 @@ export interface DerivedStockAnalytics {
      * @memberof DerivedStockAnalytics
      */
     'irr'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface Document
+ */
+export interface Document {
+    /**
+     * 
+     * @type {string}
+     * @memberof Document
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Document
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: object; }}
+     * @memberof Document
+     */
+    'metadata'?: { [key: string]: object; };
 }
 /**
  * 
@@ -913,6 +1030,19 @@ export interface ProductOfOtherItems {
 /**
  * 
  * @export
+ * @interface SemanticSearchResponse
+ */
+export interface SemanticSearchResponse {
+    /**
+     * 
+     * @type {Array<AnswerQuestionResponse>}
+     * @memberof SemanticSearchResponse
+     */
+    'answer_candidates'?: Array<AnswerQuestionResponse>;
+}
+/**
+ * 
+ * @export
  * @interface StockAnalysis2
  */
 export interface StockAnalysis2 {
@@ -1093,6 +1223,12 @@ export interface StockAnalysisProjection {
     'finalPrice'?: number;
     /**
      * 
+     * @type {number}
+     * @memberof StockAnalysisProjection
+     */
+    'percentUpside'?: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof StockAnalysisProjection
      */
@@ -1200,13 +1336,13 @@ export interface Trend {
      * @type {boolean}
      * @memberof Trend
      */
-    'increasing'?: boolean;
+    'erratic'?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof Trend
      */
-    'erratic'?: boolean;
+    'increasing'?: boolean;
 }
 /**
  * 
@@ -1711,6 +1847,118 @@ export class PublishedStockAnalysisControllerApi extends BaseAPI {
      */
     public top4StockAnalyses(options?: AxiosRequestConfig) {
         return PublishedStockAnalysisControllerApiFp(this.configuration).top4StockAnalyses(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * SemanticSearchControllerApi - axios parameter creator
+ * @export
+ */
+export const SemanticSearchControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} question 
+         * @param {string} [ticker] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        semanticSearch: async (question: string, ticker?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'question' is not null or undefined
+            assertParamExists('semanticSearch', 'question', question)
+            const localVarPath = `/api/semantic-search`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (ticker !== undefined) {
+                localVarQueryParameter['ticker'] = ticker;
+            }
+
+            if (question !== undefined) {
+                localVarQueryParameter['question'] = question;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SemanticSearchControllerApi - functional programming interface
+ * @export
+ */
+export const SemanticSearchControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SemanticSearchControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} question 
+         * @param {string} [ticker] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async semanticSearch(question: string, ticker?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SemanticSearchResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.semanticSearch(question, ticker, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * SemanticSearchControllerApi - factory interface
+ * @export
+ */
+export const SemanticSearchControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SemanticSearchControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} question 
+         * @param {string} [ticker] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        semanticSearch(question: string, ticker?: string, options?: any): AxiosPromise<SemanticSearchResponse> {
+            return localVarFp.semanticSearch(question, ticker, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * SemanticSearchControllerApi - object-oriented interface
+ * @export
+ * @class SemanticSearchControllerApi
+ * @extends {BaseAPI}
+ */
+export class SemanticSearchControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} question 
+     * @param {string} [ticker] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SemanticSearchControllerApi
+     */
+    public semanticSearch(question: string, ticker?: string, options?: AxiosRequestConfig) {
+        return SemanticSearchControllerApiFp(this.configuration).semanticSearch(question, ticker, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2795,6 +3043,107 @@ export class WatchListsControllerApi extends BaseAPI {
      */
     public watch(stockAnalysisId: string, options?: AxiosRequestConfig) {
         return WatchListsControllerApiFp(this.configuration).watch(stockAnalysisId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ZacksModelBuilderControllerApi - axios parameter creator
+ * @export
+ */
+export const ZacksModelBuilderControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        buildZacksModel: async (ticker: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ticker' is not null or undefined
+            assertParamExists('buildZacksModel', 'ticker', ticker)
+            const localVarPath = `/api/zacks-model-builder/{ticker}`
+                .replace(`{${"ticker"}}`, encodeURIComponent(String(ticker)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ZacksModelBuilderControllerApi - functional programming interface
+ * @export
+ */
+export const ZacksModelBuilderControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ZacksModelBuilderControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async buildZacksModel(ticker: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BuildZacksModelResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.buildZacksModel(ticker, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ZacksModelBuilderControllerApi - factory interface
+ * @export
+ */
+export const ZacksModelBuilderControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ZacksModelBuilderControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} ticker 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        buildZacksModel(ticker: string, options?: any): AxiosPromise<BuildZacksModelResponse> {
+            return localVarFp.buildZacksModel(ticker, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ZacksModelBuilderControllerApi - object-oriented interface
+ * @export
+ * @class ZacksModelBuilderControllerApi
+ * @extends {BaseAPI}
+ */
+export class ZacksModelBuilderControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} ticker 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ZacksModelBuilderControllerApi
+     */
+    public buildZacksModel(ticker: string, options?: AxiosRequestConfig) {
+        return ZacksModelBuilderControllerApiFp(this.configuration).buildZacksModel(ticker, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

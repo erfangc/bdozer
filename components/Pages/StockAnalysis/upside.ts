@@ -1,4 +1,4 @@
-import {StockAnalysis2, StockAnalysisProjection} from "../../../client";
+import {StockAnalysis2} from "../../../client";
 import {tvps} from "./tvps";
 
 /**
@@ -9,19 +9,6 @@ export function upside(stockAnalysis: StockAnalysis2): number {
         derivedStockAnalytics: {currentPrice},
     } = stockAnalysis;
     const finalPrice = tvps(stockAnalysis);
-    return finalPrice / currentPrice - 1;
-}
-
-
-/**
- * Computes the upside from final price
- * @param stockAnalysis
- */
-export function upsideP(stockAnalysis: StockAnalysisProjection): number {
-    const {
-        currentPrice,
-        finalPrice,
-    } = stockAnalysis;
     return finalPrice / currentPrice - 1;
 }
 

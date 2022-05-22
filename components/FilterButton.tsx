@@ -38,14 +38,14 @@ export function FilterButton({selected, onChange}: FilterButtonProps) {
     
     // register the escape key to close the button
     useEffect(() => {
-        const escapeKeyListener = (ev: KeyboardEvent) =>{
+        const escapeKeyListener = (ev: KeyboardEvent) => {
             if (ev.key === 'Escape' && open) {
                 setOpen(false);
             }
         };
         document.addEventListener('keyup', escapeKeyListener);
         return () => document.removeEventListener('keyup', escapeKeyListener);
-    }, [open, setOpen])
+    }, [open, setOpen]);
 
     return (
         <div className="relative" ref={ref}>

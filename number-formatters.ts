@@ -12,7 +12,7 @@ export function readableNumber(origInput: number | string, short?: boolean): str
      */
     const inputStr = input.toString();
     const isNegative = input < 0;
-    const [wholeNumber, ] = isNegative ? inputStr.substr(1, inputStr.length).split(".") :  inputStr.split(".")
+    const [wholeNumber,] = isNegative ? inputStr.substr(1, inputStr.length).split(".") : inputStr.split(".")
     const leadingSignificantDigits = wholeNumber.length % 3 === 0 ? 3 : wholeNumber.length % 3;
     const order = leadingSignificantDigits === 3 ? Math.floor(wholeNumber.length / 4) : Math.floor(wholeNumber.length / 3)
 
@@ -53,6 +53,10 @@ export function commafy(number: number | string | undefined) {
     }
 }
 
-export function readablePercent(number: number, decimals: number = 1) {
-    return `${(number * 100).toFixed(decimals)}%`
+export function readablePercent(number?: number, decimals: number = 1) {
+    if (!number) {
+        return "-";
+    } else {
+        return `${(number * 100).toFixed(decimals)}%`;
+    }
 }

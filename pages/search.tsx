@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Page} from "../components/Page";
 import {StockSearch} from "../components/Pages/Search/StockSearch";
 import {usePublishedStockAnalysis} from "../api-hooks";
@@ -6,7 +6,6 @@ import {StockAnalysisProjection, ZacksDerivedAnalyticsTagsEnum} from "../client"
 import {commafy, readablePercent} from "../number-formatters";
 import {useRouter} from "next/router";
 import {AscIcon, DescIcon, UnsortedIcon} from "../components/Pages/Search/Icons";
-import {upsideP} from "../components/Pages/StockAnalysis/upside";
 import {Nav} from "../components/Nav";
 import {FilterButton} from '../components/FilterButton';
 import {FilterPill} from "../components/FilterPill";
@@ -16,7 +15,7 @@ export default function Search() {
     const [stockAnalyses, setStockAnalyses] = useState<StockAnalysisProjection[]>([]);
     const stockAnalysisApi = usePublishedStockAnalysis();
     const [term, setTerm] = useState('')
-    const [sort, setSort] = useState<'ascending' | 'descending' | undefined>(undefined)
+    const [sort, setSort] = useState<'ascending' | 'descending' | undefined>("descending")
     const [page, setPage] = useState(0);
     const [selected, setSelected] = useState<ZacksDerivedAnalyticsTagsEnum[]>([]);
     const router = useRouter();
@@ -68,15 +67,14 @@ export default function Search() {
             currentPrice,
             finalPrice,
             name,
-            ticker
+            ticker,
+            percentUpside,
         } = stockAnalysis;
 
         function navigate() {
             router.push(`/stock-analyses/${stockAnalysis['_id']}`);
         }
-
-        const upside = upsideP(stockAnalysis);
-
+        
         return (
             <tr
                 className="cursor-pointer transition ease-in hover:bg-lightGreen-50 hover:text-chili-100"
@@ -85,9 +83,9 @@ export default function Search() {
                 <td className="font-mono p-2 text-left">{name}</td>
                 <td className="font-mono p-2 text-left">{ticker}</td>
                 <td
-                    className={`font-mono p-2 text-left ${upside > 0 ? 'text-lime-100' : 'text-red-100'} hover:text-chili-100`}
+                    className={`font-mono p-2 text-left ${percentUpside > 0 ? 'text-lime-100' : 'text-red-100'} hover:text-chili-100`}
                 >
-                    {readablePercent(upside)}
+                    {readablePercent(percentUpside)}
                 </td>
                 <td className="font-mono p-2 text-left hidden lg:table-cell">${commafy(currentPrice)}</td>
                 <td className="font-mono p-2 text-left hidden lg:table-cell">${commafy(finalPrice)}</td>
@@ -139,22 +137,24 @@ export default function Search() {
 }
 
 function Pagination({previousPage, nextPage}: { previousPage: () => void, nextPage: () => void }) {
-    return <div className="flex space-x-2">
-        <button className="rounded bg-lime-100 text-chili-100 w-8 h-8 flex items-center justify-center"
-                onClick={previousPage}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
-                 className="fill-current">
-                <path d="M0 0h24v24H0V0z" fill="none"/>
-                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12l4.58-4.59z"/>
-            </svg>
-        </button>
-        <button className="rounded bg-lime-100 text-chili-100 w-8 h-8 flex items-center justify-center"
-                onClick={nextPage}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
-                 className="fill-current">
-                <path d="M0 0h24v24H0V0z" fill="none"/>
-                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"/>
-            </svg>
-        </button>
-    </div>;
+    return (
+        <div className="flex space-x-2">
+            <button className="rounded bg-lime-100 text-chili-100 w-8 h-8 flex items-center justify-center"
+                    onClick={previousPage}>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                     className="fill-current">
+                    <path d="M0 0h24v24H0V0z" fill="none"/>
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12l4.58-4.59z"/>
+                </svg>
+            </button>
+            <button className="rounded bg-lime-100 text-chili-100 w-8 h-8 flex items-center justify-center"
+                    onClick={nextPage}>
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                     className="fill-current">
+                    <path d="M0 0h24v24H0V0z" fill="none"/>
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"/>
+                </svg>
+            </button>
+        </div>
+    );
 }
